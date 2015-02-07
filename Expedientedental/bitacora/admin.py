@@ -1,5 +1,6 @@
-from django.contrib	import *
-from bitacora.models import *
+from django.contrib	import admin
+from bitacora.models import bitacora
+from bitacora.models import notas
 
 '''
 class notasAdmin(admin.ModelAdmin):
@@ -13,7 +14,13 @@ class bitacoraAdmin(admin.ModelAdmin):
 	list_filter = ('Nombre_del_Procedimiento','Fecha_y_Hora','numero_de_nota')
 	search_fields = ['Nombre_del_Procedimiento','Fecha_y_Hora','numero_de_nota']
 	fields = ('Nombre_del_Procedimiento','Fecha_y_Hora','numero_de_nota')
+<<<<<<< HEAD
 
 admin.site.register(notas,notasAdmin)
 admin.site.register(bitacora,bitacoraAdmin)
 '''
+=======
+'''
+admin.site.register(notas)
+admin.site.register(bitacora)
+>>>>>>> eb6ad5b6e2f16f8d923d4958e25b7f5ad0bd7a2f
