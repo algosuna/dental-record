@@ -1,6 +1,6 @@
 from django.contrib	import *
 from precios.models import *
-
+'''
 class precioservicioAdmin(admin.ModelAdmin):
 	list_display = ('Nombre_del_Servicio','Precio')
 	list_filter = ('Nombre_del_Servicio','Precio')
@@ -15,3 +15,4 @@ class grupopreciosAdmin(admin.ModelAdmin):
 
 admin.site.register(precioservicio,precioservicioAdmin)
 admin.site.register(grupoprecios,grupopreciosAdmin)
+'''

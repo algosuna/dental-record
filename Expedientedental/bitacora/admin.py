@@ -1,6 +1,7 @@
 from django.contrib	import *
 from bitacora.models import *
 
+'''
 class notasAdmin(admin.ModelAdmin):
 	list_display = ('id','Descripcion','Fecha_y_Hora')
 	list_filter = ('Descripcion','Fecha_y_Hora')
@@ -15,3 +16,4 @@ class bitacoraAdmin(admin.ModelAdmin):
 
 admin.site.register(notas,notasAdmin)
 admin.site.register(bitacora,bitacoraAdmin)
+'''

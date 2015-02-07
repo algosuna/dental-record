@@ -1,7 +1,7 @@
 from django.db import models
 
 # Create your models here.
-
+'''
 # Modelo de Notas Agregadas
 
 class notas(models.Model):
@@ -23,3 +23,4 @@ class bitacora(models.Model):
 	def __unicode__(self):
 		DatosBitacora = "%s %s"%(self.numero_de_nota,self.Nombre_del_Procedimiento,self.Fecha_y_Hora)
 		return DatosBitacora
+		'''

@@ -1,6 +1,6 @@
 from django.db import models
 
-
+'''
 # Create your models here.
 
 
@@ -53,5 +53,5 @@ class LDPP(models.Model):
 	CIE10=models.CharField(foreign_key=True,max_length=15)
 	nomDiagnostico=models.CharField(foreignkey=True,max_length=30)
 
-
+'''
 
