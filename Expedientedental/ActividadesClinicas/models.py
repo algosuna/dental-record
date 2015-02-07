@@ -4,25 +4,14 @@ from django.db import models
 
 
 class interrogatorio(models.Model)
-	id_paciente=models.CharField(primary_key=True,maxlenght_lenght=5)
-	id_med=model.CharField(primary_key=True, maxlenght_lenght=5)
-	nom_pacient=model.CharField(maxlenght_lenght=50)
-	apm=model.CharField(maxlenght_lenght=50)
-	app=model.CharField(maxlenght_lenght=50)
-	nomdoc=model.CharField(maxlenght_lenght=50)
-	appdoc=model.CharField(maxlenght_lenght=50)
-	especialidad=model.CharField(maxlenght_lenght=30)
-	alergias=model.BooleanField(default=True)
-	descripcion=model.TextField
-	peso=model.DecimalField(max_digits=3, decimal_places=3, default=Decimal('0.00'))
-	estatura=model.DecimalField(max_digits=2, decimal_places=2, default=Decimal('0.00'))
-	padecimientos=model.BooleanField(default=True)
-	descripcionp=model.TextField()
-	FeHo=model.DateTimeField(auto_now_add=True)
-
-	def __unicode__(self):
-		Nombre_Completo= "% %"%(self.nom_pacient,self.app,self.apm)
-		return Nombre_Completo
+	Nombre_paciente	= models.ForeignKey('Nombre.paciente')
+	Nombre_doctor	= models.ForeignKey('Nombre.medico')
+	#Ap_Paterno	= models.CharField(foreingkey=True,max_length=30)
+	#Ap_Materno	= models.CharField(foreingkey=True,max_length=30)
+	#Especialidad= models.CharField(foreingkey=True,max_length=40)
+	#Nombre		= models.CharField(foreingkey=True,max_length=40)
+	#Ap_Paterno	= models.CharField(foreingkey=True,max_length=30)
+	#Ap_Materno	= models.CharField(foreingkey=True,max_length=30)
 
 	
 class Odontograma

@@ -124,6 +124,7 @@ INSTALLED_APPS = (
     'altas',
     'precios',
     'bitacora',
+    'ActividadesClinicas'
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
 )
