@@ -24,7 +24,7 @@ class interrogatorio(models.Model)
 		Nombre_Completo= "% %"%(self.nom_pacient,self.app,self.apm)
 		return Nombre_Completo
 
-	
+
 class Odontograma
 	id_odonto=model.CharField()
 	id_paciente=model.CharField(foreign_key=True,maxlenght_lenght=5)
@@ -62,3 +62,19 @@ class LDPP
 	nomDi=model.CharField(foreignkey=True,maxlenght_lenght=30)
 
 
+
+class InterrogatorioDental(models.Model):
+    credencial_paciente = models.ForeignKey(DatosDelPaciente)
+    ultima_visita_medico = models.CharField(max_length=100, null=False)
+    medicamento_ultimos_dos_anios = models.CharField(max_length=100, null=False)
+    alergico_a_medicamentos = models.CharField(max_length=100, null=False)
+    alergico_a_anestesicos = models.CharField(max_length=100, null=False)
+    padece_enfermedades = models.CharField(max_length=100, null=False)
+    enfermedad_trasmision_sexual = models.CharField(max_length=100, null=False)
+    otra_enfermedad = models.CharField(max_length=100, null=False)
+    esta_embarazada = models.CharField(max_length=100, null=False)
+    observaciones = models.TextField()
+    resumen_clinico = models.TextField()
+
+    def __unicode__(self):
+        return self.observaciones
