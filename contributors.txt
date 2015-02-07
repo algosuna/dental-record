@@ -1,2 +1,6 @@
+<<<<<<< HEAD
 Luis Eulogio Valencia Camara
 Raymundo
+=======
+Luis Eulogio Valencia Camara 1
+>>>>>>> 16d0bac957eb8e3a7dda47eb2b266e44698d56e5
