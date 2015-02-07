@@ -4,21 +4,21 @@ from django.db import models
 
 # Modelo de Medicos
 class medico(models.Model):
-	Nombre		= models.CharField(max_length=40)
-	Ap_Paterno	= models.CharField(max_length=30)
-	Ap_Materno		= models.CharField(max_length=30)
-	Nombre_Usuario = models.CharField(max_length=30)
-	Licencia_Medica = models.CharField(max_length=30)
-	Universidad_Egreso= models.CharField(max_length=70)
-	RFC = models.CharField(max_length=15)
-	Licencia_de_Especialidad = models.CharField(max_length=30)
-	Cedula_Estatal = models.CharField(max_length=40)
-	Especialidad = models.CharField(max_length=40)
-	Telefono = models.CharField(max_length=20)
-	Correo_Electronico = models.EmailField(max_length=50)
-	Direccion = models.CharField(max_length=70)
-	Codigo_Postal = models.IntegerField(max_length=5)
-	Estado = models.CharField(max_length=30)
+	nombre		= models.CharField(max_length=40)
+	apellidoPaterno	= models.CharField(max_length=30)
+	apellidoMaterno		= models.CharField(max_length=30)
+	nombreUsuario = models.CharField(max_length=30)
+	licenciaMedica = models.CharField(max_length=30)
+	universidadEgreso= models.CharField(max_length=70)
+	rfc = models.CharField(max_length=15)
+	licenciaDeEspecialidad = models.CharField(max_length=30)
+	cedulaEstatal = models.CharField(max_length=40)
+	especialidad = models.CharField(max_length=40)
+	telefono = models.CharField(max_length=20)
+	correoElectronico = models.EmailField(max_length=50)
+	direccion = models.CharField(max_length=70)
+	codigoPostal = models.IntegerField(max_length=5)
+	estado = models.CharField(max_length=30)
 	Ciudad = models.CharField(max_length=30)
 
 	def __unicode__(self):
@@ -28,8 +28,8 @@ class medico(models.Model):
 
 # Modelo de Pacientes
 class paciente(models.Model):
-	Nombre		= models.CharField(max_length=40)
-	Ap_Paterno	= models.CharField(max_length=30)
+	nombre		= models.CharField(max_length=40)
+	apellidPaterno	= models.CharField(max_length=30)
 	Ap_Materno		= models.CharField(max_length=30)
 	Sexo_CHOICES = (
         ('M', 'M'),
