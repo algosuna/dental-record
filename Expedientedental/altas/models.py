@@ -3,13 +3,13 @@ from django.db import models
 # Create your models here.
 
 # Modelo de Medicos
-class medico(models.Model):
-	nombre		= models.CharField(max_length=40)
+class Medico(models.Model):
+	medico	= models.CharField(max_length=40)
 	apellidoPaterno	= models.CharField(max_length=30)
-	apellidoMaterno		= models.CharField(max_length=30)
-	nombre_Usuario = models.CharField(max_length=30)
-	licencia_Medica = models.CharField(max_length=30)
-	universidad_Egreso= models.CharField(max_length=70)
+	apellidoMaterno	= models.CharField(max_length=30)
+	nombreUsuario = models.CharField(max_length=30)
+	licenciaMedica = models.CharField(max_length=30)
+	universidadEgreso= models.CharField(max_length=70)
 	rfc = models.CharField(max_length=15)
 	licenciadeEspecialidad = models.CharField(max_length=30)
 	cedulaEstatal = models.CharField(max_length=40)
@@ -22,24 +22,24 @@ class medico(models.Model):
 	ciudad = models.CharField(max_length=30)
 
 	def __unicode__(self):
-		nombreCompleto = "%s %s"%(self.Nombre,self.Ap_Paterno)
+		nombreCompleto = "%s %s"%(self.nombredoctor,self.apellidoPaterno)
 		return nombreCompleto
 
 
 # Modelo de Pacientes
-class paciente(models.Model):
- 	credencial_paciente = models.CharField(max_length=15)
-	nombre		= models.CharField(max_length=40)
+class Paciente(models.Model):
+ 	credencialPaciente = models.CharField(max_length=15)
+	paciente	= models.CharField(max_length=40)
 	apellidoPaterno	= models.CharField(max_length=30)
-	ApellidoMaterno		= models.CharField(max_length=30)
+	ApellidoMaterno	= models.CharField(max_length=30)
 	sexoopciones=(
         ('M', 'M'),
         ('F', 'F'),
     )
 	sexo = models.CharField(max_length=2, choices=sexoopciones)
-	correo_Electronico = models.EmailField(max_length=60)
+	correoElectronico = models.EmailField(max_length=60)
 	direccion = models.CharField(max_length=70)
-	codigo_Postal = models.IntegerField(max_length=5)
+	codigoPostal = models.IntegerField(max_length=5)
 	estado = models.CharField(max_length=30)
 	ciudad = models.CharField(max_length=30)	
 	nSs= models.CharField(max_length=20)
@@ -47,6 +47,5 @@ class paciente(models.Model):
 	
 
 	def __unicode__(self):
-		nmbreCompleto = "%s %s %s"%(self.Nombre,self.Ap_Paterno,self.Ap_Materno)
-		return NombreCompleto
-
+		nombreCompleto ="%s %s"%(self.nombrepaciente,self.apellidoPaterno)
+		return nombreCompleto
