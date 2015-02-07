@@ -32,19 +32,19 @@ class paciente(models.Model):
 	nombre		= models.CharField(max_length=40)
 	apellidoPaterno	= models.CharField(max_length=30)
 	ApellidoMaterno		= models.CharField(max_length=30)
-	sexo_CHOICES = (
+	sexoopciones=(
         ('M', 'M'),
         ('F', 'F'),
     )
-	sexo = models.CharField(max_length=2, choices=Sexo_CHOICES)
+	sexo = models.CharField(max_length=2, choices=sexoopciones)
 	correo_Electronico = models.EmailField(max_length=60)
 	direccion = models.CharField(max_length=70)
 	codigo_Postal = models.IntegerField(max_length=5)
 	estado = models.CharField(max_length=30)
 	ciudad = models.CharField(max_length=30)	
-	nSS = models.CharField(max_length=20)
+	nSs= models.CharField(max_length=20)
 	telefono = models.CharField(max_length=20)
-	nss models.CharField(max_length=20)
+	
 
 	def __unicode__(self):
 		nmbreCompleto = "%s %s %s"%(self.Nombre,self.Ap_Paterno,self.Ap_Materno)
