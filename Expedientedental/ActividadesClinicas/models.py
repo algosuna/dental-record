@@ -1,69 +1,57 @@
 from django.db import models
 
+
 # Create your models here.
 
 
-class interrogatorio(models.Model)
-	Nombre_paciente	= models.ForeignKey('Nombre.paciente')
-	Nombre_doctor	= models.ForeignKey('Nombre.medico')
-	#Ap_Paterno	= models.CharField(foreingkey=True,max_length=30)
-	#Ap_Materno	= models.CharField(foreingkey=True,max_length=30)
-	#Especialidad= models.CharField(foreingkey=True,max_length=40)
-	#Nombre		= models.CharField(foreingkey=True,max_length=40)
-	#Ap_Paterno	= models.CharField(foreingkey=True,max_length=30)
-	#Ap_Materno	= models.CharField(foreingkey=True,max_length=30)
+class interrogatorio(models.Model):
+	nombre_paciente	= models.ForeignKey('Nombre.paciente')
+	nombre_doctor	= models.ForeignKey('Nombre.medico')
+	credencial_paciente = models.ForeignKey('credencial_paciente.paciente')
+	ultima_visita_medico = models.CharField(max_length=100, null=False)
+	medicamento_ultimos_dos_anios = models.CharField(max_length=100, null=False)
+	alergico_a_medicamentos = models.CharField(max_length=100, null=False)
+	alergico_a_anestesicos = models.CharField(max_length=100, null=False)
+	padece_enfermedades = models.CharField(max_length=100, null=False)
+	enfermedad_trasmision_sexual = models.CharField(max_length=100, null=False)
+	otra_enfermedad = models.CharField(max_length=100, null=False)
+	esta_embarazada = models.CharField(max_length=100, null=False)
+	observaciones = models.TextField()
+	resumen_clinico = models.TextField()
+
+	
 
 
-class Odontograma
-	id_odonto=model.CharField()
-	id_paciente=model.CharField(foreign_key=True,maxlenght_lenght=5)
-	nom_pacient=model.CharField(foreign_key=True,maxlenght_lenght=50)
-	app=model.CharField(foreign_key=True,maxlenght_lenght=50)
-	apm=model.CharField(foreign_key=True, maxlenght_lenght=50)
-	nomdoc=model.CharField(foreign_key=True,maxlenght_lenght=50)
-	appdoc=model.CharField(foreign_key=True,maxlenght_lenght=50)
-	FeHo=model.DateTimeField(auto_now_add=True)
-	nomPdental=model.CharField(maxlenght_lenght=20)
-	CIE10=model.CharField(maxlenght_lenght=15)
-	notas=model.TextField()
+class Odontograma(models.Model):
+	class Odontograma
+ 	id_odonto=model.CharField()
+ 	id_paciente=model.CharField(foreign_key=True,maxlenght_lenght=5)
+ 	nomDi=model.CharField(foreignkey=True,maxlenght_lenght=30)
 
-	def __unicode__(self):
-		Odontograma="% %"%(self.id_odonto,nomdoc,nom_pacient)
-		return Odontograma
+ 	def __unicode__(self):
+ 		pieza="% %"% (self.nomDi)
+ 		return pieza
+
+ 
 
 
-class Ldiagnosticos
-	CIE10=model.CharField(foreign_key=True,maxlenght_lenght=15)
-	CDi=model.CharField(primary_key=True,maxlenght_lenght=15)
-	nomDi=model.CharField(maxlenght_lenght=30)
+class Ldiagnosticos(models.Model):
+	CIE10=models.CharField(foreign_key=True,max_length=15)
+	CDi=models.CharField(primary_key=True,max_length=15)
+	nomDi=models.CharField(max_length=30)
 	def __unicode__(self):
 		CO="% %"%(self.CIE10)
-			return CO
+		return CO
 
 
 
-class LDPP
-	id_paciente=model.CharField(foreign_key=True,maxlenght_lenght=5)
-	nom_pacient=CharField(foreign_key=True,maxlenght_lenght=50)
-	id_med=model.CharField(foreign_key=True, maxlenght_lenght=5)
-	CDi=model.CharField(foreign_key=True,maxlenght_lenght=15)
-	CIE10=model.CharField(foreign_key=True,maxlenght_lenght=15)
-	nomDi=model.CharField(foreignkey=True,maxlenght_lenght=30)
+class LDPP(models.Model):
+	id_paciente=models.CharField(foreign_key=True,max_length=5)
+	nom_pacient=models.CharField(foreign_key=True,max_length=50)
+	id_med=models.CharField(foreign_key=True, max_length=5)
+	codigoDiagnostico=models.CharField(foreign_key=True,max_length=15)
+	CIE10=models.CharField(foreign_key=True,max_length=15)
+	nomDiagnostico=models.CharField(foreignkey=True,max_length=30)
 
 
 
-class InterrogatorioDental(models.Model):
-    credencial_paciente = models.ForeignKey(DatosDelPaciente)
-    ultima_visita_medico = models.CharField(max_length=100, null=False)
-    medicamento_ultimos_dos_anios = models.CharField(max_length=100, null=False)
-    alergico_a_medicamentos = models.CharField(max_length=100, null=False)
-    alergico_a_anestesicos = models.CharField(max_length=100, null=False)
-    padece_enfermedades = models.CharField(max_length=100, null=False)
-    enfermedad_trasmision_sexual = models.CharField(max_length=100, null=False)
-    otra_enfermedad = models.CharField(max_length=100, null=False)
-    esta_embarazada = models.CharField(max_length=100, null=False)
-    observaciones = models.TextField()
-    resumen_clinico = models.TextField()
-
-    def __unicode__(self):
-        return self.observaciones
