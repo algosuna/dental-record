@@ -44,7 +44,7 @@ class Odontograma(models.Model):
  	nombrePiezaDental=models.CharField(max_length=40)
  	problemaDental=models.ForeignKey(ListadeDiagnosticos)
  	notas=models.TextField()
-
+ 	
  	def __unicode__(self):
  		problema="%s  %s"% (self.problemaDental)
  		return problema
