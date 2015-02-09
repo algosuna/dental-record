@@ -1,4 +1,4 @@
-from django.contrib	import admin
+'''from django.contrib	import admin
 from ActividadesClinicas.models import Interrogatorio
 from ActividadesClinicas.models import ListadeDiagnosticos
 from ActividadesClinicas.models import Odontograma
@@ -17,3 +17,4 @@ from ActividadesClinicas.models import Odontograma
 admin.site.register(Interrogatorio)
 admin.site.register(ListadeDiagnosticos)
 admin.site.register(Odontograma)
+'''

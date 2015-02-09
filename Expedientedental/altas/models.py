@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib import admin
+from django.db import models
 
 # Create your models here.
 
@@ -20,7 +22,6 @@ class Medico(models.Model):
 	codigoPostal = models.IntegerField(max_length=5)
 	estado = models.CharField(max_length=30)
 	Ciudad = models.CharField(max_length=30)
-
 
 	def __unicode__(self):
 		nombreCompleto = "%s %s"%(self.medico,self.apellidoPaterno)
@@ -51,4 +52,8 @@ class Paciente(models.Model):
 
 	def __unicode__(self):
 		nombreCompleto ="%s %s"%(self.paciente,self.apellidoPaterno)
+<<<<<<< HEAD
 		return nombreCompleto
+=======
+		return nombreCompleto
+>>>>>>> 8e8d2cd8a49c95c469dfba16cdadd0e6c4d79090

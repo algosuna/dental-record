@@ -4,26 +4,32 @@ from django.db import models
 
 # Modelo de Precios de Servicios
 
-class precioservicio(models.Model):
-	Nombre_del_Servicio	= models.CharField(max_length=50)
-	Precio = models.IntegerField(max_length=10)
-
+class PrecioServicio(models.Model):
+	nombreDelServicio	= models.CharField(max_length=50,unique = True)
+	
 	def __unicode__(self):
-		Servicio = "%s"%(self.Nombre_del_Servicio)
-
+		Servicio = "%s"%(self.nombreDelServicio)
 		return Servicio
-	def __unicode__(self):
-		Precio = "%s"%(self.Precio)
-		return Precio
 
 
 # Modelo de Grupo de Precios. 
 # Aqui se generan los nombres de grupo para la tabla de precios de servicio.
 
-class grupoprecios(models.Model):
-	Nombre_del_Grupo	= models.CharField(max_length=50)
-	Precio = models.ForeignKey(precioservicio)
+class GrupoPrecios(models.Model):
+	nombreDelGrupo	= models.CharField(max_length=50,unique = True)
+	
+	def __unicode__(self):
+		DatosGrupo = "%s"%(self.nombreDelGrupo)
+		return DatosGrupo
+
+# Modelo de Grupo de Precios. 
+# Aqui se generan los nombres de grupo, de servicio y precio para la tabla de GrupoServicio.
+
+class GrupoServicio(models.Model):
+	nombreDelGrupo	= models.ForeignKey(GrupoPrecios)
+	nombreDelServicio = models.ForeignKey(PrecioServicio)
+	precio = models.IntegerField(max_length=10)
 
 	def __unicode__(self):
-		DatosGrupo = "%s %s"%(self.Nombre_del_Grupo,self.Precio)
-		return DatosGrupo
+		DatosServicios = "%s"%(self.nombreDelGrupo,self.nombreDelServicio,self.precio)
+		return DatosServicios
