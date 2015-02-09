@@ -3,27 +3,61 @@
 
 <!DOCTYPE Html=5>
 {% block content %}
-	<link rel="stylesheet" href='/Expedientedental/static/css/odstyle.css'>
-	<script type="odonto.js/javascript"></script>
-	<script src="/Expedientedental/static/js/odonto.js"></script>
+	{%load static from staticfiles %}
+	
+       <link rel="stylesheet" href="{% static 'css/odstyle.css'%}">
+       <script type="text/javascript" >
 
-		<div class="diente"><!--diente 1-->
-			<input name="valor" type="hidden" value="1">
-			<div class="cuadro click"><input name="cuadro" type="hidden" value="1"></div>
-			<div class="cuadro izquierdo click"><input name="cuadro" type="hidden" value="2"></div>
-			<div class="cuadro debajo click"><input name="cuadro" type="hidden" value="3"></div>
-			<div class="cuadro derecha click"><input name="cuadro" type="hidden" value="hola"></div>
-			<div class="centro click"><input name="cuadro" type="hidden" value="5"></div>
-		</div>
-		        <div id="color">
-			<div class="select"></div>
-			<div class="select"></div>
-			<div class="select"></div>
-			<div class="select"></div>
-			<div class="select"></div>
-			<div class="select"></div>
-</div>
-    </form>
+			$(document).ready(function() {
+			$('#color').dialog({
+				autoOpen: false,
+			});	 
+				$(".click").click(function(event) {
+				var cuadro = $(this).find("input[name=cuadro]:hidden").val();//obtenemos el valor del cuadro al que le dimos click
+				$( "#color" ).dialog( "option", "position", [event.pageX,event.pageY]);//posicionamos el elemento donde dimos click			
+				$('#color').dialog('open');
+				$(".select").click(function(event){
+					var color = $(this).css('background-color');
+					$("input[name=cuadro]:hidden").val(cuadro).parent(".cuadro").css('background-color', color);//establecemos el background a la clase cuadro
+				});
+				return false;
+			});
+				return false;			
+			});
+		</script>
+
+
+
+				 <form action="" method="POST">{% csrf_token %}
+			        <table width="80%">
+			         {{ form.as_table }}
+			        </table><br>
+			  <div id="posiscionboton">
+			      <div id="botonsend">
+			        <input type="submit" value="Guardar Formulario">
+			      </div>
+			  </div>
+
+
+						  <div class="diente"><!--diente 1-->
+				<input name="valor" type="hidden" value="1">
+				<div class="cuadro click"><input name="cuadro" type="hidden" value="1"></div>
+				<div class="cuadro izquierdo click"><input name="cuadro" type="hidden" value="2"></div>
+				<div class="cuadro debajo click"><input name="cuadro" type="hidden" value="3"></div>
+				<div class="cuadro derecha click"><input name="cuadro" type="hidden" value="hola"></div>
+				<div class="centro click"><input name="cuadro" type="hidden" value="5"></div>
+			</div>
+			        <div id="color">
+				<div class="select"></div>
+				<div class="select"></div>
+				<div class="select"></div>
+				<div class="select"></div>
+				<div class="select"></div>
+				<div class="select"></div>
+			</div>
+						    </form>
+						    <br>
+    
     <br>
  <footer>
         <p>
