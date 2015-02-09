@@ -1,18 +1,27 @@
-from django.contrib	import *
-from precios.models import *
-'''
-class precioservicioAdmin(admin.ModelAdmin):
-	list_display = ('Nombre_del_Servicio','Precio')
-	list_filter = ('Nombre_del_Servicio','Precio')
-	search_fields = ['Nombre_del_Servicio','Precio']
-	fields = ('Nombre_del_Servicio','Precio')
+from django.contrib	import admin
+from precios.models import PrecioServicio
+from precios.models import GrupoPrecios
+from precios.models import GrupoServicio
 
-class grupopreciosAdmin(admin.ModelAdmin):
-	list_display = ('Nombre_del_Grupo','Precio')
-	list_filter = ('Nombre_del_Grupo','Precio')
-	search_fields = ['Nombre_del_Grupo','Precio']
-	fields = ('Nombre_del_Grupo','Precio')
+class PrecioServicioAdmin(admin.ModelAdmin):
+	list_display = ('nombreDelServicio',)
+	list_filter = ('nombreDelServicio',)
+	search_fields = ['nombreDelServicio']
+	fields = ('nombreDelServicio',)
 
-admin.site.register(precioservicio,precioservicioAdmin)
-admin.site.register(grupoprecios,grupopreciosAdmin)
-'''
+class GrupoPreciosAdmin(admin.ModelAdmin):
+	list_display = ('nombreDelGrupo',)
+	list_filter = ('nombreDelGrupo',)
+	search_fields = ['nombreDelGrupo']
+	fields = ('nombreDelGrupo',)
+
+class GrupoServicioAdmin(admin.ModelAdmin):
+	list_display = ('nombreDelGrupo','nombreDelServicio','precio')
+	list_filter = ('nombreDelGrupo','nombreDelServicio','precio')
+	search_fields = ['nombreDelGrupo','nombreDelServicio','precio',]
+	fields = ('nombreDelGrupo','nombreDelServicio','precio')
+
+
+admin.site.register(PrecioServicio,PrecioServicioAdmin)
+admin.site.register(GrupoPrecios,GrupoPreciosAdmin)
+admin.site.register(GrupoServicio, GrupoServicioAdmin)

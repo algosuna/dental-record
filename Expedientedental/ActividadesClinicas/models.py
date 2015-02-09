@@ -1,12 +1,8 @@
 from django.db import models 
 from altas.models import Medico,Paciente
 
-<<<<<<< HEAD
-'''
-=======
 #from django.contrib import models
 
->>>>>>> eb6ad5b6e2f16f8d923d4958e25b7f5ad0bd7a2f
 # Create your models here.
 
 
@@ -26,11 +22,8 @@ class Interrogatorio(models.Model):
 
 	def __unicode__(self):
 
-		nombres ="%s %s "% (self.paciente,self.medico)
+		nombres ="%s %s"% (self.paciente,self.medico)
 		return nombres
-
-
- 
 
 
 class ListadeDiagnosticos(models.Model):
@@ -39,7 +32,7 @@ class ListadeDiagnosticos(models.Model):
 	nomDi=models.CharField(max_length=30)
 	def __unicode__(self):
 		codigoCie="%s  %s"%(self.CIE10)
-		return CO
+		return codigoCie
 
 class Odontograma(models.Model):
  	nombre_doctor=models.ForeignKey(Medico)
@@ -54,7 +47,4 @@ class Odontograma(models.Model):
  		return problema
 
 
-
-
-'''
 
