@@ -52,4 +52,8 @@ class Paciente(models.Model):
 
 	def __unicode__(self):
 		nombreCompleto ="%s %s"%(self.paciente,self.apellidoPaterno)
+<<<<<<< HEAD
 		return nombreCompleto
+=======
+		return nombreCompleto
+>>>>>>> 8e8d2cd8a49c95c469dfba16cdadd0e6c4d79090
