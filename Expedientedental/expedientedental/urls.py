@@ -3,6 +3,7 @@ import settings
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 from ActividadesClinicas.views import interrogatorio
+from ActividadesClinicas.views import odontograma
 #from ActividadesClinicas.views import interrogatorio
 #from ActividadesClinicas.views import Odontograma
 admin.autodiscover()
@@ -18,4 +19,5 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
     url(r'^interrogatorio/$',interrogatorio),
+    url(r'^odontograma/$',odontograma),
 )
