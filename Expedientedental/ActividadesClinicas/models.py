@@ -34,8 +34,8 @@ class ListadeDiagnosticos(models.Model):
 	CDi=models.CharField(max_length=15)
 	nomDi=models.CharField(max_length=30)
 	def __unicode__(self):
-		codigoCie="%s  %s"%(self.CIE10)
-		return CO
+		codigoCie="%s "%(self.CIE10)
+		return codigoCie
 
 class Odontograma(models.Model):
  	nombre_doctor=models.ForeignKey(Medico)
@@ -46,7 +46,7 @@ class Odontograma(models.Model):
  	notas=models.TextField()
  	
  	def __unicode__(self):
- 		problema="%s  %s"% (self.problemaDental)
+ 		problema="%s  "% (self.problemaDental)
  		return problema
 
 

@@ -3,31 +3,28 @@ from django.template.loader import get_template
 from django.template import RequestContext
 from django.http import Http404, HttpResponse
 from .forms import OdontogramaForm
-from .forms import InterrogatorioDentalForm
+from .forms import InterrogatorioForm
 from django.shortcuts import render_to_response, render, redirect
 import datetime
 from ActividadesClinicas.models import Interrogatorio
-from ActividadesClinicas.models import ListadeDiagnositico
 from ActividadesClinicas.models import Odontograma
 
-
-def Interrogatorio (request):
-	if request.method == "POST"
-		modelform=InterrogatorioDentalForm(request.POST)
+def interrogatorio(request):
+	if request.method == "POST":
+		modelform = InterrogatorioForm(request.POST)
 		if modelform.is_valid():
 			modelform.save()
-			return redirect("Odontograma")
-    else:
-    	modelform=InterrogatorioDentalForm()
-    return render(request,"Interrogatorio.html"{"form":modelform})
-
-
-def  Odontograma(request):
-	if request.method == "POST"
-		modelform=OdontogramaForm(request.POST)
-		if modelform.is_valid():
-			modelform.save()
-			return redirect("/Odontograma/")
+			return redirect("/interrogatorio/")
 	else:
-		modelform=OdontogramaForm()
-	return render(request,"Odontograma.html",{"form"}:modelform})
+		modelform=InterrogatorioForm()
+	return render(request,"interrogatorio.html",{"form":modelform})
+
+def odontograma(request):
+    if request.method == "POST":
+        modelform = OdontogramaForm(request.POST)
+        if modelform.is_valid():
+            modelform.save()
+            return redirect("/odontograma/")
+    else:
+        modelform = OdontogramaForm()
+    return render(request, "odontograma.html", {"form": modelform})

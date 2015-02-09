@@ -4,40 +4,54 @@ from decimal import Decimal
 
 # Create your models here.
 
-class InventarioInsumos(models.Model):
-	tipo_insumo=models.CharField(max_length=50)
-	nombre_producto =models.CharField(max_length=100)
-	cantidad    =models.IntegerField(max_length=6)
-	precio_unidad=models.DecimalField(max_digits=12, decimal_places=2, blank=True, default=0)
-	fecha_entrada= models.DateTimeField(blank=True, null=True)
+
+class categoriaProducto(models.Model):
+	nombre = models.CharField(max_length=50)
+	descripcion = models.TextField(max_length=400)
 
 	def __unicode__(self):
-		datos="%s %s"%(self.codigoproveedor,self.descripcion)
-		return datos
+		return self.nombre
 
-class TipoPaquete(models.Model):
-	nombrePaquete=models.CharField(max_length=50)
-
-
-class InsumospPaquete(models.Model):
-	inventario_insumos=models.ForeignKey(InventarioInsumos)
-	paquete=models.ForeignKey(TipoPaquete)
-	cantidad=models.IntegerField(max_length=2)
-
-class SalidadeMaterial(models.Model):
-	insumos_Salida=models.ForeignKey(InventarioInsumos)
-	paciente	= models.ForeignKey(Paciente)
-	medico	= models.ForeignKey(Medico)
-	fechaSalida= models.DateTimeField(blank=True, null=True)
+class producto(models.Model):
 	
-	def __unicode__(self):
-		codeSalida="%s %s"%(self.ordendeSalida)
-		return codeSalida
 
-class InsumosSalida(models.Model):
-	inventario_insumos=models.ForeignKey(InventarioInsumos)
-	paquete_usado=models.ForeignKey(SalidadeMaterial)
-	cantidad=models.IntegerField(max_length=2)
+	nombre      = models.CharField(max_length=100)
+	descripcion = models.TextField(max_length=300)
+	status      = models.BooleanField(default=True)
+	precio      = models.DecimalField(max_digits=6,decimal_places=2)
+	stock       = models.IntegerField()
+	categorias  = models.ManyToManyField(categoriaProducto,null=True,blank=True)
+
+	def __unicode__(self):
+		return self.nombre
+    	#retornar nombre del producto para presentar una descripcion en el panel
+
+
+class tipoPaquete(models.Model):
+	nombre=models.CharField(max_length=50)
+	descripcion=models.TextField(max_length=400)
+
+	def __unicode__(self):
+		return self.nombre
+
+
+class paquete(models.Model):
+	
+
+	nombre      = models.CharField(max_length=100)
+	descripcion = models.TextField(max_length=300)
+	status      = models.BooleanField(default=True)
+	precio      = models.DecimalField(max_digits=6,decimal_places=2)
+	stock       = models.IntegerField()
+	categorias  = models.ManyToManyField(tipoPaquete,null=True,blank=True)
+
+	def __unicode__(self):
+		return self.nombre
+    	#retornar nombre del paquete para presentar una descripcion en el panel
+
+
+
+
 
 
 

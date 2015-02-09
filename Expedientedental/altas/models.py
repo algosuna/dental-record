@@ -23,7 +23,7 @@ class Medico(models.Model):
 
 
 	def __unicode__(self):
-		nombreCompleto = "%s %s"%(self.nombredoctor,self.apellidoPaterno)
+		nombreCompleto = "%s %s"%(self.medico,self.apellidoPaterno)
 		return nombreCompleto
 
 
@@ -50,5 +50,5 @@ class Paciente(models.Model):
 	
 
 	def __unicode__(self):
-		nombreCompleto ="%s %s"%(self.nombrepaciente,self.apellidoPaterno)
+		nombreCompleto ="%s %s"%(self.paciente,self.apellidoPaterno)
 		return nombreCompleto

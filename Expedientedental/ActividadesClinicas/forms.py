@@ -1,8 +1,8 @@
 #encoding: utf-8
 from django import forms
-from .models import Interrogatorio
-from .models import ListadeDiagnostico
-from .models import Odontograma
+from ActividadesClinicas.models import Interrogatorio
+from ActividadesClinicas.models import ListadeDiagnosticos
+from ActividadesClinicas.models import Odontograma
 
 
 
@@ -12,12 +12,12 @@ class InterrogatorioForm(forms.ModelForm):
 		model=Interrogatorio
 
 
-class ListadeDiagnosticosForm(forms.ModelForm)
+class ListadeDiagnosticosForm(forms.ModelForm):
 	class Meta:
-		model=ListadeDiagnostico
+		model=ListadeDiagnosticos
 
 
-class OdontogramaForms(forms.ModelForm)
+class OdontogramaForm(forms.ModelForm):
 	class Meta:
 		model=Odontograma
 
