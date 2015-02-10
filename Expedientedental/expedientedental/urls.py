@@ -2,6 +2,7 @@ from django.conf.urls import patterns, include, url
 import settings
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
+
 from ActividadesClinicas.views import interrogatorio
 from ActividadesClinicas.views import odontograma
 #from ActividadesClinicas.views import interrogatorio
