@@ -155,6 +155,7 @@ INSTALLED_APPS = (
     'bitacora',
     'ActividadesClinicas',
     'Inventario',
+    'cotizacion',
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
 )

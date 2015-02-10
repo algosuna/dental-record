@@ -31,5 +31,5 @@ class GrupoServicio(models.Model):
 	precio = models.IntegerField(max_length=10)
 
 	def __unicode__(self):
-		DatosServicios = "%s"%(self.nombreDelGrupo,self.nombreDelServicio,self.precio)
+		DatosServicios = "%s %s %s"%(self.nombreDelGrupo,self.nombreDelServicio,self.precio)
 		return DatosServicios
