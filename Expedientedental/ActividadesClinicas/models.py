@@ -33,6 +33,12 @@ class ListadeDiagnosticos(models.Model):
 	def __unicode__(self):
 
 		codigoCie="%s  %s"%(self.CIE10)
+<<<<<<< HEAD
+=======
+
+		codigoCie="%s "%(self.CIE10)
+
+>>>>>>> 17bfec642523457885df05d846a6b8d4d2340040
 		return codigoCie
 
 class Odontograma(models.Model):

@@ -116,6 +116,7 @@ TEMPLATE_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
 )
 
+
 TEMPLATE_CONTEXT_PROCESSORS = (
     # Default items.
     "django.contrib.auth.context_processors.auth",
@@ -137,7 +138,10 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     #"django.contrib.messages.context_processors.messages"
 )
 
+
 INSTALLED_APPS = (
+   #'grappelli',
+   #'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
