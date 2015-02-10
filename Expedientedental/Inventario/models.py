@@ -3,6 +3,14 @@ from altas.models import Medico,Paciente
 from decimal import Decimal
 
 # Create your models here.
+<<<<<<< HEAD
+=======
+
+
+
+
+
+>>>>>>> cbcd5d25ec67dfc9ca2e41cb8aabfb315d4deffa
 
 # Realizar views cuando termine Ray
 class categoriaProducto(models.Model):
@@ -42,7 +50,15 @@ class paquete(models.Model):
 	stock       = models.IntegerField()
 	categorias  = models.ManyToManyField(tipoPaquete,null=True,blank=True)
 	def __unicode__(self):
+<<<<<<< HEAD
 		return self.nombre
 
     	#retornar nombre del paquete para presentar una descripcion en el panel
 
+=======
+
+		codeSalida="%s %s"%(self.ordendeSalida)
+		return codeSalida
+		return self.nombre
+    	#retornar nombre del paquete para presentar una descripcion en el panel
+>>>>>>> cbcd5d25ec67dfc9ca2e41cb8aabfb315d4deffa

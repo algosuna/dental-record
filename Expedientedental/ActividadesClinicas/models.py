@@ -32,7 +32,11 @@ class ListadeDiagnosticos(models.Model):
 	nombreDiagnostico=models.CharField(max_length=30)
 	def __unicode__(self):
 
+<<<<<<< HEAD
 		codigoCie="%s  %s"%(self.codigoDiagnostico,self.nombreDiagnostico)
+=======
+		codigoCie="%s "%(self.CIE10)
+>>>>>>> cbcd5d25ec67dfc9ca2e41cb8aabfb315d4deffa
 		return codigoCie
 
 class Odontograma(models.Model):
@@ -44,7 +48,12 @@ class Odontograma(models.Model):
  	notas=models.TextField()
  	
  	def __unicode__(self):
+<<<<<<< HEAD
  		problema="%s"% (self.problemaDental)
+=======
+ 		
+ 		problema="%s  "% (self.problemaDental)
+>>>>>>> cbcd5d25ec67dfc9ca2e41cb8aabfb315d4deffa
  		return problema
 
 
