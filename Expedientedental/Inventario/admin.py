@@ -1,15 +1,35 @@
-<<<<<<< HEAD
-=======
-
->>>>>>> 17bfec642523457885df05d846a6b8d4d2340040
-from django.contrib import admin
+from django.contrib	import admin
 from Inventario.models import categoriaProducto
-from Inventario.models	import producto
+from Inventario.models import producto
+from Inventario.models import tipoPaquete
+from Inventario.models import paquete
 
+class categoriaProductoAdmin(admin.ModelAdmin):
+	list_display = ('nombre','descripcion',)
+	list_filter = ('nombre','descripcion',)
+	search_fields = ['nombre','descripcion']
+	fields = ('nombre','descripcion',)
 
-admin.site.register(categoriaProducto)
-admin.site.register(producto)
-<<<<<<< HEAD
-=======
+class productoAdmin(admin.ModelAdmin):
+	list_display = ('nombre','precio','stock',)
+	list_filter = ('nombre','precio','stock',)
+	search_fields = ['nombre','precio','stock']
+	fields = ()
 
->>>>>>> 17bfec642523457885df05d846a6b8d4d2340040
+class tipoPaqueteAdmin(admin.ModelAdmin):
+	list_display = ('nombre','descripcion',)
+	list_filter = ('nombre','descripcion',)
+	search_fields = ['nombre','descripcion']
+	fields = ()
+
+class paqueteAdmin(admin.ModelAdmin):
+	list_display = ('nombre','precio','stock',)
+	list_filter = ('nombre','precio','stock',)
+	search_fields = ['nombre','precio','stock']
+	fields = ()
+
+admin.site.register(categoriaProducto,categoriaProductoAdmin)
+admin.site.register(producto,productoAdmin)
+admin.site.register(tipoPaquete,tipoPaqueteAdmin)
+admin.site.register(paquete,paqueteAdmin)
+

@@ -5,8 +5,13 @@ from django.contrib import admin
 
 from ActividadesClinicas.views import interrogatorio
 from ActividadesClinicas.views import odontograma
-#from ActividadesClinicas.views import interrogatorio
-#from ActividadesClinicas.views import Odontograma
+from ActividadesClinicas.views import diagnosticos
+
+from Inventario.views import categoriaProducto
+from Inventario.views import producto
+from Inventario.views import tipoPaquete
+from Inventario.views import paquete
+
 admin.autodiscover()
 
 urlpatterns = patterns('',
@@ -24,4 +29,10 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^interrogatorio/$',interrogatorio),
     url(r'^odontograma/$',odontograma),
+    url(r'^diagnosticos/$',diagnosticos),
+
+    url(r'^categoriaProd/$',categoriaProducto),
+    url(r'^paquete/$',paquete),
+    url(r'^producto/$',producto),
+    url(r'^tipoPaquete/$',tipoPaquete),
 )

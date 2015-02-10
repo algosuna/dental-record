@@ -1,6 +1,7 @@
 from django.db import models
 from datetime import date
 
+
 # Create your models here.
 
 # Modelo de Notas Agregadas
@@ -19,6 +20,8 @@ class Notas(models.Model):
 class Bitacora(models.Model):
 	nombredelProcedimiento = models.CharField(max_length=70)
 	fechayhora = models.DateTimeField(blank=True, null=True)
+	descripcion = models.CharField(max_length=150)
+
 
 	def __unicode__(self):
 
