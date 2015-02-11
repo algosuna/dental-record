@@ -48,12 +48,7 @@ class Paciente(models.Model):
 	ciudad = models.CharField(max_length=30)	
 	nSs= models.CharField(max_length=20)
 	telefono = models.CharField(max_length=20)
-	
 
 	def __unicode__(self):
 		nombreCompleto ="%s %s"%(self.paciente,self.apellidoPaterno)
-<<<<<<< HEAD
 		return nombreCompleto
-=======
-		return nombreCompleto
->>>>>>> cbcd5d25ec67dfc9ca2e41cb8aabfb315d4deffa

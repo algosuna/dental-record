@@ -5,19 +5,15 @@ from django.contrib import admin
 
 from ActividadesClinicas.views import interrogatorio
 from ActividadesClinicas.views import odontograma
-<<<<<<< HEAD
 from ActividadesClinicas.views import diagnosticos
+from ActividadesClinicas.views import datospaciente
 
 from Inventario.views import categoriaProducto
 from Inventario.views import producto
 from Inventario.views import tipoPaquete
 from Inventario.views import paquete
-
-=======
 from cotizacion.views import cotizacion
-#from ActividadesClinicas.views import interrogatorio
-#from ActividadesClinicas.views import Odontograma
->>>>>>> cbcd5d25ec67dfc9ca2e41cb8aabfb315d4deffa
+
 admin.autodiscover()
 
 urlpatterns = patterns('',
@@ -31,20 +27,16 @@ urlpatterns = patterns('',
     url(r'^',include('altas.urls')),
     url(r'^',include('precios.urls')),
     url(r'^',include('bitacora.urls')),
-    
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
     url(r'^interrogatorio/$',interrogatorio),
+    #url(r'^odontograma/$',odontograma),
     url(r'^odontograma/$',odontograma),
-<<<<<<< HEAD
     url(r'^diagnosticos/$',diagnosticos),
-
     url(r'^categoriaProd/$',categoriaProducto),
     url(r'^paquete/$',paquete),
     url(r'^producto/$',producto),
     url(r'^tipoPaquete/$',tipoPaquete),
-=======
     url(r'^cotizacion/$',cotizacion),
->>>>>>> cbcd5d25ec67dfc9ca2e41cb8aabfb315d4deffa
 )

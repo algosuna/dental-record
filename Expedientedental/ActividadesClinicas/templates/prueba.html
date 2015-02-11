@@ -66,7 +66,7 @@
 				<div class="select"></div>
 				<div class="select"></div>
 			</div>
-			<br><br><br>
+
 			</form>
 	<br>  
     <br>
@@ -89,25 +89,28 @@
               text-shadow: 1px 1px 1px #2F3D4A;
               ">
 
-              Fecha y Hora: {{paciente.fechayHora}}</p></td></tr>
+              <DIV>Fecha y Hora:</DIV> {{paciente.fechayHora}}</p></td></tr>
               <tr>
-                <td> Doctor: </td> <td> <p> {{paciente.nombre_doctor}} </p> </td>
+              	<td> Doctor: </td> <td> <p> {{paciente.nombre_doctor}} </p> </td>
                 <td> Paciente: </td><td> <p> {{paciente.nombre_paciente}} </p> </td>
-                <td> Nombre Pieza Dental: </td><td> <p> {{paciente.nombrePiezaDental}} </p> </td>
-                <td> Problema Dental: </td><td> <p> {{paciente.problemaDental}} </p> </td>
+                <td> nombrePiezaDental: </td><td> <p> {{paciente.nombrePiezaDental}} </p> </td>
+                <td> problemaDental: </td><td> <p> {{paciente.problemaDental}} </p> </td>
               </tr>
 
               <tr>
-                <td> Nota: </td><td> <p> {{paciente.notas}} </p> </td>
-                <td> Plan Contrado: </td><td> <p> {{lista.plan_contratado}} </p> </td>
-                 <td> Imagen Odontograma: </td><td> <p> {{paciente.odontograma}} </p> </td>
+              	<td> Sexo: </td><td> <p> {{lista.sexo}} </p> </td>
+              	<td> Plan Contrado: </td><td> <p> {{lista.plan_contratado}} </p> </td>
+                 <td> Estado Civil: </td><td> <p> {{lista.estado_civil}} </p> </td>
                  <td> Telefono: </td><td> <p> {{lista.telefono}} </p> </td>
+              </tr>
+             <tr>
+                 <td> Ocupacion: </td><td> <p> {{lista.ocupacion}} </p> </td>
+                 <td></td><td></td><td></td><td></td><td></td><td></td>
               </tr>
               <tr><td colspan='8' > <hr></td></tr>
             {%endfor%}
       </table>
 
-    <br>
     <br>
  <footer>
         <p>

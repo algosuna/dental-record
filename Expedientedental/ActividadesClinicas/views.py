@@ -21,7 +21,8 @@ def interrogatorio(request):
 		modelform=InterrogatorioForm()
 	return render(request,"interrogatorio.html",{"form":modelform})
 
-def odontograma(request):
+def odontograma(request):    
+    consulta = Odontograma.objects.all()
     if request.method == "POST":
         modelform = OdontogramaForm(request.POST)
         if modelform.is_valid():
@@ -29,7 +30,7 @@ def odontograma(request):
             return redirect("/odontograma/")
     else:
         modelform = OdontogramaForm()
-    return render(request, "odontograma.html", {"form": modelform})
+    return render(request, "odontograma.html", {"form": modelform,'datospaciente': consulta[0:]})
 
 
 def diagnosticos(request):
@@ -41,3 +42,8 @@ def diagnosticos(request):
     else:
         modelform = ListadeDiagnosticosForm()
     return render(request, "diagnosticos.html", {"form": modelform})
+
+def datospaciente(request):
+    consulta = Odontograma.objects.all()
+    return render(request, 'prueba.html', {'datospaciente': consulta[0:]})
+    
