@@ -1,7 +1,16 @@
 from django import forms
-from cotizacion.models import cotizacion
+from .models import Cotizacion
+from django.forms.models import BaseInlineFormSet, inlineformset_factory
+from django.forms.formsets import formset_factory
 
 
-class cotizacionForm(forms.ModelForm):
+class Pacientecotizacion(forms.ModelForm):
 	class Meta:
-		model=cotizacion
+		model=Cotizacion
+		
+
+
+
+class CotizacionForm(forms.ModelForm):
+	class Meta:
+		model=Cotizacion

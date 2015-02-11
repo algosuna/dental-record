@@ -5,7 +5,7 @@ from django.contrib import admin
 
 from ActividadesClinicas.views import interrogatorio
 from ActividadesClinicas.views import odontograma
-from cotizacion.views import cotizacion
+from cotizacion.views import Cotizacion
 #from ActividadesClinicas.views import interrogatorio
 #from ActividadesClinicas.views import Odontograma
 admin.autodiscover()
@@ -27,5 +27,5 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^interrogatorio/$',interrogatorio),
     url(r'^odontograma/$',odontograma),
-    url(r'^cotizacion/$',cotizacion),
+    url(r'^Cotizacion/$',Cotizacion),
 )
