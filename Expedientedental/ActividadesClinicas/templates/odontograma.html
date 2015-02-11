@@ -27,17 +27,29 @@
 			});
 		</script>
 
+<div id='contenedor'>
+ <header>
+             <div id="logo">
+                        <img src="{{STATIC_URL}}img/logo.png" alt="Logo" height="132" width="162">
+                    </div>
+                    <h1>Expediente Medico Dental</h1>
+                    <div id="muela">
+                        <img src="{{STATIC_URL}}img/muela.png" height="112" width="77">
+                    </div>
+                            <div style="clear: both;"></div>
+                    <hr>
+                    <h2>Evaluacion Medica Dental</h2>
+                     <hr>
+           </header>
 
-
-				 <form action="" method="POST">{% csrf_token %}
-			        <table width="80%">
-			         {{ form.as_table }}
-			        </table><br>
-			  <div id="posiscionboton">
-			      <div id="botonsend">
-			        <input type="submit" value="Guardar Formulario">
+				<form action="" method="POST">{% csrf_token %}
+        <table>
+         {{ form.as_table }}
+        </table>
+        <div id="botonsend">
+        <input type="submit" value="Guardar Formulario">
 			      </div>
-			  </div>
+			  
 
 
 						  <div class="diente"><!--diente 1-->
@@ -66,6 +78,6 @@
         </p>
     </footer>
     <br/>
-
 </div>
+
 {% endblock content %}

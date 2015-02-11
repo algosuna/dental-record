@@ -1,5 +1,6 @@
 from django.db import models 
 from altas.models import Medico,Paciente
+from datetime import date
 
 #from django.contrib import models
 
@@ -9,7 +10,7 @@ from altas.models import Medico,Paciente
 class Interrogatorio(models.Model):
 	paciente	= models.ForeignKey(Paciente)
 	medico	= models.ForeignKey(Medico)
-	ultimaVisitaMedico = models.CharField(max_length=100, null=False)
+	ultimaVisitaMedico = models.DateField(blank=True, null=True)
 	medicamentoUltimosDosanios = models.CharField(max_length=100, null=False)
 	alergicoamedicamentos = models.CharField(max_length=100, null=False)
 	alergicoaanestesicos = models.CharField(max_length=100, null=False)
@@ -22,30 +23,37 @@ class Interrogatorio(models.Model):
 
 	def __unicode__(self):
 
-		nombres ="%s %s"% (self.paciente,self.medico)
+		nombres ="%s %s %s %s"% (self.medico,self.paciente,self.observaciones,self.resumenClinico)
 		return nombres
 
 
 class ListadeDiagnosticos(models.Model):
-	CIE10=models.CharField(max_length=15)
-	CDi=models.CharField(max_length=15)
-	nomDi=models.CharField(max_length=30)
+	codigoDiagnostico=models.CharField(max_length=15)
+	nombreDiagnostico=models.CharField(max_length=30)
 	def __unicode__(self):
 
+<<<<<<< HEAD
+		codigoCie="%s  %s"%(self.codigoDiagnostico,self.nombreDiagnostico)
+=======
 		codigoCie="%s "%(self.CIE10)
+>>>>>>> cbcd5d25ec67dfc9ca2e41cb8aabfb315d4deffa
 		return codigoCie
 
 class Odontograma(models.Model):
  	nombre_doctor=models.ForeignKey(Medico)
- 	nombrepaciente=models.ForeignKey(Paciente)
+ 	nombre_paciente=models.ForeignKey(Paciente)
  	fechayHora = models.DateTimeField(blank=True, null=True)
  	nombrePiezaDental=models.CharField(max_length=40)
  	problemaDental=models.ForeignKey(ListadeDiagnosticos)
  	notas=models.TextField()
  	
  	def __unicode__(self):
+<<<<<<< HEAD
+ 		problema="%s"% (self.problemaDental)
+=======
  		
  		problema="%s  "% (self.problemaDental)
+>>>>>>> cbcd5d25ec67dfc9ca2e41cb8aabfb315d4deffa
  		return problema
 
 

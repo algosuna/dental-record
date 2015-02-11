@@ -9,11 +9,10 @@ class notasAdmin(admin.ModelAdmin):
 	fields = ('descripcion','fechayHora',)
 
 class bitacoraAdmin(admin.ModelAdmin):
-	list_display = ('nombredelProcedimiento','fechayhora',)
-	list_filter = ('nombredelProcedimiento','fechayhora',)
-	search_fields = ['nombredelProcedimiento','fechayhora']
-	fields = ('nombredelProcedimiento','fechayhora',)
-
+	list_display = ('nombredelProcedimiento','fechayhora','descripcion',)
+	list_filter = ('nombredelProcedimiento','fechayhora','descripcion',)
+	search_fields = ['nombredelProcedimiento','fechayhora','descripcion']
+	fields = ('nombredelProcedimiento','fechayhora','descripcion',)
 
 admin.site.register(Notas,notasAdmin)
 admin.site.register(Bitacora,bitacoraAdmin)

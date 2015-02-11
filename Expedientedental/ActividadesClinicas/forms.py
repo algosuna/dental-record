@@ -5,8 +5,6 @@ from ActividadesClinicas.models import ListadeDiagnosticos
 from ActividadesClinicas.models import Odontograma
 
 
-
-
 class InterrogatorioForm(forms.ModelForm):
 	class Meta:
 		model=Interrogatorio
@@ -21,13 +19,3 @@ class OdontogramaForm(forms.ModelForm):
 	class Meta:
 		model=Odontograma
 
-		
-
-
-
-
-
-
-
-
-			
