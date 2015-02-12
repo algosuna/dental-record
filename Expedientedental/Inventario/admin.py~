@@ -33,5 +33,6 @@ admin.site.register(categoriaProducto,categoriaProductoAdmin)
 admin.site.register(producto,productoAdmin)
 admin.site.register(tipoPaquete,tipoPaqueteAdmin)
 admin.site.register(paquete,paqueteAdmin)
-
+admin.site.register(categoriaProducto)
+admin.site.register(producto)
 

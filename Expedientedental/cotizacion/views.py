@@ -16,24 +16,11 @@ from django.forms.models import BaseInlineFormSet, inlineformset_factory
 
 
 def Cotizacion(request):
-
-   # Utilizamos la propiedad inline formset para poder ingresar N numero de productos a la cotizacion
-    inline_GrupoServicio = inlineformset_factory(Cotizacion,CotizacionServicios)
-    if request.method=='POST': 
-        # Enviamos los datos del formulario que contiene al cliente y medico
-        formulario_Paciente = PacienteCotizacion(request.POST)
-        if formulario_paciente.is_valid():
-            paciente = formulario_Paciente.save(commit=False)
-            if formulario_medico.is_valid():
-            	medico=formulario_medico.save(commit=False)
-            # Generamos el formulario y instanciamos al cliente 
-            servicios_formset = inline_GrupoServicio(request.POST, instance=paciente)
-            if GrupoServicio_formset.is_valid():
-                paciente.save()
-                medico.save()
-                GrupoServicio_formset.save()
-            return HttpResponseRedirect('/')
+    if request.method=='POST':
+        modelform=CotizacionForm(request.POST)
+        if modelform.is_valid():
+            modelform.save()
+            return redirect('/cotizacion')
     else:
-        formulario_paciente =PacienteCotizacion()
-        GrupoServicio_formset = inline_producto()       
-    return render_to_response('cotizacion.html',{'Paciente':Paciente,'GrupoServicios_formset':GrupoServicios_formset}, context_instance=RequestContext(request))
+        modelform=CotizacionForm()
+    return render(request, "cotizacion.html", {"form": modelform})
