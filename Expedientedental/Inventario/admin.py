@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 from django.contrib import admin
+=======
+from django.contrib	import admin
+>>>>>>> e973b9c48f8c7a717c93d81f839415bc97defd98
 from Inventario.models import categoriaProducto
 from Inventario.models import producto
 from Inventario.models import tipoPaquete
@@ -34,4 +38,7 @@ admin.site.register(producto,productoAdmin)
 admin.site.register(tipoPaquete,tipoPaqueteAdmin)
 admin.site.register(paquete,paqueteAdmin)
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> e973b9c48f8c7a717c93d81f839415bc97defd98

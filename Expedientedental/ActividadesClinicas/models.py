@@ -6,16 +6,15 @@ from datetime import date
 
 # Create your models here.
 
-
 class Interrogatorio(models.Model):
 	paciente	= models.ForeignKey(Paciente)
 	medico	= models.ForeignKey(Medico)
-	ultimaVisitaMedico = models.DateField(blank=True, null=True)
-	medicamentoUltimosDosanios = models.CharField(max_length=100, null=False)
-	alergicoamedicamentos = models.CharField(max_length=100, null=False)
+	ultimaVisitaMedica = models.DateField(blank=True, null=True)
+	medicamentoUltimosDosAnios = models.CharField(max_length=100, null=False)
+	alergicoaMedicamentos = models.CharField(max_length=100, null=False)
 	alergicoaanestesicos = models.CharField(max_length=100, null=False)
-	padeceenfermedades = models.CharField(max_length=100, null=False)
-	enfermedad_trasmision_sexual = models.CharField(max_length=100, null=False)
+	padeceEnfermedades = models.CharField(max_length=100, null=False)
+	enfermedadTrasmisionSexual = models.CharField(max_length=100, null=False)
 	otraEnfermedad = models.CharField(max_length=100, null=False)
 	estaEmbarazada = models.CharField(max_length=100, null=False)
 	observaciones = models.TextField()
@@ -30,21 +29,30 @@ class Interrogatorio(models.Model):
 class ListadeDiagnosticos(models.Model):
 	codigoDiagnostico=models.CharField(max_length=15)
 	nombreDiagnostico=models.CharField(max_length=30)
+	
 	def __unicode__(self):
+<<<<<<< HEAD
 
 		codigoCie="%s "%(self.CIE10)
+=======
+		codigoCie="%s  %s"%(self.codigoDiagnostico,self.nombreDiagnostico)
+>>>>>>> e973b9c48f8c7a717c93d81f839415bc97defd98
 		return codigoCie
 
 class Odontograma(models.Model):
- 	nombre_doctor=models.ForeignKey(Medico)
- 	nombre_paciente=models.ForeignKey(Paciente)
+ 	doctor=models.ForeignKey(Medico)
+ 	paciente=models.ForeignKey(Paciente)
  	fechayHora = models.DateTimeField(blank=True, null=True)
  	nombrePiezaDental=models.CharField(max_length=40)
  	problemaDental=models.ForeignKey(ListadeDiagnosticos)
  	notas=models.TextField()
  	
  	def __unicode__(self):
+<<<<<<< HEAD
  		problema="%s  "% (self.problemaDental)
+=======
+ 		problema="%s %s %s"% (self.doctor,self.paciente,self.fechayHora)
+>>>>>>> e973b9c48f8c7a717c93d81f839415bc97defd98
  		return problema
 
 

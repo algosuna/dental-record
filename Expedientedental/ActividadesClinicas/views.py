@@ -10,6 +10,7 @@ import datetime
 from ActividadesClinicas.models import Interrogatorio
 from ActividadesClinicas.models import Odontograma
 from ActividadesClinicas.models import ListadeDiagnosticos
+from django.db.models import Q
 
 def interrogatorio(request):
 	if request.method == "POST":
@@ -22,6 +23,15 @@ def interrogatorio(request):
 	return render(request,"interrogatorio.html",{"form":modelform})
 
 def odontograma(request):
+    query = request.GET.get('q', '')
+    if query:
+        qset = (
+            Q(paciente__nombre__exact=query)
+        )
+        results = Odontograma.objects.filter(qset).distinct()
+    else:
+        results = []    
+    consulta = Odontograma.objects.all()
     if request.method == "POST":
         modelform = OdontogramaForm(request.POST)
         if modelform.is_valid():
@@ -29,7 +39,8 @@ def odontograma(request):
             return redirect("/odontograma/")
     else:
         modelform = OdontogramaForm()
-    return render(request, "odontograma.html", {"form": modelform})
+    return render(request, "odontograma.html", {"form": modelform,'datospaciente': consulta[0:],"results": results,
+        "query": query})
 
 
 def diagnosticos(request):
@@ -41,3 +52,8 @@ def diagnosticos(request):
     else:
         modelform = ListadeDiagnosticosForm()
     return render(request, "diagnosticos.html", {"form": modelform})
+
+def datospaciente(request):
+    consulta = Odontograma.objects.all()
+    return render(request, 'prueba.html', {'datospaciente': consulta[0:]})
+

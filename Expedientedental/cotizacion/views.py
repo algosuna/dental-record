@@ -10,11 +10,6 @@ from .forms import CotizacionForm
 from django.forms.models import BaseInlineFormSet, inlineformset_factory
 
 
-
-
-
-
-
 def Cotizacion(request):
     if request.method=='POST':
         modelform=CotizacionForm(request.POST)

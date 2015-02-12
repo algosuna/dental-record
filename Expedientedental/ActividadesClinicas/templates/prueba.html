@@ -66,80 +66,58 @@
 				<div class="select"></div>
 				<div class="select"></div>
 			</div>
-			<br><br><br>
+
 			</form>
+	<br>  
+    <br>
 
-
-          <!-- Busqueda del Paciente -->
+<!-- Busqueda del Paciente -->
 
       <form class="." method="GET"><br>
 
-    <label for="q">Buscar Paciente por Nombre: </label>
+    <label for="q">Nombre: </label>
     <input type="text" name="q" value="{{ query|escape }}">
     <br><br>
     <button type="submit" class="btn btn-success">Buscar</button>
   </form>
 
-
+<br><br>
 
 <div align = "center">
 
   {% if query %}
 
-    <div class =  "texto2">Paciente: "{{ query|escape }}"</div>
+    <div class =  "texto2">Resultados para el Nombre: "{{ query|escape }}"</div>
     
     <br><br>
 
     {% if results %}
       
-      <table border='0' width="80%" align='center' >
-           {%for paciente in results%}
+      {% for paciente in results %} <br>
 
-             <tr><td colaspan="2"> <p style="
-
-              background:     rgba(50,118,177,0.9);
-              padding:        2px 5px;
-              -webkit-border-radius: 5px;
-              -moz-border-radius: 5px;
-              border-radius: 5px;
-              text-align:     center;
-              border:         1px solid transparent;
-              border-color:   rgba(40,94,142,0.9);
-              font-weight:    bold ;
-              color:          #fff;
-              text-shadow: 1px 1px 1px #2F3D4A;
-              ">
-
-              Fecha y Hora: {{paciente.fechayHora}}</p></td></tr>
-              <tr>
-                <td> Doctor: </td> <td> <p> {{paciente.doctor}} </p> </td>
-                <td> Paciente: </td><td> <p> {{paciente.paciente}} </p> </td>
-                <td> Nombre Pieza Dental: </td><td> <p> {{paciente.nombrePiezaDental}} </p> </td>
-                <td> Problema Dental: </td><td> <p> {{paciente.problemaDental}} </p> </td>
-              </tr>
-
-              <tr>
-                <td> Nota: </td><td> <p> {{paciente.notas}} </p> </td>
-                <td> Plan Contrado: </td><td> <p> {{lista.plan_contratado}} </p> </td>
-                 <td> Imagen Odontograma: </td><td> <p> {{paciente.odontograma}} </p> </td>
-                 <td> Telefono: </td><td> <p> {{lista.telefono}} </p> </td>
-              </tr>
-              <tr><td colspan='8' > <hr></td></tr>
-            {%endfor%}
-      </table>
+      <table class="table table-hover">
+      <tr>        
+        <th>Nombre</th>
+        <th>Pieza Dental</th>
+        <th>Horario</th>
+      </tr>
+      <tr>        
+        <td>{{ paciente.paciente}}</td>
+        <td>{{ paciente.nombrePiezaDental}}</td>
+        <td>{{ paciente.horario }}</td>
+      </tr>
+    </table>
 
        <br><br> 
+    {% endfor %}
       
     {% else %}
          <br><br> <div class =  "texto2">"No existen Pacientes con ese Nombre"</div>
     {% endif %}
   {% endif %}
 </div>
-<div align="center">
------------------------------------------------------------------------------------------
-</div>    
-    <br><br>
 
+    <br><br>
             <!-- Listado del Paciente -->
     <table border='0' width="80%" align='center' >
            {%for paciente in datospaciente%}
@@ -159,27 +137,28 @@
               text-shadow: 1px 1px 1px #2F3D4A;
               ">
 
-              Fecha y Hora: {{paciente.fechayHora}}</p></td></tr>
+              <DIV>Fecha y Hora:</DIV> {{paciente.fechayHora}}</p></td></tr>
               <tr>
-                <td> Doctor: </td> <td> <p> {{paciente.doctor}} </p> </td>
-                <td> Paciente: </td><td> <p> {{paciente.paciente}} </p> </td>
-                <td> Nombre Pieza Dental: </td><td> <p> {{paciente.nombrePiezaDental}} </p> </td>
-                <td> Problema Dental: </td><td> <p> {{paciente.problemaDental}} </p> </td>
+              	<td> Doctor: </td> <td> <p> {{paciente.nombre_doctor}} </p> </td>
+                <td> Paciente: </td><td> <p> {{paciente.nombre_paciente}} </p> </td>
+                <td> nombrePiezaDental: </td><td> <p> {{paciente.nombrePiezaDental}} </p> </td>
+                <td> problemaDental: </td><td> <p> {{paciente.problemaDental}} </p> </td>
               </tr>
 
               <tr>
-                <td> Nota: </td><td> <p> {{paciente.notas}} </p> </td>
-                <td> Plan Contrado: </td><td> <p> {{lista.plan_contratado}} </p> </td>
-                 <td> Imagen Odontograma: </td><td> <p> {{paciente.odontograma}} </p> </td>
+              	<td> Sexo: </td><td> <p> {{lista.sexo}} </p> </td>
+              	<td> Plan Contrado: </td><td> <p> {{lista.plan_contratado}} </p> </td>
+                 <td> Estado Civil: </td><td> <p> {{lista.estado_civil}} </p> </td>
                  <td> Telefono: </td><td> <p> {{lista.telefono}} </p> </td>
+              </tr>
+             <tr>
+                 <td> Ocupacion: </td><td> <p> {{lista.ocupacion}} </p> </td>
+                 <td></td><td></td><td></td><td></td><td></td><td></td>
               </tr>
               <tr><td colspan='8' > <hr></td></tr>
             {%endfor%}
       </table>
 
-    <br>
-    <br>
-    <br>
     <br>
  <footer>
         <p>
