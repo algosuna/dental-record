@@ -10,11 +10,6 @@ from .forms import CotizacionForm
 from django.forms.models import BaseInlineFormSet, inlineformset_factory
 
 
-
-
-
-
-
 def Cotizacion(request):
 
    # Utilizamos la propiedad inline formset para poder ingresar N numero de productos a la cotizacion

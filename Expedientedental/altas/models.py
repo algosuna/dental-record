@@ -6,7 +6,7 @@ from django.db import models
 
 # Modelo de Medicos
 class Medico(models.Model):
-	medico	= models.CharField(max_length=40)
+	nombre	= models.CharField(max_length=40)
 	apellidoPaterno	= models.CharField(max_length=30)
 	apellidoMaterno	= models.CharField(max_length=30)
 	nombreUsuario = models.CharField(max_length=30)
@@ -24,7 +24,7 @@ class Medico(models.Model):
 	Ciudad = models.CharField(max_length=30)
 
 	def __unicode__(self):
-		nombreCompleto = "%s %s"%(self.medico,self.apellidoPaterno)
+		nombreCompleto = "%s %s"%(self.nombre,self.apellidoPaterno)
 		return nombreCompleto
 
 
@@ -32,9 +32,9 @@ class Medico(models.Model):
 
 class Paciente(models.Model):
  	credencialPaciente = models.CharField(max_length=15)
-	paciente	= models.CharField(max_length=40)
+	nombre	= models.CharField(max_length=40)
 	apellidoPaterno	= models.CharField(max_length=30)
-	ApellidoMaterno	= models.CharField(max_length=30)
+	apellidoMaterno	= models.CharField(max_length=30)
 	sexoopciones=(
 
         ('M', 'M'),
@@ -46,9 +46,9 @@ class Paciente(models.Model):
 	codigoPostal = models.IntegerField(max_length=5)
 	estado = models.CharField(max_length=30)
 	ciudad = models.CharField(max_length=30)	
-	nSs= models.CharField(max_length=20)
+	nSs = models.CharField(max_length=20)
 	telefono = models.CharField(max_length=20)
 
 	def __unicode__(self):
-		nombreCompleto ="%s %s"%(self.paciente,self.apellidoPaterno)
+		nombreCompleto ="%s %s"%(self.nombre,self.apellidoPaterno)
 		return nombreCompleto

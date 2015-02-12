@@ -70,6 +70,54 @@
 			</form>
 	<br>  
     <br>
+
+<!-- Busqueda del Paciente -->
+
+      <form class="." method="GET"><br>
+
+    <label for="q">Nombre: </label>
+    <input type="text" name="q" value="{{ query|escape }}">
+    <br><br>
+    <button type="submit" class="btn btn-success">Buscar</button>
+  </form>
+
+<br><br>
+
+<div align = "center">
+
+  {% if query %}
+
+    <div class =  "texto2">Resultados para el Nombre: "{{ query|escape }}"</div>
+    
+    <br><br>
+
+    {% if results %}
+      
+      {% for paciente in results %} <br>
+
+      <table class="table table-hover">
+      <tr>        
+        <th>Nombre</th>
+        <th>Pieza Dental</th>
+        <th>Horario</th>
+      </tr>
+      <tr>        
+        <td>{{ paciente.paciente}}</td>
+        <td>{{ paciente.nombrePiezaDental}}</td>
+        <td>{{ paciente.horario }}</td>
+      </tr>
+    </table>
+
+       <br><br> 
+    {% endfor %}
+      
+    {% else %}
+         <br><br> <div class =  "texto2">"No existen Pacientes con ese Nombre"</div>
+    {% endif %}
+  {% endif %}
+</div>
+
+    <br><br>
             <!-- Listado del Paciente -->
     <table border='0' width="80%" align='center' >
            {%for paciente in datospaciente%}
