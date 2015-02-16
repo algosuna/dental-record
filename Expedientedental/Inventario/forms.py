@@ -1,26 +1,25 @@
 #encoding: utf-8
 from django import forms
-from Inventario.models import categoriaProducto
-from Inventario.models import producto
-from Inventario.models import tipoPaquete
-from Inventario.models import paquete
+from Inventario.models import Categoria
+from Inventario.models import Producto
 
 
-class CategoriaProdForm(forms.ModelForm):
-	class Meta:
-		model=categoriaProducto
+
+
+
+
+class CategoriaForm(forms.ModelForm):
+       class Meta:
+               model=Categoria
+
+
 
 
 class ProductoForm(forms.ModelForm):
-	class Meta:
-		model=producto
+      class Meta:
+             model=Producto
 
 
-class TipoPaqueteForm(forms.ModelForm):
-	class Meta:
-		model=tipoPaquete
 
 
-class PaqueteForm(forms.ModelForm):
-	class Meta:
-		model=paquete
+

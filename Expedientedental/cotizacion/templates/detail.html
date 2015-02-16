@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Titulo{% endblock %}
+{% block content %}
+	<h1>Titulo</h1>
+	<form action="{{request.path}}" method="post" >
+		{% csrf_token %}
+		{{form.as_ul}}
+		<input style="float:right; margin-top:10px;" type="submit" value="Guardar cotizacion">
+		<div class="cleared"></div>
+	</form>
+
+	<br><br>
+
+	<h2>Productos en esta cotizacion</h2>
+	{% if latest_list %}
+			<table>
+				<tr>
+					<th>Producto</th>
+					<th>Cantidad</th>
+					<th>Precio unitario</th>
+					<th>Precio total</th>
+				</tr>
+			{% for object in latest_list %}
+				<tr>
+					<td><a href="{{request.path}}details/update/{{object.id}}">{{object.producto}}</a></td>
+					<td><a href="{{request.path}}details/update/{{object.id}}">{{object.cantidad}}</a></td>
+					<td><a href="{{request.path}}details/update/{{object.id}}">${{object.producto.precio}}</a></td>
+					<td><a href="{{request.path}}details/update/{{object.id}}">${{object.total}}</a></td>
+				</tr>
+			{% endfor %}
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td style="text-align:right" >${{cotizacion.total}}</td>
+				</tr>
+			</table>
+			<input style="float:right; margin-right:40px;"  type="button" value="Imprimir" onclick="window.open('{{request.path}}printit')">
+			<div class="cleared"></div>
+	{% else %}
+		<p style="text-align:center;" >No haz agregado ningún producto a esta Cotizacion.</p>
+	{% endif %}
+
+	<input style="float:right; margin-right:40px;"  type="button" value="Agregar producto" onclick="location.href='{{request.path}}details/create'">
+	<div class="cleared"></div>
+{% endblock %}
