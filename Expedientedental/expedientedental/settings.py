@@ -3,6 +3,7 @@ from unipath import Path
 BASE_DIR = Path(__file__).ancestor(2)
 
 DEBUG = True
+
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (

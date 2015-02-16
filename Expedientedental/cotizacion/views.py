@@ -10,6 +10,7 @@ from django.forms.models import BaseInlineFormSet, inlineformset_factory
 from django.views.generic.edit import DeleteView
 
 
+<<<<<<< HEAD
 def cotizaciones(request):
     return render_to_response('cotizacion.html',context_instance=RequestContext(request))
 
@@ -91,3 +92,14 @@ def update_printit(request, id_cotizacion = None):
     else:
         form = CotizacionForm(instance = cotizacion)
     return render_to_response('/printit.html',{'form':form, 'cotizacion':cotizacion, 'latest_list': latest_list}, context_instance=RequestContext(request))
+=======
+def Cotizacion(request):
+    if request.method=='POST':
+        modelform=CotizacionForm(request.POST)
+        if modelform.is_valid():
+            modelform.save()
+            return redirect('/cotizacion')
+    else:
+        modelform=CotizacionForm()
+    return render(request, "cotizacion.html", {"form": modelform})
+>>>>>>> f8d12bebf2b6c2fd2b1f0dccb68bc39f3f32d999
