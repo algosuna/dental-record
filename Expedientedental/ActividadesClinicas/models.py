@@ -9,7 +9,7 @@ from datetime import date
 class Interrogatorio(models.Model):
 	paciente	= models.ForeignKey(Paciente)
 	medico	= models.ForeignKey(Medico)
-	ultimaVisitaMedica = models.DateField(blank=True, null=True)
+	ultimaVisitaMedica = models.DateTimeField(auto_now_add=True)
 	medicamentoUltimosDosAnios = models.CharField(max_length=100, null=False)
 	alergicoaMedicamentos = models.CharField(max_length=100, null=False)
 	alergicoaanestesicos = models.CharField(max_length=100, null=False)
@@ -37,7 +37,7 @@ class ListadeDiagnosticos(models.Model):
 class Odontograma(models.Model):
  	doctor=models.ForeignKey(Medico)
  	paciente=models.ForeignKey(Paciente)
- 	fechayHora = models.DateTimeField(blank=True, null=True)
+ 	fechayHora = models.DateTimeField(auto_now_add=True)
  	nombrePiezaDental=models.CharField(max_length=40)
  	problemaDental=models.ForeignKey(ListadeDiagnosticos)
  	notas=models.TextField()

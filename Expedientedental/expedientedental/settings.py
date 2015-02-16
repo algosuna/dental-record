@@ -159,6 +159,7 @@ INSTALLED_APPS = (
     'cotizacion',
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
+    'south',
 )
 
 # A sample logging configuration. The only tangible logging

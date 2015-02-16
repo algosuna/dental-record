@@ -1,0 +1,63 @@
+<html>
+<head>
+	<title>Cotizacion</title>
+	<style type="text/css">
+		body{
+			font-family:Helvetica, Arial, sans-serif;
+			font-size:13px;
+		}
+		h2{
+			font-size:2em;
+			text-align:center;
+		}
+		h3{
+			font-size:1.3em;
+			text-align:right;
+			line-height:1.3em;
+			margin:0;
+		}
+		table, th, td{
+			border:1px solid black;
+		}
+		table{
+			margin:0 auto;
+		}
+		td{
+			text-align: center;
+		}
+	</style>
+</head>
+<body>
+	<div style="width:960px; margin:0 auto;">
+		<h2>Cotización</h2>
+		<h3>Cliente: {{cotizacion.cliente}}</h3>
+		<h3>{{cotizacion.fecha}}</h3>
+		<br>
+		{% if latest_list %}
+				<table>
+					<tr>
+						<th>Producto</th>
+						<th>Cantidad</th>
+						<th>Precio unitario</th>
+						<th>Precio total</th>
+					</tr>
+				{% for object in latest_list %}
+					<tr>
+						<td>{{object.producto}}</td>
+						<td>{{object.cantidad}}</td>
+						<td>${{object.producto.precio}}</td>
+						<td>${{object.total}}</td>
+					</tr>
+				{% endfor %}
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td style="text-align:right" >${{cotizacion.total}}</td>
+					</tr>
+				</table>
+				<div class="cleared"></div>
+		{% endif %}
+	</div>
+</body>
+</html>

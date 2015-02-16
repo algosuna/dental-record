@@ -17,5 +17,5 @@ class ListadeDiagnosticosForm(forms.ModelForm):
 
 class OdontogramaForm(forms.ModelForm):
 	class Meta:
-		model=Odontograma
+		model = Odontograma
 

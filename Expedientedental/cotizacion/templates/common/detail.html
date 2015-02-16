@@ -19,28 +19,15 @@
                          <hr>
             </header>
 
-    <input style="float:right; margin-right:20px;"  type="button" value="Agregart" href="/altas/templates/medicos">
+	<form action="{{request.path}}" method="post" >
+		{% csrf_token %}
+		{{form.as_ul}}
+		<br>
+		<input style="float:left; margin-right:20px;" type="button" value="Borrar" onclick="location.href='{{request.path}}delete'">
+		<input style="float:right; margin-right:20px;" type="submit" value="Guardar">
+		<div class="cleared"></div>
+	</form>
 
-  <div class="cleared"></div>
-  {% if latest_list %}
-      <table>
-        <tr>
-          <th>Cliente</th>
-          <th>Fecha</th>
-          <th>Totals</th>
-        </tr>
-      {% for cotizacion in latest_list %}
-        <tr>
-          <td><a href="update/{{object.id}}">{{cotizacion.paciente}}</a></td>
-          <td><a href="update/{{object.id}}">{{cotizacion.fecha}}</a></td>
-          <td><a href="update/{{object.id}}">${{cotizacion.total}}</a></td>
-        </tr>
-      {% endfor %}
-      </table>
-  {% else %}
-    <!--<p>No hay {{request.path}} en la base de datos.</p> -->
-    <p>No hay Cotizaciones en la base de datos.</p> 
-  {% endif %}
 
     <br>
  <footer>
