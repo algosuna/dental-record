@@ -26,7 +26,7 @@ urlpatterns = patterns('',
     url(r'^',include('bitacora.urls')),
 
     #url(r'^',include('cotizacion.urls')),
-   # url(r'^cotizacion/', include('cotizacion.urls')),
+    url(r'^cotizacion/', include('cotizacion.urls')),
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
@@ -34,7 +34,7 @@ urlpatterns = patterns('',
     url(r'^interrogatorio/$',interrogatorio),
     url(r'^odontograma/$',odontograma),
     url(r'^diagnosticos/$',diagnosticos),
-    url(r'^cotizacion/$',Cotizacion),
+    
 
    # url(r'^detail/$',Cotizacion),
     #url(r'^categoriaProd/$',categoriaProducto),

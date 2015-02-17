@@ -2,9 +2,10 @@ from django.db import models
 from altas.models import Medico,Paciente
 from precios.models import PrecioServicio
 from precios.models import GrupoServicio
-
-from decimal import Decimal
 from precios.models import GrupoPrecios
+from decimal import Decimal
+
+
 
 class Cotizacion(models.Model):
 	fecha = models.DateTimeField(auto_now_add = True)
@@ -12,7 +13,7 @@ class Cotizacion(models.Model):
 	medico = models.ForeignKey(Medico)
 
 	def __unicode__(self):
-		return '['+str(self.fecha.day)+'/'+str(self.fecha.month)+'/'+str(self.fecha.year)+']  '+self.paciente.nombre+' '+self.medico.nombre
+		return '['+str(self.fecha.day)+'/'+str(self.fecha.month)+'/'+str(self.fecha.year)+']  '+self.paciente.nombre+' '+self.paciente.apellidoPaterno
 	
 	def total(self):
 		cotizaciondetails = CotizacionDetail.objects.filter(cotizacion__id__exact = self.id)

@@ -134,14 +134,14 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     #"django.core.context_processors.media",
     "django.core.context_processors.static",
     #"django.core.context_processors.tz",
-    #"django.core.context_processors.request",
+    "django.core.context_processors.request",
     #"django.contrib.messages.context_processors.messages"
 )
 
 
 INSTALLED_APPS = (
-   #'grappelli',
-   #'django.contrib.admin',
+    'suit',
+    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -158,7 +158,7 @@ INSTALLED_APPS = (
     'Inventario',
     'cotizacion',
     'paquete',
-    'south',
+    
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
     'south',

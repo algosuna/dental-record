@@ -1,30 +1,22 @@
-{% extends "base.html" %
-
-{% block title %}{{request.path}}{% endblock %}
-{% block content %}
-	<h1>{{request.path}}</h1>
-	<input style="float:right; margin-right:20px;"  type="button" value="Agregar" onclick="location.href='{{request.path}}create'">
+{% extends "base.html" %}
 {%load static from staticfiles %}
-
-<!DOCTYPE Html=5>
 {% block content %}
+<div id='contenedor'>
+ <header>
+             <div id="logo">
+                        <img src="{{STATIC_URL}}img/logo.png" alt="Logo" height="132" width="162">
+                    </div>
+                    <h1>Expediente Medico Dental</h1>
+                    <div id="muela">
+                        <img src="{{STATIC_URL}}img/muela.png" height="112" width="77">
+                    </div>
+                            <div style="clear: both;"></div>
+                    <hr>
+                    <h2>Cotizaciones</h2>
+                     <hr>
+           </header>
 
-  <div id="contenedor">
-      <header>
-                 <div id="logo">
-                            <img src="{{STATIC_URL}}img/logo.png" alt="Logo" height="132" width="162">
-                        </div>
-                        <h1>Expediente Medico Dental</h1>
-                        <div id="muela">
-                            <img src="{{STATIC_URL}}img/muela.png" height="112" width="77">
-                        </div>
-                                <div style="clear: both;"></div>
-                        <hr>
-                        <h2>cotizacion</h2>
-                         <hr>
-            </header>
-
-	<input style="float:right; margin-right:20px;"  type="button" value="Agregar" onclick="location.href='{{request.path}}create'">
+	<input style="float:right; margin-right:20px;"  type="button" value="Agregar" onclick="location.href='{{request.path}}create/'">
 	
 
 	<div class="cleared"></div>
@@ -33,28 +25,19 @@
 				<tr>
 					<th>Cliente</th>
 					<th>Fecha</th>
-					<th>Totals</th>
-				</tr>
-			{% for object in latest_list %}
-				<tr>
-					<td><a href="update/{{object.id}}">{{object.cliente}}</a></td>
-
 					<th>Total</th>
 				</tr>
 			{% for object in latest_list %}
 				<tr>
-					<td><a href="update/{{object.id}}">{{object.paciente}}</a></td>
-
-					<td><a href="update/{{object.id}}">{{object.fecha}}</a></td>
-					<td><a href="update/{{object.id}}">${{object.total}}</a></td>
+					<td><a href="update/{{object.id}}/">{{object.paciente}}</a></td>
+					<td><a href="update/{{object.id}}/">{{object.fecha}}</a></td>
+					<td><a href="update/{{object.id}}/">${{object.total}}</a></td>
 				</tr>
 			{% endfor %}
 			</table>
 	{% else %}
-		<p>No hay {{request.path}} en la base de datos.</p>
+		<p>No hay Cotizaciones en la base de datos.</p>
 	{% endif %}
-
-
 	<br>
  <footer>
         <p>
@@ -62,7 +45,6 @@
         </p>
     </footer>
     <br/>
-
 </div>
 
 {% endblock %}

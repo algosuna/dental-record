@@ -4,20 +4,9 @@ from django.template import RequestContext
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response, render, redirect
 import datetime
-from cotizacion.models import Cotizacion
-from cotizacion.models import CotizacionDetail
-from .forms import CotizacionForm
-from .forms import CotizacionDetailForm
+
 from cotizacion.models import Cotizacion, CotizacionDetail
 from cotizacion.forms import CotizacionForm, CotizacionDetailForm
-from django.forms.models import BaseInlineFormSet, inlineformset_factory
-from django.views.generic.edit import DeleteView
-
-
-
-
-def Cotizacion(request):
-    return render_to_response('cotizacion.html',context_instance=RequestContext(request))
 
 def create(request):
     #when POST
@@ -57,7 +46,7 @@ def details_create(request, id_cotizacion):
         form = CotizacionDetailForm(request.POST, instance = cotizaciondetail)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/update/'+id_cotizacion)
+            return HttpResponseRedirect('/cotizacion/update/'+id_cotizacion+'/')
         else:
             return HttpResponse('no fue posible hacer la operacion')
     #when NOT POST
@@ -74,7 +63,7 @@ def details_update(request, id_cotizacion, id_cotizaciondetail):
         form = CotizacionDetailForm(request.POST, instance = cotizaciondetail)
         if form.is_valid():
             form.save()
-        return HttpResponseRedirect('update/'+id_cotizacion)
+        return HttpResponseRedirect('/cotizacion/update/'+id_cotizacion+'/')
     #when NOT POST
     else:
         cotizaciondetail = CotizacionDetail.objects.get(id = id_cotizaciondetail)
