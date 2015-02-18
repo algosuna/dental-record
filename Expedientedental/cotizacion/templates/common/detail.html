@@ -1,7 +1,5 @@
 {% extends "base.html" %}
 {%load static from staticfiles %}
-
-<!DOCTYPE Html=5>
 {% block content %}
 
   <div id="contenedor">
@@ -15,16 +13,17 @@
                         </div>
                                 <div style="clear: both;"></div>
                         <hr>
-                        <h2>cotizacion</h2>
+                        <h2>cotizacion holis</h2>
                          <hr>
             </header>
+
 
 	<form action="{{request.path}}" method="post" >
 		{% csrf_token %}
 		{{form.as_ul}}
 		<br>
 		<input style="float:left; margin-right:20px;" type="button" value="Borrar" onclick="location.href='{{request.path}}delete'">
-		<input style="float:right; margin-right:20px;" type="submit" value="Guardar">
+		<input style="float:right; margin-right:20px;" type="submit" value="Guardar5">
 		<div class="cleared"></div>
 	</form>
 

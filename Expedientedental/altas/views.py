@@ -17,7 +17,7 @@ def datosmedico_view(request):
 		if form.is_valid():
 			add = form.save(commit=False)
 			add.save()
-			return HttpResponseRedirect('/medicos')
+			return HttpResponseRedirect('/medicos/')
 	else:
 		form=MedicoForm()
 	ctx = {'form':form}
@@ -29,7 +29,7 @@ def datospaciente_view(request):
 		if form.is_valid():
 			add = form.save(commit=False)
 			add.save()
-			return HttpResponseRedirect('/pacientes')
+			return HttpResponseRedirect('/pacientes/')
 	else:
 		form=PacienteForm()
 	ctx = {'form':form}

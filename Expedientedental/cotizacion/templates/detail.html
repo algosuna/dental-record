@@ -1,31 +1,21 @@
 {% extends "base.html" %}
-<<<<<<< HEAD
-
-{% block title %}Titulo{% endblock %}
-{% block content %}
-	<h1>Titulo</h1>
-=======
 {%load static from staticfiles %}
-
-<!DOCTYPE Html=5>
 {% block content %}
+<div id='contenedor'>
+ <header>
+             <div id="logo">
+                        <img src="{{STATIC_URL}}img/logo.png" alt="Logo" height="132" width="162">
+                    </div>
+                    <h1>Expediente Medico Dental</h1>
+                    <div id="muela">
+                        <img src="{{STATIC_URL}}img/muela.png" height="112" width="77">
+                    </div>
+                            <div style="clear: both;"></div>
+                    <hr>
+                    <h2>Cotizaciones</h2>
+                     <hr>
+           </header>
 
-  <div id="contenedor">
-      <header>
-                 <div id="logo">
-                            <img src="{{STATIC_URL}}img/logo.png" alt="Logo" height="132" width="162">
-                        </div>
-                        <h1>Expediente Medico Dental</h1>
-                        <div id="muela">
-                            <img src="{{STATIC_URL}}img/muela.png" height="112" width="77">
-                        </div>
-                                <div style="clear: both;"></div>
-                        <hr>
-                        <h2>cotizacion</h2>
-                         <hr>
-            </header>
-
->>>>>>> 154c6b5070238634cd3200583e0caa7a83d57c56
 	<form action="{{request.path}}" method="post" >
 		{% csrf_token %}
 		{{form.as_ul}}
@@ -35,22 +25,14 @@
 
 	<br><br>
 
+
+<!---   Para agregar Servicios rapidamente al momento de Registrar al Cliente -->
+
+
 	<h2>Productos en esta cotizacion</h2>
 	{% if latest_list %}
 			<table>
 				<tr>
-<<<<<<< HEAD
-					<th>Producto</th>
-					<th>Cantidad</th>
-					<th>Precio unitario</th>
-					<th>Precio total</th>
-				</tr>
-			{% for object in latest_list %}
-				<tr>
-					<td><a href="{{request.path}}details/update/{{object.id}}">{{object.producto}}</a></td>
-					<td><a href="{{request.path}}details/update/{{object.id}}">{{object.cantidad}}</a></td>
-					<td><a href="{{request.path}}details/update/{{object.id}}">${{object.producto.precio}}</a></td>
-=======
 					<th>Servicio</th>
 					<th>Grupo</th>
 					<th>Costo</th>
@@ -58,11 +40,11 @@
 				</tr>
 			{% for object in latest_list %}
 				<tr>
-					<td><a href="{{request.path}}details/update/{{object.id}}">{{object.nombreDelServicio}}</a></td>
-					<td><a href="{{request.path}}details/update/{{object.id}}">{{object.nombreDelGrupo}}</a></td>
-					<td><a href="{{request.path}}details/update/{{object.id}}">${{object.precio}}</a></td>
->>>>>>> 154c6b5070238634cd3200583e0caa7a83d57c56
-					<td><a href="{{request.path}}details/update/{{object.id}}">${{object.total}}</a></td>
+					<td><a href="{{request.path}}details/update/{{object.id}}/">{{object.nombreDelServicio}}</a></td>
+					<td><a href="{{request.path}}details/update/{{object.id}}/">{{object.nombreDelGrupo}}</a></td>
+					<td><a href="{{request.path}}details/update/{{object.id}}/">${{object.precio}}</a></td>
+
+					<td><a href="{{request.path}}details/update/{{object.id}}/">${{object.total}}</a></td>
 				</tr>
 			{% endfor %}
 				<tr>
@@ -75,17 +57,13 @@
 			<input style="float:right; margin-right:40px;"  type="button" value="Imprimir" onclick="window.open('{{request.path}}printit')">
 			<div class="cleared"></div>
 	{% else %}
-<<<<<<< HEAD
-		<p style="text-align:center;" >No haz agregado ningún producto a esta Cotizacion.</p>
-=======
-		<p style="text-align:center;" >No haz agregado ningún producto a esta compra.</p>
->>>>>>> 154c6b5070238634cd3200583e0caa7a83d57c56
+
+		<p style="text-align:center;"> No haz agregado ningún producto a esta Cotizacion.</p>
+
 	{% endif %}
 
-	<input style="float:right; margin-right:40px;"  type="button" value="Agregar producto" onclick="location.href='{{request.path}}details/create'">
+	<input style="float:right; margin-right:40px;"  type="button" value="Agregar producto" onclick="location.href='{{request.path}}details/create/'">
 	<div class="cleared"></div>
-<<<<<<< HEAD
-=======
 
 	<br>
  <footer>
@@ -96,5 +74,5 @@
     <br/>
 
 </div>
->>>>>>> 154c6b5070238634cd3200583e0caa7a83d57c56
+
 {% endblock %}
