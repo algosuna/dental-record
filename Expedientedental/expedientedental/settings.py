@@ -32,7 +32,7 @@ ALLOWED_HOSTS = []
 # timezone as the operating system.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
-TIME_ZONE = 'America/Chicago'
+TIME_ZONE = 'America/Tijuana'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
@@ -111,6 +111,7 @@ WSGI_APPLICATION = 'expedientedental.wsgi.application'
 
 TEMPLATE_DIRS = (
     #os.path.join(os.path.dirname(__file__),'templates',
+    'templates/'
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -134,14 +135,14 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     #"django.core.context_processors.media",
     "django.core.context_processors.static",
     #"django.core.context_processors.tz",
-    #"django.core.context_processors.request",
+    "django.core.context_processors.request",
     #"django.contrib.messages.context_processors.messages"
 )
 
 
 INSTALLED_APPS = (
-   #'grappelli',
-   #'django.contrib.admin',
+    'suit',
+    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -158,10 +159,12 @@ INSTALLED_APPS = (
     'Inventario',
     'cotizacion',
     'paquete',
-    'south',
+    'crispy_forms',
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
 )
+
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

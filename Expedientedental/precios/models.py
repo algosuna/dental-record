@@ -28,7 +28,7 @@ class GrupoPrecios(models.Model):
 class GrupoServicio(models.Model):
 	nombreDelGrupo	= models.ForeignKey(GrupoPrecios)
 	nombreDelServicio = models.ForeignKey(PrecioServicio)
-	precio = models.DecimalField(max_digits = 5, decimal_places = 2)
+	precio = models.DecimalField(max_digits = 8, decimal_places = 2)
 
 	def __unicode__(self):
 		DatosServicios = "%s %s %s"%(self.nombreDelGrupo,self.nombreDelServicio,self.precio)
