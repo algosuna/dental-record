@@ -15,6 +15,7 @@
 
 	<script src="{{ STATIC_URL }}js/script.js"></script-->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="{% static 'css/local.css'%}">
 	
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -39,13 +40,17 @@
 				<a href="/" class="navbar-brand">Expediente Dental</a>
 			</div>
 
-			<div class="collapse navbar-collapse" id="navigation">
+			<div class="collapse navbar-collapse pull-right" id="navigation">
 
-				<ul>
+				<ul class="nav navbar-nav">
 					<li><a href="/">Home</a></li>
-					<li><a href="/paciente">Alta de Pacientes</a></li>
-					<li><a href="/lista">Lista de Pacientes</a></li>
-					<li><a href="/main">Detalles de Pacientes Registrados</a></li>
+					<li><a href="#" class="dropdown-toggle" data-toggle="dropdown">Pacientes<span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="/paciente">Alta de Pacientes</a></li>
+						<li><a href="/lista">Lista de Pacientes</a></li>
+						<li><a href="/main">Detalles de Pacientes Registrados</a></li>
+					</ul>
+					</li>
 					<li><a href="#" class="dropdown-toggle" data-toggle="dropdown">Interrogatorio Dental <span class="caret"></span></a>
 					<ul class="dropdown-menu">
 						<li><a href="/interrogatorio">General</a></li>
@@ -63,62 +68,28 @@
 			</div><!-- end .navbar-collapse -->
 		</div><!-- end .container -->
 	</nav><!-- end .navbar -->
-	
-
-    <!-- <div id='cssmenu'>
-        <ul>
-            <li><a href='/paciente'>Alta de Pacientes</a></li>
-           <li><a href='/lista'>Lista de Pacientes</a></li>
-            <li><a href='/main'>Detalles de Pacientes Registrados</a></li>
-    
-            <li class='active has-sub'><a href="#">Interrogatorio Dental</a>
-              <ul>
-                 <li class='has-sub'><a href='/interrogatorio'>General</a> </li>
-                 <li class='has-sub'><a href='/interrogatorio'>Cirugia Maxilofacial</a> </li>
-                 <li class='has-sub'><a href='/interrogatorio'>Endodoncia</a> </li>
-                 <li class='has-sub'><a href='/interrogatorio'>Ortodoncia</a> </li>
-                 <li class='has-sub'><a href='/interrogatorio'>Periodoncia</a> </li>
-              </ul>
-           </li>
-    
-    
-            <li><a href='/odontograma'>Odontogrma</a></li>
-            <li><a href='#'>Plan de Tratamiento</a></li>
-            <li><a href='#'>Historial de Procedimientos</a></li>
-    
-    
-    
-    
-    <li class='active has-sub'><a href="/lista ">Interrogatorio Dental</a>
-              <ul>
-                 <li class='has-sub'><a href='interrogatorio'>General</a>
-                    <ul>
-                       <li><a href='#'>Sub Product</a></li>
-                       <li><a href='#'>Sub Product</a></li>
-                    </ul>
-                 </li>
-                 <li class='has-sub'><a href='#'>Product 2</a>
-                    <ul>
-                       <li><a href='#'>Sub Product</a></li>
-                       <li><a href='#'>Sub Product</a></li>
-                    </ul>
-                 </li>
-              </ul>
-           </li>
-    
-        </ul>
-    </div> -->
 
 	{% endblock menu%}
+
+	<div class="page-header container clearfix">
+		<img src="{{STATIC_URL}}img/logo.png" alt="Logo" height="132" width="162" class="pull-left">
+		<img src="{{STATIC_URL}}img/muela.png" height="112" width="77">
+	</div>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-10 col-md-offset-1">
 
 	{% block content %}
 	{% endblock content%}
 
-    {%block footer%}
-    {%endblock footer%}
+			</div>
+		</div><!-- end .row -->
+	</div>
 
     <footer>
     	<div class="container">
+    		<p class="alert alert-danger">Derivado del contrato de prestacion de Servicios Profesionales celebradoentre Usted y MediExcel Health Plan, le manifestamos que en terminos de laLey Federal de Proteccion de Datos Personales en Posesion de los Particulares, debera apegarse al Aviso de Privacidad que MediExcel HealthPlan comprometio a los titulares respecto de su informacion Personal, mismoque anexamos para su conocimiento y observacion. Aviso De Confidencialidad de Datos Personales MediExcel Health Plan, condomicilio Fiscal en Av. Paseo de los Heroes No. 2507 Zona Rio Tijuana, B.C. 22320, establece que, conforme lo marca la Ley Federal de Proteccion de Datos Personales en Posesion de los Particulares, todos aquellos datos entregados y obtenidos con motivo del contrato de servicios realizado con la empresa, seran utilizados unicamente para la operacion y administracion de su Plan de Salud, garantizando que sus datos personales no seran utilizados para fines distintos a lo indicado previamente, ni seran transferidos a terceros, obligandose MediExcel Health Plan a salva guardar la privacidad delos mismos. Usted tiene derecho a limitar el uso de divulgacion de sus datos personales,rectificarlos y cancelarlos mediante solicitud por escrito a nuestrodepartamento de atencion a asegurados o con el Registro Unico de Usuarios(REUS) Todo cambio al presente aviso por MediExcel Health Plan sera notificado en nuestro portal www.mediexcelHP.com</p>
     		<p class="text-muted">Gracias por usar el Sistema Dental MediExcel Health Plan.</p>
     	</div>
     </footer>
