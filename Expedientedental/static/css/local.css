@@ -1,0 +1,21 @@
+/*
+
+local css
+
+*/
+
+body {
+	padding-top: 70px;
+}
+
+nav.navbar + .page-header {
+	margin-top: 10px;
+}
+
+footer {
+	margin-top: 40px;
+}
+
+footer .alert {
+	text-align: justify;
+}
