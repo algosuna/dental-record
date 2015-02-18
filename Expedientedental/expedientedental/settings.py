@@ -96,7 +96,6 @@ TEMPLATE_LOADERS = (
 )
 
 MIDDLEWARE_CLASSES = (
-    'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -135,14 +134,14 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     #"django.core.context_processors.media",
     "django.core.context_processors.static",
     #"django.core.context_processors.tz",
-    #"django.core.context_processors.request",
+    "django.core.context_processors.request",
     #"django.contrib.messages.context_processors.messages"
 )
 
 
 INSTALLED_APPS = (
-   #'grappelli',
-   #'django.contrib.admin',
+    'suit',
+    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -158,8 +157,11 @@ INSTALLED_APPS = (
     'ActividadesClinicas',
     'Inventario',
     'cotizacion',
+    'paquete',
+    
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
+    'south',
 )
 
 # A sample logging configuration. The only tangible logging

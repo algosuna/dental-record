@@ -50,10 +50,4 @@ class Paciente(models.Model):
 	telefono = models.CharField(max_length=20)
 
 	def __unicode__(self):
-<<<<<<< HEAD
-		nombreCompleto ="%s %s"%(self.paciente,self.apellidoPaterno)
-
-=======
-		nombreCompleto ="%s %s"%(self.nombre,self.apellidoPaterno)
->>>>>>> e973b9c48f8c7a717c93d81f839415bc97defd98
-		return nombreCompleto
+		return self.nombre+' '+self.apellidoPaterno

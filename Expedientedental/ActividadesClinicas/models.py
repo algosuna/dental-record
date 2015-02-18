@@ -9,7 +9,7 @@ from datetime import date
 class Interrogatorio(models.Model):
 	paciente	= models.ForeignKey(Paciente)
 	medico	= models.ForeignKey(Medico)
-	ultimaVisitaMedica = models.DateField(blank=True, null=True)
+	ultimaVisitaMedica = models.DateTimeField(auto_now_add=True)
 	medicamentoUltimosDosAnios = models.CharField(max_length=100, null=False)
 	alergicoaMedicamentos = models.CharField(max_length=100, null=False)
 	alergicoaanestesicos = models.CharField(max_length=100, null=False)
@@ -31,28 +31,20 @@ class ListadeDiagnosticos(models.Model):
 	nombreDiagnostico=models.CharField(max_length=30)
 	
 	def __unicode__(self):
-<<<<<<< HEAD
-
-		codigoCie="%s "%(self.CIE10)
-=======
 		codigoCie="%s  %s"%(self.codigoDiagnostico,self.nombreDiagnostico)
->>>>>>> e973b9c48f8c7a717c93d81f839415bc97defd98
 		return codigoCie
 
 class Odontograma(models.Model):
  	doctor=models.ForeignKey(Medico)
  	paciente=models.ForeignKey(Paciente)
- 	fechayHora = models.DateTimeField(blank=True, null=True)
+ 	fechayHora = models.DateTimeField(auto_now_add=True)
  	nombrePiezaDental=models.CharField(max_length=40)
  	problemaDental=models.ForeignKey(ListadeDiagnosticos)
  	notas=models.TextField()
  	
  	def __unicode__(self):
-<<<<<<< HEAD
- 		problema="%s  "% (self.problemaDental)
-=======
+ 		
  		problema="%s %s %s"% (self.doctor,self.paciente,self.fechayHora)
->>>>>>> e973b9c48f8c7a717c93d81f839415bc97defd98
  		return problema
 
 

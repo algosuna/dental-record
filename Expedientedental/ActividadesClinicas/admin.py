@@ -16,9 +16,9 @@ class ListadeDiagnosticosAdmin(admin.ModelAdmin):
 	fields = ()
 
 class OdontogramaAdmin(admin.ModelAdmin):
-	list_display = ('problemaDental',)
-	list_filter = ('problemaDental',)
-	search_fields = ['problemaDental']
+	list_display = ('doctor','paciente','problemaDental',)
+	list_filter = ('doctor','paciente','problemaDental',)
+	search_fields = ['doctor','paciente','problemaDental']
 	fields = ()
 
 admin.site.register(Interrogatorio,InterrogatorioAdmin)
