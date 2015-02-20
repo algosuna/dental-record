@@ -1,6 +1,5 @@
 from django.contrib	import admin
-from altas.models import Medico
-from altas.models import Paciente
+from altas.models import Medico, Paciente
 
 class medicoAdmin(admin.ModelAdmin):
 	list_display = ('nombre','apellidoPaterno',)

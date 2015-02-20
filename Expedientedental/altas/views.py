@@ -4,12 +4,10 @@
 from django.template.loader import get_template
 from django.template import RequestContext
 from django.http import Http404, HttpResponse, HttpResponseRedirect
-from .forms import MedicoForm
-from .forms import PacienteForm
+from .forms import MedicoForm, PacienteForm
 from django.shortcuts import render_to_response, render, redirect
 import datetime
-from altas.models import Medico
-from altas.models import Paciente
+from altas.models import Medico, Paciente
 
 def datosmedico_view(request):
 	if request.method=='POST':

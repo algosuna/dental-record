@@ -8,15 +8,14 @@ from .forms import NotasForm
 from .forms import BitacoraForm
 from django.shortcuts import render_to_response, render, redirect
 import datetime
-from bitacora.models import Notas
-from bitacora.models import Bitacora
+from bitacora.models import Notas, Bitacora
 
 def notas_view(request):
 	if request.method=='POST':
 		modelform=NotasForm(request.POST)
 		if modelform.is_valid():
 			modelform.save()
-			return redirect('/notas')
+			return redirect('/notas/')
 	else:
 		modelform=NotasForm()
 	return render(request, "notas.html", {"form": modelform})
@@ -27,7 +26,7 @@ def bitacoras_view(request):
 		if form.is_valid():
 			add = form.save(commit=False)
 			add.save()
-			return HttpResponseRedirect('/bitacoras')
+			return HttpResponseRedirect('/bitacoras/')
 	else:
 		form=BitacoraForm()
 	ctx = {'form':form}
