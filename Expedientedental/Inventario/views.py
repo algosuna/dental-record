@@ -2,13 +2,20 @@
 from django.template.loader import get_template
 from django.template import RequestContext
 from django.http import Http404, HttpResponse
-from .forms import ProductoForm
 from django.shortcuts import render_to_response, render, redirect
+from .forms import ProductoForm, CategoriaForm
+from Inventario.models import Categoria, Producto
 import datetime
-from Inventario.models import Categoria
-from Inventario.models import Producto
 
-
+def categoria(request):
+    if request.method == "POST":
+        modelform = CategoriaForm(request.POST)
+        if modelform.is_valid():
+            modelform.save()
+            return redirect("/categorias/")
+    else:
+        modelform = CategoriaForm()
+    return render(request, "categoriaProd.html", {"form": modelform})
 
 
 
@@ -21,7 +28,4 @@ def producto(request):
     else:
         modelform = ProductoForm()
     return render(request, "producto.html", {"form": modelform})
-
-
-
 

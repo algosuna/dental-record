@@ -7,10 +7,6 @@ from Inventario.models import Producto
 from crispy_forms.layout import (Layout,Fieldset,HTML,Field,ButtonHolder,Submit)
 
 
-
-
-
-
 class CategoriaForm(forms.ModelForm):
        class Meta:
                model=Categoria
@@ -33,8 +29,6 @@ def __init__(self, *args , **kargs):
 
 		)
 		self.fields['nombre'].label='Nombre Categoria'	
-
-
 
 
 class ProductoForm(forms.ModelForm):

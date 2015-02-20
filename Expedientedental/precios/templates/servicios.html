@@ -1,22 +1,9 @@
-{% extends "base.html" %}
+{% extends "base1.html" %}
 {%load static from staticfiles %}
 
-<!DOCTYPE Html=5>
 {% block content %}
-<div id='contenedor'>
- <header>
-             <div id="logo">
-                        <img src="{{STATIC_URL}}img/logo.png" alt="Logo" height="132" width="162">
-                    </div>
-                    <h1> Expediente Medico Dental </h1>
-                    <div id="muela">
-                        <img src="{{STATIC_URL}}img/muela.png" height="112" width="77">
-                    </div>
-                            <div style="clear: both;"></div>
-                    <hr>
-                    <h2>Registro de Servicios </h2>
-                     <hr>
-           </header>
+
+    <h2 class="page-header">Registrar Servicios</h2>
 
    <form action="" method="POST">{% csrf_token %}
         <table>
@@ -25,15 +12,6 @@
         <div id="botonsend">
         <input type="submit" value="Guardar Formulario">
         </div>
-        <br>
     </form>
-     <footer>
-        <p>
-            Derivado del contrato de prestacion de Servicios Profesionales celebradoentre Usted y MediExcel Health Plan, le manifestamos que en terminos de laLey Federal de Proteccion de Datos Personales en Posesion de los Particulares, debera apegarse al Aviso de Privacidad que MediExcel HealthPlan comprometio a los titulares respecto de su informacion Personal, mismoque anexamos para su conocimiento y observacion. Aviso De Confidencialidad de Datos Personales MediExcel Health Plan, condomicilio Fiscal en Av. Paseo de los Heroes No. 2507 Zona Rio Tijuana, B.C. 22320, establece que, conforme lo marca la Ley Federal de Proteccion de Datos Personales en Posesion de los Particulares, todos aquellos datos entregados y obtenidos con motivo del contrato de servicios realizado con la empresa, seran utilizados unicamente para la operacion y administracion de su Plan de Salud, garantizando que sus datos personales no seran utilizados para fines distintos a lo indicado previamente, ni seran transferidos a terceros, obligandose MediExcel Health Plan a salva guardar la privacidad delos mismos. Usted tiene derecho a limitar el uso de divulgacion de sus datos personales,rectificarlos y cancelarlos mediante solicitud por escrito a nuestrodepartamento de atencion a asegurados o con el Registro Unico de Usuarios(REUS) Todo cambio al presente aviso por MediExcel Health Plan sera notificado en nuestro portal www.mediexcelHP.com
-        </p>
-    </footer>
-    <br/>
-</div>
-
 
 {% endblock content %}

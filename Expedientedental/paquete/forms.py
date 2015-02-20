@@ -1,6 +1,5 @@
 from django import forms
-from paquete.models import Paquete
-from paquete.models import ContenidoPaquete
+from paquete.models import Paquete, EntryPaquete
 
 
 
@@ -8,7 +7,8 @@ class PaqueteForm(forms.ModelForm):
 	class Meta:
 		model=Paquete
 
-class EntryPaqueteForm(form.ModelForm):
+
+class EntryPaqueteForm(forms.ModelForm):
 	class Meta:
-		model=ContenidoPaquete
+		model=EntryPaquete
 		

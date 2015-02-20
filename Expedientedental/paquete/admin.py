@@ -1,20 +1,20 @@
 from django.contrib import admin
-from paquete.models import Paquete
-from paquete.models import EntryPaquete
-from Inventario.views import *
-
-
+from paquete.models import Paquete, EntryPaquete
 
 
 class PaqueteAdmin(admin.ModelAdmin):
-	class Meta:
-			model=Paquete
+	list_display = ('nombre','descripcion',)
+	list_filter = ('nombre','descripcion',)
+	search_fields = ['nombre','descripcion']
+	fields = ()
 
 class EntryPaqueteAdmin(admin.ModelAdmin):
-	filter_horizontal=('producto',)
+	list_display = ('nombre',)
+	list_filter = ('nombre',)
+	search_fields = ['nombre',]
+	fields = ()
 
 
-
-admin.site.register(EntryPaquete,EntryPaqueteAdmin)
-admin.site.register(Paquete,PaqueteAdmin)
+admin.site.register(EntryPaquete, EntryPaqueteAdmin)
+admin.site.register(Paquete, PaqueteAdmin)
 	
