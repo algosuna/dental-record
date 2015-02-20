@@ -1,21 +1,26 @@
 #encoding: utf-8
 from django import forms
-from ActividadesClinicas.models import Interrogatorio
-from ActividadesClinicas.models import ListadeDiagnosticos
+from crispy_forms.helper import FormHelper
+from ActividadesClinicas.models import HistoriaClinica
 from ActividadesClinicas.models import Odontograma
+from ActividadesClinicas.models import ListadeDiagnosticos
 
-
-class InterrogatorioForm(forms.ModelForm):
+class HistoriaClinicaForm(forms.ModelForm):
 	class Meta:
-		model=Interrogatorio
+		model=HistoriaClinica
 
-
-class ListadeDiagnosticosForm(forms.ModelForm):
-	class Meta:
-		model=ListadeDiagnosticos
 
 
 class OdontogramaForm(forms.ModelForm):
-	class Meta:
-		model = Odontograma
+ 	class Meta:
+ 		model=Odontograma
+
+class ListadeDiagnosticosForm(forms.ModelForm):
+ 	class Meta:
+ 		model=ListadeDiagnosticos
+			
+
+
+
+
 

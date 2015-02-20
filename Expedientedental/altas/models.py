@@ -31,20 +31,26 @@ class Medico(models.Model):
 # Modelo de Pacientes
 
 class Paciente(models.Model):
+	sex_CHOICES=(
+
+		('M', 'M'),
+        ('F', 'F'),
+        )
+	estado_CHOICES=(
+
+    	('B.C','Baja California'),
+    	('CA','California'),
+
+    	)
  	credencialPaciente = models.CharField(max_length=15)
 	nombre	= models.CharField(max_length=40)
 	apellidoPaterno	= models.CharField(max_length=30)
 	apellidoMaterno	= models.CharField(max_length=30)
-	sexoopciones=(
-
-        ('M', 'M'),
-        ('F', 'F'),
-    )
-	sexo = models.CharField(max_length=2, choices=sexoopciones)
+	sexo = models.CharField(max_length=2, choices=sex_CHOICES)
 	correoElectronico = models.EmailField(max_length=60)
 	direccion = models.CharField(max_length=70)
 	codigoPostal = models.IntegerField(max_length=5)
-	estado = models.CharField(max_length=30)
+	estado = models.CharField(max_length=20 , choices=estado_CHOICES)
 	ciudad = models.CharField(max_length=30)	
 	nSs = models.CharField(max_length=20)
 	telefono = models.CharField(max_length=20)

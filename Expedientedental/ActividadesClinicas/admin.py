@@ -1,12 +1,12 @@
 from django.contrib	import admin
-from ActividadesClinicas.models import Interrogatorio
+from ActividadesClinicas.models import HistoriaClinica
 from ActividadesClinicas.models import ListadeDiagnosticos
 from ActividadesClinicas.models import Odontograma
 
-class InterrogatorioAdmin(admin.ModelAdmin):
-	list_display = ('medico','paciente','observaciones','resumenClinico',)
-	list_filter = ('medico','paciente','observaciones','resumenClinico',)
-	search_fields = ['medico','paciente','observaciones','resumenClinico']
+class HistoriaClinicaAdmin(admin.ModelAdmin):
+	list_display = ('medico','paciente',)
+	list_filter = ('medico','paciente',)
+	search_fields = ['medico','paciente']
 	fields = ()
 
 class ListadeDiagnosticosAdmin(admin.ModelAdmin):
@@ -21,6 +21,6 @@ class OdontogramaAdmin(admin.ModelAdmin):
 	search_fields = ['doctor','paciente','problemaDental']
 	fields = ()
 
-admin.site.register(Interrogatorio,InterrogatorioAdmin)
+admin.site.register(HistoriaClinica,HistoriaClinicaAdmin)
 admin.site.register(ListadeDiagnosticos,ListadeDiagnosticosAdmin)
 admin.site.register(Odontograma,OdontogramaAdmin)
