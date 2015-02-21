@@ -2,17 +2,17 @@
 from django.template.loader import get_template
 from django.template import RequestContext
 from django.http import Http404, HttpResponse
-from .forms import OdontogramaForm, InterrogatorioForm, ListadeDiagnosticosForm
+from .forms import OdontogramaForm, HistoriaClinicaForm, ListadeDiagnosticosForm
 from .forms import HistoriaClinicaForm
 from .forms import ListadeDiagnosticosForm
 from django.shortcuts import render_to_response, render, redirect
 import datetime
 from ActividadesClinicas.models import HistoriaClinica
-from ActividadesClinicas.models import Interrogatorio, Odontograma, ListadeDiagnosticos
+from ActividadesClinicas.models import Odontograma, ListadeDiagnosticos
 #from ActividadesClinicas.models import ListadeDiagnosticos
 from django.db.models import Q
 
-def interrogatorio(request):
+def HistoriaClinica(request):
 	if request.method == "POST":
 		modelform = HistoriaClinicaForm(request.POST)
 		if modelform.is_valid():
