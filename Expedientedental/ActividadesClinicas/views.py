@@ -8,7 +8,10 @@ from .forms import ListadeDiagnosticosForm
 from django.shortcuts import render_to_response, render, redirect
 import datetime
 from ActividadesClinicas.models import HistoriaClinica
-from ActividadesClinicas.models import Odontograma, ListadeDiagnosticos
+from .forms import ListadeDiagnosticosForm
+from django.shortcuts import render_to_response, render, redirect
+import datetime
+from ActividadesClinicas.models import HistoriaClinica, Odontograma, ListadeDiagnosticos
 #from ActividadesClinicas.models import ListadeDiagnosticos
 from django.db.models import Q
 
