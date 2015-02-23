@@ -34,3 +34,21 @@ border-color:           #ccc;
 color: #fff;
 }
 
+.muela img{
+
+    margin-left: 800px !important;
+    float:right;
+    margin-top: -40px;
+}
+.alert-danger{
+width: auto;
+font-size: 8px;
+font-family: sans-serif;
+}
+
+.page-header h2{
+    font-size: 50px;
+    color: rgba(54,57,61,0.5);
+    margin-left: 100px !important;
+    float: left;
+}
