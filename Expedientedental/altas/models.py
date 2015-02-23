@@ -1,11 +1,14 @@
 #encoding: utf-8
 from django.db import models
 from django.contrib import admin
+from precios.models import GrupoPrecios
 
 # Create your models here.
 
 # Modelo de Medicos
 class Medico(models.Model):
+
+
 	nombre	= models.CharField(max_length=40)
 	apellidoPaterno	= models.CharField(max_length=30)
 	apellidoMaterno	= models.CharField(max_length=30)
@@ -43,6 +46,7 @@ class Paciente(models.Model):
 
     	)
  	credencialPaciente = models.CharField(max_length=15)
+ 	grupo= models.ForeignKey(GrupoPrecios)
 	nombre	= models.CharField(max_length=40)
 	apellidoPaterno	= models.CharField(max_length=30)
 	apellidoMaterno	= models.CharField(max_length=30)

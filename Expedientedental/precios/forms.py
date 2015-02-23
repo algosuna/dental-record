@@ -76,9 +76,9 @@ class GrupoServicioForm(forms.ModelForm):
 			Fieldset(
 				'Informacion de Rigor',
 				
-				Field('nombreDelGrupo' , wrapper_class='col-md-8'),
-				Field('nombreDelServicio' , wrapper_class='col-md-8'),
-				Field('precio' , wrapper_class='col-md-8'),		
+				Field('nombreDelGrupo' , wrapper_class='col-md-5'),
+				Field('nombreDelServicio' , wrapper_class='col-md-5'),
+				Field('precio' , wrapper_class='col-md-2'),		
 
 
 				),
