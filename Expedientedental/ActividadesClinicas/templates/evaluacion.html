@@ -5,44 +5,20 @@
 
 	{%load static from staticfiles %}
 
+       <link rel="stylesheet" href="{% static 'css/odstyle.css'%}">
 
+    <h2 class="page-header">Evaluacion Médica</h2>
 
-        <h2 class="page-header">Registrar </h2>
-
-        {% load crispy_forms_tags %}
-        {% crispy form %}
-			      
-
-              <br><br><br>
-
-						  <div class="diente"><!--diente 1-->
-				<input name="valor" type="hidden" value="1">
-				<div class="cuadro click"><input name="cuadro" type="hidden" value="1"></div>
-				<div class="cuadro izquierdo click"><input name="cuadro" type="hidden" value="2"></div>
-				<div class="cuadro debajo click"><input name="cuadro" type="hidden" value="3"></div>
-				<div class="cuadro derecha click"><input name="cuadro" type="hidden" value="hola"></div>
-				<div class="centro click"><input name="cuadro" type="hidden" value="5"></div>
-			</div>
-			        <div id="color">
-				<div class="select"></div>
-				<div class="select"></div>
-				<div class="select"></div>
-				<div class="select"></div>
-				<div class="select"></div>
-				<div class="select"></div>
-			</div>
-			<br><br><br>
-			</form>
 
       <!-- Forma para la busqueda del Paciente -->
 
       <form class="." method="GET" autocomplete="on"><br>
 
-    <label for="q">Buscar Paciente por Nombre: </label>
+    <label for="q">Buscar Paciente </label>
     <input type="text" name="q" value="{{ query|escape }}">
     <br><br>
         <div id="botonsend">
-        <input type="submit" value="Buscar">
+        <input type="submit" value="Buscar" placeholder="Nombre del Paciente">
             </div>
   </form>
 
@@ -95,9 +71,11 @@
 
   {% if query %}
 
+    <!-- Desplegar nombre de la busqueda
     <div class =  "texto2">Paciente: "{{ query|escape }}"</div>
     
     <br><br>
+    -->
 
     {% if results %}
       
@@ -145,46 +123,5 @@
   {% endif %}
 </div>
 
-            <!-- Listado del Paciente 
-
-            TABLA HECHA POR LUIS
-
-
-    <table border='0' width="80%" align='center' >
-           {%for paciente in datospaciente%}
-
-             <tr><td colaspan="2"> <p style="
-
-              background:     rgba(50,118,177,0.9);
-              padding:        2px 5px;
-              -webkit-border-radius: 5px;
-              -moz-border-radius: 5px;
-              border-radius: 5px;
-              text-align:     center;
-              border:         1px solid transparent;
-              border-color:   rgba(40,94,142,0.9);
-              font-weight:    bold ;
-              color:          #fff;
-              text-shadow: 1px 1px 1px #2F3D4A;
-              ">
-
-              Fecha y Hora: {{paciente.fechayHora}}</p></td></tr>
-              <tr>
-                <td> Doctor: </td> <td> <p> {{paciente.doctor}} </p> </td>
-                <td> Paciente: </td><td> <p> {{paciente.paciente}} </p> </td>
-                <td> Nombre Pieza Dental: </td><td> <p> {{paciente.nombrePiezaDental}} </p> </td>
-                <td> Problema Dental: </td><td> <p> {{paciente.problemaDental}} </p> </td>
-              </tr>
-
-              <tr>
-                <td> Nota: </td><td> <p> {{paciente.notas}} </p> </td>
-                <td> Plan Contrado: </td><td> <p> {{lista.plan_contratado}} </p> </td>
-                 <td> Imagen Odontograma: </td><td> <p> {{paciente.odontograma}} </p> </td>
-                 <td> Telefono: </td><td> <p> {{lista.telefono}} </p> </td>
-              </tr>
-              <tr><td colspan='8' > <hr></td></tr>
-            {%endfor%}
-      </table>
--->
 
 {% endblock content %}

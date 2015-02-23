@@ -4,11 +4,11 @@
 	<meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	
+
 	<title> {%block title%}  {%endblock%}</title>
 
     {%load static from staticfiles %}
-    
+
     <!-- <link rel="stylesheet" href="{% static 'css/style.css'%}">
     <link rel="stylesheet" href="{% static 'css/styles.css'%}"> -->
     <!--script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
@@ -61,12 +61,12 @@
 					</li>
 					<li><a href="" class="dropdown-toggle" data-toggle="dropdown">Odontograma <span class="caret"></span></a>
 					<ul class="dropdown-menu">
-						<li><a href="/diagnosticos/">Lista de Diagnosticos</a></li>
+						<li><a href="/diagnosticos/">Lista de Diagnósticos</a></li>
 						<li><a href="/odontograma/">Odontograma</a></li>
 						<li><a href="/cotizacion/">Cotizaciones</a></li>
 					</ul>
 					</li>
-					<li><a href="#">Plan de Tratamiento</a></li>
+					<li><a href="/evaluacion/">Evaluación Médica</a></li>
 					<li><a href="#">Historial de Procedimientos</a>
 					</li>
 					<li><a href="" class="dropdown-toggle" data-toggle="dropdown">Inventario <span class="caret"></span></a>
@@ -99,9 +99,10 @@
 	<div class="page-header container clearfix">
 		<img src="{{STATIC_URL}}img/logo.png" alt="Logo" height="132" width="162" class="pull-left">
 
-		<h2> Expediente Médico Dental </h2>
-
-		<img src="{{STATIC_URL}}img/muela.png" height="112" width="77">
+		<h2> Sistema  Administrativo Dental </h2>
+		<div class="muela">
+			<img src="{{STATIC_URL}}img/muela.png" height="112" width="77">
+		</div>
 	</div>
 
 	<div class="container">

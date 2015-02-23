@@ -57,6 +57,7 @@ def details_create(request, id_cotizacion):
 def details_update(request, id_cotizacion, id_cotizaciondetail):
     #when POST
     if request.method == 'POST':
+        # consultaPrecio = CotizacionDetail.objects.filter()
         cotizacion = Cotizacion.objects.get(id = id_cotizacion)
         cotizaciondetail = CotizacionDetail.objects.get(id = id_cotizaciondetail)
         cotizaciondetail.cotizacion = cotizacion

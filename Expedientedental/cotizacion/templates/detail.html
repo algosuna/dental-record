@@ -28,11 +28,11 @@
 				</tr>
 			{% for object in latest_list %}
 				<tr>
-					<td><a href="{{request.path}}details/update/{{object.id}}/">{{object.nombreDelServicio}}</a></td>
-					<td><a href="{{request.path}}details/update/{{object.id}}/">{{object.nombreDelGrupo}}</a></td>
-					<td><a href="{{request.path}}details/update/{{object.id}}/">${{object.precio}}</a></td>
+					<td><!--a href="{{request.path}}details/update/{{object.id}}/"-->{{object.nombreDelServicio}}</a></td>
+					<td><!--a href="{{request.path}}details/update/{{object.id}}/"-->{{object.nombreDelGrupo}}</a></td>
+					<td><!--a href="{{request.path}}details/update/{{object.id}}/"-->${{object.precio}}</a></td>
 
-					<td><a href="{{request.path}}details/update/{{object.id}}/">${{object.total}}</a></td>
+					<td><!--a href="{{request.path}}details/update/{{object.id}}/"-->${{object.total}}</a></td>
 				</tr>
 			{% endfor %}
 				<tr>
