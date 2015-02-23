@@ -1,5 +1,6 @@
 {% extends "base1.html" %}
 {%load static from staticfiles %}
+{% load crispy_forms_tags %}
 {% block content %}
 
     <h2 class="page-header">Agregando Servicio</h2>
@@ -7,13 +8,6 @@
     <h4>Paciente: {{object.paciente}}</h4>
     <br>
 
-	<form action="{{request.path}}" method="post" >
-		{% csrf_token %}
-		{{form.as_ul}}
-		<br>
-		<input style="float:left; margin-right:20px;" type="button" value="Borrar" onclick="location.href='{{request.path}}delete'">
-		<input style="float:center; margin-right:20px;" type="submit" value="Guardar">
-		<div class="cleared"></div>
-	</form>
+	{% crispy form %}
 
 {% endblock content %}

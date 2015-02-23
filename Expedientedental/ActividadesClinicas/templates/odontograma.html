@@ -71,6 +71,49 @@
             </div>
   </form>
 
+<!-- Tabla de Pacientes  -->
+
+<table class="table table-hover table-bordered">
+  {%for paciente in datospaciente%}
+        <br><br><br>
+        <!-- En caso de llevar cabecera principal
+
+      <table class="table table-hover">
+           
+        <br><br><br>
+        <div align="center">
+          Fecha Y Hora: {{paciente.fechayHora}}
+      </div>        
+      </table>
+        -->
+
+      <table class="table table-hover table-bordered">
+        <thead>
+            <tr>
+              <th><div align="center">Fecha Y Hora</div></th>
+                <th><div align="center">Nombre Pieza Dental</div></th>
+                <th><div align="center">Problema Dental</div></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+              <td><div align="center">{{paciente.fechayHora}}</div></td>
+                <td><div align="center">{{paciente.nombrePiezaDental}}</div></td>
+                <td><div align="center">{{paciente.problemaDental}}</div></td>
+            </tr>
+        </tbody>    
+      </table>
+        
+            <tr>
+                <td><div align="left"><b>Nota:</b> {{paciente.notas}}
+            </div></td>
+            </tr>
+    {% endfor %}
+    </table>
+
+
+
+
 <!-- Tabla de Datos del Paciente -->
 
 <div align = "center">
@@ -127,13 +170,11 @@
   {% endif %}
 </div>
 
-<div align="center">
------------------------------------------------------------------------------------------
-</div>    
+            <!-- Listado del Paciente 
 
-    <br><br>
+            TABLA HECHA POR LUIS
 
-            <!-- Listado del Paciente -->
+
     <table border='0' width="80%" align='center' >
            {%for paciente in datospaciente%}
 
@@ -169,5 +210,6 @@
               <tr><td colspan='8' > <hr></td></tr>
             {%endfor%}
       </table>
+-->
 
 {% endblock content %}

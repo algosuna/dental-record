@@ -55,3 +55,14 @@ def datospaciente(request):
     consulta = Odontograma.objects.all()
     return render(request, 'prueba.html', {'datospaciente': consulta[0:]})
 
+def buscarpaciente(request):
+    query = request.GET.get('q', '')
+    if query:
+        qset = (
+            Q(paciente__nombre__exact=query)
+        )
+        results = Odontograma.objects.filter(qset).distinct()
+    else:
+        results = []    
+    return render(request, "evaluacion.html", {"results": results,
+        "query": query})
