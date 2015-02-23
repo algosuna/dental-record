@@ -19,3 +19,14 @@ footer {
 footer .alert {
 	text-align: justify;
 }
+
+/*color de la barra de navegacion */
+.navbar-inverse {
+background-color:       #4096EE;
+border-color:           #ccc;
+}
+/*color del texto de la barra de navegacion*/
+
+.navbar-inverse .navbar-nav>li>a {
+color: #fff;
+}
