@@ -25,8 +25,12 @@ footer .alert {
 background-color:       #4096EE;
 border-color:           #ccc;
 }
-/*color del texto de la barra de navegacion*/
 
+.navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:focus, .navbar-inverse .navbar-nav>.open>a:hover{
+    background-color: #A1C4F0;
+}
+/*color del texto de la barra de navegacion*/
 .navbar-inverse .navbar-nav>li>a {
 color: #fff;
 }
+
