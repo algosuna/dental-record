@@ -2,7 +2,7 @@ from django.conf.urls.defaults import patterns, include, url
 import settings
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
-from ActividadesClinicas.views import interrogatorio
+from ActividadesClinicas.views import HistoriaClinica
 from ActividadesClinicas.views import odontograma
 from ActividadesClinicas.views import diagnosticos
 from ActividadesClinicas.views import datospaciente
@@ -30,7 +30,7 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^interrogatorio/$',interrogatorio),
+    url(r'^interrogatorio/$',HistoriaClinica),
     url(r'^odontograma/$',odontograma),
     url(r'^diagnosticos/$',diagnosticos),
 

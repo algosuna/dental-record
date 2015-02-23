@@ -3,15 +3,8 @@
 
 {% block content %}
 
-    <h2 class="page-header">Registrar Servicios</h2>
+<h2 class="page-header">Registro</h2>
 
-   <form action="" method="POST">{% csrf_token %}
-        <table>
-         {{ form.as_table }}
-        </table>
-        <div id="botonsend">
-        <input type="submit" value="Guardar Formulario">
-        </div>
-    </form>
-
+{% load crispy_forms_tags %}
+{% crispy form %}
 {% endblock content %}

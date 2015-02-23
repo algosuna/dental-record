@@ -3,8 +3,10 @@ from django.template.loader import get_template
 from django.template import RequestContext
 from django.http import Http404, HttpResponse
 from django.shortcuts import render_to_response, render, redirect
-from .forms import ProductoForm, CategoriaForm
-from Inventario.models import Categoria, Producto
+from .forms import ProductoForm 
+from .forms import CategoriaForm
+from Inventario.models import Categoria 
+from Inventario.models import Producto
 import datetime
 
 def categoria(request):

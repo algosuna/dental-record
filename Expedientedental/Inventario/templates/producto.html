@@ -3,15 +3,16 @@
 
 {% block content %}
 
-<h2 class="page-header">Agregar Productos</h2>
+<h2 class="page-header">Registrar Producto</h2>
 
-   <form action="" method="POST">{% csrf_token %}
-        <table>
-         {{ form.as_table }}
-        </table>
-        <div id="botonsend">
-        <input type="submit" value="Guardar">
-        </div>
-    </form>
+{% load crispy_forms_tags %}
+{% crispy form %}
+
+<!-- <form action="" method="POST">{% csrf_token %}
+    <table>
+     {{ form.as_table }}
+    </table>
+    <input type="submit" value="Guardar Formulario" class="btn btn-primary">
+</form> -->
 
 {% endblock content %}
