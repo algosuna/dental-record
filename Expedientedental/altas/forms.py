@@ -25,6 +25,7 @@ class PacienteForm(forms.ModelForm):
 			Fieldset(
 				'Informacion de Rigor',
 
+
 				Field('credencialPaciente' , wrapper_class='col-md-7'),
 				Field('grupo' , wrapper_class='col-md-5'),
 				Field('nombre' , wrapper_class='col-md-4'),
@@ -47,6 +48,7 @@ class PacienteForm(forms.ModelForm):
 			)
 		)
 		self.fields['credencialPaciente'].label='DNI Paciente'
+		self.fields['grupo'].label="Grupo"
 		self.fields['nombre'].label='Nombre(s)'
 		self.fields['apellidoPaterno'].label='Apellido Paterno'
 		self.fields['apellidoMaterno'].label='Apellido Materno'
