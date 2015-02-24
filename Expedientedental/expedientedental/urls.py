@@ -6,6 +6,7 @@ from ActividadesClinicas.views import HistoriaClinica
 from ActividadesClinicas.views import odontograma
 from ActividadesClinicas.views import diagnosticos
 from ActividadesClinicas.views import datospaciente
+from ActividadesClinicas.views import detallespaciente
 from ActividadesClinicas.views import buscarpaciente
 from Inventario.views import producto, categoria
 from cotizacion.views import Cotizacion
@@ -40,6 +41,7 @@ urlpatterns = patterns('',
     url(r'^paquete/$',paquete),
     url(r'^tipoPaquete/$',tipoPaquete),
     url(r'^evaluacion/$',buscarpaciente),
+    url(r'^detalles/$',detallespaciente),
 
     #url(r'^prueba/$',busqueda),
 

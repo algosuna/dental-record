@@ -61,9 +61,11 @@
         </thead>
         <tbody>
             <tr>
-              <td><div align="center">{{paciente.paciente}}</div></td>
+              <td><div align="center">
+                {{paciente.nombre}} {{paciente.apellidoPaterno}} {{paciente.apellidoMaterno}}
+              </div></td>
                 <td><div align="center">{{paciente.grupo}}</div></td>
-                <td><div align="center"><a href="/consulta/detalle/miembros/miembro/1956/" class="btn btn-default">VER</a></div></td>
+                <td><div align="center"><a href="/detalles/" class="btn btn-default">VER</a></div></td>
             </tr>
         </tbody>    
     {% endfor %}

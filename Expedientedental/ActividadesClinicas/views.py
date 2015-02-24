@@ -5,13 +5,13 @@ from django.http import Http404, HttpResponse
 from .forms import OdontogramaForm
 from .forms import HistoriaClinicaForm
 from .forms import ListadeDiagnosticosForm
+from altas.models import Paciente
 from django.shortcuts import render_to_response, render, redirect
 import datetime
 from ActividadesClinicas.models import HistoriaClinica
 from django.shortcuts import render_to_response, render, redirect
 import datetime
 from ActividadesClinicas.models import HistoriaClinica, Odontograma, ListadeDiagnosticos
-#from ActividadesClinicas.models import ListadeDiagnosticos
 from django.db.models import Q
 
 def HistoriaClinica(request):
@@ -63,10 +63,14 @@ def buscarpaciente(request):
     query = request.GET.get('q', '')
     if query:
         qset = (
-            Q(paciente__nombre__exact=query)
+            Q(nombre__contains=query)
         )
-        results = Odontograma.objects.filter(qset).distinct()
+        results = Paciente.objects.filter(qset).distinct()
     else:
         results = []    
     return render(request, "evaluacion.html", {"results": results,"query": query})
 
+def detallespaciente(request):
+    consulta = Odontograma.objects.all()
+    detalles = Paciente.objects.all()
+    return render(request, 'detalles.html', {'detallespaciente': consulta[0:], 'detalles': detalles})

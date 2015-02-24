@@ -1,11 +1,9 @@
 from django import forms
 
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit
 from altas.models import Medico
 from altas.models import Paciente
-from crispy_forms.layout import(Layout,Fieldset,HTML,Field,ButtonHolder,
-Submit)
+from crispy_forms.layout import Layout, Fieldset, HTML, Field, ButtonHolder, Submit
 
 				
 class PacienteForm(forms.ModelForm):
@@ -18,9 +16,9 @@ class PacienteForm(forms.ModelForm):
 		self.helper=FormHelper()
 		self.helper.layout=Layout(
 			HTML(""" 
-							<p> Rellene todos los Campos Con *.</p>
+				<p> Rellene todos los Campos Con *.</p>
 
-							"""
+				"""
 			),
 			Fieldset(
 				'Informacion de Rigor',
@@ -41,9 +39,9 @@ class PacienteForm(forms.ModelForm):
 				Field('telefono', wrapper_class='col-md-5'),
 
 
-				),
+			),
 			ButtonHolder(
-					Submit('save','Guardar')
+				Submit('save','Guardar')
 
 			)
 		)
@@ -69,7 +67,6 @@ class MedicoForm(forms.ModelForm):
 
 	def __init__(self, *args, **kwargs):
 		super(MedicoForm,self).__init__(*args,**kwargs)
-		self.helper=FormHelper()
 		self.helper=FormHelper()
 		self.helper.layout=Layout(
 		HTML(""" 
