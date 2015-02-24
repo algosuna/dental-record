@@ -8,17 +8,16 @@ Submit)
 from ActividadesClinicas.models import HistoriaClinica
 from ActividadesClinicas.models import Odontograma
 from ActividadesClinicas.models import ListadeDiagnosticos
-        
+
 class HistoriaClinicaForm(forms.ModelForm):
-	class Meta:
-		model=HistoriaClinica
-	def __init__(self, *args, **kwargs):
-		super(HistoriaClinicaForm,self).__init__(*args,**kwargs)
-		self.helper=FormHelper()
-		
-		self.helper.layout=Layout(
-			HTML(""" 
-							<p> Rellene todos los Campos Con *.</p>
+    class Meta:
+        model=HistoriaClinica
+    def __init__(self, *args, **kwargs):
+        super(HistoriaClinicaForm,self).__init__(*args,**kwargs)
+        self.helper=FormHelper()
+        self.helper.layout=Layout(
+            HTML("""
+                            <p> Rellene todos los Campos Con *.</p>
 
 							"""
 			),
@@ -26,8 +25,8 @@ class HistoriaClinicaForm(forms.ModelForm):
 				'Informacion de Rigor',
 
 				Field('paciente', wrapper_class='col-md-4'),
-				Field('medico', wrapper_class='col-md-4'),				
-				
+				Field('medico', wrapper_class='col-md-4'),
+
 				Field('herenciaMadre', wrapper_class='col-md-4'),
 				Field('herenciaPadre', wrapper_class='col-md-4'),
 				Field('herenciaHermanos', wrapper_class='col-md-4'),
@@ -117,16 +116,16 @@ class HistoriaClinicaForm(forms.ModelForm):
 				Field('interpretacionradiografica', wrapper_class='col-md-4'),
 				Field('estudiosdeLaboratorio', wrapper_class='col-md-4'),
 				Field('interpretacionEstudiosLaboratorio', wrapper_class='col-md-4'),
-	
+
 				),
 			ButtonHolder(
 					Submit('save','Guardar')
 
 			)
 		)
-	
+
 		self.fields  ['paciente'].label='Paciente'
-		self.fields	['medico' ].label='Medico'		
+		self.fields	['medico' ].label='Medico'
 		self.fields	['herenciaMadre'].label='Madre'
 		self.fields	['herenciaPadre'].label='Padre'
 		self.fields	['herenciaHermanos'].label='Hermanos'
@@ -188,34 +187,34 @@ class HistoriaClinicaForm(forms.ModelForm):
 		self.fields	['disminuciondelaavertura'] .label='Disminución de la abertura'
 		self.fields	['desviacionaverturadecierre'] .label='Desviación a la abertura cierre'
 		self.fields	['ganglios'].label='Ganglios'
-		self.fields	['glandulassalivales'] .label='Glándulas salivales' 
-		self.fields	['labioExterno'].label='Labio externo' 
-		self.fields	['bordebermellon'].label='Borde bermellón' 
-		self.fields	['labiointerno'].label='Labio interno' 
-		self.fields	['Comisuras'] .label='Comisuras' 
-		self.fields	['carrillos'].label='Carrillos' 
-		self.fields	['fondodesaco'].label='Fondo de saco' 
-		self.fields	['frenillos'].label='Frenillos' 
-		self.fields	['lenguaTerciomedio'].label='Lengua tercio medio' 
-		self.fields	['paladarDuro'].label='Paladar duro' 
-		self.fields	['paladarBlando'].label='Paladar blando' 
-		self.fields	['istmoBucofaringe'].label='Istmo bucofaringe' 
-		self.fields	['lenguaDorso'] .label='Lengua dorso' 
+		self.fields	['glandulassalivales'] .label='Glándulas salivales'
+		self.fields	['labioExterno'].label='Labio externo'
+		self.fields	['bordebermellon'].label='Borde bermellón'
+		self.fields	['labiointerno'].label='Labio interno'
+		self.fields	['Comisuras'] .label='Comisuras'
+		self.fields	['carrillos'].label='Carrillos'
+		self.fields	['fondodesaco'].label='Fondo de saco'
+		self.fields	['frenillos'].label='Frenillos'
+		self.fields	['lenguaTerciomedio'].label='Lengua tercio medio'
+		self.fields	['paladarDuro'].label='Paladar duro'
+		self.fields	['paladarBlando'].label='Paladar blando'
+		self.fields	['istmoBucofaringe'].label='Istmo bucofaringe'
+		self.fields	['lenguaDorso'] .label='Lengua dorso'
 		self.fields	['lenguaVentral'] .label='Lengua bordes'
 		self.fields	['pisodelaBoca'].label='Piso de la boca'
-		self.fields	['dientes'].label='Dientes' 
+		self.fields	['dientes'].label='Dientes'
 		self.fields	['mucosadelBordealveolar'].label='Mucosa del borde alveolar'
 		self.fields	['encia'].label='Encía'
 		self.fields	['gingivitis'].label='Gingivitis'
-		self.fields	['periodontitis'] .label='Periodontitis' 
-		self.fields	['receciongingival'] .label='Recesión gingival' 
-		self.fields	['bolsasperiodontales'].label='' 
+		self.fields	['periodontitis'] .label='Periodontitis'
+		self.fields	['receciongingival'] .label='Recesión gingival'
+		self.fields	['bolsasperiodontales'].label=''
 		self.fields	['movilidadDentario'] .label=''
-		self.fields	['indicedeplaca'].label='Bolsas periodontales' 
-		self.fields	['interpretacionradiografica'].label='Interpretación radiográfica'  
+		self.fields	['indicedeplaca'].label='Bolsas periodontales'
+		self.fields	['interpretacionradiografica'].label='Interpretación radiográfica'
 		self.fields	['estudiosdeLaboratorio'] .label='Estudios de laboratorio y gabinete'
-		self.fields	['interpretacionEstudiosLaboratorio'].label='Interpretación de los estudios de laboratorio y gabinete' 
-	
+		self.fields	['interpretacionEstudiosLaboratorio'].label='Interpretación de los estudios de laboratorio y gabinete'
+
 
 
 
@@ -229,20 +228,20 @@ class OdontogramaForm(forms.ModelForm):
         self.helper.label_class = 'col-md-2'
         self.helper.field_class = 'col-md-8'
         self.helper.layout=Layout(
-            HTML(""" 
-                            <p> Rellene todos los Campos Con *.</p>
+            HTML("""
+                            <p class='parrafo'> Todos Los Campos con ( * ) son Requeridos.</p>
 
                             """
             ),
             Fieldset(
-                'Informacion de Rigor',
+                '',
 
                 Field('doctor'),
                 Field('paciente'),
                 Field('nombrePiezaDental'),
                 Field('problemaDental'),
                 Field('notas'),
-                
+
                 ),
             ButtonHolder(
                     Submit('save','Guardar')
@@ -250,11 +249,10 @@ class OdontogramaForm(forms.ModelForm):
             )
         )
         self.fields['doctor'].label='Medico'
-        self.fields['paciente'].label='Paciente'
+        self.fields['paciente'].label='Nombre (s)'
         self.fields['nombrePiezaDental'].label='Pieza Dental'
         self.fields['problemaDental'].label='problemaDental'
         self.fields['notas'].label='notas'
-
 
 class ListadeDiagnosticosForm(forms.ModelForm):
     class Meta:

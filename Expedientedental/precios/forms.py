@@ -15,22 +15,23 @@ class ServicioForm(forms.ModelForm):
 		super(ServicioForm,self).__init__(*args,**kwargs)
 		self.helper=FormHelper()
 		self.helper.layout=Layout(
-			HTML(""" 
-							<p> Rellene todos los Campos Con *.</p>
+			HTML("""
+							<p class="parrafo"> Campos con ( * ) Son Requeridos. </p>
+
 
 							"""
 			),
 			Fieldset(
 				'Informacion de Rigor',
-				
-				Field('nombreDelServicio' , wrapper_class='col-md-8'),		
+
+				Field('' , wrapper_class='col-md-8'),
 
 
 				),
 			ButtonHolder(
 					Submit('save','Guardar')
 			)
-		)		
+		)
 		self.fields['nombreDelServicio'].label='Nombre'
 
 
@@ -42,22 +43,23 @@ class GrupoForm(forms.ModelForm):
 		super(GrupoForm,self).__init__(*args,**kwargs)
 		self.helper=FormHelper()
 		self.helper.layout=Layout(
-			HTML(""" 
-							<p> Rellene todos los Campos Con *.</p>
+			HTML("""
+							<p class="parrafo"> Campos con ( * ) Son Requeridos. </p>
+
 
 							"""
 			),
 			Fieldset(
-				'Informacion de Rigor',
-				
-				Field('nombreDelGrupo' , wrapper_class='col-md-8'),		
+				'',
+
+				Field('nombreDelGrupo' , wrapper_class='col-md-8'),
 
 
 				),
 			ButtonHolder(
 					Submit('save','Guardar')
 			)
-		)		
+		)
 		self.fields['nombreDelGrupo'].label='Nombre de Grupo'
 
 class GrupoServicioForm(forms.ModelForm):
@@ -68,24 +70,25 @@ class GrupoServicioForm(forms.ModelForm):
 		super(GrupoServicioForm,self).__init__(*args,**kwargs)
 		self.helper=FormHelper()
 		self.helper.layout=Layout(
-			HTML(""" 
-							<p> Rellene todos los Campos Con *.</p>
+			HTML("""
+							<p class="parrafo"> Campos con ( * ) Son Requeridos. </p>
+
 
 							"""
 			),
 			Fieldset(
-				'Informacion de Rigor',
-				
+				'',
+
 				Field('nombreDelGrupo' , wrapper_class='col-md-5'),
 				Field('nombreDelServicio' , wrapper_class='col-md-5'),
-				Field('precio' , wrapper_class='col-md-2'),		
+				Field('precio' , wrapper_class='col-md-2'),
 
 
 				),
 			ButtonHolder(
 					Submit('save','Guardar')
 			)
-		)		
+		)
 		self.fields['nombreDelServicio'].label='Nombre de Servicio'
 		self.fields['nombreDelGrupo'].label='Grupo'
 		self.fields['precio'].label='Precio'
