@@ -2,14 +2,29 @@
 {%load static from staticfiles %}
 {% block content %}
 
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+		<script type="text/javascript">
+		$(document).ready(function(){
+		    $('[data-toggle="tooltip"]').tooltip({
+		        placement : 'left'
+		    });
+		});
+		</script>
+		<style type="text/css">
+			.bs-example{
+		    	margin: 100px 50px;
+		    }
+		</style>
+
 	<h2 class="page-header">Cotizaciones</h2>
 
-	<input style="float:right; margin-right:20px;"  type="button" value="Agregar" onclick="location.href='{{request.path}}create/'">
-	
-
+	<input style="float:left; margin-right:20px;"  type="button" value="Agregar Cotización" onclick="location.href='{{request.path}}create/'">
+	<br><br>
 	<div class="cleared"></div>
 	{% if latest_list %}
-			<table>
+			<table class="table table-hover table-bordered">
 				<tr>
 					<th>Cliente</th>
 					<th>Fecha</th>
@@ -17,9 +32,9 @@
 				</tr>
 			{% for object in latest_list %}
 				<tr>
-					<td><a href="update/{{object.id}}/">{{object.paciente}}</a></td>
-					<td><a href="update/{{object.id}}/">{{object.fecha}}</a></td>
-					<td><a href="update/{{object.id}}/">${{object.total}}</a></td>
+					<td><a href="update/{{object.id}}/" data-toggle="tooltip" class="tip-left" data-original-title="Click para agregar servicios">{{object.paciente}}</a></td>
+					<td>{{object.fecha}}</td>
+					<td>${{object.total}}</td>
 				</tr>
 			{% endfor %}
 			</table>

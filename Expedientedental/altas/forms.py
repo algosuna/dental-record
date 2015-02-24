@@ -1,13 +1,11 @@
 from django import forms
 
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit
 from altas.models import Medico
 from altas.models import Paciente
-from crispy_forms.layout import(Layout,Fieldset,HTML,Field,ButtonHolder,
-Submit)
+from crispy_forms.layout import Layout, Fieldset, HTML, Field, ButtonHolder, Submit
 
-				
+
 class PacienteForm(forms.ModelForm):
 	class Meta:
 		model   = Paciente
@@ -17,13 +15,14 @@ class PacienteForm(forms.ModelForm):
 		super(PacienteForm,self).__init__(*args,**kwargs)
 		self.helper=FormHelper()
 		self.helper.layout=Layout(
-			HTML(""" 
-							<p> Rellene todos los Campos Con *.</p>
+			HTML("""
+							<p class="parrafo"> Todos Los Campos Con ( * ) Son Requeridos.</p>
 
-							"""
+				"""
 			),
 			Fieldset(
-				'Informacion de Rigor',
+				'',
+
 
 				Field('credencialPaciente' , wrapper_class='col-md-7'),
 				Field('grupo' , wrapper_class='col-md-5'),
@@ -40,13 +39,14 @@ class PacienteForm(forms.ModelForm):
 				Field('telefono', wrapper_class='col-md-5'),
 
 
-				),
+			),
 			ButtonHolder(
-					Submit('save','Guardar')
+				Submit('save','Guardar')
 
 			)
 		)
 		self.fields['credencialPaciente'].label='DNI Paciente'
+		self.fields['grupo'].label="Grupo"
 		self.fields['nombre'].label='Nombre(s)'
 		self.fields['apellidoPaterno'].label='Apellido Paterno'
 		self.fields['apellidoMaterno'].label='Apellido Materno'
@@ -68,15 +68,14 @@ class MedicoForm(forms.ModelForm):
 	def __init__(self, *args, **kwargs):
 		super(MedicoForm,self).__init__(*args,**kwargs)
 		self.helper=FormHelper()
-		self.helper=FormHelper()
 		self.helper.layout=Layout(
-		HTML(""" 
-						<p> Rellene todos los Campos Con *.</p>
+		HTML("""
+						<p class='parrafo'> Todos Los campos con ( * ) son Requeridos .</p>
 
 						"""
 		),
 		Fieldset(
-			'Informacion de Rigor',
+			'',
 
 				Field('nombreUsuario', wrapper_class='col-md-4'),
 				Field('nombre', wrapper_class='col-md-4'),
@@ -116,5 +115,5 @@ class MedicoForm(forms.ModelForm):
 		self.fields['direccion'].label='Direccion'
 		self.fields['codigoPostal'].label='C.P.'
 		self.fields['estado'].label='Estado'
-		self.fields['Ciudad'].label='Cudad'
+		self.fields['Ciudad'].label='Cuidad'
 

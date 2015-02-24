@@ -25,8 +25,9 @@ class CotizacionDetailForm(forms.ModelForm):
 		self.helper.label_class = 'col-md-2'
 		self.helper.field_class = 'col-md-8'
 		self.helper.layout=Layout(
-			HTML(""" 
-							<p> Rellene todos los Campos Con *.</p>
+			HTML("""
+							<p class="parrafo"> Campos con ( * ) Son Requeridos. </p>
+
 
 							"""
 			),

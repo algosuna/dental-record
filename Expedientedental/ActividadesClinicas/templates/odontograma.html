@@ -2,7 +2,12 @@
 {%load static from staticfiles %}
 {% load crispy_forms_tags %}
 
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/jquery-ui.css'%}">
+{% endblock css %}
+
 {% block content %}
+
 
 
 
@@ -14,62 +19,62 @@
 <table align="center" border="0" style="float-left:" >
 <tr>
      <td>
-        <img src="{{STATIC_URL}}/img/maxilary_third_molar_left.jpg" width="30px" heigth="30px" alt="Tercer Molar Izquierdo"/>
+        <img src="{{STATIC_URL}}img/maxilary_third_molar_left.jpg" width="30px" heigth="30px" alt="Tercer Molar Izquierdo"/>
      </td>
      <td>
-        <img src="{{STATIC_URL}}/img/maxilary_second_molar_left.jpg" width="30px" heigth="30px" alt="Segundo Molar Izquierdo"/>
+        <img src="{{STATIC_URL}}img/maxilary_second_molar_left.jpg" width="30px" heigth="30px" alt="Segundo Molar Izquierdo"/>
      </td>
      <td>
-        <img src="{{STATIC_URL}}/img/maxilary_first_molar_left.jpg" width="30px" heigth="30px" alt="Tercer Molar Izquierdo"/>
+        <img src="{{STATIC_URL}}img/maxilary_first_molar_left.jpg" width="30px" heigth="30px" alt="Tercer Molar Izquierdo"/>
      </td>
      <td>
-        <img src="{{STATIC_URL}}/img/maxilary_second_premolar_left.jpg" width="30px" heigth="10px" alt="Tercer Molar Izquierdo"/>
+        <img src="{{STATIC_URL}}img/maxilary_second_premolar_left.jpg" width="30px" heigth="10px" alt="Tercer Molar Izquierdo"/>
      </td>
      <td>
-        <img src="{{STATIC_URL}}/img/maxilary_first_premolar_left.jpg" width="30px" heigth="10px" alt="Tercer Molar Izquierdo"/>
+        <img src="{{STATIC_URL}}img/maxilary_first_premolar_left.jpg" width="30px" heigth="10px" alt="Tercer Molar Izquierdo"/>
      </td>
     <td>
-        <img src="{{STATIC_URL}}/img/maxilary_canine_left.jpg" width="30px" heigth="10px" alt="Tercer Molar Izquierdo"/>
+        <img src="{{STATIC_URL}}img/maxilary_canine_left.jpg" width="30px" heigth="10px" alt="Tercer Molar Izquierdo"/>
      </td>
 
     <td>
-        <img src="{{STATIC_URL}}/img/maxilary_second_incisor_left.jpg" width="30px" heigth="30px" alt="Tercer Molar Izquierdo"/>
+        <img src="{{STATIC_URL}}img/maxilary_second_incisor_left.jpg" width="30px" heigth="30px" alt="Tercer Molar Izquierdo"/>
      </td>
 
     <td >
-        <img src="{{STATIC_URL}}/img/maxilary_first_incisor_left.jpg" width="30px" heigth="30px" alt="Tercer Molar Izquierdo"/>
+        <img src="{{STATIC_URL}}img/maxilary_first_incisor_left.jpg" width="30px" heigth="30px" alt="Tercer Molar Izquierdo"/>
      </td>
 
     <td>
-        <img src="{{STATIC_URL}}/img/maxilary_first_incisor_right.jpg" width="30px" heigth="30px" alt="Tercer Molar Izquierdo"/>
+        <img src="{{STATIC_URL}}img/maxilary_first_incisor_right.jpg" width="30px" heigth="30px" alt="Tercer Molar Izquierdo"/>
      </td>
 
     <td>
-        <img src="{{STATIC_URL}}/img/maxilary_second_incisor_right.jpg" width="30px" heigth="30px" alt="Tercer Molar Izquierdo"/>
+        <img src="{{STATIC_URL}}img/maxilary_second_incisor_right.jpg" width="30px" heigth="30px" alt="Tercer Molar Izquierdo"/>
      </td>
 
     <td>
-        <img src="{{STATIC_URL}}/img/maxilary_canine_right.jpg" width="30px" heigth="30px" alt="Tercer Molar Izquierdo"/>
+        <img src="{{STATIC_URL}}img/maxilary_canine_right.jpg" width="30px" heigth="30px" alt="Tercer Molar Izquierdo"/>
     </td>
 
     <td>
-        <img src="{{STATIC_URL}}/img/maxilary_first_premolar_right.jpg" width="30px" heigth="30px" alt="Tercer Molar Izquierdo"/>
+        <img src="{{STATIC_URL}}img/maxilary_first_premolar_right.jpg" width="30px" heigth="30px" alt="Tercer Molar Izquierdo"/>
      </td>
 
     <td>
-        <img src="{{STATIC_URL}}/img/maxilary_second_premolar_right.jpg" width="30px" heigth="30px" alt="Tercer Molar Izquierdo"/>
+        <img src="{{STATIC_URL}}img/maxilary_second_premolar_right.jpg" width="30px" heigth="30px" alt="Tercer Molar Izquierdo"/>
     </td>
 
     <td >
-        <img src="{{STATIC_URL}}/img/maxilary_first_molar_right.jpg" width="30px" heigth="30px" alt="Tercer Molar Izquierdo"/>
+        <img src="{{STATIC_URL}}img/maxilary_first_molar_right.jpg" width="30px" heigth="30px" alt="Tercer Molar Izquierdo"/>
      </td>
 
     <td>
-        <img src="{{STATIC_URL}}/img/maxilary_second_molar_right.jpg" width="30px" heigth="30px" alt="Tercer Molar Izquierdo"/>
+        <img src="{{STATIC_URL}}img/maxilary_second_molar_right.jpg" width="30px" heigth="30px" alt="Tercer Molar Izquierdo"/>
      </td>
 
     <td>
-        <img src="{{STATIC_URL}}/img/maxilary_third_molar_right.jpg" width="30px" heigth="30px" alt="Tercer Molar Izquierdo"/>
+        <img src="{{STATIC_URL}}img/maxilary_third_molar_right.jpg" width="30px" heigth="30px" alt="Tercer Molar Izquierdo"/>
      </td>
 
 </tr>
@@ -381,52 +386,52 @@
 <table align="center" border="0"  >
 <tr>
      <td>
-        <img src="{{STATIC_URL}}/img/mandibular_third_molar_left.jpg" width="30px" heigth="30px" alt="Tercer Molar Izquierdo"/>
+        <img src="{{STATIC_URL}}img/mandibular_third_molar_left.jpg" width="30px" heigth="30px" alt="Tercer Molar Izquierdo"/>
      </td>
      <td>
-        <img src="{{STATIC_URL}}/img/mandibular_second_molar_left.jpg" width="30px" heigth="30px" alt="Segundo Molar Izquierdo"/>
+        <img src="{{STATIC_URL}}img/mandibular_second_molar_left.jpg" width="30px" heigth="30px" alt="Segundo Molar Izquierdo"/>
      </td>
      <td>
-        <img src="{{STATIC_URL}}/img/mandibular_first_molar_left.jpg" width="30px" heigth="30px" alt="Tercer Molar Izquierdo"/>
+        <img src="{{STATIC_URL}}img/mandibular_first_molar_left.jpg" width="30px" heigth="30px" alt="Tercer Molar Izquierdo"/>
      </td>
      <td>
-        <img src="{{STATIC_URL}}/img/mandibular_second_premolar_left.jpg" width="30px" heigth="10px" alt="Tercer Molar Izquierdo"/>
+        <img src="{{STATIC_URL}}img/mandibular_second_premolar_left.jpg" width="30px" heigth="10px" alt="Tercer Molar Izquierdo"/>
      </td>
      <td>
-        <img src="{{STATIC_URL}}/img/mandibular_first_premolar_left.jpg" width="30px" heigth="10px" alt="Tercer Molar Izquierdo"/>
+        <img src="{{STATIC_URL}}img/mandibular_first_premolar_left.jpg" width="30px" heigth="10px" alt="Tercer Molar Izquierdo"/>
      </td>
     <td>
-        <img src="{{STATIC_URL}}/img/mandibular_canine_left.jpg" width="30px" heigth="10px" alt="Tercer Molar Izquierdo"/>
+        <img src="{{STATIC_URL}}img/mandibular_canine_left.jpg" width="30px" heigth="10px" alt="Tercer Molar Izquierdo"/>
      </td>
     <td>
-        <img src="{{STATIC_URL}}/img/mandibular_second_incisor_left.jpg" width="30px" heigth="30px" alt="Tercer Molar Izquierdo"/>
+        <img src="{{STATIC_URL}}img/mandibular_second_incisor_left.jpg" width="30px" heigth="30px" alt="Tercer Molar Izquierdo"/>
      </td>
     <td >
-        <img src="{{STATIC_URL}}/img/mandibular_first_incisor_left.jpg" width="30px" heigth="30px" alt="Tercer Molar Izquierdo"/>
+        <img src="{{STATIC_URL}}img/mandibular_first_incisor_left.jpg" width="30px" heigth="30px" alt="Tercer Molar Izquierdo"/>
      </td>
     <td>
-        <img src="{{STATIC_URL}}/img/mandibular_first_incisor_right.jpg" width="30px" heigth="30px" alt="Tercer Molar Izquierdo"/>
+        <img src="{{STATIC_URL}}img/mandibular_first_incisor_right.jpg" width="30px" heigth="30px" alt="Tercer Molar Izquierdo"/>
      </td>
     <td>
-        <img src="{{STATIC_URL}}/img/mandibular_second_incisor_right.jpg" width="30px" heigth="30px" alt="Tercer Molar Izquierdo"/>
+        <img src="{{STATIC_URL}}img/mandibular_second_incisor_right.jpg" width="30px" heigth="30px" alt="Tercer Molar Izquierdo"/>
      </td>
     <td>
-        <img src="{{STATIC_URL}}/img/mandibular_canine_right.jpg" width="30px" heigth="30px" alt="Tercer Molar Izquierdo"/>
+        <img src="{{STATIC_URL}}img/mandibular_canine_right.jpg" width="30px" heigth="30px" alt="Tercer Molar Izquierdo"/>
     </td>
     <td>
-        <img src="{{STATIC_URL}}/img/mandibular_first_premolar_right.jpg" width="30px" heigth="30px" alt="Tercer Molar Izquierdo"/>
+        <img src="{{STATIC_URL}}img/mandibular_first_premolar_right.jpg" width="30px" heigth="30px" alt="Tercer Molar Izquierdo"/>
      </td>
     <td>
-        <img src="{{STATIC_URL}}/img/mandibular_second_premolar_right.jpg" width="30px" heigth="30px" alt="Tercer Molar Izquierdo"/>
+        <img src="{{STATIC_URL}}img/mandibular_second_premolar_right.jpg" width="30px" heigth="30px" alt="Tercer Molar Izquierdo"/>
     </td>
     <td >
-        <img src="{{STATIC_URL}}/img/mandibular_first_molar_right.jpg" width="30px" heigth="30px" alt="Tercer Molar Izquierdo"/>
+        <img src="{{STATIC_URL}}img/mandibular_first_molar_right.jpg" width="30px" heigth="30px" alt="Tercer Molar Izquierdo"/>
      </td>
     <td>
-        <img src="{{STATIC_URL}}/img/mandibular_second_molar_right.jpg" width="30px" heigth="30px" alt="Tercer Molar Izquierdo"/>
+        <img src="{{STATIC_URL}}img/mandibular_second_molar_right.jpg" width="30px" heigth="30px" alt="Tercer Molar Izquierdo"/>
      </td>
     <td>
-        <img src="{{STATIC_URL}}/img/mandibular_third_molar_right.jpg" width="30px" heigth="30px" alt="Tercer Molar Izquierdo"/>
+        <img src="{{STATIC_URL}}img/mandibular_third_molar_right.jpg" width="30px" heigth="30px" alt="Tercer Molar Izquierdo"/>
      </td>
 </tr>
 </table>
@@ -452,12 +457,18 @@
   </form>
       -->
 
-
+<br><br>
 <!-- Tabla de Pacientes  -->
 
 <table class="table table-hover table-bordered">
+        <thead>
+            <tr>
+              <th><div align="center">Fecha Y Hora</div></th>
+                <th><div align="center">Nombre Pieza Dental</div></th>
+                <th><div align="center">Problema Dental</div></th>
+            </tr>
+        </thead>
   {%for paciente in datospaciente%}
-        <br><br><br>
         <!-- En caso de llevar cabecera principal
 
       <table class="table table-hover">
@@ -469,14 +480,7 @@
       </table>
         -->
 
-      <table class="table table-hover table-bordered">
-        <thead>
-            <tr>
-              <th><div align="center">Fecha Y Hora</div></th>
-                <th><div align="center">Nombre Pieza Dental</div></th>
-                <th><div align="center">Problema Dental</div></th>
-            </tr>
-        </thead>
+      
         <tbody>
             <tr>
               <td><div align="center">{{paciente.fechayHora}}</div></td>
@@ -484,12 +488,13 @@
                 <td><div align="center">{{paciente.problemaDental}}</div></td>
             </tr>
         </tbody>
-      </table>
-
-            <tr>
-                <td><div align="left"><b>Nota:</b> {{paciente.notas}}
+      
+<!--
+            <tr
+                <td<div align="left"><b>Nota:</b> {{paciente.notas}}
             </div></td>
             </tr>
+-->
     {% endfor %}
     </table>
 
@@ -548,48 +553,10 @@
          <br><br> <div class =  "texto2">"No existen Pacientes con ese Nombre"</div>
     {% endif %}
   {% endif %}
+
 </div>
+{% endblock %}
 
-            <!-- Listado del Paciente
-
-            TABLA HECHA POR LUIS
-
-
-    <table border='0' width="80%" align='center' >
-           {%for paciente in datospaciente%}
-
-             <tr><td colaspan="2"> <p style="
-
-              background:     rgba(50,118,177,0.9);
-              padding:        2px 5px;
-              -webkit-border-radius: 5px;
-              -moz-border-radius: 5px;
-              border-radius: 5px;
-              text-align:     center;
-              border:         1px solid transparent;
-              border-color:   rgba(40,94,142,0.9);
-              font-weight:    bold ;
-              color:          #fff;
-              text-shadow: 1px 1px 1px #2F3D4A;
-              ">
-
-              Fecha y Hora: {{paciente.fechayHora}}</p></td></tr>
-              <tr>
-                <td> Doctor: </td> <td> <p> {{paciente.doctor}} </p> </td>
-                <td> Paciente: </td><td> <p> {{paciente.paciente}} </p> </td>
-                <td> Nombre Pieza Dental: </td><td> <p> {{paciente.nombrePiezaDental}} </p> </td>
-                <td> Problema Dental: </td><td> <p> {{paciente.problemaDental}} </p> </td>
-              </tr>
-
-              <tr>
-                <td> Nota: </td><td> <p> {{paciente.notas}} </p> </td>
-                <td> Plan Contrado: </td><td> <p> {{lista.plan_contratado}} </p> </td>
-                 <td> Imagen Odontograma: </td><td> <p> {{paciente.odontograma}} </p> </td>
-                 <td> Telefono: </td><td> <p> {{lista.telefono}} </p> </td>
-              </tr>
-              <tr><td colspan='8' > <hr></td></tr>
-            {%endfor%}
-      </table>
--->
-
-{% endblock content %}
+{% block javascript %}
+  <script type="text/javascript" src="{% static 'js/jquery-ui.js'%}"></script>
+{% endblock javascript %}
