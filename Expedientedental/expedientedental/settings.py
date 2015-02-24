@@ -161,6 +161,7 @@ INSTALLED_APPS = (
     'paquete',
     'crispy_forms',
     'historialprocedimientos',
+    'south',
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
 )
