@@ -2,17 +2,10 @@
 {%load static from staticfiles %}
 
 {% block content %}
-     
-    <h2 class="page-header">Interrogatorio General</h2>
 
-   <form action="" method="POST">{% csrf_token %}
-        <table>
-         {{ form.as_table }}
-        </table>
-        <div id="botonsend">
-        <input type="submit" value="Guardar Formulario">
-        </div>
-        <br>
-    </form>
+<h2 class="page-header">Registro Del Paciente</h2>
 
+{% load crispy_forms_tags %}
+{% crispy form %}
 {% endblock content %}
+                  

@@ -60,4 +60,4 @@ class Paciente(models.Model):
 	telefono = models.CharField(max_length=20)
 
 	def __unicode__(self):
-		return self.nombre+' '+self.apellidoPaterno
+		return self.nombre+' '+self.apellidoPaterno 
