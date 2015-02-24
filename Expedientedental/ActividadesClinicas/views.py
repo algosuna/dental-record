@@ -63,7 +63,7 @@ def buscarpaciente(request):
     query = request.GET.get('q', '')
     if query:
         qset = (
-            Q(paciente__nombre__exact=query)
+            Q(paciente__nombre__contains=query)
         )
         results = Odontograma.objects.filter(qset).distinct()
     else:
