@@ -85,7 +85,7 @@ class OdontogramaForm(forms.ModelForm):
             )
         )
         self.fields['doctor'].label='Medico'
-        self.fields['paciente'].label='Nombre(s)'
+        self.fields['paciente'].label='Paciente'
         self.fields['nombrePiezaDental'].label='Pieza Dental'
         self.fields['problemaDental'].label='problemaDental'
         self.fields['notas'].label='notas'

@@ -456,12 +456,18 @@
   </form>
       -->
 
-
+<br><br>
 <!-- Tabla de Pacientes  -->
 
 <table class="table table-hover table-bordered">
+        <thead>
+            <tr>
+              <th><div align="center">Fecha Y Hora</div></th>
+                <th><div align="center">Nombre Pieza Dental</div></th>
+                <th><div align="center">Problema Dental</div></th>
+            </tr>
+        </thead>
   {%for paciente in datospaciente%}
-        <br><br><br>
         <!-- En caso de llevar cabecera principal
 
       <table class="table table-hover">
@@ -473,14 +479,7 @@
       </table>
         -->
 
-      <table class="table table-hover table-bordered">
-        <thead>
-            <tr>
-              <th><div align="center">Fecha Y Hora</div></th>
-                <th><div align="center">Nombre Pieza Dental</div></th>
-                <th><div align="center">Problema Dental</div></th>
-            </tr>
-        </thead>
+      
         <tbody>
             <tr>
               <td><div align="center">{{paciente.fechayHora}}</div></td>
@@ -488,12 +487,13 @@
                 <td><div align="center">{{paciente.problemaDental}}</div></td>
             </tr>
         </tbody>
-      </table>
-
-            <tr>
-                <td><div align="left"><b>Nota:</b> {{paciente.notas}}
+      
+<!--
+            <tr
+                <td<div align="left"><b>Nota:</b> {{paciente.notas}}
             </div></td>
             </tr>
+-->
     {% endfor %}
     </table>
 
