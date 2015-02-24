@@ -32,7 +32,7 @@ def odontograma(request):
         )
         results = Odontograma.objects.filter(qset).distinct()
     else:
-        results = []    
+        results = []
     consulta = Odontograma.objects.all()
     if request.method == "POST":
         modelform = OdontogramaForm(request.POST)
@@ -67,7 +67,7 @@ def buscarpaciente(request):
         )
         results = Paciente.objects.filter(qset).distinct()
     else:
-        results = []    
+        results = []
     return render(request, "evaluacion.html", {"results": results,"query": query})
 
 def detallespaciente(request):
