@@ -16,7 +16,6 @@ class PacienteForm(forms.ModelForm):
 	def __init__(self, *args, **kwargs):
 		super(PacienteForm,self).__init__(*args,**kwargs)
 		self.helper=FormHelper()
-		self.helper=FormHelper()
 		self.helper.layout=Layout(
 			HTML(""" 
 							<p> Rellene todos los Campos Con *.</p>
@@ -26,7 +25,8 @@ class PacienteForm(forms.ModelForm):
 			Fieldset(
 				'Informacion de Rigor',
 
-				Field('credencialPaciente' , wrapper_class='col-md-12'),
+				Field('credencialPaciente' , wrapper_class='col-md-7'),
+				Field('grupo' , wrapper_class='col-md-5'),
 				Field('nombre' , wrapper_class='col-md-4'),
 				Field('apellidoPaterno',	wrapper_class='col-md-4'),
 				Field('apellidoMaterno',	wrapper_class='col-md-4'),

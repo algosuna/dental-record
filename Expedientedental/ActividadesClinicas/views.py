@@ -2,13 +2,12 @@
 from django.template.loader import get_template
 from django.template import RequestContext
 from django.http import Http404, HttpResponse
-from .forms import OdontogramaForm, HistoriaClinicaForm, ListadeDiagnosticosForm
+from .forms import OdontogramaForm
 from .forms import HistoriaClinicaForm
 from .forms import ListadeDiagnosticosForm
 from django.shortcuts import render_to_response, render, redirect
 import datetime
 from ActividadesClinicas.models import HistoriaClinica
-from .forms import ListadeDiagnosticosForm
 from django.shortcuts import render_to_response, render, redirect
 import datetime
 from ActividadesClinicas.models import HistoriaClinica, Odontograma, ListadeDiagnosticos
@@ -16,14 +15,14 @@ from ActividadesClinicas.models import HistoriaClinica, Odontograma, ListadeDiag
 from django.db.models import Q
 
 def HistoriaClinica(request):
-	if request.method == "POST":
-		modelform = HistoriaClinicaForm(request.POST)
-		if modelform.is_valid():
-			modelform.save()
-			return redirect("/interrogatorio/")
-	else:
-		modelform=HistoriaClinicaForm()
-	return render(request,"interrogatorio.html",{"form":modelform})
+    if request.method == "POST":
+        modelform = HistoriaClinicaForm(request.POST)
+        if modelform.is_valid():
+            modelform.save()
+            return redirect("/interrogatorio/")
+    else:
+        modelform=HistoriaClinicaForm()
+    return render(request,"interrogatorio.html",{"form":modelform})
 
 def odontograma(request):
     query = request.GET.get('q', '')

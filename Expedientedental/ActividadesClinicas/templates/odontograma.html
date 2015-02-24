@@ -1,9 +1,8 @@
 {% extends "base1.html" %}
 {%load static from staticfiles %}
+{% load crispy_forms_tags %}
 
 {% block content %}
-
-	{%load static from staticfiles %}
 
 
 
@@ -434,10 +433,9 @@
 
 </div> <!--Fin Div Tabla 4 -->
 <br><br><br><br>
-
-{% load crispy_forms_tags %}
+  <div class"row">
         {% crispy form %}
-
+  </div>
 
 
 
