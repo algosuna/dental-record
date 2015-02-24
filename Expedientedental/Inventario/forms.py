@@ -16,24 +16,24 @@ class CategoriaForm(forms.ModelForm):
 		self.helper=FormHelper()
 		self.helper=FormHelper()
 		self.helper.layout=Layout(
-			HTML(""" 
-							<p> Rellene todos los Campos Con *.</p>
+			HTML("""
+							<p class="parrafo">Todos Los campos con ( * ) son Requeridos.</p>
 
 							"""
 			),
 			Fieldset(
-				'Informacion de Rigor',
-				
-				Field('nombre' , wrapper_class='col-md-8'),		
+				'',
+
+				Field('nombre' , wrapper_class='col-md-8'),
 
 
 				),
 			ButtonHolder(
 					Submit('save','Guardar')
 			)
-		)		
+		)
 		self.fields['nombre'].label='Nombre'
-		
+
 
 class ProductoForm(forms.ModelForm):
       class Meta:
@@ -47,7 +47,7 @@ class ProductoForm(forms.ModelForm):
       	self.helper.layout=Layout(
       		HTML(
       			"""
-      					<p>Rellene la Informacion marcada con *.</p>
+      					<p class="parrafo">Todos Los campos con ( * ) son Requeridos.</p>
       					"""
       					),
       		Fieldset(
@@ -66,7 +66,7 @@ class ProductoForm(forms.ModelForm):
       	self.fields['precio'].label='Precio'
       	self.fields['categoria'].label='Categoria'
 
-      
+
 
 
 

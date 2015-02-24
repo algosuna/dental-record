@@ -16,17 +16,18 @@ class PaqueteForm(forms.ModelForm):
 		self.helper=FormHelper()
 		self.helper=FormHelper()
 		self.helper.layout=Layout(
-			HTML(""" 
-							<p> Rellene todos los Campos Con *.</p>
+			HTML("""
+							<p class="parrafo"> Campos con ( * ) Son Requeridos. </p>
+
 
 							"""
 			),
 			Fieldset(
-				'Informacion de Rigor',
+				'',
 
 				Field('nombre' , wrapper_class='col-md-4'),
 				Field('descripcion' , wrapper_class='col-md-8'),
-				
+
 
 
 				),
@@ -37,7 +38,7 @@ class PaqueteForm(forms.ModelForm):
 		)
 		self.fields['nombre'].label='Nombre Paquete'
 		self.fields['descripcion'].label='Descripcion del Paquete'
-		
+
 
 
 class EntryPaqueteForm(forms.ModelForm):
@@ -49,18 +50,18 @@ class EntryPaqueteForm(forms.ModelForm):
 		self.helper=FormHelper()
 		self.helper=FormHelper()
 		self.helper.layout=Layout(
-			HTML(""" 
-							<p> Rellene todos los Campos Con *.</p>
+			HTML("""
+							<p class="parrafo"> Campos con ( * ) Son Requeridos. </p>
 
 							"""
 			),
 			Fieldset(
-				'Informacion de Rigor',
+				'',
 
 				Field('nombre' , wrapper_class='col-md-4'),
 				Field('producto' , wrapper_class='col-md-8'),
 				Field('cantidad',wrapper_class='col-md-2')
-				
+
 
 
 				),
@@ -72,6 +73,5 @@ class EntryPaqueteForm(forms.ModelForm):
 		self.fields['nombre'].label='Nombre Paquete'
 		self.fields['producto'].label='Prodcutos'
 		self.fields['cantidad'].label='cantidad'
-		
 
-		
+

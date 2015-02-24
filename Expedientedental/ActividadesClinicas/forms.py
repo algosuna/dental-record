@@ -10,10 +10,10 @@ class HistoriaClinicaForm(forms.ModelForm):
     class Meta:
         model=HistoriaClinica
     def __init__(self, *args, **kwargs):
-        super(PacienteForm,self).__init__(*args,**kwargs)
+        super(HistoriaClinicaForm,self).__init__(*args,**kwargs)
         self.helper=FormHelper()
         self.helper.layout=Layout(
-            HTML(""" 
+            HTML("""
                             <p> Rellene todos los Campos Con *.</p>
 
                             """
@@ -64,20 +64,20 @@ class OdontogramaForm(forms.ModelForm):
         self.helper.label_class = 'col-md-2'
         self.helper.field_class = 'col-md-8'
         self.helper.layout=Layout(
-            HTML(""" 
-                            <p> Rellene todos los Campos Con *.</p>
+            HTML("""
+                            <p class='parrafo'> Todos Los Campos con ( * ) son Requeridos.</p>
 
                             """
             ),
             Fieldset(
-                'Informacion de Rigor',
+                '',
 
                 Field('doctor'),
                 Field('paciente'),
                 Field('nombrePiezaDental'),
                 Field('problemaDental'),
                 Field('notas'),
-                
+
                 ),
             ButtonHolder(
                     Submit('save','Guardar')
@@ -85,11 +85,11 @@ class OdontogramaForm(forms.ModelForm):
             )
         )
         self.fields['doctor'].label='Medico'
-        self.fields['paciente'].label='Nombre(s)'
+        self.fields['paciente'].label='Nombre (s)'
         self.fields['nombrePiezaDental'].label='Pieza Dental'
         self.fields['problemaDental'].label='problemaDental'
         self.fields['notas'].label='notas'
-        
+
 class ListadeDiagnosticosForm(forms.ModelForm):
     class Meta:
         model=ListadeDiagnosticos
