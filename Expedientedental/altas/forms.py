@@ -26,6 +26,7 @@ class PacienteForm(forms.ModelForm):
 
 				Field('credencialPaciente' , wrapper_class='col-md-7'),
 				Field('grupo' , wrapper_class='col-md-5'),
+				Field('imagen' , wrapper_class='col-md-5'),
 				Field('nombre' , wrapper_class='col-md-4'),
 				Field('apellidoPaterno',	wrapper_class='col-md-4'),
 				Field('apellidoMaterno',	wrapper_class='col-md-4'),
