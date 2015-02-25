@@ -1,4 +1,5 @@
 #encoding: utf-8
+from os.path import splitext
 from django.db import models
 from django.contrib import admin
 from precios.models import GrupoPrecios
@@ -34,6 +35,12 @@ class Medico(models.Model):
 # Modelo de Pacientes
 
 class Paciente(models.Model):
+
+	def url(nombreCompleto, filename):
+		name, ext = splitext(filename)
+		ruta = "Pacientes/%s%s"%(nombreCompleto, ext)
+		return ruta
+
 	sex_CHOICES=(
 
 		('M', 'M'),
@@ -46,6 +53,7 @@ class Paciente(models.Model):
 
     	)
  	credencialPaciente = models.CharField(max_length=15)
+ 	imagen = models.ImageField(upload_to=url,null=True,blank=True)
  	grupo= models.ForeignKey(GrupoPrecios)
 	nombre	= models.CharField(max_length=40)
 	apellidoPaterno	= models.CharField(max_length=30)
@@ -59,7 +67,8 @@ class Paciente(models.Model):
 	nSs = models.CharField(max_length=20)
 	telefono = models.CharField(max_length=20)
 
-	def __unicode__(self):
 
-		return self.nombre+' '+self.apellidoPaterno 
+	def __unicode__(self):
+		nombreCompleto = "%s_%s"%(self.apellidoPaterno,self.nombre)
+		return nombreCompleto
 
