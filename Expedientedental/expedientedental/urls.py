@@ -2,12 +2,6 @@ from django.conf.urls.defaults import patterns, include, url
 import settings
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
-from ActividadesClinicas.views import HistoriaClinica
-from ActividadesClinicas.views import odontograma
-from ActividadesClinicas.views import diagnosticos
-from ActividadesClinicas.views import datospaciente
-from ActividadesClinicas.views import detallespaciente
-from ActividadesClinicas.views import buscarpaciente
 from Inventario.views import producto, categoria
 from cotizacion.views import Cotizacion
 from paquete.views import paquete, tipoPaquete
@@ -28,20 +22,18 @@ urlpatterns = patterns('',
     url(r'^',include('bitacora.urls')),
     #url(r'^',include('cotizacion.urls')),
     url(r'^cotizacion/', include('cotizacion.urls')),
+    url(r'^', include('ActividadesClinicas.urls')),
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^interrogatorio/$',HistoriaClinica),
-    url(r'^odontograma/$',odontograma),
-    url(r'^diagnosticos/$',diagnosticos),
 
     url(r'^producto/$',producto),
     url(r'^categoria/$',categoria),
 
     url(r'^paquete/$',paquete),
     url(r'^tipoPaquete/$',tipoPaquete),
-    url(r'^evaluacion/$',buscarpaciente),
-    url(r'^detalles/$',detallespaciente),
+    url(r'^evaluacion/$', 'buscarpaciente'),
+    url(r'^detalles/$', 'detallespaciente'),
 
     #url(r'^prueba/$',busqueda),
 
