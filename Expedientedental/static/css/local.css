@@ -4,57 +4,50 @@ local css
 
 */
 
-body {
-	padding-top: 70px;
-}
+body { padding-top: 70px; }
 
-nav.navbar + .page-header {
-	margin-top: 10px;
-}
+nav.navbar + .page-header { margin-top: 10px; }
 
-footer {
-	margin-top: 40px;
-}
+footer { margin-top: 40px; }
 
 footer .alert {
-	text-align: justify;
+    text-align: justify;
+    font-size: 8px;
 }
 
-/*color de la barra de navegacion */
-.navbar-inverse {
-background-color:       #4096EE;
-border-color:           #ccc;
-}
-
-.navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:focus, .navbar-inverse .navbar-nav>.open>a:hover{
-    background-color: #A1C4F0;
-}
-/*color del texto de la barra de navegacion*/
-.navbar-inverse .navbar-nav>li>a {
-color: #fff;
-}
-
-.muela img{
-
-    margin-left: 800px !important;
-    float:right;
-    margin-top: -40px;
-}
-.alert-danger{
-width: auto;
-font-size: 8px;
-font-family: sans-serif;
-}
-
-.page-header h2{
+/* styling del header principal */
+.page-header h2 {
     font-size: 50px;
-    color: rgba(54,57,61,0.5);
-    margin-left: 100px !important;
-    float: left;
+    color: #999999;
+    margin-left: 80px;
+    padding-top: 20px;
 }
 
-/*P del forms actividades clinicas*/
+/* color de la barra de navegacion */
+.navbar-inverse {
+    background-color: #4096ee;
+    border-color: #cccccc;
+}
 
+.navbar-inverse .navbar-nav > .open > a,
+.navbar-inverse .navbar-nav > .open > a:focus,
+.navbar-inverse .navbar-nav > .open > a:hover { background-color: #A1C4F0; }
+
+/* color del texto de la barra de navegacion */
+.navbar-inverse .navbar-nav > li > a { color: #fff; }
+
+/* p del forms odontograma */
 .parrafo{
     font-size:  30px;
+}
+
+/*
+
+busqueda
+
+*/
+
+.search {
+    max-width: 600px;
+    margin: 0 auto;
 }

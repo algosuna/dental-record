@@ -14,6 +14,9 @@ import datetime
 from ActividadesClinicas.models import HistoriaClinica, Odontograma, ListadeDiagnosticos
 from django.db.models import Q
 
+def inicio(request):
+    return render(request, 'inicio.html')
+
 def HistoriaClinica(request):
     if request.method == "POST":
         modelform = HistoriaClinicaForm(request.POST)

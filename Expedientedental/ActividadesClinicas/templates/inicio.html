@@ -1,0 +1,19 @@
+{% extends "base1.html" %}
+
+{%load static from staticfiles %}
+
+{% block content %}
+
+	<h2 class="page-header">Búsqueda</h2>
+
+	<div class="text-center search">
+		<p class="lead">Ingrese el nombre del paciente:</p>
+		<form action="" class="form-inline">
+
+			<input type="text" class="form-control" id="name" placeholder="Nombre del paciente...">
+			<input type="submit" class="btn btn-primary" name="busqueda" value="Buscar">
+			
+		</form>
+	</div>
+
+{% endblock content %}                  
