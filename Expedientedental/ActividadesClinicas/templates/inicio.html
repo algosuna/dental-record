@@ -6,14 +6,47 @@
 
 	<h2 class="page-header">Búsqueda</h2>
 
-	<div class="text-center search">
-		<p class="lead">Ingrese el nombre del paciente:</p>
-		<form action="" class="form-inline">
 
-			<input type="text" class="form-control" id="name" placeholder="Nombre del paciente...">
-			<input type="submit" class="btn btn-primary" name="busqueda" value="Buscar">
-			
-		</form>
-	</div>
+	{% if search_string %}
+	<p class="text-center">Usted ingresó "{{ search_string }}":</p>
+		{% if objects %}
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>Nombre</th>
+						<th>Apellido Paterno</th>
+						<th>Apellido Materno</th>
+						<th>&nbsp;</th>
+					</tr>
+				</thead>
+				<tbody>
+  		{% for paciente in objects %}
+  			<tr>
+  				<td>{{ paciente.nombre }}</td>
+  				<td>{{ paciente.apellidoPaterno }}</td>
+  				<td>{{ paciente.apellidoMaterno }}</td>
+  				<td class="text-center"><a href="#" class="btn btn-warning">Detalles</a></td>
+  			</tr>
+  		{% endfor %}
+  			</tbody>
+			</table>
+			<p class="lead text-center">
+			<a href="/" class="btn btn-primary">Nueva Búsqueda <span class="glyphicon glyphicon-chevron-right"></span></a href="/"></p>
+		{% else %}
+			<p class="lead text-center text-muted">No se han encontrado pacientes con ese nombre.
+			<a href="/" class="btn btn-primary">Nueva Búsqueda <span class="glyphicon glyphicon-chevron-right"></span></a href="/"></p>
+		{% endif %}
 
+		{% else %}
+
+		<div class="text-center search clearfix">
+			<form action="" method="GET">
+				
+				<label for="q" class="lead">Ingrese el nombre del paciente:</label>
+				<input type="text" name="q" class="form-control" placeholder="Nombre del paciente..." value="{{ query|escape }}">
+				<input type="submit" class="btn btn-primary" value="Buscar">
+				
+			</form>
+		</div>
+  {% endif %}
 {% endblock content %}                  

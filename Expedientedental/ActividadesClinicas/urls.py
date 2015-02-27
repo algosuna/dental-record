@@ -6,5 +6,7 @@ urlpatterns = patterns('ActividadesClinicas.views',
     url(r'^interrogatorio/$', 'HistoriaClinica'),
     url(r'^odontograma/$', 'odontograma'),
     url(r'^diagnosticos/$', 'diagnosticos'),
+    url(r'^evaluacion/$', 'buscarpaciente'),
+    url(r'^detalles/$', 'detallespaciente'),
 
 )

@@ -3,12 +3,23 @@
 local css
 
 */
+html {
+    position: relative;
+    min-height: 100%;
+}
 
-body { padding-top: 70px; }
+body {
+    padding-top: 70px;
+    margin-bottom: 177px;
+}
 
 nav.navbar + .page-header { margin-top: 10px; }
 
-footer { margin-top: 40px; }
+footer {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+}
 
 footer .alert {
     text-align: justify;
@@ -50,4 +61,23 @@ busqueda
 .search {
     max-width: 600px;
     margin: 0 auto;
+}
+.search label {
+    display: block;
+    width: 100%;
+}
+.search input {
+    width: 480px;
+    display: block;
+    float: left;
+}
+
+.search input + input {
+    width: 100px;
+    margin-left: 20px;
+}
+
+.search ~ table tbody tr:hover {
+    background-color: #eeeeee;
+    cursor: pointer;
 }

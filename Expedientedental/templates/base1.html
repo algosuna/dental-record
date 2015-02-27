@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title> {%block title%}  {%endblock%}</title>
+  <title> {%block title%}{%endblock%}</title>
 
   {%load static from staticfiles %}
 
@@ -84,11 +84,11 @@
   </nav><!-- end .navbar -->
 
   <div class="page-header container clearfix">
-    <img src="{{STATIC_URL}}img/logo.png" alt="Logo" height="125" width="170" class="pull-left">
+    <img src="{% static 'img/logo.png'%}" alt="Logo" height="125" width="170" class="pull-left">
 
     <h2 class="pull-left">Sistema Administrativo Dental</h2>
     <div class="muela pull-right">
-      <img src="{{STATIC_URL}}img/muela.png" height="112" width="77">
+      <img src="{% static 'img/muela.png' %}" height="112" width="77">
     </div>
   </div>
 
@@ -111,7 +111,7 @@
     </footer>
 
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
   {% block javascript %}
   {% endblock javascript %}

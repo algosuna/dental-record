@@ -1,21 +1,28 @@
 #encoding:utf-8
-from django.template.loader import get_template
-from django.template import RequestContext
-from django.http import Http404, HttpResponse
-from .forms import OdontogramaForm
-from .forms import HistoriaClinicaForm
-from .forms import ListadeDiagnosticosForm
-from altas.models import Paciente
-from django.shortcuts import render_to_response, render, redirect
 import datetime
-from ActividadesClinicas.models import HistoriaClinica
-from django.shortcuts import render_to_response, render, redirect
-import datetime
-from ActividadesClinicas.models import HistoriaClinica, Odontograma, ListadeDiagnosticos
+
+from django.shortcuts import render, redirect, render_to_response
 from django.db.models import Q
+from django.template import RequestContext
+
+from ActividadesClinicas.forms import OdontogramaForm, HistoriaClinicaForm, ListadeDiagnosticosForm
+from ActividadesClinicas.models import HistoriaClinica, Odontograma, ListadeDiagnosticos
+from ActividadesClinicas.utils import generic_search
+
+from altas.models import Paciente
 
 def inicio(request):
-    return render(request, 'inicio.html')
+    query = 'q'
+    MODEL_MAP = {
+        Paciente: ['nombre','apellidoPaterno','apellidoMaterno', 'id', ''],
+    }
+
+    objects = []
+
+    for model, fields in MODEL_MAP.iteritems():
+        objects+=generic_search(request,model,fields,query)
+
+    return render_to_response('inicio.html', {'objects':objects, 'search_string' : request.GET.get(query,''), } )
 
 def HistoriaClinica(request):
     if request.method == "POST":

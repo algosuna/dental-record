@@ -32,8 +32,6 @@ urlpatterns = patterns('',
 
     url(r'^paquete/$',paquete),
     url(r'^tipoPaquete/$',tipoPaquete),
-    url(r'^evaluacion/$', 'buscarpaciente'),
-    url(r'^detalles/$', 'detallespaciente'),
 
     url(r'^media/(?P<path>.*)$','django.views.static.serve',{'document_root':settings.MEDIA_ROOT}),
 
