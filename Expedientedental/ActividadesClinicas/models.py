@@ -246,14 +246,25 @@ class Odontograma(models.Model):
  	doctor=models.ForeignKey(Medico)
  	paciente=models.ForeignKey(Paciente)
  	fechayHora = models.DateTimeField(auto_now_add=True)
- 	nombrePiezaDental=models.CharField(max_length=40)
- 	problemaDental=models.ForeignKey(ListadeDiagnosticos)
  	notas=models.TextField()
  	
- 	def __unicode__(self):
- 		
- 		problema="%s %s %s"% (self.doctor,self.paciente,self.fechayHora)
- 		return problema
+ 	
+
+
+CARAS=(
+	('S','Cara Superior'),
+	('C','Cara Central'),
+	('X','Cara Completo'),
+	('Z','Cara Izquierda'),
+	('D','Cara Derecha'),
+	)
+
+class Procedimiento(models.Model):
+	pieza=models.IntegerField()
+	cara=models.CharField(max_length=4,choices=CARAS)
+	tratamiento=models.ForeignKey(ListadeDiagnosticos)
+
+
 
 
 
