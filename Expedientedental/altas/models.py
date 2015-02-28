@@ -36,9 +36,9 @@ class Medico(models.Model):
 
 class Paciente(models.Model):
 
-	def url(nombreCompleto, filename):
+	def url(imagennombre, filename):
 		name, ext = splitext(filename)
-		ruta = "Pacientes/%s%s"%(nombreCompleto, ext)
+		ruta = "Pacientes/%s%s"%(imagennombre, ext)
 		return ruta
 
 	sex_CHOICES=(
@@ -69,6 +69,10 @@ class Paciente(models.Model):
 
 
 	def __unicode__(self):
-		nombreCompleto = "%s_%s"%(self.apellidoPaterno,self.nombre)
-		return nombreCompleto
+		imagennombre = "%s_%s"%(self.apellidoPaterno,self.nombre)
+		return imagennombre
+
+	def __unicode__(self):
+		nombre = "%s %s"%(self.nombre,self.apellidoPaterno)
+		return nombre
 

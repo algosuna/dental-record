@@ -64,7 +64,7 @@ MEDIA_URL = '/media/'
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = ''
+#STATIC_ROOT = os.path.join.(BASE_DIR,'static')
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
@@ -83,10 +83,14 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    'dajaxice.finders.DajaxiceFinder',
 )
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'a*whdmryd)m91g7su-ul!7%*z5qhe05t^)x12xeio^qco36hp-'
+
+#For Dajax urls
+DAJAXICE_MEDIA_PREFIX="dajaxice"
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -123,9 +127,9 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.contrib.auth.context_processors.auth",
     #"django.auth.core.context_processors.auth",
 
-   # "django.core.context_processors.debug",
-   # "django.core.context_processors.i18n",
-   # "django.core.context_processors.media",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    # "django.core.context_processors.media",
     # Needs to be added for django-staticfiles to allow you to use
     # {{ STATIC_URL }}myapp/my.css in your templates.
     #'staticfiles.context_processors.static_url',
@@ -136,7 +140,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.static",
     #"django.core.context_processors.tz",
     "django.core.context_processors.request",
-    #"django.contrib.messages.context_processors.messages"
+    "django.contrib.messages.context_processors.messages",
 )
 
 
@@ -159,6 +163,8 @@ INSTALLED_APPS = (
     'Inventario',
     'cotizacion',
     'paquete',
+    'dajaxice',
+    'dajax',
     'crispy_forms',
     'historialprocedimientos',
     'south',

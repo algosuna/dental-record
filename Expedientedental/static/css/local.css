@@ -58,3 +58,21 @@ font-family: sans-serif;
 .parrafo{
     font-size:  30px;
 }
+
+/*
+
+form styling
+
+*/
+
+fieldset { margin-top: 20px; }
+
+legend {
+    padding: 10px 0px 10px 20px;
+    background-color: #cbefff;
+}
+
+.section-header {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+}
