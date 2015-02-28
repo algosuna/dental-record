@@ -9,4 +9,6 @@ urlpatterns = patterns('ActividadesClinicas.views',
     url(r'^evaluacion/$', 'buscarpaciente'),
     url(r'^detalles/$', 'detallespaciente'),
 
+ 		url(r'^pormientras/(?P<paciente_id>\d+)/$', 'pormientras'),
+
 )

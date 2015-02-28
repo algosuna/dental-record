@@ -14,7 +14,7 @@ from altas.models import Paciente
 def inicio(request):
     query = 'q'
     MODEL_MAP = {
-        Paciente: ['nombre','apellidoPaterno','apellidoMaterno', 'id', ''],
+        Paciente: ['nombre','apellidoPaterno','apellidoMaterno'],
     }
 
     objects = []
@@ -23,6 +23,10 @@ def inicio(request):
         objects+=generic_search(request,model,fields,query)
 
     return render_to_response('inicio.html', {'objects':objects, 'search_string' : request.GET.get(query,''), } )
+
+def pormientras(request):
+    
+    return render(request, 'pormientras.html')
 
 def HistoriaClinica(request):
     if request.method == "POST":
