@@ -24,7 +24,7 @@ class ServicioForm(forms.ModelForm):
 			Fieldset(
 				'Informacion de Rigor',
 
-				Field('' , wrapper_class='col-md-8'),
+				Field('nombreDelServicio' , wrapper_class='col-md-8'),
 
 
 				),
