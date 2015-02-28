@@ -23,20 +23,6 @@ def inicio(request):
 
     return render_to_response('inicio.html', {'objects':objects, 'search_string' : request.GET.get(query,''), } )
 
-def pormientras(request):
-    
-    return render(request, 'pormientras.html')
-
-def HistoriaClinica(request):
-    if request.method == "POST":
-        modelform = HistoriaClinicaForm(request.POST)
-        if modelform.is_valid():
-            modelform.save()
-            return redirect("/interrogatorio/")
-    else:
-        modelform=HistoriaClinicaForm()
-    return render(request,"interrogatorio.html",{"form":modelform})
-
 def odontograma(request):
     query = request.GET.get('q', '')
     if query:
@@ -63,6 +49,15 @@ def odontograma(request):
         "results": results,
         "query": query})
 
+def HistoriaClinica(request):
+    if request.method == "POST":
+        modelform = HistoriaClinicaForm(request.POST)
+        if modelform.is_valid():
+            modelform.save()
+            return redirect("/interrogatorio/")
+    else:
+        modelform=HistoriaClinicaForm()
+    return render(request,"interrogatorio.html",{"form":modelform})
 
 def diagnosticos(request):
     if request.method == "POST":

@@ -1,16 +1,18 @@
+import settings
+
 from django.conf.urls.defaults import patterns, include, url
 from django.conf import settings
-from dajaxice.core import dajaxice_autodiscover, dajaxice_config
-dajaxice_autodiscover()
-import settings
+
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
+admin.autodiscover()
+
+from dajaxice.core import dajaxice_autodiscover, dajaxice_config
+dajaxice_autodiscover()
+
 from Inventario.views import producto, categoria
 from cotizacion.views import Cotizacion
 from paquete.views import paquete, tipoPaquete
-from django.contrib import admin
-
-admin.autodiscover()
 
 urlpatterns = patterns('',
     # Examples:
