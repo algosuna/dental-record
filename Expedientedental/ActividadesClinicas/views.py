@@ -2,16 +2,18 @@
 from django.template.loader import get_template
 from django.template import RequestContext
 from django.http import Http404, HttpResponse
+from ActividadesClinicas.models import HistoriaClinica
+from ActividadesClinicas.models import Odontograma
+from ActividadesClinicas.models import ListadeDiagnosticos
+from altas.models import Paciente
 from .forms import OdontogramaForm
+from .forms import ProcedimientoForm
 from .forms import HistoriaClinicaForm
 from .forms import ListadeDiagnosticosForm
-from altas.models import Paciente
+from .forms import ProcedimientoFormSet
 from django.shortcuts import render_to_response, render, redirect
+
 import datetime
-from ActividadesClinicas.models import HistoriaClinica
-from django.shortcuts import render_to_response, render, redirect
-import datetime
-from ActividadesClinicas.models import HistoriaClinica, Odontograma, ListadeDiagnosticos
 from django.db.models import Q
 
 def HistoriaClinica(request):
@@ -36,12 +38,18 @@ def odontograma(request):
     consulta = Odontograma.objects.all()
     if request.method == "POST":
         modelform = OdontogramaForm(request.POST)
+        formset = ProcedimientoFormSet(request.POST, request.FILES)
         if modelform.is_valid():
             modelform.save()
             return redirect("/odontograma/")
     else:
         modelform = OdontogramaForm()
-    return render(request, "odontograma.html", {"form": modelform,'datospaciente': consulta[0:],"results": results,
+        formset=ProcedimientoFormSet()
+    return render(request, "odontograma.html", 
+        {"form": modelform,
+        "formset": formset,
+        'datospaciente': consulta[0:],
+        "results": results,
         "query": query})
 
 

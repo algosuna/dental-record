@@ -17,9 +17,9 @@ class ListadeDiagnosticosAdmin(admin.ModelAdmin):
 	fields = ()
 
 class OdontogramaAdmin(admin.ModelAdmin):
-	list_display = ('doctor','paciente','problemaDental',)
-	list_filter = ('doctor','paciente','problemaDental',)
-	search_fields = ['doctor','paciente','problemaDental']
+	list_display = ('doctor','paciente',)
+	list_filter = ('doctor','paciente',)
+	search_fields = ['doctor','paciente',]
 	fields = ()
 
 class TablaPruebaAdmin(admin.ModelAdmin):
