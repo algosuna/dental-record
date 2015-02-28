@@ -1,4 +1,7 @@
 from django.conf.urls.defaults import patterns, include, url
+from django.conf import settings
+from dajaxice.core import dajaxice_autodiscover, dajaxice_config
+dajaxice_autodiscover()
 import settings
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -36,7 +39,8 @@ urlpatterns = patterns('',
     url(r'^media/(?P<path>.*)$','django.views.static.serve',{'document_root':settings.MEDIA_ROOT}),
 
     #url(r'^prueba/$',busqueda),
-
+    
+    (r'^dajaxice/', include('dajaxice.urls')),
 )
 
 

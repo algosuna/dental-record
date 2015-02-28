@@ -3,9 +3,8 @@ import datetime
 
 from django.shortcuts import render, redirect, render_to_response
 from django.db.models import Q
-from django.template import RequestContext
 
-from ActividadesClinicas.forms import OdontogramaForm, HistoriaClinicaForm, ListadeDiagnosticosForm
+from ActividadesClinicas.forms import OdontogramaForm, HistoriaClinicaForm, ListadeDiagnosticosForm, ProcedimientoForm, ProcedimientoFormSet
 from ActividadesClinicas.models import HistoriaClinica, Odontograma, ListadeDiagnosticos
 from ActividadesClinicas.utils import generic_search
 
@@ -50,12 +49,18 @@ def odontograma(request):
     consulta = Odontograma.objects.all()
     if request.method == "POST":
         modelform = OdontogramaForm(request.POST)
+        formset = ProcedimientoFormSet(request.POST, request.FILES)
         if modelform.is_valid():
             modelform.save()
             return redirect("/odontograma/")
     else:
         modelform = OdontogramaForm()
-    return render(request, "odontograma.html", {"form": modelform,'datospaciente': consulta[0:],"results": results,
+        formset=ProcedimientoFormSet()
+    return render(request, "odontograma.html", 
+        {"form": modelform,
+        "formset": formset,
+        'datospaciente': consulta[0:],
+        "results": results,
         "query": query})
 
 

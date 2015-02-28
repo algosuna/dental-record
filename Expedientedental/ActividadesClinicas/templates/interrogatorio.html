@@ -2,10 +2,31 @@
 {%load static from staticfiles %}
 
 {% block content %}
+{% load dajaxice_templatetags %}
+<!-- script necesario -->
+<script src="{% static 'js/jquery.dajax.core.js'%}"></script>
+{% dajaxice_js_import %}
 
-<h2 class="page-header">Registro Del Paciente</h2>
+
+<h2 class="page-header">Interrogatorio</h2>
 
 {% load crispy_forms_tags %}
 {% crispy form %}
+
 {% endblock content %}
-                  
+{% block javascript %}
+<script type="text/javascript">
+$( document ).ready(function() {
+	$('#id_credencialPaciente').keydown(function(event){
+	    if(event.keyCode == 13)
+	    {
+	    	var dni = $('#id_credencialPaciente').val();
+	    	console.log(dni);
+			Dajaxice.ActividadesClinicas.get_person(Dajax.process, {'dni':dni});
+	    	event.preventDefault();
+	    }
+	});
+});
+</script>
+
+{% endblock javascript %}

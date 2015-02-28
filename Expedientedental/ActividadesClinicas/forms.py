@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 from django import forms
+from django.forms.formsets import formset_factory
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from crispy_forms.layout import(Layout,Fieldset,HTML,Field,ButtonHolder,Submit)
-
 from ActividadesClinicas.models import HistoriaClinica
 from ActividadesClinicas.models import Odontograma
 from ActividadesClinicas.models import ListadeDiagnosticos
+from ActividadesClinicas.models import Procedimiento
 
 class HistoriaClinicaForm(forms.ModelForm):
     class Meta:
@@ -16,15 +17,21 @@ class HistoriaClinicaForm(forms.ModelForm):
         self.helper=FormHelper()
         self.helper.layout=Layout(
             HTML("""
-                            <p> Rellene todos los Campos Con *.</p>
+                <p> Rellene todos los Campos Con *.</p>
 
-                            """
+                """
             ),
             Fieldset(
-                'Informacion de Rigor',
+                'Informaci&oacute;n de Rigor',
 
                 Field('paciente', wrapper_class='col-md-4'),
                 Field('medico', wrapper_class='col-md-4'),
+                Field('credencialPaciente' , wrapper_class='col-md-4'),
+            ),
+
+            Fieldset(
+
+                'Antecedentes Patol&oacute;gicos Hereditarios',
 
                 Field('herenciaMadre', wrapper_class='col-md-4'),
                 Field('herenciaPadre', wrapper_class='col-md-4'),
@@ -33,12 +40,22 @@ class HistoriaClinicaForm(forms.ModelForm):
                 Field('herenciaEsposos', wrapper_class='col-md-4'),
                 Field('herenciaTios', wrapper_class='col-md-4'),
                 Field('herenciaAbuelos', wrapper_class='col-md-4'),
+                ),
+
+            Fieldset(
+                'Antecedentes personales Patol&oacute;gicos',
+
                 Field('eInflamatoriasnotopciones', wrapper_class='col-md-4'),
                 Field('ets', wrapper_class='col-md-4'),
                 Field('eDegenerativas', wrapper_class='col-md-4'),
                 Field('eNeoplasticas', wrapper_class='col-md-4'),
                 Field('eCongenitas', wrapper_class='col-md-4'),
                 Field('otras', wrapper_class='col-md-4'),
+            ),
+
+            Fieldset(
+                'Antecedentes personales no Patol&oacute;gicos',
+
                 Field('habitosHigienicosVest', wrapper_class='col-md-4'),
                 Field('habitosHigienicosCorp', wrapper_class='col-md-4'),
                 Field('uxiliaresBucales', wrapper_class='col-md-4'),
@@ -53,6 +70,10 @@ class HistoriaClinicaForm(forms.ModelForm):
                 Field('fechaHospitalizaion', wrapper_class='col-md-4'),
                 Field('motivo', wrapper_class='col-md-4'),
                 Field('padecimientoActual',wrapper_class='col-md-4'),
+            ),
+
+            Fieldset(
+                'Interrogatorio por aparatos y sistemas',
                 Field('aparatoDigestivo', wrapper_class='col-md-4'),
                 Field('aparatoRespiratorio', wrapper_class='col-md-4'),
                 Field('aparatoCardioBascular', wrapper_class='col-md-4'),
@@ -69,6 +90,11 @@ class HistoriaClinicaForm(forms.ModelForm):
                 Field('tensionarterial', wrapper_class='col-md-4'),
                 Field('frecuenciaRespiratoria', wrapper_class='col-md-4'),
                 Field('temperatura', wrapper_class='col-md-4'),
+            ),
+
+            Fieldset(
+                'Exploraci&oacute;n de cabeza y cuello',
+
                 Field('cabeza', wrapper_class='col-md-4'),
                 Field('craneo', wrapper_class='col-md-4'),
                 Field('caraAsimetria', wrapper_class='col-md-4'),
@@ -78,6 +104,17 @@ class HistoriaClinicaForm(forms.ModelForm):
                 Field('cuello', wrapper_class='col-md-4'),
                 Field('otros', wrapper_class='col-md-4'),
                 Field('ruidos', wrapper_class='col-md-4'),
+            ),
+
+             HTML("""
+                <h2 class="section-header">Exploraci&oacute;n del aparato estom&aacute;tognatico</h2>
+
+                """
+            ),
+
+            Fieldset(
+                'Articulaci&oacute;n temporomandibular',
+
                 Field('chasquidos', wrapper_class='col-md-4'),
                 Field('crepitacion', wrapper_class='col-md-4'),
                 Field('difparaAbrirlaboca', wrapper_class='col-md-4'),
@@ -85,6 +122,11 @@ class HistoriaClinicaForm(forms.ModelForm):
                 Field('fatigadolormuscular', wrapper_class='col-md-4'),
                 Field('disminuciondelaavertura', wrapper_class='col-md-4'),
                 Field('desviacionaverturadecierre', wrapper_class='col-md-4'),
+            ),
+
+            Fieldset(
+                'Tejidos blandos',
+
                 Field('ganglios', wrapper_class='col-md-4'),
                 Field('glandulassalivales', wrapper_class='col-md-4'),
                 Field('labioExterno', wrapper_class='col-md-4'),
@@ -105,6 +147,11 @@ class HistoriaClinicaForm(forms.ModelForm):
                 Field('dientes', wrapper_class='col-md-4'),
                 Field('mucosadelBordealveolar', wrapper_class='col-md-4'),
                 Field('encia', wrapper_class='col-md-4'),
+                ),
+
+            Fieldset(
+                'Dental',
+
                 Field('sistemaEndocrina', wrapper_class='col-md-4'),
                 Field('gingivitis', wrapper_class='col-md-4'),
                 Field('periodontitis', wrapper_class='col-md-4'),
@@ -116,7 +163,7 @@ class HistoriaClinicaForm(forms.ModelForm):
                 Field('estudiosdeLaboratorio', wrapper_class='col-md-4'),
                 Field('interpretacionEstudiosLaboratorio', wrapper_class='col-md-4'),
 
-                ),
+            ),
             ButtonHolder(
                     Submit('save','Guardar')
 
@@ -125,6 +172,7 @@ class HistoriaClinicaForm(forms.ModelForm):
 
         self.fields['paciente'].label='Paciente'
         self.fields['medico' ].label='Medico'
+        self.fields['credencialPaciente'].label='DNI Paciente'
         self.fields['herenciaMadre'].label='Madre'
         self.fields['herenciaPadre'].label='Padre'
         self.fields['herenciaHermanos'].label='Hermanos'
@@ -207,8 +255,8 @@ class HistoriaClinicaForm(forms.ModelForm):
         self.fields['gingivitis'].label='Gingivitis'
         self.fields['periodontitis'] .label='Periodontitis'
         self.fields['receciongingival'] .label='Recesión gingival'
-        self.fields['bolsasperiodontales'].label=''
-        self.fields['movilidadDentario'] .label=''
+        self.fields['bolsasperiodontales'].label='Bolsas Periodontales'
+        self.fields['movilidadDentario'] .label='Movilidad Dentario'
         self.fields['indicedeplaca'].label='Bolsas periodontales'
         self.fields['interpretacionradiografica'].label='Interpretación radiográfica'
         self.fields['estudiosdeLaboratorio'] .label='Estudios de laboratorio y gabinete'
@@ -223,9 +271,10 @@ class OdontogramaForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(OdontogramaForm,self).__init__(*args,**kwargs)
         self.helper=FormHelper()
+        self.helper.form_tag=False
         self.helper.form_class = 'form-horizontal'
         self.helper.label_class = 'col-md-2'
-        self.helper.field_class = 'col-md-8'
+        self.helper.field_class = 'col-md-4'
         self.helper.layout=Layout(
             HTML("""
                             <p class='parrafo'> Todos Los Campos con ( * ) son Requeridos.</p>
@@ -237,8 +286,6 @@ class OdontogramaForm(forms.ModelForm):
 
                 Field('doctor'),
                 Field('paciente'),
-                Field('nombrePiezaDental'),
-                Field('problemaDental'),
                 Field('notas'),
 
                 ),
@@ -249,10 +296,46 @@ class OdontogramaForm(forms.ModelForm):
         )
         self.fields['doctor'].label='Medico'
         self.fields['paciente'].label='Nombre (s)'
-        self.fields['nombrePiezaDental'].label='Pieza Dental'
-        self.fields['problemaDental'].label='problemaDental'
         self.fields['notas'].label='notas'
 
 class ListadeDiagnosticosForm(forms.ModelForm):
     class Meta:
         model=ListadeDiagnosticos
+
+class ProcedimientoForm(forms.ModelForm):
+    tratamiento=forms.CharField()
+    class Meta:
+        model=Procedimiento
+    def __init__(self, *args, **kwargs):
+        super(ProcedimientoForm,self).__init__(*args,**kwargs)
+        self.helper=FormHelper()
+        self.helper.form_tag=False
+        self.helper.form_class = 'form-horizontal'
+        self.helper.label_class = 'col-md-3'
+        self.helper.field_class = 'col-md-9'
+        self.helper.layout=Layout(
+            HTML("""
+                            <p class='parrafo'> Todos Los Campos con ( * ) son Requeridos.</p>
+
+                            """
+            ),
+            Fieldset(
+                '',
+
+                Field('pieza',data_bind='value: diente.id'),
+                Field('cara',data_bind='value: cara'),
+                Field('tratamiento',data_bind='value: tratamiento.nombre'),
+                
+
+                ),          
+
+            
+        )
+        self.fields['pieza'].label='Pieza'
+        self.fields['cara'].label='Cara '
+        self.fields['tratamiento'].label='tratamiento'
+        
+
+ProcedimientoFormSet = formset_factory(ProcedimientoForm,)
+
+

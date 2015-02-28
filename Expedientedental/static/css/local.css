@@ -47,9 +47,22 @@ footer .alert {
 /* color del texto de la barra de navegacion */
 .navbar-inverse .navbar-nav > li > a { color: #fff; }
 
-/* p del forms odontograma */
-.parrafo{
-    font-size:  30px;
+/*
+
+form styling
+
+*/
+
+fieldset { margin-top: 20px; }
+
+legend {
+    padding: 10px 0px 10px 20px;
+    background-color: #cbefff;
+}
+
+.section-header {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
 }
 
 /*

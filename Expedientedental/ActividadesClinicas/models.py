@@ -42,10 +42,6 @@ class HistoriaClinica(models.Model):
         ('Analgesicos', 'Analgesicos'),
         ('Anestesicos','Alimentos')
         )
-	hospital_CHOICES=(
-		('Si', 'Si'),
-        ('No', 'No'),
-        )
 	#exploracion
 	cabeza_CHOICES=(
 		('Exotosis', 'Exotosis'),
@@ -139,6 +135,7 @@ class HistoriaClinica(models.Model):
 
 	paciente	= models.ForeignKey(Paciente)
 	medico	= models.ForeignKey(Medico)
+	credencialPaciente = models.CharField(max_length=15)
 	herenciaMadre=models.CharField(max_length=50)
 	herenciaPadre=models.CharField(max_length=50)
 	herenciaHermanos=models.CharField(max_length=50)
@@ -164,7 +161,7 @@ class HistoriaClinica(models.Model):
 	esquemaFalta=models.CharField(max_length=200)
 	adicciones=models.CharField(max_length=15,choices=antecedentes_Choices)
 	alergias=models.CharField(max_length=400,choices=alergias_CHOICES)
-	fechaHospitalizaion=models.DateTimeField(choices=hospital_CHOICES)
+	fechaHospitalizaion=models.CharField(max_length=400)
 	motivo=models.CharField(max_length=400)
 	padecimientoActual=models.CharField(max_length=200)
 	aparatoDigestivo=models.CharField(max_length=50)
@@ -249,14 +246,81 @@ class Odontograma(models.Model):
  	doctor=models.ForeignKey(Medico)
  	paciente=models.ForeignKey(Paciente)
  	fechayHora = models.DateTimeField(auto_now_add=True)
- 	nombrePiezaDental=models.CharField(max_length=40)
- 	problemaDental=models.ForeignKey(ListadeDiagnosticos)
  	notas=models.TextField()
  	
- 	def __unicode__(self):
- 		
- 		problema="%s %s %s"% (self.doctor,self.paciente,self.fechayHora)
- 		return problema
+ 	
+
+
+CARAS=(
+	('S','Cara Superior'),
+	('C','Cara Central'),
+	('X','Cara Completo'),
+	('Z','Cara Izquierda'),
+	('D','Cara Derecha'),
+	)
+
+class Procedimiento(models.Model):
+	pieza=models.IntegerField()
+	cara=models.CharField(max_length=4,choices=CARAS)
+	tratamiento=models.ForeignKey(ListadeDiagnosticos)
 
 
 
+
+
+class TablaPrueba(models.Model):
+	sex_CHOICES=(
+
+		('M', 'M'),
+        ('F', 'F'),
+        )	
+	antecedentes_Choices=(
+		('Tabaco', 'Tabaco'),
+        ('Alcohol', 'Alcohol'),
+        
+        )
+	alergias_CHOICES=(
+
+		('Antibioticos', 'Antibioticos'),
+        ('Analgesicos', 'Analgesicos'),
+        ('Anestesicos','Alimentos')
+        )
+	#exploracion
+	cabeza_CHOICES=(
+		('Exotosis', 'Exotosis'),
+        ('Endostosis', 'Endostosis'),        
+        )
+
+	nombre	= models.CharField(max_length=40)
+	apellidoPaterno	= models.CharField(max_length=30)
+	apellidoMaterno	= models.CharField(max_length=30)
+	credencialPaciente = models.CharField(max_length=15)
+	sexo = models.CharField(max_length=2, choices=sex_CHOICES)
+	ocupacion	= models.CharField(max_length=30)
+	escolaridad	= models.CharField(max_length=30)
+	estadoCivil	= models.CharField(max_length=30)
+	herenciaMadre=models.CharField(max_length=50)
+	herenciaPadre=models.CharField(max_length=50)
+	herenciaHermanos=models.CharField(max_length=50)
+	herenciaHijos=models.CharField(max_length=50)
+	habitosHigienicosVest=models.CharField(max_length=50)
+	habitosHigienicosCorp=models.CharField(max_length=50)
+	adicciones=models.CharField(max_length=15,choices=antecedentes_Choices)
+	alergias=models.CharField(max_length=400,choices=alergias_CHOICES)
+	fechaHospitalizaion=models.CharField(max_length=400)
+	padecimientoActual=models.CharField(max_length=200)
+	aparatoDigestivo=models.CharField(max_length=50)
+	aparatoRespiratorio=models.CharField(max_length=50)
+	aparatoCardioBascular=models.CharField(max_length=50)
+	apararoGenitourinario=models.CharField(max_length=50)
+	sistemaEndocrina=models.CharField(max_length=50)
+	sistemaHemopoyetico=models.CharField(max_length=50)
+	sistemamusculoEsqueletico=models.CharField(max_length=50)
+	aparatoTegumentario=models.CharField(max_length=50)
+	habitusExterior=models.CharField(max_length=50)
+	cabeza=models.CharField(max_length=40,choices=cabeza_CHOICES)	
+
+	def __unicode__(self):
+
+		nombres ="%s"% (self.nombre)
+		return nombres

@@ -9,9 +9,9 @@ class medicoAdmin(admin.ModelAdmin):
 
 
 class pacienteAdmin(admin.ModelAdmin):
-	list_display = ('nombre','apellidoPaterno',)
-	list_filter = ('nombre','apellidoPaterno',)
-	search_fields = ['nombre','apellidoPaterno']
+	list_display = ('id','nombre','apellidoPaterno',)
+	list_filter = ('id','nombre','apellidoPaterno',)
+	search_fields = ['id','nombre','apellidoPaterno']
 	fields = ()
 
 admin.site.register(Medico,medicoAdmin)
