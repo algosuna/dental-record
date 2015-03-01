@@ -94,3 +94,27 @@ busqueda
     background-color: #eeeeee;
     cursor: pointer;
 }
+
+/*
+
+odontograma
+
+*/
+
+.odontograma {
+    background-color: #cbefff;
+    border-color: #a8e1fa;
+}
+
+.odontograma img {
+    max-width: 200px;
+}
+
+.odontograma .table {
+    width: 685px;
+    margin-left: 220px;
+}
+
+.odontograma .table > thead > tr > th {
+    border-bottom-color: #a8e1fa;
+}
