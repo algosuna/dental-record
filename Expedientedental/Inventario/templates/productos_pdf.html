@@ -1,0 +1,36 @@
+{% extends "basePDF.html" %}
+{%load static from staticfiles %}
+
+{% block content %}
+
+<br><br>
+<h2 class="page-header">Lista de Productos en Inventario</h2>
+
+<p>Fecha: <strong>{{fecha}}</strong> Hora: <strong>{{hora}}</strong></p>
+
+{% if productos %}
+<table class="table table-bordered">
+        <thead>
+            <tr>
+              <th><div align="center">Categoria</div></th>
+              <th><div align="center">Productos</div></th>
+                <th><div align="center">Descripcion</div></th>
+                <th><div align="center">Costo</div></th>
+            </tr>
+        </thead>
+    <tbody>
+  {%for p in productos %}
+  
+            <tr>
+            	<td>{{p.categoria}}</td>	
+                <td>{{p.nombre}}</td>
+                <td>{{p.descripcion}}</td>
+                <td>${{p.precio}}</td>
+            </tr>
+
+    {% endfor %}
+	</tbody>
+    {% endif %}
+    </table>
+
+{% endblock content %}

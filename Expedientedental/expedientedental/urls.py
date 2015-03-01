@@ -12,6 +12,7 @@ from ActividadesClinicas.views import datospaciente
 from ActividadesClinicas.views import detallespaciente
 from ActividadesClinicas.views import buscarpaciente
 from Inventario.views import producto, categoria
+from Inventario.views import ProductosPDF
 from cotizacion.views import Cotizacion
 from paquete.views import paquete, tipoPaquete
 from django.contrib import admin
@@ -40,6 +41,7 @@ urlpatterns = patterns('',
 
     url(r'^producto/$',producto),
     url(r'^categoria/$',categoria),
+    url(r'^productos/pdf/$',ProductosPDF.as_view()),
 
     url(r'^paquete/$',paquete),
     url(r'^tipoPaquete/$',tipoPaquete),

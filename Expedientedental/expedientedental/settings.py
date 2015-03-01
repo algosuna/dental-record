@@ -156,6 +156,7 @@ INSTALLED_APPS = (
    
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
+    'wkhtmltopdf',
     'altas',
     'precios',
     'bitacora',
