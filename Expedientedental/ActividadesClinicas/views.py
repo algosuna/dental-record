@@ -1,7 +1,7 @@
 #encoding:utf-8
 import datetime
 
-from django.shortcuts import render, redirect, render_to_response
+from django.shortcuts import render, redirect, render_to_response, get_object_or_404
 from django.db.models import Q
 
 from ActividadesClinicas.forms import OdontogramaForm, HistoriaClinicaForm, ListadeDiagnosticosForm, ProcedimientoForm, ProcedimientoFormSet
@@ -19,35 +19,31 @@ def inicio(request):
     objects = []
 
     for model, fields in MODEL_MAP.iteritems():
-        objects+=generic_search(request,model,fields,query)
+        objects += generic_search(request,model,fields,query)
 
     return render_to_response('inicio.html', {'objects':objects, 'search_string' : request.GET.get(query,''), } )
 
-def odontograma(request):
-    query = request.GET.get('q', '')
-    if query:
-        qset = (
-            Q(paciente__nombre__exact=query)
-        )
-        results = Odontograma.objects.filter(qset).distinct()
-    else:
-        results = []
+def odontograma(request, paciente_id):
+    paciente = get_object_or_404(Paciente, pk=paciente_id)
     consulta = Odontograma.objects.all()
-    if request.method == "POST":
+
+    if request.method == 'POST':
         modelform = OdontogramaForm(request.POST)
         formset = ProcedimientoFormSet(request.POST, request.FILES)
+
         if modelform.is_valid():
             modelform.save()
-            return redirect("/odontograma/")
+            return redirect('/odontograma/')
     else:
         modelform = OdontogramaForm()
         formset=ProcedimientoFormSet()
-    return render(request, "odontograma.html", 
-        {"form": modelform,
-        "formset": formset,
-        'datospaciente': consulta[0:],
-        "results": results,
-        "query": query})
+
+    return render(request, 'odontograma.html', 
+        {'form': modelform,
+        'formset': formset,
+        'paciente': paciente,
+        'datospaciente': consulta[0:]
+        })
 
 def HistoriaClinica(request):
     if request.method == "POST":
