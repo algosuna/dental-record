@@ -24,9 +24,9 @@ class PacienteForm(forms.ModelForm):
 				'',
 
 
-				Field('credencialPaciente' , wrapper_class='col-md-7'),
-				Field('grupo' , wrapper_class='col-md-5'),
-				Field('imagen' , wrapper_class='col-md-5'),
+				Field('credencialPaciente' , wrapper_class='col-md-12'),
+				Field('grupo' , wrapper_class='col-md-6'),
+				Field('imagen' , wrapper_class='col-md-6'),
 				Field('nombre' , wrapper_class='col-md-4'),
 				Field('apellidoPaterno',	wrapper_class='col-md-4'),
 				Field('apellidoMaterno',	wrapper_class='col-md-4'),
@@ -36,7 +36,7 @@ class PacienteForm(forms.ModelForm):
 				Field('direccion', wrapper_class='col-md-7'),
 				Field('codigoPostal', wrapper_class='col-md-2'),
 				Field('estado' ,wrapper_class='col-md-3'),
-				Field('ciudad', 	wrapper_class='col-md-5'),
+				Field('ciudad', 	wrapper_class='col-md-7'),
 				Field('telefono', wrapper_class='col-md-5'),
 
 
