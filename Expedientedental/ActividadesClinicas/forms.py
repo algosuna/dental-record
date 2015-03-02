@@ -58,6 +58,7 @@ class HistoriaClinicaForm(forms.ModelForm):
 
                 Field('habitosHigienicosVest', wrapper_class='col-md-4'),
                 Field('habitosHigienicosCorp', wrapper_class='col-md-4'),
+                Field('frecuenciaLavadoDental', wrapper_class='col-md-4'),
                 Field('uxiliaresBucales', wrapper_class='col-md-4'),
                 Field('consumodeGolosinas', wrapper_class='col-md-4'),
                 Field('gruposanguineo', wrapper_class='col-md-4'),
@@ -152,7 +153,6 @@ class HistoriaClinicaForm(forms.ModelForm):
             Fieldset(
                 'Dental',
 
-                Field('sistemaEndocrina', wrapper_class='col-md-4'),
                 Field('gingivitis', wrapper_class='col-md-4'),
                 Field('periodontitis', wrapper_class='col-md-4'),
                 Field('receciongingival', wrapper_class='col-md-4'),
@@ -247,7 +247,8 @@ class HistoriaClinicaForm(forms.ModelForm):
         self.fields['paladarBlando'].label='Paladar blando'
         self.fields['istmoBucofaringe'].label='Istmo bucofaringe'
         self.fields['lenguaDorso'] .label='Lengua dorso'
-        self.fields['lenguaVentral'] .label='Lengua bordes'
+        self.fields['lenguaBordes'] .label='Lengua bordes'
+        self.fields['lenguaVentral'] .label='Lengua ventral'
         self.fields['pisodelaBoca'].label='Piso de la boca'
         self.fields['dientes'].label='Dientes'
         self.fields['mucosadelBordealveolar'].label='Mucosa del borde alveolar'
@@ -257,7 +258,7 @@ class HistoriaClinicaForm(forms.ModelForm):
         self.fields['receciongingival'] .label='Recesión gingival'
         self.fields['bolsasperiodontales'].label='Bolsas Periodontales'
         self.fields['movilidadDentario'] .label='Movilidad Dentario'
-        self.fields['indicedeplaca'].label='Bolsas periodontales'
+        self.fields['indicedeplaca'].label='Indice de Placa'
         self.fields['interpretacionradiografica'].label='Interpretación radiográfica'
         self.fields['estudiosdeLaboratorio'] .label='Estudios de laboratorio y gabinete'
         self.fields['interpretacionEstudiosLaboratorio'].label='Interpretación de los estudios de laboratorio y gabinete'

@@ -182,7 +182,7 @@ class HistoriaClinica(models.Model):
 	temperatura=models.CharField(max_length=60)
 	cabeza=models.CharField(max_length=400,choices=cabeza_CHOICES)
 	craneo=models.CharField(max_length=50,choices=craneo_CHOICES)
-	caraAsimetria=models.CharField(max_length=20,choices=cara_CHOICES)
+	caraAsimetria=models.CharField(max_length=50,choices=cara_CHOICES)
 	perfil= models.CharField(max_length=15,choices=perfil_CHOICES)
 	piel=models.CharField(max_length=50,choices=piel_CHOICES)
 	musculos=models.CharField(max_length=500)
@@ -216,7 +216,6 @@ class HistoriaClinica(models.Model):
 	dientes=models.CharField(max_length=50)
 	mucosadelBordealveolar=models.CharField(max_length=50)
 	encia=models.CharField(max_length=50)
-	sistemaEndocrina=models.CharField(max_length=50)
 	gingivitis=models.CharField(max_length=50)
 	periodontitis=models.CharField(max_length=50)
 	receciongingival=models.CharField(max_length=50)
@@ -230,7 +229,7 @@ class HistoriaClinica(models.Model):
 
 	def __unicode__(self):
 
-		nombres ="%s %s %s %s"% (self.medico,self.paciente,self.observaciones,self.resumenClinico)
+		nombres ="%s %s"% (self.medico,self.paciente)
 		return nombres
 
 

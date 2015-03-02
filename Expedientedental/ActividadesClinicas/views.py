@@ -4,6 +4,8 @@ import datetime
 from django.shortcuts import render, redirect, render_to_response, get_object_or_404
 from django.db.models import Q
 
+from wkhtmltopdf.views import PDFTemplateView
+
 from ActividadesClinicas.forms import OdontogramaForm, HistoriaClinicaForm, ListadeDiagnosticosForm, ProcedimientoForm, ProcedimientoFormSet
 from ActividadesClinicas.models import HistoriaClinica, Odontograma, ListadeDiagnosticos
 from ActividadesClinicas.utils import generic_search
@@ -45,7 +47,8 @@ def odontograma(request, paciente_id):
         'datospaciente': consulta[0:]
         })
 
-def HistoriaClinica(request):
+
+def HistoriaClinicaView(request):
     if request.method == "POST":
         modelform = HistoriaClinicaForm(request.POST)
         if modelform.is_valid():
@@ -54,6 +57,20 @@ def HistoriaClinica(request):
     else:
         modelform=HistoriaClinicaForm()
     return render(request,"interrogatorio.html",{"form":modelform})
+
+class InterrogatorioPDF(PDFTemplateView):
+    filename = 'Interrogatorio.pdf'
+    template_name = 'interrogatorio_pdf.html'
+    cmd_options = {
+        'margin-top': 13,
+    }
+
+    def get_context_data(self, **kwargs):
+        context = super(InterrogatorioPDF, self).get_context_data(**kwargs)
+        context['interrogatorio'] = HistoriaClinica.objects.all()
+        context['fecha'] = datetime.now().strftime("%d/%m/%Y")
+        context['hora'] = datetime.now().strftime("%I:%M %p")
+        return context
 
 def diagnosticos(request):
     if request.method == "POST":

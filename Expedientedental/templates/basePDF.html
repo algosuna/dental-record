@@ -1,49 +1,32 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <title> {%block title%}  {%endblock%}</title>
 
   {%load static from staticfiles %}
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-  <link rel="stylesheet" href="{% static 'css/local.css'%}">
-
+  <style>
+  h2 {
+    margin-left: 20px;
+    margin-top: 50px;
+  }
+  </style>
 </head>
 
 <body>
-
-  <div class="page-header container clearfix">
-    <img src="https://mediexcelblog.files.wordpress.com/2012/09/logo-mediexcel-by-carlos-p1.png" alt="Logo" height="65" width="110" class="pull-left">
-
-    <h2> Sistema  Administrativo Dental </h2>
-
-    <!--
-    <div class="muela">
-      <img src="{{STATIC_URL}}img/muela.png" height="112" width="77">
-    </div>
+  <div class="page-header clearfix">
+    <img src="http://localhost:8000/static/img/logo.png" alt="Logo" height="120" width="170" class="pull-left">
+    <h2 class="pull-left"> Sistema  Administrativo Dental </h2>
   </div>
--->
       
- {% block content %}
-
+  {% block content %}
   {% endblock content %}
 
-
-
-    <footer>
-      <div class="container">
-        <p class="alert alert-danger">En términos de la Ley Federal de Protección de Datos Personales en Posesión de los Particulares, deberá apegarse al Aviso de Privacidad que MediExcel HealthPlan comprometió a los titulares respecto de su información Personal.</p>
-        <p class="text-muted">Gracias por usar el Sistema Dental MediExcel Health Plan.</p>
-      </div>
-    </footer>
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-  {% block javascript %}
-  {% endblock javascript %}
+  <footer>
+    <div class="container">
+      <p class="alert alert-danger">En términos de la Ley Federal de Protección de Datos Personales en Posesión de los Particulares, deberá apegarse al Aviso de Privacidad que MediExcel HealthPlan comprometió a los titulares respecto de su información Personal.</p>
+      <p class="text-muted">Gracias por usar el Sistema Dental MediExcel Health Plan.</p>
+    </div>
+  </footer>
 </body>
 </html>

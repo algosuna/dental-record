@@ -34,7 +34,7 @@ urlpatterns = patterns('',
 
     url(r'^producto/$',producto),
     url(r'^categoria/$',categoria),
-    url(r'^productos/pdf/$',ProductosPDF.as_view()),
+
 
     url(r'^media/(?P<path>.*)$','django.views.static.serve',{'document_root':settings.MEDIA_ROOT}),
 
