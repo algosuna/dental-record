@@ -111,7 +111,7 @@ odontograma
 }
 
 .odontograma .table {
-    width: 685px;
+    max-width: 685px;
     margin-left: 220px;
 }
 
