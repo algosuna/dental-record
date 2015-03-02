@@ -1,15 +1,8 @@
-<<<<<<< HEAD
 Luis Eulogio Valencia Camara
-<<<<<<< HEAD
+
+Raymundo
 
 Test de equipo de Emmanuel
-=======
-Raymundo
-=======
-Luis Eulogio Valencia Camara 1
->>>>>>> 16d0bac957eb8e3a7dda47eb2b266e44698d56e5
-
 segundo test en el equipo de Raymundo
->>>>>>> d854ebdb8e0a44a0e2222ed06b9b47364a7bb455
 tercer test desde equipo de ray
 cuarto test desde equipo de Emmanuel

@@ -1,23 +1,16 @@
+import settings
+
 from django.conf.urls.defaults import patterns, include, url
 from django.conf import settings
-from dajaxice.core import dajaxice_autodiscover, dajaxice_config
-dajaxice_autodiscover()
-import settings
+
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
-from ActividadesClinicas.views import HistoriaClinica
-from ActividadesClinicas.views import odontograma
-from ActividadesClinicas.views import diagnosticos
-from ActividadesClinicas.views import datospaciente
-from ActividadesClinicas.views import detallespaciente
-from ActividadesClinicas.views import buscarpaciente
-from Inventario.views import producto, categoria
-from Inventario.views import ProductosPDF
-from cotizacion.views import Cotizacion
-from paquete.views import paquete, tipoPaquete
-from django.contrib import admin
-
 admin.autodiscover()
+
+from dajaxice.core import dajaxice_autodiscover, dajaxice_config
+dajaxice_autodiscover()
+
+from Inventario.views import producto, categoria
 
 urlpatterns = patterns('',
     # Examples:
@@ -27,6 +20,9 @@ urlpatterns = patterns('',
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
+    url(r'^', include('ActividadesClinicas.urls')),
+    url(r'^', include('paquete.urls')),
+
     url(r'^',include('altas.urls')),
     url(r'^',include('precios.urls')),
     url(r'^',include('bitacora.urls')),
@@ -35,18 +31,10 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^interrogatorio/$',HistoriaClinica),
-    url(r'^odontograma/$',odontograma),
-    url(r'^diagnosticos/$',diagnosticos),
 
     url(r'^producto/$',producto),
     url(r'^categoria/$',categoria),
     url(r'^productos/pdf/$',ProductosPDF.as_view()),
-
-    url(r'^paquete/$',paquete),
-    url(r'^tipoPaquete/$',tipoPaquete),
-    url(r'^evaluacion/$',buscarpaciente),
-    url(r'^detalles/$',detallespaciente),
 
     url(r'^media/(?P<path>.*)$','django.views.static.serve',{'document_root':settings.MEDIA_ROOT}),
 

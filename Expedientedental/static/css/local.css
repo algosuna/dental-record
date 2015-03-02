@@ -3,63 +3,49 @@
 local css
 
 */
+html {
+    position: relative;
+    min-height: 100%;
+}
 
 body {
-	padding-top: 70px;
+    padding-top: 70px;
+    margin-bottom: 177px;
 }
 
-nav.navbar + .page-header {
-	margin-top: 10px;
-}
+nav.navbar + .page-header { margin-top: 10px; }
 
 footer {
-	margin-top: 40px;
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
 }
 
 footer .alert {
-	text-align: justify;
+    text-align: justify;
+    font-size: 8px;
 }
 
-/*color de la barra de navegacion */
-.navbar-inverse {
-background-color:       #4096EE;
-border-color:           #ccc;
-}
-
-.navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:focus, .navbar-inverse .navbar-nav>.open>a:hover{
-    background-color: #A1C4F0;
-}
-/*color del texto de la barra de navegacion*/
-.navbar-inverse .navbar-nav>li>a {
-color: #fff;
-}
-
-.muela img{
-
-    margin-left: 800px !important;
-    float:right;
-    margin-top: -40px;
-}
-.alert-danger{
-width: auto;
-font-size: 8px;
-font-family: sans-serif;
-}
-
-.page-header h2{
+/* styling del header principal */
+.page-header h2 {
     font-size: 50px;
-    color: rgba(54,57,61,0.5);
-    margin-left: 100px !important;
-    float: left;
+    color: #999999;
+    margin-left: 80px;
+    padding-top: 20px;
 }
 
-/*P del forms actividades clinicas*/
-
-.parrafo{
-font-size: 10px;
-text-align:right;
-
+/* color de la barra de navegacion */
+.navbar-inverse {
+    background-color: #4096ee;
+    border-color: #cccccc;
 }
+
+.navbar-inverse .navbar-nav > .open > a,
+.navbar-inverse .navbar-nav > .open > a:focus,
+.navbar-inverse .navbar-nav > .open > a:hover { background-color: #A1C4F0; }
+
+/* color del texto de la barra de navegacion */
+.navbar-inverse .navbar-nav > li > a { color: #fff; }
 
 /*
 
@@ -77,4 +63,58 @@ legend {
 .section-header {
     border-bottom: 1px solid #ccc;
     padding-bottom: 10px;
+}
+
+/*
+
+busqueda
+
+*/
+
+.search {
+    max-width: 600px;
+    margin: 0 auto;
+}
+.search label {
+    display: block;
+    width: 100%;
+}
+.search input {
+    width: 480px;
+    display: block;
+    float: left;
+}
+
+.search input + input {
+    width: 100px;
+    margin-left: 20px;
+}
+
+.search ~ table tbody tr:hover {
+    background-color: #eeeeee;
+    cursor: pointer;
+}
+
+/*
+
+odontograma
+
+*/
+
+.odontograma {
+    background-color: #cbefff;
+    border-color: #a8e1fa;
+}
+
+.odontograma img {
+    max-width: 200px;
+}
+
+.odontograma .table {
+    width: 685px;
+    margin-left: 220px;
+}
+
+.odontograma .table > thead > tr > th {
+    border-bottom-color: #a8e1fa;
 }

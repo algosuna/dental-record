@@ -21,6 +21,8 @@ def paquete(request):
     return render(request, "paquete.html", {"form": modelform})
 
 
+    
+
 def tipoPaquete(request):
     if request.method == "POST":
         modelform = EntryPaqueteForm(request.POST)

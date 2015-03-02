@@ -1,0 +1,45 @@
+{% extends "basePDF.html" %}
+{%load static from staticfiles %}
+
+{% block content %}
+
+<h3 class="page-header">Detalles de Interrogatorio General</h3>
+
+{% if interrogatorio %}
+
+{%for i in interrogatorio %}
+
+<p>Nombre del Paciente: <strong>{{i.paciente}}</strong>
+
+<p>Atendido por: Dr. <strong>{{i.medico}}</strong>
+
+{% endfor %}
+
+<p>Fecha: <strong>{{fecha}}</strong> Hora: <strong>{{hora}}</strong></p>
+
+
+<table class="table table-bordered">
+        <thead>
+            <tr>
+              <th><div align="center">Categoria</div></th>
+              <th><div align="center">Productos</div></th>
+                <th><div align="center">Descripcion</div></th>
+                <th><div align="center">Costo</div></th>
+            </tr>
+        </thead>
+    <tbody>
+  {%for i in interrogatorio %}
+  
+            <tr>
+            	<td>{{i.paciente}}</td>	
+                <td>{{i.paciente}}</td>
+                <td>{{i.paciente}}</td>
+                <td>{{i.paciente}}</td>
+            </tr>
+
+    {% endfor %}
+	</tbody>
+    {% endif %}
+    </table>
+
+{% endblock content %}
