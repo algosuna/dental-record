@@ -1,9 +1,14 @@
 {% extends "base1.html" %}
 {%load static from staticfiles %}
 
+{% block css %}
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">
+<link rel="stylesheet" href="{% static 'css/bootstrap-duallistbox.css' %}">
+{% endblock css %}
+
 {% block content %}
 
-<h2 class="page-header">Registrar </h2>
+<h2 class="page-header">Registrar 2</h2>
 
 {% load crispy_forms_tags %}
 {% crispy form %}
@@ -16,3 +21,17 @@
 </form> -->
 
 {% endblock content %}
+
+
+{% block javascript %}
+<script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/r298/run_prettify.min.js"></script>
+<script src="{% static 'js/jquery.bootstrap-duallistbox.js' %}"></script>
+<script>
+$('#id_producto').bootstrapDualListbox({
+	nonSelectedListLabel: 'A-seleccionar',
+	selectedListLabel: 'Seleccionados',
+	preserveSelectionOnMove: 'moved',
+	moveOnSelect: false,
+});
+</script>
+{% endblock javascript %}

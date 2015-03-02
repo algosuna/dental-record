@@ -14,7 +14,6 @@ class Paquete(models.Model):
 class EntryPaquete(models.Model):
 	nombre=models.ForeignKey(Paquete)
 	producto= models.ManyToManyField(Producto)
-	cantidad=models.IntegerField()
 
 	def __unicode__(self):
 		return '%s' % (self.producto)

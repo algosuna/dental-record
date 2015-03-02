@@ -168,9 +168,14 @@ INSTALLED_APPS = (
     'crispy_forms',
     'historialprocedimientos',
     'south',
+    
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
 )
+
+
+import unittest
+unittest.TestLoader.testMethodPrefix = 'should'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
