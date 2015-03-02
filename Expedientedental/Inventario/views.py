@@ -1,14 +1,12 @@
 #encoding:utf-8
-from datetime import datetime
-from django.template.loader import get_template
-from django.template import RequestContext
-from django.http import Http404, HttpResponse
-from django.shortcuts import render_to_response, render, redirect
-from wkhtmltopdf.views import PDFTemplateView
-from .forms import ProductoForm 
-from .forms import CategoriaForm
-from Inventario.models import Categoria 
-from Inventario.models import Producto
+import datetime
+
+from django.shortcuts import render, redirect
+
+from wkhtmltopdf import PDFTemplateView
+
+from Inventario.forms import ProductoForm, CategoriaForm
+from Inventario.models import Categoria, Producto
 
 def categoria(request):
     if request.method == "POST":
