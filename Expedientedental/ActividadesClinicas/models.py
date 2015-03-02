@@ -135,7 +135,7 @@ class HistoriaClinica(models.Model):
 
 	paciente	= models.ForeignKey(Paciente)
 	medico	= models.ForeignKey(Medico)
-	credencialPaciente = models.CharField(max_length=15)
+	credencialPaciente = models.CharField(max_length=15, null=True)
 	herenciaMadre=models.CharField(max_length=50)
 	herenciaPadre=models.CharField(max_length=50)
 	herenciaHermanos=models.CharField(max_length=50)
