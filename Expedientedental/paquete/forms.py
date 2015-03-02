@@ -58,10 +58,9 @@ class EntryPaqueteForm(forms.ModelForm):
 			Fieldset(
 				'',
 
-				Field('nombre' , wrapper_class='col-md-4'),
-				Field('producto' , wrapper_class='col-md-8'),
-				Field('cantidad',wrapper_class='col-md-2')
-
+				Field('nombre' , wrapper_class='col-md-2'),
+				Field('producto' , wrapper_class='col-md-10'),
+			
 
 
 				),
@@ -72,6 +71,6 @@ class EntryPaqueteForm(forms.ModelForm):
 		)
 		self.fields['nombre'].label='Nombre Paquete'
 		self.fields['producto'].label='Prodcutos'
-		self.fields['cantidad'].label='cantidad'
+		
 
 
