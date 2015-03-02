@@ -3,7 +3,7 @@ import datetime
 
 from django.shortcuts import render, redirect
 
-from wkhtmltopdf import PDFTemplateView
+from wkhtmltopdf.views import PDFTemplateView
 
 from Inventario.forms import ProductoForm, CategoriaForm
 from Inventario.models import Categoria, Producto
