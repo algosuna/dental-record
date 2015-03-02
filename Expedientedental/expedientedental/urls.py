@@ -11,8 +11,6 @@ from dajaxice.core import dajaxice_autodiscover, dajaxice_config
 dajaxice_autodiscover()
 
 from Inventario.views import producto, categoria
-from cotizacion.views import Cotizacion
-from paquete.views import paquete, tipoPaquete
 
 urlpatterns = patterns('',
     # Examples:
@@ -22,21 +20,20 @@ urlpatterns = patterns('',
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
+    url(r'^', include('ActividadesClinicas.urls')),
+    url(r'^', include('paquete.urls')),
+
     url(r'^',include('altas.urls')),
     url(r'^',include('precios.urls')),
     url(r'^',include('bitacora.urls')),
     #url(r'^',include('cotizacion.urls')),
     url(r'^cotizacion/', include('cotizacion.urls')),
-    url(r'^', include('ActividadesClinicas.urls')),
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
 
     url(r'^producto/$',producto),
     url(r'^categoria/$',categoria),
-
-    url(r'^paquete/$',paquete),
-    url(r'^tipoPaquete/$',tipoPaquete),
 
     url(r'^media/(?P<path>.*)$','django.views.static.serve',{'document_root':settings.MEDIA_ROOT}),
 
