@@ -4,7 +4,7 @@
 from django.template.loader import get_template
 from django.template import RequestContext
 from django.http import Http404, HttpResponse, HttpResponseRedirect
-from .forms import MedicoForm, PacienteForm
+from altas.forms import MedicoForm, PacienteForm
 from django.shortcuts import render_to_response, render, redirect
 import datetime
 from altas.models import Medico, Paciente

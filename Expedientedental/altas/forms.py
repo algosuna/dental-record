@@ -118,40 +118,39 @@ class MedicoForm(forms.ModelForm):
 		self.fields['estado'].label='Estado'
 		self.fields['Ciudad'].label='Cuidad'
 
-class fotoPaciente(forms.FileField, object):
+# class fotoPaciente(forms.FileField, object):
 
-	def __init__(self, *args, **kwargs):
-		super(fotoPaciente, self).__init__(*args, *kwargs)
-		self.help_text = 'Help Text'
+# 	def __init__(self, *args, **kwargs):
+# 		super(fotoPaciente, self).__init__(*args, **kwargs)
+# 		self.help_text = 'Help Text'
 
-	def validate(self, image):
-		if not str(image).split('.')[-1].lower() in ['jpg', 'jpeg', 'png', 'gif']:
-			raise ValidationError('File format not supported. Please try again and upload a JPG/PNG/GIF file.')
+# 	def validate(self, image):
+# 		if not str(image).split('.')[-1].lower() in ['jpg', 'jpeg', 'png', 'gif']:
+# 			raise ValidationError('File format not supported. Please try again and upload a JPG/PNG/GIF file.')
 	
-	def to_python(self, image):
-		try:
-			limit = 500000
-			tries = 10
-			img = Image.open(image.file)
-			width, height = img.size
-			ratio = float(width) / float(height)
+# 	def to_python(self, image):
+# 		try:
+# 			limit = 500000
+# 			tries = 10
+# 			img = Image.open(image.file)
+# 			width, height = img.size
+# 			ratio = float(width) / float(height)
 
-			upload_dir = settings.FILE_UPLOAD_TEMP_DIR if settings.FILE_UPLOAD_TEMP_DIR else '/tmp'
-			tmp_file = open(os.path.join(upload_dir, str(uuid.uuid1())), 'w')
-			tmp_file.write(image.file.read())
-			tmp_file.close()
+# 			upload_dir = settings.FILE_UPLOAD_TEMP_DIR if settings.FILE_UPLOAD_TEMP_DIR else '/tmp'
+# 			tmp_file = open(os.path.join(upload_dir, str(uuid.uuid1())), 'w')
+# 			tmp_file.write(image.file.read())
+# 			tmp_file.close()
 
-			while os.path.getsize(tmp_file.name) > limit:
-				tries -= 1
-				width = 900 if tries == 0 else width - 100
-					height = int(width / ratio)
-					img.thumbnail((width, height), Image.ANTIALIAS)
-					img.save(tmp_file.name, img.format)
-					image.file = open(tmp_file.name)
-					if tries == 0:
-						break
-					except:
-						pass
+# 			while os.path.getsize(tmp_file.name) > limit:
+# 				tries -= 1
+# 				width = 900 if tries == 0 else width - 100
+# 					height = int(width / ratio)
+# 					img.thumbnail((width, height), Image.ANTIALIAS)
+# 					img.save(tmp_file.name, img.format)
+# 					image.file = open(tmp_file.name)
+# 					if tries == 0:
+# 						break
+# 					except:
+# 						pass
 
-					return image
-		
+# 					return image
