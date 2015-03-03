@@ -1,45 +1,464 @@
 {% extends "basePDF.html" %}
 {%load static from staticfiles %}
 
-{% block content %}
 
-<h3 class="page-header">Detalles de Interrogatorio General</h3>
+{% block title %} 
+    <h2 class="pull-left"> Expediente Medico Dental</h2>   
+{% endblock title %}
+
+
+{% block content %}
 
 {% if interrogatorio %}
 
 {%for i in interrogatorio %}
 
-<p>Nombre del Paciente: <strong>{{i.paciente}}</strong>
+<p>Credencial del Paciente: <strong> {{i.credencialPaciente}}</strong></p>
 
-<p>Atendido por: Dr. <strong>{{i.medico}}</strong>
+<p>Nombre del Paciente: <strong>{{i.paciente}}</strong></p>
+
+<p>Atendido por: <strong>Dr. {{i.medico}}</strong></p>
 
 {% endfor %}
 
-<p>Fecha: <strong>{{fecha}}</strong> Hora: <strong>{{hora}}</strong></p>
+<p>Fecha Consulta: <strong>{{fecha}}</strong> Hora: <strong>{{hora}}</strong></p>
 
+<br>
+<!-- Antecedentes Patológicos Hereditarios -->
+<h4><strong>Antecedentes Patológicos Hereditarios</strong></h4>
 
-<table class="table table-bordered">
-        <thead>
-            <tr>
-              <th><div align="center">Categoria</div></th>
-              <th><div align="center">Productos</div></th>
-                <th><div align="center">Descripcion</div></th>
-                <th><div align="center">Costo</div></th>
-            </tr>
-        </thead>
+<div id="interrogatorioPDF">
+<table class="table">
+
     <tbody>
   {%for i in interrogatorio %}
   
-            <tr>
-            	<td>{{i.paciente}}</td>	
-                <td>{{i.paciente}}</td>
-                <td>{{i.paciente}}</td>
-                <td>{{i.paciente}}</td>
-            </tr>
+        <tr>
+           	<th>Madre: </th>
+        </tr>
+        <tr>
+            <td>{{i.herenciaMadre}}</td>
+        </tr>
+        <tr>
+            <th>Padre: </th>
+        </tr>
+        <tr>
+            <td>{{i.herenciaPadre}}</td>
+        </tr>
+        <tr>
+            <th>Hermanos: </th>
+        </tr>
+        <tr>
+            <td>{{i.herenciaHermanos}}</td>
+        </tr>
+        <tr>
+            <th>Hijos: </th>
+        </tr>
+        <tr>
+            <td>{{i.herenciaHijos}}</td>
+        </tr>
+        <tr>
+            <th>Esposo (a): </th>
+        </tr>
+        <tr>
+            <td>{{i.herenciaEsposos}}</td>
+        </tr>
+        <tr>
+            <th>Tios: </th>
+        </tr>
+        <tr>
+            <td>{{i.herenciaTios}}</td>
+        </tr>
+        <tr>
+            <th>Abuelos: </th>
+        </tr>
+        <tr>
+            <td>{{i.herenciaAbuelos}}</td>
+        </tr>
 
     {% endfor %}
 	</tbody>
-    {% endif %}
-    </table>
+</table>
 
+
+<!-- Antecedentes personales Patológicos -->
+<h4><strong>Antecedentes personales Patológicos</strong></h4>
+
+<table class="table">
+
+    <tbody>
+  {%for i in interrogatorio %}
+  
+        <tr>
+            <th style="width: 10%;">Enfermedades inflamatorias: </th>
+            <td style="width: 33%;">{{i.eInflamatoriasnotopciones}}</td>
+
+            <th style="width: 20%;">Enfermedades de trans. sexual: </th>
+            <td style="width: 33%;">{{i.ets}}</td>
+        </tr>
+        <tr>
+            <th>Enfermedades degenerativas: </th>
+            <td>{{i.eDegenerativas}}</td>
+
+            <th>Enfermedades neoplásicas: </th>
+            <td>{{i.eNeoplasticas}}</td>
+        </tr>
+        <tr>
+            <th>Enfermedades congénitas: </th>
+            <td>{{i.eCongenitas}}</td>
+
+            <th>Otras: </th>
+            <td>{{i.otras}}</td>
+        </tr>
+
+    {% endfor %}
+    </tbody>   
+</table>
+
+
+<!-- Antecedentes personales No Patológicos -->
+<h4><strong>Antecedentes personales No Patológicos</strong></h4>
+
+<table class="table">
+
+    <tbody>
+  {%for i in interrogatorio %}
+  
+        <tr>
+            <th>Hábitos higiénicos (En el vestuario) </th>
+        </tr>
+        <tr>
+            <td>{{i.habitosHigienicosVest}}</td>
+        </tr>
+
+    {% endfor %}
+    </tbody>
+</table>
+
+
+<table class="table">
+
+    <tbody>
+  {%for i in interrogatorio %}
+  
+        <tr>
+            <th>Hábitos higiénicos (Corporales) </th>
+        </tr>
+        <tr>
+            <td>{{i.habitosHigienicosCorp}}</td>
+        </tr>
+
+    {% endfor %}
+    </tbody>
+</table>
+
+
+<table class="table">
+
+    <tbody>
+  {%for i in interrogatorio %}
+        <tr>
+            <th style="width: 23%;">¿Con que Frecuencia se lava los dientes? </th>
+            <td>{{i.frecuenciaLavadoDental}}</td>
+
+            <th style="width: 20%;">¿Utiliza auxiliares de higiene bucal? </th>
+            <td>{{i.uxiliaresBucales}}</td>
+
+
+            <th style="width: 30%;">Consumo de alimentos entre comidas (golosinas,otros) </th>
+            <td>{{i.consumodeGolosinas}}</td>
+        </tr>
+ {% endfor %}
+    </tbody>
+</table>
+
+<table class="table">
+
+    <tbody>
+  {%for i in interrogatorio %}
+        <tr>
+            <th>Grupo sanguíneo </th>
+            <td>{{i.gruposanguineo}}</td>
+
+            <th>Factor Rh </th>
+            <td>{{i.factorRh}}</td>
+
+            <th>¿Cuenta con Cartilla de vacunación? </th>
+            <td>{{i.cartilladeVacunacion}}</td>
+        </tr>
+ {% endfor %}
+    </tbody>
+</table>
+
+<table class="table">
+
+    <tbody>
+  {%for i in interrogatorio %}
+        <tr>           
+            <th style="width: 10%;">Adicciones: </th>
+            <td style="width: 10%;">{{i.adicciones}}</td>
+
+            <th style="width: 28%;">Antecedentes alérgicos: </th>
+            <td style="width: 10%;">{{i.alergias}}</td>
+
+            <th>¿Tiene el esquema completo? </th>
+            <td>{{i.esquemaCompleto}}</td>
+        </tr>
+ {% endfor %}
+    </tbody>
+</table>
+
+
+<table class="table">
+
+    <tbody>
+  {%for i in interrogatorio %}
+        <tr>
+            <th style="width: 24%;">Especifique cuál falta: </th>
+            <td>{{i.esquemaFalta}}</td>
+        </tr>
+        <tr>
+            <th colspan="4"><br>¿Ha sido hospitalizado? </th>
+        </tr>
+        <tr>
+            <td colspan="4">{{i.fechaHospitalizaion}}</td>
+        </tr>
+        <tr>
+            <th colspan="4"><br>Motivo de su hospitalización </th>
+        </tr>
+        <tr>
+            <td colspan="4">{{i.motivo}}</td>
+        </tr>
+        <tr>
+            <th colspan="4"><br>Padecimiento Actual </th>
+        </tr>        
+        <tr>
+            <td colspan="4">{{i.padecimientoActual}}</td>
+        </tr>
+
+    {% endfor %}
+    </tbody>
+</table>
+
+
+<!-- Interrogatorio por aparatos y sistemas -->
+<h4><strong>Interrogatorio por aparatos y sistemas</strong></h4>
+
+<table class="table">
+
+    <tbody>
+  {%for i in interrogatorio %}
+  
+        <tr>
+            <th>Cabeza </th>
+            <td>{{i.cabeza}}</td>
+
+            <th>Cráneo </th>
+            <td style="width: 15%;">{{i.craneo}}</td>
+
+            <th>Cara </th>
+            <td>{{i.caraAsimetria}}</td>
+        </tr>
+        <tr>
+            <th>Piel </th>
+            <td>{{i.piel}}</td>
+
+            <th>Cuello </th>
+            <td>{{i.cuello}}</td>
+
+            <th>Perfil </th>
+            <td>{{i.perfil}}</td>
+        </tr>
+        <tr>
+            <th>Músculos </th>
+            <td colspan="3">{{i.musculos}}</td>
+
+            <th>Ruidos </th>
+            <td>{{i.ruidos}}</td>
+        </tr>
+        <tr>
+            <th>Otros </th>
+            <td colspan="5">{{i.otros}}</td>
+        </tr>
+
+    {% endfor %}
+    </tbody>
+</table>
+
+
+<!-- Articulación temporomandibular -->
+<h4 class="page-header"><strong>Articulación temporomandibular</strong></h4>
+
+<table class="table">
+
+    <tbody>
+  {%for i in interrogatorio %}
+  
+        <tr>
+            <th style="width: 20%;">Chasquidos </th>
+            <td style="width: 10%;">{{i.chasquidos}}</td>
+
+            <th style="width: 30%;">Crepitación </th>
+            <td style="width: 10%;">{{i.crepitacion}}</td>
+
+            <th>Fatiga o dolor muscular </th>
+            <td style="width: 10%;">{{i.fatigadolormuscular}}</td>
+        </tr>
+        <tr>
+            <th>Crepitación </th>
+            <td>{{i.crepitacion}}</td>
+
+            <th>Dolor a la abertura o movimientos de lateralidad </th>
+            <td>{{i.dolorabertura}}</td>
+
+            <th>Dificultad para abrir la boca </th>
+            <td>{{i.difparaAbrirlaboca}}</td>
+        </tr>
+        <tr>
+
+            <th>Disminución de la abertura </th>
+            <td>{{i.disminuciondelaavertura}}</td>
+
+            <th>Desviación a la abertura cierre </th>
+            <td>{{i.desviacionaverturadecierre}}</td>
+
+            <th> </th>
+            <td></td>
+        </tr>
+
+    {% endfor %}
+    </tbody>
+</table>
+
+
+<!-- Tejidos Blandos -->
+<h4><strong>Tejidos Blandos</strong></h4>
+
+<table class="table table-bordered">
+
+    <tbody>
+  {%for i in interrogatorio %}
+  
+        <tr>
+            <th>Ganglios </th>
+            <td>{{i.ganglios}}</td>
+
+            <th>Glándulas Salivales </th>
+            <td>{{i.glandulassalivales}}</td>
+        </tr>
+        <tr>
+            <th>Labio externo </th>
+            <td>{{i.labioExterno}}</td>
+
+            <th>Borde bermellón </th>
+            <td>{{i.bordebermellon}}</td>
+        </tr>
+        <tr>
+            <th>Labio interno </th>
+            <td>{{i.labiointerno}}</td>
+
+            <th>Comisuras </th>
+            <td>{{i.Comisuras}}</td>
+        </tr>
+        <tr>
+            <th>Carrillos </th>
+            <td>{{i.carrillos}}</td>
+
+            <th>Fondo de saco </th>
+            <td>{{i.fondodesaco}}</td>
+        </tr>
+        <tr>
+            <th>Frenillos </th>
+            <td>{{i.frenillos}}</td>
+        
+            <th>Lengua tercio medio </th>
+            <td>{{i.lenguaTerciomedio}}</td>
+        </tr>
+        <tr>
+            <th>Paladar duro </th>
+            <td>{{i.paladarDuro}}</td>
+
+            <th>Paladar blando </th>
+            <td>{{i.paladarBlando}}</td>
+        </tr>
+        <tr>
+            <th>Istmo bucofaringe </th>
+            <td>{{i.istmoBucofaringe}}</td>
+
+            <th>Lengua dorso </th>
+            <td>{{i.lenguaDorso}}</td>
+        </tr>
+        <tr>
+            <th>Lengua bordes </th>
+            <td>{{i.lenguaBordes}}</td>
+
+            <th>Lengua ventral </th>
+            <td>{{i.lenguaVentral}}</td>
+        </tr>
+        <tr>
+            <th>Piso de la boca </th>
+            <td>{{i.pisodelaBoca}}</td>
+
+            <th>Dientes </th>
+            <td>{{i.dientes}}</td>
+        </tr>
+        <tr>
+            <th>Mucosa del borde alveolar </th>
+            <td>{{i.mucosadelBordealveolar}}</td>
+
+            <th>Encía </th>
+            <td>{{i.encia}}</td>
+        </tr>
+
+    {% endfor %}
+    </tbody>
+</table>
+
+
+<!-- Dental -->
+<h4><strong>Dental</strong></h4>
+
+<table class="table table-bordered">
+
+    <tbody>
+  {%for i in interrogatorio %}
+  
+        <tr>
+            <th>Gingivitis </th>
+            <td>{{i.gingivitis}}</td>
+
+            <th>Periodontitis </th>
+            <td>{{i.periodontitis}}</td>
+        </tr>
+        <tr>
+            <th>Recesión gingival </th>
+            <td>{{i.receciongingival}}</td>
+
+            <th>Bolsas Periodontales </th>
+            <td>{{i.bolsasperiodontales}}</td>
+        </tr>
+        <tr>
+            <th>Movilidad Dentario </th>
+            <td>{{i.movilidadDentario}}</td>
+
+            <th>Indice de Placa </th>
+            <td>{{i.indicedeplaca}}</td>
+        </tr>
+        <tr>
+            <th>Interpretación radiográfica </th>
+            <td>{{i.interpretacionradiografica}}</td>
+
+            <th>Estudios de laboratorio y gabinete </th>
+            <td>{{i.estudiosdeLaboratorio}}</td>
+        </tr>
+        <tr>
+            <th>Interpretación de los estudios de laboratorio y gabinete </th>
+            <td>{{i.interpretacionEstudiosLaboratorio}}</td>
+        </tr>
+
+    {% endfor %}
+    </tbody>
+{% endif %}
+</table>
+</div>
 {% endblock content %}

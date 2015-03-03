@@ -27,7 +27,7 @@ class Medico(models.Model):
 	Ciudad = models.CharField(max_length=30)
 
 	def __unicode__(self):
-		nombreCompleto = "%s %s"%(self.nombre,self.apellidoPaterno)
+		nombreCompleto = "%s %s %s"%(self.nombre,self.apellidoPaterno,self.apellidoMaterno)
 		return nombreCompleto
 
 
@@ -70,6 +70,6 @@ class Paciente(models.Model):
 		return imagennombre
 
 	def __unicode__(self):
-		nombre = "%s %s"%(self.nombre,self.apellidoPaterno)
+		nombre = "%s %s %s"%(self.nombre,self.apellidoPaterno,self.apellidoMaterno)
 		return nombre
 

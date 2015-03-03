@@ -1,5 +1,5 @@
 #encoding:utf-8
-import datetime
+from datetime import datetime
 
 from django.shortcuts import render, redirect, render_to_response, get_object_or_404
 from django.db.models import Q
