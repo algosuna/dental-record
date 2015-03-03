@@ -15,6 +15,9 @@ from Inventario.views import producto, categoria
 from cotizacion.views import Cotizacion
 from paquete.views import paquete, tipoPaquete
 from django.contrib import admin
+from procesocoopago.views import Abono
+from procesocoopago.views import Pago
+from procesocoopago.views import Proceso
 
 admin.autodiscover()
 
@@ -45,6 +48,10 @@ urlpatterns = patterns('',
     url(r'^tipoPaquete/$',tipoPaquete),
     url(r'^evaluacion/$',buscarpaciente),
     url(r'^detalles/$',detallespaciente),
+    url(r'^abono/$',Abono),
+    url(r'^pago/$',Pago),
+    url(r'^proceso/$',Proceso),
+
 
     url(r'^media/(?P<path>.*)$','django.views.static.serve',{'document_root':settings.MEDIA_ROOT}),
 
