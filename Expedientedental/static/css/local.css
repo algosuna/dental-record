@@ -101,20 +101,112 @@ odontograma
 
 */
 
+/* svg */
+svg\:svg { display: none; }
+
+.svg_error {
+    color: red;
+    font-weight: bold;
+}
+
 .odontograma {
     background-color: #cbefff;
     border-color: #a8e1fa;
 }
 
 .odontograma img {
-    max-width: 200px;
-}
-
-.odontograma .table {
-    max-width: 685px;
-    margin-left: 220px;
+    max-width: 100%;
 }
 
 .odontograma .table > thead > tr > th {
     border-bottom-color: #a8e1fa;
 }
+
+.odontograma ~ .clearfix form .lead {
+    margin-top: 20px;
+}
+
+#odontograma {
+    width: 620px;
+    margin: 0 auto;
+}
+
+#odontograma ~ .clearfix fieldset {
+    float: left;
+    margin-top: 0px;
+    margin-bottom: 20px;
+}
+
+#odontograma ~ .clearfix ul {
+    margin: 0px;
+    padding: 0px;
+}
+
+#odontograma ~ .clearfix ul li {
+    list-style: none;
+}
+
+#odontograma ~ .clearfix ul li .form-group {
+    clear: both;
+}
+
+#odontograma ~ .clearfix ul li .form-group label,
+#odontograma ~ .clearfix ul li .form-group .controls {
+    float: left;
+    display: inline;
+}
+
+#odontograma ~ .clearfix ul li .form-group label {
+    margin: 7px 7px 0px 0px;
+}
+
+#odontograma ~ .clearfix ul li .form-group .controls {
+    margin-right: 20px;
+}
+
+#odontograma ~ .clearfix ul li .form-group:last-of-type .controls input {
+    width: 280px;
+}
+
+#tooth-images {
+    position: absolute;
+    top: 405px;
+    left: 175px;
+    height: 60px;
+}
+
+#tooth-images img + img {
+    margin-left: 10px;
+}
+
+#tooth-images img[alt="11"] {
+    margin-right: 5px;
+}
+
+#tooth-images .bottom {
+    position: relative;
+    top: 125px;
+    left: 5px;
+}
+
+#tooth-images .bottom img[alt="47"],
+#tooth-images .bottom img[alt="38"] { margin-left: 5px; }
+
+#tooth-images .bottom img[alt="46"] { margin-left: 6px; }
+
+#tooth-images .bottom img[alt="43"],
+#tooth-images .bottom img[alt="34"] { margin-left: 15px; }
+
+#tooth-images .bottom img[alt="42"],
+#tooth-images .bottom img[alt="36"] { margin-left: 12px; }
+
+#tooth-images .bottom img[alt="41"] {
+    margin-left: 16px;
+    margin-right: 15px;
+}
+
+#tooth-images .bottom img[alt="32"] { margin-left: 16px; }
+
+#tooth-images .bottom img[alt="33"] { margin-left: 13px; }
+
+#tooth-images .bottom img[alt="37"] { margin-left: 7px; }

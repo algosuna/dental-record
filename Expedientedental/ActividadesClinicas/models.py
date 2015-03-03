@@ -242,10 +242,10 @@ class ListadeDiagnosticos(models.Model):
 		return codigoCie
 
 class Odontograma(models.Model):
- 	doctor=models.ForeignKey(Medico)
- 	paciente=models.ForeignKey(Paciente)
+ 	doctor = models.ForeignKey(Medico, null=True)
+ 	paciente = models.ForeignKey(Paciente, null=True)
  	fechayHora = models.DateTimeField(auto_now_add=True)
- 	notas=models.TextField()
+ 	notas = models.TextField()
  	
  	
 

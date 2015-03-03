@@ -4,13 +4,9 @@
 {% load crispy_forms_tags %}
 
 {% block css %}
-  <link rel="stylesheet" href="{%static 'css/jquery-ui-1.8.17.custom.css'%}">
-  <link rel="stylesheet" href="{%static 'css/jquery.svg.css'%}">
-  <link rel="stylesheet" href="{%static 'css/odontograma1.css'%}">
-  <!-- All JavaScript at the bottom, except for Modernizr / Respond.
-       Modernizr enables HTML5 elements & feature detects; Respond is a polyfill for min/max-width CSS3 Media Queries
-       For optimal performance, use a custom Modernizr build: www.modernizr.com/download/ -->
-  <script src="{% static 'js/modernizr-2.0.6.min.js'%}"></script>
+<link rel="stylesheet" href="{%static 'css/jquery-ui-1.8.17.custom.css'%}">
+
+<script src="{% static 'js/modernizr-2.0.6.min.js'%}"></script>
 {% endblock %}
 
 {% block content %}
@@ -18,79 +14,115 @@
 <h2>Odontograma</h2>
 
 <div class="well odontograma clearfix">
-  <img src="{% static paciente.imagen %}" alt="{{ paciente.nombre }} {{ paciente.apellidoPaterno }}" class="pull-left img-rounded">
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Nombre</th>
-        <th>Grupo</th>
-        <th>Teléfono</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>{{ paciente.nombre }} {{ paciente.apellidoPaterno }} {{ paciente.apellidoMaterno }}</td>
-        <td>{{ paciente.grupo }}</td>
-        <td>{{ paciente.telefono }}</td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="col-xs-3">
+    <img src="{% static paciente.imagen %}" alt="{{ paciente.nombre }} {{ paciente.apellidoPaterno }}" class="pull-left img-rounded">
+  </div>
+  <div class="col-xs-9">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Grupo</th>
+          <th>Teléfono</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ paciente.nombre }} {{ paciente.apellidoPaterno }} {{ paciente.apellidoMaterno }}</td>
+          <td>{{ paciente.grupo }}</td>
+          <td>{{ paciente.telefono }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- patient info section -->
+
+<div class="row">
+  <div class="col-md-4">
+    <p class="lead">1) Seleccione un tratamiento:</p>
+  </div>
+  <div class="col-md-8">
+    <select data-bind="options: tratamientosPosibles, value: tratamientoSeleccionado, optionsText: function(item){ return item.nombre; }, optionsCaption: 'Seleccione un tratamiento...'" class="form-control"></select>
+  </div>
 </div>
 
+<form method="post" action="">
+  {{ formset.management_form }}
 
-  <div id="main" role="main">
-    <div id="tratamiento">
+  <p class="lead">2) Seleccione una pieza:</p>
 
-      <h2>Tratamiento</h2>
-
-      <select data-bind=" options: tratamientosPosibles,
-                          value: tratamientoSeleccionado,
-                          optionsText: function(item){ return item.nombre; },
-                          optionsCaption: 'Seleccione un tratamiento...'"></select>
-
-      <form method="post" action="">
-          {{ formset.management_form }}
-        <ul data-bind="foreach: tratamientosAplicados">
-          <li>
-            <!--P<span data-bind="text: diente.id"></span><span data-bind="text: cara"></span>-->
-
-            <!-- <p>Pieza:<input data-bind="value: diente.id"></p> -->
-            <!-- <p>Cara:<input data-bind="value: cara"></p>        -->
-            <!-- <p>tratamiento:<input data-bind="value: tratamiento.nombre"></p> -->
-            {% for procedimientoForm in formset %}
-            <div class="form-horizontal">{% crispy procedimientoForm %}</div>
-            {%endfor%}
-          
-            <a href="#" data-bind="click: $parent.quitarTratamiento">Eliminar</a>
-          </li>
-        </ul>
-      </div>
-      <div id="odontograma-wrapper">
-        <h2>Odontograma</h2>
-        <div id="odontograma"></div>
-      </div>      
+  <div id="odontograma"></div>
+  <div id="tooth-images">
+    <!--top -->
+    <!-- left-side -->
+    <img src="{% static 'img/piezas/18.jpg' %}" alt="18" width="28">
+    <img src="{% static 'img/piezas/17.jpg' %}" alt="17" width="28">
+    <img src="{% static 'img/piezas/16.jpg' %}" alt="16" width="28">
+    <img src="{% static 'img/piezas/15.jpg' %}" alt="15" width="22">
+    <img src="{% static 'img/piezas/14.jpg' %}" alt="14" width="22">
+    <img src="{% static 'img/piezas/13.jpg' %}" alt="13" width="22">
+    <img src="{% static 'img/piezas/12.jpg' %}" alt="12" width="24">
+    <img src="{% static 'img/piezas/11.jpg' %}" alt="11" width="28">
+    <!-- right-side -->
+    <img src="{% static 'img/piezas/21.jpg' %}" alt="21" width="28">
+    <img src="{% static 'img/piezas/22.jpg' %}" alt="22" width="24">
+    <img src="{% static 'img/piezas/23.jpg' %}" alt="23" width="22">
+    <img src="{% static 'img/piezas/24.jpg' %}" alt="24" width="22">
+    <img src="{% static 'img/piezas/25.jpg' %}" alt="25" width="22">
+    <img src="{% static 'img/piezas/26.jpg' %}" alt="26" width="28">
+    <img src="{% static 'img/piezas/27.jpg' %}" alt="27" width="28">
+    <img src="{% static 'img/piezas/28.jpg' %}" alt="28" width="28">
+    <br>
+    <!-- bottom -->
+    <div class="bottom">
+      <!-- left-side -->
+      <img src="{% static 'img/piezas/48.jpg' %}" alt="48" width="28">
+      <img src="{% static 'img/piezas/47.jpg' %}" alt="47" width="28">
+      <img src="{% static 'img/piezas/46.jpg' %}" alt="46" width="28">
+      <img src="{% static 'img/piezas/45.jpg' %}" alt="45" width="20">
+      <img src="{% static 'img/piezas/44.jpg' %}" alt="44" width="20">
+      <img src="{% static 'img/piezas/43.jpg' %}" alt="43" width="20">
+      <img src="{% static 'img/piezas/42.jpg' %}" alt="42" width="20">
+      <img src="{% static 'img/piezas/41.jpg' %}" alt="41" width="20">
+      <!-- right-side -->
+      <img src="{% static 'img/piezas/31.jpg' %}" alt="31" width="20">
+      <img src="{% static 'img/piezas/32.jpg' %}" alt="32" width="20">
+      <img src="{% static 'img/piezas/33.jpg' %}" alt="33" width="20">
+      <img src="{% static 'img/piezas/34.jpg' %}" alt="34" width="20">
+      <img src="{% static 'img/piezas/35.jpg' %}" alt="35" width="20">
+      <img src="{% static 'img/piezas/36.jpg' %}" alt="36" width="28">
+      <img src="{% static 'img/piezas/37.jpg' %}" alt="37" width="28">
+      <img src="{% static 'img/piezas/38.jpg' %}" alt="38" width="28">
     </div>
-    <div class="form-horizontal" >{% crispy form %}</div>
-    <footer>
-      
-    </footer>
-  </div> <!--! end of #container -->    
+  </div>
 
+  <p class="lead">3) Verifique detalles:</p>
+  <div class="clearfix">
+    <ul data-bind="foreach: tratamientosAplicados">
+      <li>
+        {% for procedimientoForm in formset %}
+        <div class="form-inline">
+          {% crispy procedimientoForm %}
+        </div>
+        {%endfor%}
+        <a href="#" data-bind="click: $parent.quitarTratamiento" class="pull-left btn btn-warning">Eliminar</a>
+      </li>
+    </ul><!-- end foreach -->
+  </div>
+
+  <h3 class="page-header">Detalle informaci&oacute;n adicional</h3>
+
+  {% crispy form %}
 
 </form>
 {% endblock %}
 
-{% block javascript %}  <!-- scripts concatenated and minified via ant build script-->
-  <script src="{% static 'js/plugins.js'%}"></script>
-  <script src="{% static 'js/jquery-ui-1.8.17.custom.min.js'%}"></script>
-  <script src="{% static 'js/jquery.tmpl.js'%}"></script>
-  <script src="{% static 'js/knockout-3.3.0.js'%}"></script>
-  <script src="{% static 'js/jquery.svg.min.js'%}"></script>  
-  <script src="{% static 'js/jquery.svggraph.min.js'%}"></script>  
-  <script src="{% static 'js/odontograma.js'%}"></script>
-   <!-- end scripts-->
-
-
-
+{% block javascript %}
+<script src="{% static 'js/plugins.js'%}"></script>
+<script src="{% static 'js/jquery-ui-1.8.17.custom.min.js'%}"></script>
+<script src="{% static 'js/jquery.tmpl.js'%}"></script>
+<script src="{% static 'js/knockout-3.3.0.js'%}"></script>
+<script src="{% static 'js/jquery.svg.min.js'%}"></script>  
+<script src="{% static 'js/jquery.svggraph.min.js'%}"></script>  
+<script src="{% static 'js/odontograma.js'%}"></script>
 {% endblock %}
-
