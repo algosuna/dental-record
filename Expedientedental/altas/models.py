@@ -9,7 +9,6 @@ from precios.models import GrupoPrecios
 # Modelo de Medicos
 class Medico(models.Model):
 
-
 	nombre	= models.CharField(max_length=40)
 	apellidoPaterno	= models.CharField(max_length=30)
 	apellidoMaterno	= models.CharField(max_length=30)
@@ -28,7 +27,7 @@ class Medico(models.Model):
 	Ciudad = models.CharField(max_length=30)
 
 	def __unicode__(self):
-		nombreCompleto = "%s %s"%(self.nombre,self.apellidoPaterno)
+		nombreCompleto = "%s %s %s"%(self.nombre,self.apellidoPaterno,self.apellidoMaterno)
 		return nombreCompleto
 
 
@@ -38,23 +37,21 @@ class Paciente(models.Model):
 
 	def url(imagennombre, filename):
 		name, ext = splitext(filename)
-		ruta = "Pacientes/%s%s"%(imagennombre, ext)
+		ruta = 'Pacientes/%s%s'%(imagennombre, ext)
 		return ruta
 
 	sex_CHOICES=(
-
 		('M', 'M'),
-        ('F', 'F'),
-        )
+		('F', 'F'),
+	)
 	estado_CHOICES=(
+		('B.C','Baja California'),
+		('CA','California'),
+	)
 
-    	('B.C','Baja California'),
-    	('CA','California'),
-
-    	)
- 	credencialPaciente = models.CharField(max_length=15)
- 	imagen = models.ImageField(upload_to=url,null=True,blank=True)
- 	grupo= models.ForeignKey(GrupoPrecios)
+	credencialPaciente = models.CharField(max_length=15)
+	imagen = models.ImageField(upload_to=url,null=True,blank=True)
+	grupo= models.ForeignKey(GrupoPrecios)
 	nombre	= models.CharField(max_length=40)
 	apellidoPaterno	= models.CharField(max_length=30)
 	apellidoMaterno	= models.CharField(max_length=30)
@@ -63,7 +60,7 @@ class Paciente(models.Model):
 	direccion = models.CharField(max_length=70)
 	codigoPostal = models.IntegerField(max_length=5)
 	estado = models.CharField(max_length=20 , choices=estado_CHOICES)
-	ciudad = models.CharField(max_length=30)	
+	ciudad = models.CharField(max_length=30)
 	nSs = models.CharField(max_length=20)
 	telefono = models.CharField(max_length=20)
 
@@ -73,6 +70,6 @@ class Paciente(models.Model):
 		return imagennombre
 
 	def __unicode__(self):
-		nombre = "%s %s"%(self.nombre,self.apellidoPaterno)
+		nombre = "%s %s %s"%(self.nombre,self.apellidoPaterno,self.apellidoMaterno)
 		return nombre
 

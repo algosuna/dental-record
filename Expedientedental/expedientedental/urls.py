@@ -1,10 +1,11 @@
+import settings
+
 from django.conf.urls.defaults import patterns, include, url
 from django.conf import settings
-from dajaxice.core import dajaxice_autodiscover, dajaxice_config
-dajaxice_autodiscover()
-import settings
+
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
+<<<<<<< HEAD
 from ActividadesClinicas.views import HistoriaClinica
 from ActividadesClinicas.views import odontograma
 from ActividadesClinicas.views import diagnosticos
@@ -19,7 +20,13 @@ from procesocoopago.views import Abono
 from procesocoopago.views import Pago
 from procesocoopago.views import Proceso
 
+
 admin.autodiscover()
+
+from dajaxice.core import dajaxice_autodiscover, dajaxice_config
+dajaxice_autodiscover()
+
+from Inventario.views import producto, categoria
 
 urlpatterns = patterns('',
     # Examples:
@@ -29,6 +36,9 @@ urlpatterns = patterns('',
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
+    url(r'^', include('ActividadesClinicas.urls')),
+    url(r'^', include('paquete.urls')),
+
     url(r'^',include('altas.urls')),
     url(r'^',include('precios.urls')),
     url(r'^',include('bitacora.urls')),
@@ -37,12 +47,10 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^interrogatorio/$',HistoriaClinica),
-    url(r'^odontograma/$',odontograma),
-    url(r'^diagnosticos/$',diagnosticos),
 
     url(r'^producto/$',producto),
     url(r'^categoria/$',categoria),
+
 
     url(r'^paquete/$',paquete),
     url(r'^tipoPaquete/$',tipoPaquete),

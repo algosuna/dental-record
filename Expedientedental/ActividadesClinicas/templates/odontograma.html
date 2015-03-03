@@ -1,6 +1,8 @@
 {% extends "base1.html" %}
+
 {% load static from staticfiles %}
 {% load crispy_forms_tags %}
+
 {% block css %}
   <link rel="stylesheet" href="{%static 'css/jquery-ui-1.8.17.custom.css'%}">
   <link rel="stylesheet" href="{%static 'css/jquery.svg.css'%}">
@@ -11,17 +13,42 @@
   <script src="{% static 'js/modernizr-2.0.6.min.js'%}"></script>
 {% endblock %}
 
-{% block content %}     
-      <div id="main" role="main">
-      <div id="tratamiento">
-        <h2>Tratamiento</h2>
-        <select 
-          data-bind=" options: tratamientosPosibles, 
-                      value: tratamientoSeleccionado, 
-                      optionsText: function(item){ return item.nombre; },
-                      optionsCaption: 'Seleccione un tratamiento...'">
-        </select>
-        <form method="post" action="">
+{% block content %}
+
+<h2>Odontograma</h2>
+
+<div class="well odontograma clearfix">
+  <img src="{% static paciente.imagen %}" alt="{{ paciente.nombre }} {{ paciente.apellidoPaterno }}" class="pull-left img-rounded">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Grupo</th>
+        <th>Teléfono</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{ paciente.nombre }} {{ paciente.apellidoPaterno }} {{ paciente.apellidoMaterno }}</td>
+        <td>{{ paciente.grupo }}</td>
+        <td>{{ paciente.telefono }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+  <div id="main" role="main">
+    <div id="tratamiento">
+
+      <h2>Tratamiento</h2>
+
+      <select data-bind=" options: tratamientosPosibles,
+                          value: tratamientoSeleccionado,
+                          optionsText: function(item){ return item.nombre; },
+                          optionsCaption: 'Seleccione un tratamiento...'"></select>
+
+      <form method="post" action="">
           {{ formset.management_form }}
         <ul data-bind="foreach: tratamientosAplicados">
           <li>

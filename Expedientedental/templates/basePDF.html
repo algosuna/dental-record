@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  {%load static from staticfiles %}
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="http://localhost:8000/static/css/localPDF.css">
+
+  <style>
+  h2 {
+    margin-left: 20px;
+    margin-top: 50px;
+  }
+  </style>
+</head>
+
+<body>
+  <div class="page-header clearfix">
+    <img src="http://localhost:8000/static/img/logo.png" alt="Logo" height="120" width="170" class="pull-left">
+    {% block title %}    
+    {% endblock title %}
+  </div>
+      
+  {% block content %}
+  {% endblock content %}
+
+  <footer>
+    <div class="container">
+      <p class="alert alert-danger">En términos de la Ley Federal de Protección de Datos Personales en Posesión de los Particulares, deberá apegarse al Aviso de Privacidad que MediExcel HealthPlan comprometió a los titulares respecto de su información Personal.</p>
+      <p class="text-muted">Gracias por usar el Sistema Dental MediExcel Health Plan.</p>
+    </div>
+  </footer>
+</body>
+</html>
