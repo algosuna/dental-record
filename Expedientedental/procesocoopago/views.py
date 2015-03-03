@@ -10,10 +10,10 @@ import datetime
 
 def Abono(request):
     if request.method == "POST":
-        modelform = Abonoform(request.POST)
+        modelform = AbonoForm(request.POST)
         if modelform.is_valid():
             modelform.save()
-            return redirect("/Abono/")
+            return redirect("/abono/")
     else:
         modelform = AbonoForm()
     return render(request, "abono.html", {"form": modelform})
@@ -21,7 +21,7 @@ def Abono(request):
 
 def Pago(request):
     if request.method == "POST":
-        modelform = Pagoform(request.POST)
+        modelform = PagoForm(request.POST)
         if modelform.is_valid():
             modelform.save()
             return redirect("/pago/")
