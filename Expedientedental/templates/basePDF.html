@@ -5,6 +5,8 @@
   {%load static from staticfiles %}
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="http://localhost:8000/static/css/localPDF.css">
+
   <style>
   h2 {
     margin-left: 20px;
@@ -16,7 +18,8 @@
 <body>
   <div class="page-header clearfix">
     <img src="http://localhost:8000/static/img/logo.png" alt="Logo" height="120" width="170" class="pull-left">
-    <h2 class="pull-left"> Sistema  Administrativo Dental </h2>
+    {% block title %}    
+    {% endblock title %}
   </div>
       
   {% block content %}

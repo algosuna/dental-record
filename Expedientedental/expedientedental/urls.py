@@ -5,6 +5,21 @@ from django.conf import settings
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
+
+from ActividadesClinicas.views import HistoriaClinica
+from ActividadesClinicas.views import odontograma
+from ActividadesClinicas.views import diagnosticos
+from ActividadesClinicas.views import datospaciente
+from ActividadesClinicas.views import detallespaciente
+from ActividadesClinicas.views import buscarpaciente
+from Inventario.views import producto, categoria
+from cotizacion.views import Cotizacion
+from paquete.views import paquete, tipoPaquete
+from django.contrib import admin
+from procesocoopago.views import Abono
+from procesocoopago.views import Pago
+from procesocoopago.views import Proceso
+
 admin.autodiscover()
 
 from dajaxice.core import dajaxice_autodiscover, dajaxice_config
@@ -34,6 +49,15 @@ urlpatterns = patterns('',
 
     url(r'^producto/$',producto),
     url(r'^categoria/$',categoria),
+
+
+    url(r'^paquete/$',paquete),
+    url(r'^tipoPaquete/$',tipoPaquete),
+    url(r'^evaluacion/$',buscarpaciente),
+    url(r'^detalles/$',detallespaciente),
+    url(r'^abono/$',Abono),
+    url(r'^pago/$',Pago),
+    url(r'^proceso/$',Proceso),
 
 
     url(r'^media/(?P<path>.*)$','django.views.static.serve',{'document_root':settings.MEDIA_ROOT}),

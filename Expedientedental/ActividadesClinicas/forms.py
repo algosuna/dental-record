@@ -219,7 +219,7 @@ class HistoriaClinicaForm(forms.ModelForm):
         self.fields['craneo'] .label='Cráneo:'
         self.fields['caraAsimetria'] .label='Cara:'
         self.fields['perfil'] .label='Perfil:'
-        self.fields['piel'].label='Perfil:'
+        self.fields['piel'].label='Piel:'
         self.fields['musculos'] .label='Músculos:'
         self.fields['cuello'].label='Cuello:'
         self.fields['otros'] .label='Otros'
