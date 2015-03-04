@@ -250,18 +250,19 @@ class Odontograma(models.Model):
  	
 
 
-CARAS=(
-	('S','Cara Superior'),
-	('C','Cara Central'),
-	('X','Cara Completo'),
-	('Z','Cara Izquierda'),
-	('D','Cara Derecha'),
-	)
 
 class Procedimiento(models.Model):
-	pieza=models.IntegerField()
-	cara=models.CharField(max_length=4,choices=CARAS)
-	tratamiento=models.ForeignKey(ListadeDiagnosticos)
+	CARAS_CHOICES = (
+		('S','Cara Superior'),
+		('C','Cara Central'),
+		('X','Cara Completo'),
+		('Z','Cara Izquierda'),
+		('D','Cara Derecha'),
+	)
+
+	pieza = models.IntegerField()
+	cara = models.CharField(max_length=4, choices=CARAS_CHOICES)
+	tratamiento = models.CharField(max_length=300, null=True)
 
 
 
