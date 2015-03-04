@@ -125,4 +125,9 @@
 <script src="{% static 'js/jquery.svg.min.js'%}"></script>  
 <script src="{% static 'js/jquery.svggraph.min.js'%}"></script>  
 <script src="{% static 'js/odontograma.js'%}"></script>
+<script>
+  var submitButton = $('#odontograma ~ .buttonHolder input');
+
+  submitButton.addClass(' pull-right odontograma-submit');
+</script>
 {% endblock %}

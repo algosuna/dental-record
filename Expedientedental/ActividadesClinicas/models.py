@@ -250,13 +250,15 @@ class Odontograma(models.Model):
  	
 
 
-CARAS=(
+CARAS = (
+
 	('S','Cara Superior'),
 	('C','Cara Central'),
 	('X','Cara Completo'),
 	('Z','Cara Izquierda'),
 	('D','Cara Derecha'),
-	)
+
+)
 
 class Procedimiento(models.Model):
 	pieza=models.IntegerField()

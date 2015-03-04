@@ -114,17 +114,13 @@ svg\:svg { display: none; }
     border-color: #a8e1fa;
 }
 
-.odontograma img {
-    max-width: 100%;
-}
+.odontograma img { max-width: 100%; }
 
-.odontograma .table > thead > tr > th {
-    border-bottom-color: #a8e1fa;
-}
+.odontograma .table > thead > tr > th { border-bottom-color: #a8e1fa; }
 
-.odontograma ~ .clearfix form .lead {
-    margin-top: 20px;
-}
+.odontograma form { position: absolute; }
+
+.odontograma ~ .clearfix form .lead { margin-top: 20px; }
 
 #odontograma {
     width: 620px;
@@ -142,13 +138,9 @@ svg\:svg { display: none; }
     padding: 0px;
 }
 
-#odontograma ~ .clearfix ul li {
-    list-style: none;
-}
+#odontograma ~ .clearfix ul li { list-style: none; }
 
-#odontograma ~ .clearfix ul li .form-group {
-    clear: both;
-}
+#odontograma ~ .clearfix ul li .form-group { clear: both; }
 
 #odontograma ~ .clearfix ul li .form-group label,
 #odontograma ~ .clearfix ul li .form-group .controls {
@@ -156,32 +148,22 @@ svg\:svg { display: none; }
     display: inline;
 }
 
-#odontograma ~ .clearfix ul li .form-group label {
-    margin: 7px 7px 0px 0px;
-}
+#odontograma ~ .clearfix ul li .form-group label { margin: 7px 7px 0px 0px; }
 
-#odontograma ~ .clearfix ul li .form-group .controls {
-    margin-right: 20px;
-}
+#odontograma ~ .clearfix ul li .form-group .controls { margin-right: 20px; }
 
-#odontograma ~ .clearfix ul li .form-group:last-of-type .controls input {
-    width: 280px;
-}
+#odontograma ~ .clearfix ul li .form-group:last-of-type .controls input { width: 280px; }
 
 #tooth-images {
-    position: absolute;
-    top: 405px;
-    left: 175px;
+    position: relative;
+    bottom: 305px;
+    left: 157px;
     height: 60px;
 }
 
-#tooth-images img + img {
-    margin-left: 10px;
-}
+#tooth-images img + img { margin-left: 10px; }
 
-#tooth-images img[alt="11"] {
-    margin-right: 5px;
-}
+#tooth-images img[alt="11"] { margin-right: 5px; }
 
 #tooth-images .bottom {
     position: relative;
@@ -210,3 +192,5 @@ svg\:svg { display: none; }
 #tooth-images .bottom img[alt="33"] { margin-left: 13px; }
 
 #tooth-images .bottom img[alt="37"] { margin-left: 7px; }
+
+.odontograma-submit { margin: 20px; }
