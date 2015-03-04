@@ -12,6 +12,7 @@ class Cotizacion(models.Model):
 	paciente = models.ForeignKey(Paciente)
 	medico = models.ForeignKey(Medico)
 
+
 	def __unicode__(self):
 		return '['+str(self.fecha.day)+'/'+str(self.fecha.month)+'/'+str(self.fecha.year)+']  '+self.paciente.nombre+' '+self.paciente.apellidoPaterno
 	
@@ -26,7 +27,8 @@ class CotizacionDetail(models.Model):
 	cotizacion = models.ForeignKey(Cotizacion)
 	nombreDelServicio = models.ForeignKey(PrecioServicio)
 	nombreDelGrupo = models.ForeignKey(GrupoPrecios)
-	precio = models.DecimalField(max_digits = 6, decimal_places = 2)
+	precio = models.ForeignKey(GrupoServicio,null=True) 
+
 	def total(self):
 		total = self.precio
 		return total

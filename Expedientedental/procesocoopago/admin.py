@@ -4,28 +4,13 @@ from procesocoopago.models import SeervAut
 from procesocoopago.models import Pago
 from procesocoopago.models import procesoPago
 from django.core.urlresolvers import reverse
-'''
+
 class AbonoInline(admin.TabularInline):
 	model=Abono
 
 class AbonoAdmin(admin.ModelAdmin):
     list_display = ["fecha","monto","status","detalles"]
-    inlines = [ItemInline]
-
-
-'''
-
-
-
-
-
-
-
-
-
-
-
-
+    inlines = [AbonoInline]
 
 
 

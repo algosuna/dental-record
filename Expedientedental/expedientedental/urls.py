@@ -5,7 +5,7 @@ from django.conf import settings
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
-<<<<<<< HEAD
+
 from ActividadesClinicas.views import HistoriaClinica
 from ActividadesClinicas.views import odontograma
 from ActividadesClinicas.views import diagnosticos

@@ -16,7 +16,7 @@ class CotizacionForm(forms.ModelForm):
 class CotizacionDetailForm(forms.ModelForm):
 	class Meta:
 		model =CotizacionDetail
-		# exclude = ['precio']
+
 
 	def __init__(self, *args, **kwargs):
 		super(CotizacionDetailForm,self).__init__(*args,**kwargs)
@@ -37,19 +37,20 @@ class CotizacionDetailForm(forms.ModelForm):
 				Field('cotizacion'),
 				Field('nombreDelServicio'),
 				Field('nombreDelGrupo'),
+				Field('precio')
+
+				
 
 
-				),
-			Fieldset(
-				'Precio',
-				HTML('<p><strong>Precio:</strong> {{object.precio}}</p>'),
-				Submit('obt_precio','Obtener')
+			
 			),
 			ButtonHolder(
 					Submit('save','Guardar')
 
 			)
 		)
-		self.fields['cotizacion'].label=u'Cotización'
+		self.fields['cotizacion'].label='Cotización'
 		self.fields['nombreDelServicio'].label='Servicio'
 		self.fields['nombreDelGrupo'].label='Grupo'
+		self.fields['precio'].label="Precio"
+		
