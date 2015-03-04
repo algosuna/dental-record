@@ -70,6 +70,6 @@ class Paciente(models.Model):
 		return imagennombre
 
 	def __unicode__(self):
-		nombre = "%s %s %s"%(self.nombre,self.apellidoPaterno,self.apellidoMaterno)
-		return nombre
+		nombreCompleto = "%s %s %s"%(self.nombre, self.apellidoPaterno, self.apellidoMaterno)
+		return nombreCompleto
 
