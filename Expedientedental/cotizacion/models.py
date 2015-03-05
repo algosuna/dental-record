@@ -27,7 +27,7 @@ class CotizacionDetail(models.Model):
 	cotizacion = models.ForeignKey(Cotizacion)
 	nombreDelServicio = models.ForeignKey(PrecioServicio)
 	nombreDelGrupo = models.ForeignKey(GrupoPrecios)
-	precio = models.ForeignKey(GrupoServicio,null=True) 
+	precio = models.OneToOneField(GrupoServicio,null=True) 
 
 	def total(self):
 		total = self.precio
