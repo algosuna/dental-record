@@ -12,6 +12,7 @@ class EntryPaqueteAdmin(admin.ModelAdmin):
 	list_display = ('nombre',)
 	list_filter = ('nombre',)
 	search_fields = ['nombre',]
+	filter_horizontal = ('producto',)
 	fields = ()
 
 

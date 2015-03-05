@@ -242,26 +242,24 @@ class ListadeDiagnosticos(models.Model):
 		return codigoCie
 
 class Odontograma(models.Model):
- 	doctor=models.ForeignKey(Medico)
- 	paciente=models.ForeignKey(Paciente)
+ 	doctor = models.ForeignKey(Medico, null=True)
+ 	paciente = models.ForeignKey(Paciente, null=True)
  	fechayHora = models.DateTimeField(auto_now_add=True)
- 	notas=models.TextField()
- 	
- 	
+ 	notas = models.TextField()
 
-
-CARAS=(
-	('S','Cara Superior'),
-	('C','Cara Central'),
-	('X','Cara Completo'),
-	('Z','Cara Izquierda'),
-	('D','Cara Derecha'),
-	)
 
 class Procedimiento(models.Model):
-	pieza=models.IntegerField()
-	cara=models.CharField(max_length=4,choices=CARAS)
-	tratamiento=models.ForeignKey(ListadeDiagnosticos)
+	CARAS_CHOICES = (
+		('S','Cara Superior'),
+		('C','Cara Central'),
+		('X','Cara Completo'),
+		('Z','Cara Izquierda'),
+		('D','Cara Derecha'),
+	)
+
+	pieza = models.IntegerField()
+	cara = models.CharField(max_length=4, choices=CARAS_CHOICES)
+	tratamiento = models.CharField(max_length=300, null=True)
 
 
 

@@ -1,13 +1,11 @@
 # -*- coding: utf-8 -*-
 from django import forms
 from django.forms.formsets import formset_factory
+
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit
-from crispy_forms.layout import(Layout,Fieldset,HTML,Field,ButtonHolder,Submit)
-from ActividadesClinicas.models import HistoriaClinica
-from ActividadesClinicas.models import Odontograma
-from ActividadesClinicas.models import ListadeDiagnosticos
-from ActividadesClinicas.models import Procedimiento
+from crispy_forms.layout import Layout, Fieldset, HTML, Field, ButtonHolder, Submit
+
+from ActividadesClinicas.models import HistoriaClinica, Odontograma, ListadeDiagnosticos, Procedimiento
 
 class HistoriaClinicaForm(forms.ModelForm):
     class Meta:
@@ -268,40 +266,30 @@ class HistoriaClinicaForm(forms.ModelForm):
 
 class OdontogramaForm(forms.ModelForm):
     class Meta:
-        model=Odontograma
+        model = Odontograma
     def __init__(self, *args, **kwargs):
-        super(OdontogramaForm,self).__init__(*args,**kwargs)
-        self.helper=FormHelper()
-        self.helper.form_tag=False
+        super(OdontogramaForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_tag = False
         self.helper.form_class = 'form-horizontal'
-        self.helper.label_class = 'col-md-2'
-        self.helper.field_class = 'col-md-4'
-        self.helper.layout=Layout(
-            HTML("""
-                            <p class='parrafo'> Todos Los Campos con ( * ) son Requeridos.</p>
-
-                            """
-            ),
+        self.helper.label_class = 'col-md-3'
+        self.helper.field_class = 'col-md-9'
+        self.helper.layout = Layout(
             Fieldset(
                 '',
-
-                Field('doctor'),
-                Field('paciente'),
                 Field('notas'),
-
-                ),
+            ),
             ButtonHolder(
                     Submit('save','Guardar')
 
             )
         )
-        self.fields['doctor'].label='Medico'
-        self.fields['paciente'].label='Nombre (s)'
-        self.fields['notas'].label='notas'
+        self.fields['notas'].label='Observaciones'
+        self.fields['paciente'] = forms.CharField()
 
 class ListadeDiagnosticosForm(forms.ModelForm):
     class Meta:
-        model=ListadeDiagnosticos
+        model = ListadeDiagnosticos
 
 class ProcedimientoForm(forms.ModelForm):
     tratamiento=forms.CharField()
@@ -309,33 +297,20 @@ class ProcedimientoForm(forms.ModelForm):
         model=Procedimiento
     def __init__(self, *args, **kwargs):
         super(ProcedimientoForm,self).__init__(*args,**kwargs)
-        self.helper=FormHelper()
-        self.helper.form_tag=False
-        self.helper.form_class = 'form-horizontal'
-        self.helper.label_class = 'col-md-3'
-        self.helper.field_class = 'col-md-9'
+        self.helper = FormHelper()
+        self.helper.form_tag = False
         self.helper.layout=Layout(
-            HTML("""
-                            <p class='parrafo'> Todos Los Campos con ( * ) son Requeridos.</p>
-
-                            """
-            ),
             Fieldset(
                 '',
-
                 Field('pieza',data_bind='value: diente.id'),
                 Field('cara',data_bind='value: cara'),
                 Field('tratamiento',data_bind='value: tratamiento.nombre'),
-                
 
-                ),          
-
-            
-        )
+                ),
+            )
         self.fields['pieza'].label='Pieza'
         self.fields['cara'].label='Cara '
         self.fields['tratamiento'].label='tratamiento'
-        
 
 ProcedimientoFormSet = formset_factory(ProcedimientoForm,)
 

@@ -135,26 +135,26 @@ jQuery(function(){
 			dientes.push(new DienteModel(18 - i, i * 25, 0));	
 		}
 		for(var i = 3; i < 8; i++){
-			dientes.push(new DienteModel(55 - i, i * 25, 1 * 40));	
+			dientes.push(new DienteModel(55 - i, i * 25, 1 * 80));	
 		}
 		for(var i = 3; i < 8; i++){
-			dientes.push(new DienteModel(85 - i, i * 25, 2 * 40));	
+			dientes.push(new DienteModel(85 - i, i * 25, 2 * 60));	
 		}
 		for(var i = 0; i < 8; i++){
-			dientes.push(new DienteModel(48 - i, i * 25, 3 * 40));	
+			dientes.push(new DienteModel(48 - i, i * 25, 3 * 65));	
 		}
 		//Dientes derechos
 		for(var i = 0; i < 8; i++){
 			dientes.push(new DienteModel(21 + i, i * 25 + 210, 0));	
 		}
 		for(var i = 0; i < 5; i++){
-			dientes.push(new DienteModel(61 + i, i * 25 + 210, 1 * 40));	
+			dientes.push(new DienteModel(61 + i, i * 25 + 210, 1 * 80));	
 		}
 		for(var i = 0; i < 5; i++){
-			dientes.push(new DienteModel(71 + i, i * 25 + 210, 2 * 40));	
+			dientes.push(new DienteModel(71 + i, i * 25 + 210, 2 * 60));	
 		}
 		for(var i = 0; i < 8; i++){
-			dientes.push(new DienteModel(31 + i, i * 25 + 210, 3 * 40));	
+			dientes.push(new DienteModel(31 + i, i * 25 + 210, 3 * 65));	
 		}
 
 		self.dientes = ko.observableArray(dientes);
@@ -164,7 +164,7 @@ jQuery(function(){
 	
 	//Inicializo SVG
     $('#odontograma').svg({
-        settings:{ width: '620px', height: '250px' }
+        settings:{ width: '620px', height: '350px' }
     });
 
 	ko.applyBindings(vm);
