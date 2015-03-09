@@ -19,6 +19,7 @@ from django.contrib import admin
 from procesocoopago.views import Abono
 from procesocoopago.views import Pago
 from procesocoopago.views import Proceso
+from historialprocedimientos.views import create
 
 
 admin.autodiscover()
@@ -47,11 +48,11 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^$', 'indexmhp'),
 
     url(r'^producto/$',producto),
+    url(r'^historialprocedimientos/$',create),
     url(r'^categoria/$',categoria),
-
-
     url(r'^paquete/$',paquete),
     url(r'^tipoPaquete/$',tipoPaquete),
     url(r'^evaluacion/$',buscarpaciente),

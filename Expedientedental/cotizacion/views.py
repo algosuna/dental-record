@@ -29,8 +29,7 @@ def update(request, id_cotizacion = None):
     #when POST
     if request.method == 'POST':
         form = CotizacionForm(request.POST, instance = cotizacion)
-        if form.is_valid():
-            form.save()
+        if form.is_valid():            form.save()
         return HttpResponseRedirect('/cotizacion/')
     #when NOT POST
     else:
@@ -41,10 +40,11 @@ def update(request, id_cotizacion = None):
 def details_create(request, id_cotizacion):
     #when POST
     if request.method == 'POST':
-        cotizacion = Cotizacion.objects.get(id = id_cotizacion)
+        cotizacion = Cotizacion.objects.get(id = id_cotizacion)       
         cotizaciondetail = CotizacionDetail(cotizacion = cotizacion)
         form = CotizacionDetailForm(request.POST, instance = cotizaciondetail)
         if form.is_valid():
+            form.instance.cotizacion = cotizacion
             form.save()
             return HttpResponseRedirect('/cotizacion/update/'+id_cotizacion+'/')
         else:
@@ -57,7 +57,7 @@ def details_create(request, id_cotizacion):
 def details_update(request, id_cotizacion, id_cotizaciondetail):
     #when POST
     if request.method == 'POST':
-        # consultaPrecio = CotizacionDetail.objects.filter()
+        consultaPrecio = CotizacionDetail.objects.filter()
         cotizacion = Cotizacion.objects.get(id = id_cotizacion)
         cotizaciondetail = CotizacionDetail.objects.get(id = id_cotizaciondetail)
         cotizaciondetail.cotizacion = cotizacion
@@ -81,9 +81,31 @@ def update_printit(request, id_cotizacion = None):
     if request.method == 'POST':
         form = CotizacionForm(request.POST, instance = cotizacion)
         if form.is_valid():
+            
             form.save()
         return HttpResponseRedirect('/cotizacion/')
     #when NOT POST
     else:
         form = CotizacionForm(instance = cotizacion)
     return render_to_response('/printit.html',{'form':form, 'cotizacion':cotizacion, 'latest_list': latest_list}, context_instance=RequestContext(request))
+
+
+
+def servicio_action (request, action, pk):
+
+    """Mark done, toggle onhold or delete a todo item."""
+    if action == "aceptado":
+        servicio = Item.objects.get(pk=pk)
+        servicio.aceptado = True
+        servicio.save()
+    elif action == "pendiente":
+        item = servicio.objects.get(pk=pk)
+        if servicio.pendiente:
+            servicio.pendiente = False
+        else:
+            servicio.pendiente = True
+        servicio.save()
+    elif action == "delete":
+        servicio.objects.filter(pk=pk).delete()
+
+    return HttpResponseRedirect(reverse(''))

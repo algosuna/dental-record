@@ -27,6 +27,14 @@ $( document ).ready(function() {
 	    }
 	});
 });
-</script>
 
+// disables paciente select
+// and fills in the value by id
+(function() {
+	var paciente = $('#id_paciente');
+
+	paciente.val('{{ paciente.id }}');
+	paciente.attr('readonly', '');
+})();
+</script>
 {% endblock javascript %}

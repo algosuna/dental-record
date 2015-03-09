@@ -1,17 +1,41 @@
 {% extends "base1.html" %}
 {%load static from staticfiles %}
 {% load crispy_forms_tags %}
-
-
-
-
 {% block content %}
+<h2>Cotizacion : #{{cotizacion.folio}}</h2>
+<div class="well odontograma clearfix">
+  <div class="col-xs-1">
+    
+  </div>
+  <div class="col-xs-9">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Medico</th>
+          <th>Folio</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{cotizacion.paciente }} </td>
+          <td>{{cotizacion.medico }}</td>
+          <td>{{cotizacion.folio}}</td>
+          
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- patient info section -->
+
+
 
 	<h2 class="page-header">Paciente a Cotizar</h2>
 
 	<form action="{{request.path}}" method="post" >
 		{% csrf_token %}
 		{{form.as_ul}}
+
 		<input style="float:right; margin-top:10px;" type="submit" value="Guardar cotizacion">
 		<div class="cleared"></div>
 	</form>
@@ -26,32 +50,53 @@
 	{% if latest_list %}
 
 			<div class="table-responsive">
-  			<table class="table">
+  			<table class="table table-hover">
  
 				<tr>
 					<th>Servicio</th>
 					<th>Grupo</th>
-					<th>Costo</th>
-					<th>Total</th>
+					<th>Costo</th>					
+					<th>Status</th>
 				</tr>
 			{% for object in latest_list %}
-				<tr>
-					<td><!--a href="{{request.path}}details/update/{{object.id}}/"-->{{object.nombreDelServicio}}</a></td>
-					<td><!--a href="{{request.path}}details/update/{{object.id}}/"-->{{object.nombreDelGrupo}}</a></td>
-					<td><a href="{{request.path}}details/update/{{object.id}}/">${{object.precio}}</a></td>
 
-					<td><a href="{{request.path}}details/update/{{object.id}}/">${{object.total}}</a></td>
+				<ul>
+					{% for precio in object_list %}
+						
+
+					{% endfor %}
+				</ul>
+
+				<tr>
+				<form method="POST" action="">
+					<td><a href="{{request.path}}details/update/{{object.id}}/">{{object.servicio.nombreDelServicio}}</a></td>
+					<td>{{object.servicio.nombreDelGrupo}}</a></td>
+					<td><input type ="text" value ="{{object.servicio.precio}}" class="precio" readonly="precio"></td>					
+					<td>{{cotizacion.precio.servicio}}</a></td>	
+					<td><td class="active">{{object.get_estado_display}}</td>				
+					
+					
+
 				</tr>
 			{% endfor %}
 				<tr>
 					<td></td>
 					<td></td>
 					<td></td>
-					<td style="text-align:right" >${{cotizacion.total}}</td>
+
+					
+					<labelstyle="float:right; margin-right:10px;" for="total">Total: <input type="text" id="total" value="0"/>
+					<input id="calcular" type="button" value="Calcular" />
+					<form method="post" action="">
+
 				</tr>
 			</table>
 			<input style="float:right; margin-right:40px;"  type="button" value="Imprimir" onclick="window.open('{{request.path}}printit')">
 			<div class="cleared"></div>
+
+
+
+
 	{% else %}
 
 		<p style="text-align:center;"> No se ha agregado ningún servicio a esta Cotizacion.</p>
@@ -60,5 +105,35 @@
 
 	<input style="float:right; margin-right:40px;"  type="button" value="Agregar Servicio" onclick="location.href='{{request.path}}details/create/'">
 	<div class="cleared"></div>
+{% endblock content %}
 
-{% endblock %}
+
+ {% block javascript %}
+<script type="text/javascript">
+
+
+
+function calcular_total() {
+
+	var precio_total = 0;
+	$(".precio").each(function(index, value) {
+		console.log("Entra a log");
+		precio_total = precio_total + parseInt($(this).val());
+		console.log(precio_total);
+	});
+	$("#total").val(precio_total);
+}
+
+function obtener() {
+	$("#precio").append('<input type="text" class="precio" value="0"');
+}
+// $("#calcular").on("click",calcular_total());
+$("#calcular").on("click",function(){
+	console.log("Prueba 2");
+	calcular_total();
+});
+</script>
+{% endblock javascript %}
+
+
+	

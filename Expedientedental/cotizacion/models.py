@@ -7,7 +7,12 @@ from decimal import Decimal
 
 
 
+
+
+
+
 class Cotizacion(models.Model):
+	folio =models.CharField(max_length=9,unique = True)
 	fecha = models.DateTimeField(auto_now_add = True)
 	paciente = models.ForeignKey(Paciente)
 	medico = models.ForeignKey(Medico)
@@ -20,23 +25,37 @@ class Cotizacion(models.Model):
 		cotizaciondetails = CotizacionDetail.objects.filter(cotizacion__id__exact = self.id)
 		total = 0
 		for cotizaciondetail in cotizaciondetails:
-			total += cotizaciondetail.precio
+			total += cotizaciondetail.servicio.precio
 		return total
 
-class CotizacionDetail(models.Model):
-	cotizacion = models.ForeignKey(Cotizacion)
+
+class CatalogodeServicios(models.Model):
 	nombreDelServicio = models.ForeignKey(PrecioServicio)
 	nombreDelGrupo = models.ForeignKey(GrupoPrecios)
-	precio = models.OneToOneField(GrupoServicio,null=True) 
+	precio = models.OneToOneField(GrupoServicio,null=True)
+	
+	def __unicode__(self):
+		return "%s (%s)"%(self.nombreDelServicio ,self.precio)
+		 
+
+
+class CotizacionDetail(models.Model):
+	estado_CHOICES=(
+
+		('aceptado','aceptado'),
+		('pendiente','pendiente'),
+
+
+		)
+	estado=models.CharField(max_length=10,choices=estado_CHOICES,default='aceptado')
+	cotizacion = models.ForeignKey(Cotizacion)
+	servicio = models.ForeignKey(CatalogodeServicios)
+
+	def __unicode__(self):
+		return "(%s) %s"%(self.cotizacion,self.servicio)
 
 	def total(self):
 		total = self.precio
 		return total
 
-	def __unicode__(self):
-		datos = "%s %s"%(self.nombreDelServicio,self.nombreDelGrupo)
-		return datos
-
-	def __unicode__(self):
-		precio = "%s"%(self.precio)
-		return precio
+	

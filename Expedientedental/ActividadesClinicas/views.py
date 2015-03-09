@@ -48,15 +48,19 @@ def odontograma(request, paciente_id):
         })
 
 
-def HistoriaClinicaView(request):
-    if request.method == "POST":
+def HistoriaClinicaView(request, paciente_id):
+    paciente = get_object_or_404(Paciente, pk=paciente_id)
+
+    if request.method == 'POST':
         modelform = HistoriaClinicaForm(request.POST)
         if modelform.is_valid():
             modelform.save()
-            return redirect("/interrogatorio/")
+            return redirect('/')
     else:
-        modelform=HistoriaClinicaForm()
-    return render(request,"interrogatorio.html",{"form":modelform})
+        modelform = HistoriaClinicaForm()
+    return render(request, 'interrogatorio.html',
+        {'form': modelform,
+        'paciente': paciente})
 
 class InterrogatorioPDF(PDFTemplateView):
     filename = 'Interrogatorio.pdf'
@@ -67,7 +71,10 @@ class InterrogatorioPDF(PDFTemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(InterrogatorioPDF, self).get_context_data(**kwargs)
-        context['interrogatorio'] = HistoriaClinica.objects.all()
+        self.paciente_id = int(kwargs.get('paciente_id'))
+        paciente = get_object_or_404(Paciente, pk=self.paciente_id)
+        context['paciente'] = paciente
+        context['interrogatorio'] = HistoriaClinica.objects.get(paciente=paciente)
         context['fecha'] = datetime.now().strftime("%d/%m/%Y")
         context['hora'] = datetime.now().strftime("%I:%M %p")
         return context
