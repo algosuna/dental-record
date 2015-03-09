@@ -59,9 +59,7 @@ class EntryPaqueteForm(forms.ModelForm):
 				'',
 
 				Field('nombre' , wrapper_class='col-md-2'),
-				Field('producto' , wrapper_class='col-md-10'),
-			
-
+				Field('producto' , wrapper_class='col-md-8'),
 
 				),
 			ButtonHolder(
@@ -70,7 +68,7 @@ class EntryPaqueteForm(forms.ModelForm):
 			)
 		)
 		self.fields['nombre'].label='Nombre Paquete'
-		self.fields['producto'].label='Prodcutos'
+		self.fields['producto'].label='Productos'
 		
 
 

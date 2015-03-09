@@ -7,3 +7,7 @@ Interrogatorio PDF
     border: none;
 }
 
+footer .alert {
+    text-align: justify;
+    font-size: 12px;
+}

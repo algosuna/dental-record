@@ -5,9 +5,9 @@ from ActividadesClinicas.models import Odontograma
 from ActividadesClinicas.models import TablaPrueba
 
 class HistoriaClinicaAdmin(admin.ModelAdmin):
-	list_display = ('medico','paciente',)
-	list_filter = ('medico','paciente',)
-	search_fields = ['medico','paciente']
+	list_display = ('id','medico','paciente',)
+	list_filter = ('id','medico','paciente',)
+	search_fields = ['id','medico','paciente']
 	fields = ()
 
 class ListadeDiagnosticosAdmin(admin.ModelAdmin):

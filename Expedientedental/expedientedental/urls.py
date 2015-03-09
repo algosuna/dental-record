@@ -12,7 +12,7 @@ from ActividadesClinicas.views import diagnosticos
 from ActividadesClinicas.views import datospaciente
 from ActividadesClinicas.views import detallespaciente
 from ActividadesClinicas.views import buscarpaciente
-from Inventario.views import producto, categoria
+from Inventario.views import producto, categoria, busqueda, ingresarCantidad, detallesProd
 from cotizacion.views import Cotizacion
 from paquete.views import paquete, tipoPaquete
 from django.contrib import admin
@@ -25,7 +25,6 @@ admin.autodiscover()
 from dajaxice.core import dajaxice_autodiscover, dajaxice_config
 dajaxice_autodiscover()
 
-from Inventario.views import producto, categoria
 
 urlpatterns = patterns('',
     # Examples:
@@ -49,6 +48,9 @@ urlpatterns = patterns('',
 
     url(r'^producto/$',producto),
     url(r'^categoria/$',categoria),
+    url(r'^ingresar/(?P<entrada_id>\d+)$',ingresarCantidad),
+    url(r'^detalles_producto/(?P<entrada_id>\d+)$',detallesProd),
+    url(r'^entradas/$',busqueda),
 
 
     url(r'^paquete/$',paquete),
