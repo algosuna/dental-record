@@ -17,5 +17,4 @@ six==1.9.0
 South==1.0.2
 tablib==0.10.0
 Unipath==1.0
-django-wkhtmltopdf==2.0
 xlwt==0.7.5
