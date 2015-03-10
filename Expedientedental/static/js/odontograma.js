@@ -68,14 +68,14 @@ jQuery(function(){
 				//Validamos el tratamiento
 				var tratamiento = vm.tratamientoSeleccionado();
 
-				if(cara == 'X' && !tratamiento.aplicaDiente){
+				/*if(cara == 'X' && !tratamiento.aplicaDiente){
 					alert('El tratamiento seleccionado no se puede aplicar a toda la pieza.');
 					return false;
 				}
 				if(cara != 'X' && !tratamiento.aplicaCara){
 					alert('El tratamiento seleccionado no se puede aplicar a una cara.');
 					return false;
-				}
+				}*/
 				//TODO: Validaciones de si la cara tiene tratamiento o no, etc...
 
 				vm.tratamientosAplicados.push({diente: diente, cara: cara, tratamiento: tratamiento});
@@ -119,7 +119,7 @@ jQuery(function(){
 	function ViewModel(){
 		var self = this;
 
-		self.tratamientosPosibles = ko.observableArray([]);
+		//self.tratamientosPosibles = ko.observableArray([]);
 		self.tratamientoSeleccionado = ko.observable(null);
 		self.tratamientosAplicados = ko.observableArray([]);
 
@@ -174,10 +174,10 @@ jQuery(function(){
 
 
 	//Cargo los tratamientos
-	$.getJSON('/static/js/tratamientos.js', function(d){
+	/*$.getJSON('/static/js/tratamientos.js', function(d){
 		for (var i = d.length - 1; i >= 0; i--) {
 			var tratamiento = d[i];
 			vm.tratamientosPosibles.push(tratamiento);
 		};		
-	});
+	});*/
 });
