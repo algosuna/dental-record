@@ -1,0 +1,15 @@
+{% extends "base1.html" %}
+
+{%load static from staticfiles %}
+
+{% block content %}
+
+	<h2 class="page-header">Resumen de Odontograma</h2>
+  {{ odontograma.id }}
+  <ul>
+  {% for thing in odontograma.procedimiento_set.all %}
+    <li>{{ thing.cara }}</li>
+  {% endfor %}
+  </ul>
+
+{% endblock content %}
