@@ -5,27 +5,15 @@ from django.conf import settings
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
-
-from ActividadesClinicas.views import HistoriaClinica
-from ActividadesClinicas.views import odontograma
-from ActividadesClinicas.views import diagnosticos
-from ActividadesClinicas.views import datospaciente
-from ActividadesClinicas.views import detallespaciente
-from ActividadesClinicas.views import buscarpaciente
-from Inventario.views import producto, categoria
-from cotizacion.views import Cotizacion
-from paquete.views import paquete, tipoPaquete
-from django.contrib import admin
-from procesocoopago.views import Abono
-from procesocoopago.views import Pago
-from procesocoopago.views import Proceso
-
 admin.autodiscover()
+
+from ActividadesClinicas.views import HistoriaClinica, odontograma, diagnosticos, datospaciente, buscarpaciente
+from Inventario.views import producto, categoria
+from paquete.views import paquete, tipoPaquete
+from procesocoopago.views import Abono, Pago, Proceso
 
 from dajaxice.core import dajaxice_autodiscover, dajaxice_config
 dajaxice_autodiscover()
-
-from Inventario.views import producto, categoria
 
 urlpatterns = patterns('',
     # Examples:
@@ -36,12 +24,12 @@ urlpatterns = patterns('',
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     url(r'^', include('ActividadesClinicas.urls')),
-    url(r'^', include('paquete.urls')),
 
+    url(r'^', include('paquete.urls')),
     url(r'^',include('altas.urls')),
     url(r'^',include('precios.urls')),
     url(r'^',include('bitacora.urls')),
-    #url(r'^',include('cotizacion.urls')),
+
     url(r'^cotizacion/', include('cotizacion.urls')),
 
     # Uncomment the next line to enable the admin:
@@ -53,8 +41,6 @@ urlpatterns = patterns('',
 
     url(r'^paquete/$',paquete),
     url(r'^tipoPaquete/$',tipoPaquete),
-    url(r'^evaluacion/$',buscarpaciente),
-    url(r'^detalles/$',detallespaciente),
     url(r'^abono/$',Abono),
     url(r'^pago/$',Pago),
     url(r'^proceso/$',Proceso),
