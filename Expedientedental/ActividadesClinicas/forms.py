@@ -5,7 +5,7 @@ from django.forms.formsets import formset_factory
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, HTML, Field, ButtonHolder, Submit
 
-from ActividadesClinicas.models import HistoriaClinica, Odontograma, ListadeDiagnosticos, Procedimiento
+from ActividadesClinicas.models import HistoriaClinica, Odontograma, Tratamiento, Procedimiento
 
 class HistoriaClinicaForm(forms.ModelForm):
     class Meta:
@@ -277,6 +277,8 @@ class OdontogramaForm(forms.ModelForm):
         self.helper.layout = Layout(
             Fieldset(
                 '',
+                Field('paciente'),
+                Field('doctor'),
                 Field('notas'),
             ),
             ButtonHolder(
@@ -284,17 +286,17 @@ class OdontogramaForm(forms.ModelForm):
 
             )
         )
-        self.fields['notas'].label='Observaciones'
-        self.fields['paciente'] = forms.CharField()
+        self.fields['doctor'].label = 'M&eacute;dico '
+        self.fields['notas'].label = 'Observaciones '
 
-class ListadeDiagnosticosForm(forms.ModelForm):
+class TratamientoForm(forms.ModelForm):
     class Meta:
-        model = ListadeDiagnosticos
+        model = Tratamiento
 
 class ProcedimientoForm(forms.ModelForm):
-    tratamiento=forms.CharField()
     class Meta:
         model=Procedimiento
+        exclude=('odontograma',)
     def __init__(self, *args, **kwargs):
         super(ProcedimientoForm,self).__init__(*args,**kwargs)
         self.helper = FormHelper()
@@ -302,15 +304,15 @@ class ProcedimientoForm(forms.ModelForm):
         self.helper.layout=Layout(
             Fieldset(
                 '',
-                Field('pieza',data_bind='value: diente.id'),
-                Field('cara',data_bind='value: cara'),
-                Field('tratamiento',data_bind='value: tratamiento.nombre'),
+                Field('pieza', data_bind='value: diente.id'),
+                Field('cara', data_bind='value: cara'),
+                Field('tratamiento', data_bind='value: tratamiento'),
 
                 ),
             )
-        self.fields['pieza'].label='Pieza'
-        self.fields['cara'].label='Cara '
-        self.fields['tratamiento'].label='tratamiento'
+        self.fields['pieza'].label = 'Pieza '
+        self.fields['cara'].label = 'Cara '
+        self.fields['tratamiento'].label = 'Tratamiento '
 
 ProcedimientoFormSet = formset_factory(ProcedimientoForm,)
 

@@ -4,9 +4,15 @@
 {% load crispy_forms_tags %}
 
 {% block css %}
-<link rel="stylesheet" href="{%static 'css/jquery-ui-1.8.17.custom.css'%}">
+<link rel="stylesheet" href="{%static 'css/jquery-ui-1.8.17.custom.css' %}">
 
-<script src="{% static 'js/modernizr-2.0.6.min.js'%}"></script>
+<style>
+  .hidden {
+    display: none;
+  }
+</style>
+
+<script src="{% static 'js/modernizr-2.0.6.min.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -42,7 +48,12 @@
     <p class="lead">1) Seleccione un tratamiento:</p>
   </div>
   <div class="col-md-8">
-    <select data-bind="options: tratamientosPosibles, value: tratamientoSeleccionado, optionsText: function(item){ return item.nombre; }, optionsCaption: 'Seleccione un tratamiento...'" class="form-control"></select>
+    <select name="tratamiento" id="tratamientos" class="form-control" data-bind="value: tratamientoSeleccionado,">
+      <option>Seleccione un tratamiento...</option>
+      {% for tratamiento in tratamientos %}
+      <option value="{{ tratamiento.id }}">{{ tratamiento.codigoTratamiento }} - {{ tratamiento.nombreTratamiento }}</option>
+      {% endfor %}
+    </select>
   </div>
 </div>
 
@@ -125,9 +136,25 @@
 <script src="{% static 'js/jquery.svg.min.js'%}"></script>  
 <script src="{% static 'js/jquery.svggraph.min.js'%}"></script>  
 <script src="{% static 'js/odontograma.js'%}"></script>
+<script src="{% static 'js/jquery.formset.js' %}"></script>
 <script>
-  var submitButton = $('#odontograma ~ .buttonHolder input');
+  // some widgets and such
+  $(function() {
+    var submitButton = $('#odontograma ~ .buttonHolder input'),
+        pacienteId = '{{ paciente.id }}',
+        pacienteSelect = $('#id_paciente');
 
-  submitButton.addClass(' pull-right odontograma-submit');
+    // aligns the submit button
+    submitButton.addClass(' pull-right odontograma-submit');
+
+    // gives a value to the paciente field
+    pacienteSelect.val(pacienteId);
+
+    // hides paciente field
+    $('#div_id_paciente').addClass(' hidden');
+
+    // for saving multiple forms
+    $('.form-inline fieldset').formset();
+  })();
 </script>
 {% endblock %}

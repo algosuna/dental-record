@@ -6,13 +6,12 @@ urlpatterns = patterns('ActividadesClinicas.views',
 
     url(r'^$', 'inicio'),
     #url(r'^interrogatorio/$', 'HistoriaClinicaView'),
- 	  #Agregado para Interrogatorio/Historial Clinico
- 	  url(r'^interrogatorio/(?P<paciente_id>\d+)$', 'HistoriaClinicaView'),
- 	  url(r'^odontograma/(?P<paciente_id>\d+)$', 'odontograma'),
+ 	#Agregado para Interrogatorio/Historial Clinico
+ 	url(r'^interrogatorio/(?P<paciente_id>\d+)$', 'HistoriaClinicaView'),
+ 	url(r'^odontograma/(?P<paciente_id>\d+)$', 'odontograma'),
     url(r'^odontograma/(?P<paciente_id>\d+)/detalle/(?P<odontograma_id>\d+)$', 'detalle', name='detalle'),
     url(r'^diagnosticos/$', 'diagnosticos'),
     url(r'^evaluacion/$', 'buscarpaciente'),
-    url(r'^detalles/$', 'detallespaciente'),
 
 )
 

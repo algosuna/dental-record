@@ -36,7 +36,6 @@ def odontograma(request, paciente_id):
     if request.method == 'POST':
         modelform = OdontogramaForm(request.POST)
         formset = ProcedimientoFormSet(request.POST, request.FILES)
-
         if modelform.is_valid():
             odontograma = modelform.save()
 

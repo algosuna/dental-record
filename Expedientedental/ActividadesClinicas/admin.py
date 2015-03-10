@@ -1,8 +1,7 @@
 from django.contrib	import admin
 from ActividadesClinicas.models import HistoriaClinica
-from ActividadesClinicas.models import ListadeDiagnosticos
+from ActividadesClinicas.models import Tratamiento
 from ActividadesClinicas.models import Odontograma
-from ActividadesClinicas.models import TablaPrueba
 
 class HistoriaClinicaAdmin(admin.ModelAdmin):
 	list_display = ('id','medico','paciente',)
@@ -10,10 +9,10 @@ class HistoriaClinicaAdmin(admin.ModelAdmin):
 	search_fields = ['id','medico','paciente']
 	fields = ()
 
-class ListadeDiagnosticosAdmin(admin.ModelAdmin):
-	list_display = ('codigoDiagnostico','nombreDiagnostico',)
-	list_filter = ('codigoDiagnostico','nombreDiagnostico',)
-	search_fields = ['codigoDiagnostico','nombreDiagnostico']
+class TratamientoAdmin(admin.ModelAdmin):
+	list_display = ('codigoTratamiento','nombreTratamiento',)
+	list_filter = ('codigoTratamiento','nombreTratamiento',)
+	search_fields = ['codigoTratamiento','nombreTratamiento']
 	fields = ()
 
 class OdontogramaAdmin(admin.ModelAdmin):
@@ -22,13 +21,6 @@ class OdontogramaAdmin(admin.ModelAdmin):
 	search_fields = ['doctor','paciente',]
 	fields = ()
 
-class TablaPruebaAdmin(admin.ModelAdmin):
-	list_display = ('id','nombre','apellidoPaterno',)
-	list_filter = ('id','nombre','apellidoPaterno',)
-	search_fields = ['id','nombre','apellidoPaterno',]
-	fields = ()
-
-admin.site.register(HistoriaClinica,HistoriaClinicaAdmin)
-admin.site.register(ListadeDiagnosticos,ListadeDiagnosticosAdmin)
-admin.site.register(Odontograma,OdontogramaAdmin)
-admin.site.register(TablaPrueba,TablaPruebaAdmin)
+admin.site.register(HistoriaClinica, HistoriaClinicaAdmin)
+admin.site.register(Tratamiento, TratamientoAdmin)
+admin.site.register(Odontograma, OdontogramaAdmin)
