@@ -10,6 +10,7 @@ admin.autodiscover()
 from Inventario.views import producto, categoria, busqueda, ingresarCantidad, detallesProd
 from cotizacion.views import Cotizacion
 from procesocoopago.views import Abono, Pago, Proceso
+from historialprocedimientos.views import create
 
 from dajaxice.core import dajaxice_autodiscover, dajaxice_config
 dajaxice_autodiscover()
@@ -33,9 +34,12 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^$', 'indexmhp'),
 
     url(r'^producto/$',producto),
+    url(r'^historialprocedimientos/$',create),
     url(r'^categoria/$',categoria),
+
     url(r'^ingresar/(?P<entrada_id>\d+)$',ingresarCantidad),
     url(r'^detalles_producto/(?P<entrada_id>\d+)$',detallesProd),
     url(r'^entradas/$',busqueda),

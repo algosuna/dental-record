@@ -127,4 +127,3 @@ def buscarpaciente(request):
     else:
         results = []
     return render(request, "evaluacion.html", {"results": results,"query": query})
-

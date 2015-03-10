@@ -36,17 +36,16 @@
 		{% if latest_list %}
 				<table>
 					<tr>
-						<th>Producto</th>
-						<th>Cantidad</th>
-						<th>Precio unitario</th>
+						<th>servicio</th>					
+						
 						<th>Precio total</th>
 					</tr>
 				{% for object in latest_list %}
 					<tr>
-						<td>{{object.producto}}</td>
-						<td>{{object.cantidad}}</td>
-						<td>${{object.producto.precio}}</td>
-						<td>${{object.total}}</td>
+						<td><a>{{object.servicio.nombreDelServicio.precio}</td>
+						
+						<td>${{object.servicio.precio}}</td>
+						
 					</tr>
 				{% endfor %}
 					<tr>

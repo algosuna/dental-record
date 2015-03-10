@@ -4,7 +4,9 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from crispy_forms.layout import(Layout,Fieldset,HTML,Field,ButtonHolder,
 Submit)
-from .models import Cotizacion, CotizacionDetail
+from .models import Cotizacion, CotizacionDetail,CatalogodeServicios
+from django.forms.formsets import formset_factory
+
 
 
 class CotizacionForm(forms.ModelForm):
@@ -16,7 +18,9 @@ class CotizacionForm(forms.ModelForm):
 class CotizacionDetailForm(forms.ModelForm):
 	class Meta:
 		model =CotizacionDetail
-		# exclude = ['precio']
+		exclude=('cotizacion','estado',)
+
+
 
 	def __init__(self, *args, **kwargs):
 		super(CotizacionDetailForm,self).__init__(*args,**kwargs)
@@ -34,22 +38,21 @@ class CotizacionDetailForm(forms.ModelForm):
 			Fieldset(
 				'Consulta',
 
-				Field('cotizacion'),
-				Field('nombreDelServicio'),
-				Field('nombreDelGrupo'),
+				
+				Field('servicio'),
+				
 
 
-				),
-			Fieldset(
-				'Precio',
-				HTML('<p><strong>Precio:</strong> {{object.precio}}</p>'),
-				Submit('obt_precio','Obtener')
+			
 			),
 			ButtonHolder(
 					Submit('save','Guardar')
 
 			)
 		)
-		self.fields['cotizacion'].label=u'Cotización'
-		self.fields['nombreDelServicio'].label='Servicio'
-		self.fields['nombreDelGrupo'].label='Grupo'
+		
+		self.fields['servicio'].label='Servicio'
+
+
+		
+		
