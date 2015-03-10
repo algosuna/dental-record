@@ -17,6 +17,7 @@ class DateTimeAdmin(admin.ModelAdmin):
 class HistogramaItemAdmin(admin.ModelAdmin):
 	class Meta:
 		model=HistogramaItem
+		exclude=('cotizacion',)
      
    
 

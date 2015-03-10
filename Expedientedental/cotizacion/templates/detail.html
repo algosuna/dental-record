@@ -14,6 +14,7 @@
           <th>Nombre</th>
           <th>Medico</th>
           <th>Folio</th>
+          <th>GRUPO</th>
         </tr>
       </thead>
       <tbody>
@@ -21,6 +22,7 @@
           <td>{{cotizacion.paciente }} </td>
           <td>{{cotizacion.medico }}</td>
           <td>{{cotizacion.folio}}</td>
+          <td>{{cotizacion.paciente.grupo}}</a></td>
           
         </tr>
       </tbody>
@@ -53,8 +55,8 @@
   			<table class="table table-hover">
  
 				<tr>
-					<th>Servicio</th>
-					<th>Grupo</th>
+					<th>Diagnostico</th>
+					<th>Pan de Tratamiento</th>			
 					<th>Costo</th>					
 					<th>Status</th>
 				</tr>
@@ -70,11 +72,10 @@
 				<tr>
 				<form method="POST" action="">
 					<td><a href="{{request.path}}details/update/{{object.id}}/">{{object.servicio.nombreDelServicio}}</a></td>
-					<td>{{object.servicio.nombreDelGrupo}}</a></td>
+					<td><a href="{{request.path}}details/update/{{object.id}}/">{{object.servicio.nombreDelServicio}}</a></td>
 					<td><input type ="text" value ="{{object.servicio.precio}}" class="precio" readonly="precio"></td>					
 					<td>{{cotizacion.precio.servicio}}</a></td>	
-					<td><td class="active">{{object.get_estado_display}}</td>				
-					
+					<td><td class="active">{{object.get_estado_display}}</td>
 					
 
 				</tr>
@@ -105,12 +106,14 @@
 
 	<input style="float:right; margin-right:40px;"  type="button" value="Agregar Servicio" onclick="location.href='{{request.path}}details/create/'">
 	<div class="cleared"></div>
+
+
+
 {% endblock content %}
 
 
  {% block javascript %}
 <script type="text/javascript">
-
 
 
 function calcular_total() {
@@ -128,10 +131,10 @@ function obtener() {
 	$("#precio").append('<input type="text" class="precio" value="0"');
 }
 // $("#calcular").on("click",calcular_total());
-$("#calcular").on("click",function(){
-	console.log("Prueba 2");
+(function(){
+	
 	calcular_total();
-});
+})();
 </script>
 {% endblock javascript %}
 

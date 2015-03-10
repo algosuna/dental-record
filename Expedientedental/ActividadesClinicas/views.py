@@ -108,3 +108,18 @@ def detallespaciente(request):
     consulta = Odontograma.objects.all()
     detalles = Paciente.objects.all()
     return render(request, 'detalles.html', {'detallespaciente': consulta[0:], 'detalles': detalles})
+
+
+def HistoriaClinicaView(request, paciente_id):
+    Procedimiento = get_object_or_404(Preocedimiento, pk=paciente_id)
+
+    if request.method == 'POST':
+        modelform = ProcedimientoForm(request.POST)
+        if modelform.is_valid():
+            modelform.save()
+            return redirect('/')
+    else:
+        modelform = HistoriaClinicaForm()
+    return render(request, 'interrogatorio.html',
+        {'form': modelform,
+        'Procedimiento': Procedimiento})

@@ -3,6 +3,7 @@ from altas.models import Medico,Paciente
 from precios.models import PrecioServicio
 from precios.models import GrupoServicio
 from precios.models import GrupoPrecios
+from ActividadesClinicas.models import Procedimiento
 from decimal import Decimal
 
 
@@ -16,6 +17,7 @@ class Cotizacion(models.Model):
 	fecha = models.DateTimeField(auto_now_add = True)
 	paciente = models.ForeignKey(Paciente)
 	medico = models.ForeignKey(Medico)
+	total=models.DecimalField(max_digits=19, decimal_places=10)
 
 
 	def __unicode__(self):
@@ -47,12 +49,13 @@ class CotizacionDetail(models.Model):
 
 
 		)
-	estado=models.CharField(max_length=10,choices=estado_CHOICES,default='aceptado')
-	cotizacion = models.ForeignKey(Cotizacion)
-	servicio = models.ForeignKey(CatalogodeServicios)
+	estado      =models.CharField(max_length=10,choices=estado_CHOICES,default='aceptado')
+	cotizacion  = models.ForeignKey(Cotizacion)
+	servicio    = models.ForeignKey(CatalogodeServicios)
+	diagnostico = models.ForeignKey(Procedimiento)
 
 	def __unicode__(self):
-		return "(%s) %s"%(self.cotizacion,self.servicio)
+		return "(%s) %s %s"%(self.cotizacion,self.servicio,self.diagnostico)
 
 	def total(self):
 		total = self.precio

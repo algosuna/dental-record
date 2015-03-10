@@ -1,6 +1,7 @@
 from django.contrib	import admin
 from ActividadesClinicas.models import HistoriaClinica
 from ActividadesClinicas.models import ListadeDiagnosticos
+from ActividadesClinicas.models import Procedimiento
 from ActividadesClinicas.models import Odontograma
 from ActividadesClinicas.models import TablaPrueba
 
@@ -22,6 +23,11 @@ class OdontogramaAdmin(admin.ModelAdmin):
 	search_fields = ['doctor','paciente',]
 	fields = ()
 
+class ProcedimientoAdmin(admin.ModelAdmin):
+	class Meta:
+		model=Procedimiento
+
+
 class TablaPruebaAdmin(admin.ModelAdmin):
 	list_display = ('id','nombre','apellidoPaterno',)
 	list_filter = ('id','nombre','apellidoPaterno',)
@@ -29,6 +35,7 @@ class TablaPruebaAdmin(admin.ModelAdmin):
 	fields = ()
 
 admin.site.register(HistoriaClinica,HistoriaClinicaAdmin)
+admin.site.register(Procedimiento,ProcedimientoAdmin)
 admin.site.register(ListadeDiagnosticos,ListadeDiagnosticosAdmin)
 admin.site.register(Odontograma,OdontogramaAdmin)
 admin.site.register(TablaPrueba,TablaPruebaAdmin)
