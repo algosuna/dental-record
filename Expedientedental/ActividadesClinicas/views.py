@@ -128,3 +128,7 @@ def buscarpaciente(request):
         results = []
     return render(request, "evaluacion.html", {"results": results,"query": query})
 
+
+
+
+

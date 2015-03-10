@@ -1,4 +1,5 @@
 from django.contrib	import admin
+
 from ActividadesClinicas.models import HistoriaClinica
 from ActividadesClinicas.models import Tratamiento
 from ActividadesClinicas.models import Odontograma
