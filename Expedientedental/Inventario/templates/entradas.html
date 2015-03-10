@@ -1,0 +1,68 @@
+{% extends "base1.html" %}
+
+{%load static from staticfiles %}
+
+{% block content %}
+
+	<h2 class="page-header">Búsqueda</h2>
+
+
+	{% if search_string %}
+	<p class="text-center">Usted ingresó "{{ search_string }}" :</p>
+		{% if objects %}
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>Producto</th>
+
+						<th class="text-center">Cantidad</th>
+					<!--  Campos de Precio y Total
+						<th class="text-center">Precio</th>
+						<th class="text-center">Total</th>
+					-->
+					
+						<th class="text-center">Última Modificación</th>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
+					</tr>
+				</thead>
+				<tbody>
+  		{% for producto in objects %}
+  			<tr>
+  				<td>{{ producto.nombre }}</td>
+  				{% with entrada=producto.entradas_set.get %}
+  				<td align="center">{{ entrada.cantidad }}</td>
+
+  			<!--  Campos de Precio y Total
+  				<td align="center">${{ entrada.nombre.precio }}</td>
+  				<td align="center">{{ entrada.total }}</td>
+  			-->
+
+  				<td align="center">{{ entrada.fecha }}</td> 
+  				<td class="text-center"><a href="/ingresar/{{ entrada.id }}" class="btn btn-info">Agregar Cantidad</a></td>
+  				<td class="text-center"><a href="/detalles_producto/{{ entrada.id }}" class="btn btn-default">Ver Detalles</a></td>
+  				{% endwith %}
+  			</tr>
+  		{% endfor %}
+  			</tbody>
+			</table>
+			<p class="lead text-center">
+			<a href="/entradas/" class="btn btn-primary">Nueva Búsqueda <span class="glyphicon glyphicon-chevron-right"></span></a href="/"></p>
+		{% else %}
+			<p class="lead text-center text-muted">No se han encontrado productos con ese nombre.
+			<a href="/entradas/" class="btn btn-primary">Nueva Búsqueda <span class="glyphicon glyphicon-chevron-right"></span></a href="/"></p>
+		{% endif %}
+
+		{% else %}
+
+		<div class="text-center search clearfix">
+			<form action="" method="GET">
+				
+				<label for="q" class="lead">Ingrese el nombre del Producto:</label>
+				<input type="text" name="q" class="form-control" placeholder="Nombre del producto..." value="{{ query|escape }}">
+				<input type="submit" class="btn btn-primary" value="Buscar">
+				
+			</form>
+		</div>
+  {% endif %}
+{% endblock content %}

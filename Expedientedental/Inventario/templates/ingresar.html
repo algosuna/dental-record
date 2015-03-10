@@ -1,0 +1,25 @@
+{% extends "base1.html" %}
+{%load static from staticfiles %}
+
+{% block content %}
+
+<h2 class="page-header">Ingresar Cantidad</h2>
+
+{% load crispy_forms_tags %}
+{% crispy form %}
+
+
+{% endblock content %}
+{% block javascript %}
+<script type="text/javascript">
+// disables entradas de producto select
+// and fills in the value by id
+(function() {
+	var entradas = $('#id_nombre');
+
+	entradas.val('{{ entrada.nombre.id }}');
+	entradas.attr('readonly', '');
+})();
+</script>
+
+{% endblock javascript %}

@@ -7,9 +7,8 @@ from django.conf import settings
 from django.contrib import admin
 admin.autodiscover()
 
-from ActividadesClinicas.views import HistoriaClinica, odontograma, diagnosticos, datospaciente, buscarpaciente
-from Inventario.views import producto, categoria
-from paquete.views import paquete, tipoPaquete
+from Inventario.views import producto, categoria, busqueda, ingresarCantidad, detallesProd
+from cotizacion.views import Cotizacion
 from procesocoopago.views import Abono, Pago, Proceso
 
 from dajaxice.core import dajaxice_autodiscover, dajaxice_config
@@ -37,14 +36,13 @@ urlpatterns = patterns('',
 
     url(r'^producto/$',producto),
     url(r'^categoria/$',categoria),
+    url(r'^ingresar/(?P<entrada_id>\d+)$',ingresarCantidad),
+    url(r'^detalles_producto/(?P<entrada_id>\d+)$',detallesProd),
+    url(r'^entradas/$',busqueda),
 
-
-    url(r'^paquete/$',paquete),
-    url(r'^tipoPaquete/$',tipoPaquete),
     url(r'^abono/$',Abono),
     url(r'^pago/$',Pago),
     url(r'^proceso/$',Proceso),
-
 
     url(r'^media/(?P<path>.*)$','django.views.static.serve',{'document_root':settings.MEDIA_ROOT}),
 

@@ -17,6 +17,8 @@
 						<th>Apellido Paterno</th>
 						<th>Apellido Materno</th>
 						<th>&nbsp;</th>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -26,6 +28,8 @@
   				<td>{{ paciente.apellidoPaterno }}</td>
   				<td>{{ paciente.apellidoMaterno }}</td>
   				<td class="text-center"><a href="/odontograma/{{ paciente.id }}" class="btn btn-warning">Odontograma</a></td>
+  				<td class="text-center"><a href="/interrogatorio/{{ paciente.id }}" class="btn btn-info">Interrogatorio</a></td>
+  				<td class="text-center"><a href="/interrogatorios/{{ paciente.id }}/pdf/" class="btn btn-danger">PDF</a></td>
   			</tr>
   		{% endfor %}
   			</tbody>
