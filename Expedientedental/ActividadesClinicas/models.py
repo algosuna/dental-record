@@ -1,4 +1,4 @@
-from django.db import models 
+from django.db import models
 from altas.models import Medico,Paciente
 from datetime import date
 
@@ -12,14 +12,14 @@ class HistoriaClinica(models.Model):
 
     	('Si', 'Si'),
         ('No', 'No'),
-        
+
 
     	)
 	cartilla_CHOICES=(
 
 		('Si', 'Si'),
         ('No', 'No'),
-        
+
 		)
 	esquema_Choices=(
 		('Si', 'Si'),
@@ -30,7 +30,7 @@ class HistoriaClinica(models.Model):
 	antecedentes_Choices=(
 		('Tabaco', 'Tabaco'),
         ('Alcohol', 'Alcohol'),
-        
+
         )
 	alergias_CHOICES=(
 
@@ -42,12 +42,12 @@ class HistoriaClinica(models.Model):
 	cabeza_CHOICES=(
 		('Exotosis', 'Exotosis'),
         ('Endostosis', 'Endostosis'),
-        
+
         )
 	craneo_CHOICES=(
 		('Dolicocefalico', 'Dolicocefalico'),
         ('Mesocefalico','Mesocefalico'),
-        
+
         )
 	cara_CHOICES=(
 		('Asimetrias:Transversales','Asimetrias:Transversales'),
@@ -92,7 +92,7 @@ class HistoriaClinica(models.Model):
 		('O-','O-'),
 
 		)
-	
+
 	#articulacion temporomandibular
 	ruidos_CHOICES=(
 		('Si','No'),
@@ -251,7 +251,7 @@ class Procedimiento(models.Model):
 		('I', 'Palatino'),
 	)
 
-	pieza = models.IntegerField()
+	pieza = models.IntegerField(null=True)
 	cara = models.CharField(max_length=4, choices=CARAS_CHOICES)
 	tratamiento = models.ForeignKey(Tratamiento, null=True)
 	odontograma = models.ForeignKey(Odontograma, null=True)

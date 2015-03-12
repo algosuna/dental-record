@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django import forms
-from django.forms.formsets import formset_factory
+from django.forms.formsets import formset_factory, BaseFormSet
 
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, HTML, Field, ButtonHolder, Submit
@@ -295,8 +295,8 @@ class TratamientoForm(forms.ModelForm):
 
 class ProcedimientoForm(forms.ModelForm):
     class Meta:
-        model=Procedimiento
-        exclude=('odontograma',)
+        model = Procedimiento
+        exclude = ('odontograma',)
     def __init__(self, *args, **kwargs):
         super(ProcedimientoForm,self).__init__(*args,**kwargs)
         self.helper = FormHelper()
