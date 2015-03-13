@@ -65,6 +65,16 @@ legend {
     padding-bottom: 10px;
 }
 
+/* 
+
+tables
+
+*/
+
+.table thead ~ thead tr th {
+    padding-top: 25px;
+}
+
 /*
 
 busqueda

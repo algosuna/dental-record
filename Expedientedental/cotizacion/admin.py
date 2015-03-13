@@ -3,13 +3,13 @@ from cotizacion.models import Cotizacion, CotizacionDetail,CatalogodeServicios
 
 
 class CotizacionDetailAdmin(admin.ModelAdmin):
-	list_display=('cotizacion','servicio','estado')	
-	list_filter=('cotizacion','servicio','estado')
+	list_display=('cotizacion','servicio','estado','total')	
+	list_filter=('cotizacion','servicio','estado',)
 	search_fields=['cotizacion','servicio']
-	fields=('cotizacion',)
+	fields=('cotizacion','servicio')
 
 class CotizacionAdmin(admin.ModelAdmin):
-	list_display=('fecha','paciente','medico')
+	list_display=('fecha',)
 	fields=('paciente',)
 
 class CatalogodeServiciosAdmin(admin.ModelAdmin):

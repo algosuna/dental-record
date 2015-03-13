@@ -32,12 +32,7 @@ class HistoriaClinica(models.Model):
         ('Alcohol', 'Alcohol'),
         
         )
-	alergias_CHOICES=(
-
-		('Antibioticos', 'Antibioticos'),
-        ('Analgesicos', 'Analgesicos'),
-        ('Anestesicos','Alimentos')
-        )
+	
 	#exploracion
 	cabeza_CHOICES=(
 		('Exotosis', 'Exotosis'),
@@ -156,7 +151,7 @@ class HistoriaClinica(models.Model):
 	esquemaCompleto=models.CharField(max_length=2,choices=esquema_Choices, blank=True)
 	esquemaFalta=models.CharField(max_length=200, blank=True)
 	adicciones=models.CharField(max_length=15,choices=antecedentes_Choices)
-	alergias=models.CharField(max_length=400,choices=alergias_CHOICES)
+	alergias=models.CharField(max_length=400)
 	fechaHospitalizaion=models.CharField(max_length=400)
 	motivo=models.CharField(max_length=400, blank=True)
 	padecimientoActual=models.CharField(max_length=500)

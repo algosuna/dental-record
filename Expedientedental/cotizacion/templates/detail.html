@@ -2,43 +2,53 @@
 {%load static from staticfiles %}
 {% load crispy_forms_tags %}
 {% block content %}
-<h2>Cotizacion : #{{cotizacion.folio}}</h2>
+
 <div class="well odontograma clearfix">
-  <div class="col-xs-1">
-    
+  <div class="col-xs-3">
+    <img src="{% static cotizacion.paciente.imagen %}" alt="{{ cotizacion.paciente.nombre }} {{ cotizacion.paciente.apellidoPaterno }}" class="pull-left img-rounded">
   </div>
   <div class="col-xs-9">
     <table class="table">
       <thead>
         <tr>
-          <th>Nombre</th>
-          <th>Medico</th>
-          <th>Folio</th>
-          <th>GRUPO</th>
+          <th>Nombre</th>          
+          <th>Grupo</th>
+          <th># Cotizaci&oacute;n</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>{{cotizacion.paciente }} </td>
-          <td>{{cotizacion.medico }}</td>
-          <td>{{cotizacion.folio}}</td>
-          <td>{{cotizacion.paciente.grupo}}</a></td>
-          
+          <td>{{ cotizacion.paciente}}</td>
+          <td>{{ cotizacion.paciente.grupo }}</td>
+          <td>{{ cotizacion.id}}</td>
         </tr>
       </tbody>
+      <thead>
+        <tr>
+        	<th>Medico Tratante</th>
+        	<th>&nbsp;</th>
+        	<th>&nbsp;</th>
+        </tr>
+        <tr>
+        	<td>{{ cotizacion.medico }}</td>
+        	<td>&nbsp;</td>
+        	<td>&nbsp;</td>        	
+        </tr>
+      </thead>
     </table>
   </div>
 </div><!-- patient info section -->
 
 
 
-	<h2 class="page-header">Paciente a Cotizar</h2>
+	<h2><class="page-header">Presupuesto de Paciente</h2>
 
 	<form action="{{request.path}}" method="post" >
 		{% csrf_token %}
-		{{form.as_ul}}
 
+		{{form.as_ul}}
 		<input style="float:right; margin-top:10px;" type="submit" value="Guardar cotizacion">
+		
 		<div class="cleared"></div>
 	</form>
 
@@ -55,7 +65,7 @@
   			<table class="table table-hover">
  
 				<tr>
-					<th>Diagnostico</th>
+					
 					<th>Pan de Tratamiento</th>			
 					<th>Costo</th>					
 					<th>Status</th>
@@ -71,11 +81,14 @@
 
 				<tr>
 				<form method="POST" action="">
+					
 					<td><a href="{{request.path}}details/update/{{object.id}}/">{{object.servicio.nombreDelServicio}}</a></td>
-					<td><a href="{{request.path}}details/update/{{object.id}}/">{{object.servicio.nombreDelServicio}}</a></td>
-					<td><input type ="text" value ="{{object.servicio.precio}}" class="precio" readonly="precio"></td>					
-					<td>{{cotizacion.precio.servicio}}</a></td>	
-					<td><td class="active">{{object.get_estado_display}}</td>
+
+
+
+					<td><input style="width:55px" type ="text" value ="{{object.servicio.precio}}" class="precio" readonly="precio" ></td>	
+					
+					<td  class="">{{object.get_estado_display}}</td>
 					
 
 				</tr>
@@ -86,14 +99,32 @@
 					<td></td>
 
 					
-					<labelstyle="float:right; margin-right:10px;" for="total">Total: <input type="text" id="total" value="0"/>
-					<input id="calcular" type="button" value="Calcular" />
+					
+					
 					<form method="post" action="">
 
 				</tr>
 			</table>
-			<input style="float:right; margin-right:40px;"  type="button" value="Imprimir" onclick="window.open('{{request.path}}printit')">
-			<div class="cleared"></div>
+
+
+				<table>
+					<label style="float:left; margin-left:250px;" for="total">Total:$ <input type="text" id="total" value="0"/ style="text-align:right" style ="width:100px">
+				</table>
+				<br>
+				<br>
+			<table border="0" align="right">
+					<tr>
+						<td style="padding:0px 10px 0px 10px;  "><input  type="button" value="Imprimir" onclick="window.open('{{request.path}}printit')"></td>
+						
+						<td style="padding:0px 10px 0px 10px;  "><input  type="button" value="Agregar Servicio" onclick="location.href='{{request.path}}details/create/'"></td>
+					</tr>
+	
+					<div class="cleared"></div>
+			</table>
+
+			
+
+			
 
 
 
@@ -101,11 +132,19 @@
 	{% else %}
 
 		<p style="text-align:center;"> No se ha agregado ningún servicio a esta Cotizacion.</p>
+					<table border="0" align="right">
+					<tr>
+						<td style="padding:0px 10px 0px 10px;  "><input  type="button" value="Imprimir" onclick="window.open('{{request.path}}printit')"></td>
+						
+						<td style="padding:0px 10px 0px 10px;  "><input  type="button" value="Agregar Servicio" onclick="location.href='{{request.path}}details/create/'"></td>
+					</tr>
+	
+					<div class="cleared"></div>
+			</table>
 
 	{% endif %}
-
-	<input style="float:right; margin-right:40px;"  type="button" value="Agregar Servicio" onclick="location.href='{{request.path}}details/create/'">
-	<div class="cleared"></div>
+	
+	
 
 
 
@@ -135,6 +174,20 @@ function obtener() {
 	
 	calcular_total();
 })();
+
+/*var precio = $('.precio'),
+total = $('#precio-total');
+
+$(function(){
+total.text(function(){
+	var sum = 0;
+	precio.each(function(){
+		sum += +$(this).text()
+	});
+	return sum;
+});
+})(); */
+
 </script>
 {% endblock javascript %}
 
