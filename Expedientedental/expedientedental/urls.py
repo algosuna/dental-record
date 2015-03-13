@@ -44,9 +44,6 @@ urlpatterns = patterns('',
     url(r'^detalles_producto/(?P<entrada_id>\d+)$',detallesProd),
     url(r'^entradas/$',busqueda),
 
-    url(r'^evaluacion/$',buscarpaciente),
-    url(r'^detalles/$',detallespaciente),
-
     url(r'^abono/$',Abono),
     url(r'^pago/$',Pago),
     url(r'^proceso/$',Proceso),
@@ -54,7 +51,7 @@ urlpatterns = patterns('',
     url(r'^media/(?P<path>.*)$','django.views.static.serve',{'document_root':settings.MEDIA_ROOT}),
 
     #url(r'^prueba/$',busqueda),
-    
+
     (r'^dajaxice/', include('dajaxice.urls')),
 )
 

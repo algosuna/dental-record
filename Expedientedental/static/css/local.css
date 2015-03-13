@@ -152,7 +152,7 @@ svg\:svg { display: none; }
 
 #odontograma ~ .clearfix ul li .form-group .controls { margin-right: 20px; }
 
-#odontograma ~ .clearfix ul li .form-group:last-of-type .controls select { width: 270px; }
+#odontograma ~ .clearfix ul li .form-group:last-of-type .controls select { width: 260px; }
 
 #tooth-images {
     position: relative;

@@ -109,15 +109,20 @@
 
   <p class="lead">3) Verifique detalles:</p>
   <div class="clearfix">
-    <ul data-bind="foreach: tratamientosAplicados">
+    <ul>
+      {% for procedimientoForm in formset %}
+      {% if forloop.last %}
+      <li data-bind="foreach: tratamientosAplicados">
+        <div class="form-inline" data-bind='attr: { id: form_div_id }'>
+      {% else %}
       <li>
-        {% for procedimientoForm in formset %}
-        <div class="form-inline">
+        <div class="form-inline" id="form_div_{{forloop.counter0}}">
+      {% endif %}
           {% crispy procedimientoForm %}
         </div>
-        {%endfor%}
         <a href="#" data-bind="click: $parent.quitarTratamiento" class="pull-left btn btn-warning">Eliminar</a>
       </li>
+      {%endfor%}
     </ul><!-- end foreach -->
   </div>
 
@@ -133,10 +138,9 @@
 <script src="{% static 'js/jquery-ui-1.8.17.custom.min.js'%}"></script>
 <script src="{% static 'js/jquery.tmpl.js'%}"></script>
 <script src="{% static 'js/knockout-3.3.0.js'%}"></script>
-<script src="{% static 'js/jquery.svg.min.js'%}"></script>  
-<script src="{% static 'js/jquery.svggraph.min.js'%}"></script>  
+<script src="{% static 'js/jquery.svg.min.js'%}"></script>
+<script src="{% static 'js/jquery.svggraph.min.js'%}"></script>
 <script src="{% static 'js/odontograma.js'%}"></script>
-<script src="{% static 'js/jquery.formset.js' %}"></script>
 <script>
   // some widgets and such
   $(function() {
@@ -154,7 +158,7 @@
     $('#div_id_paciente').addClass(' hidden');
 
     // for saving multiple forms
-    $('.form-inline fieldset').formset();
-  })();
+
+  });
 </script>
 {% endblock %}

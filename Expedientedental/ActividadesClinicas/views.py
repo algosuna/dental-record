@@ -52,7 +52,7 @@ def odontograma(request, paciente_id):
         modelform = OdontogramaForm()
         formset = ProcedimientoFormSet()
 
-    return render(request, 'odontograma.html', 
+    return render(request, 'odontograma.html',
         {'form': modelform,
         'formset': formset,
         'paciente': paciente,
@@ -127,8 +127,4 @@ def buscarpaciente(request):
     else:
         results = []
     return render(request, "evaluacion.html", {"results": results,"query": query})
-
-
-
-
 
