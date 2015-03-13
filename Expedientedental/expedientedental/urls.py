@@ -8,7 +8,6 @@ from django.contrib import admin
 admin.autodiscover()
 
 from Inventario.views import producto, categoria, busqueda, ingresarCantidad, detallesProd
-from cotizacion.views import Cotizacion
 from procesocoopago.views import  Pago, Proceso
 from historialprocedimientos.views import create
 

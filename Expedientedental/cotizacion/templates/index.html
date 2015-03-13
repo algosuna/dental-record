@@ -2,22 +2,6 @@
 {%load static from staticfiles %}
 {% block content %}
 
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-
-		<script type="text/javascript">
-		$(document).ready(function(){
-		    $('[data-toggle="tooltip"]').tooltip({
-		        placement : 'left'
-		    });
-		});
-		</script>
-		<style type="text/css">
-			.bs-example{
-		    	margin: 100px 50px;
-		    }
-		</style>
-
 	<h2 class="page-header">Presupuestos</h2>
 
 	<div class="cleared"></div>
@@ -25,15 +9,15 @@
 			<table style="text-align:center"class="table table-condensed" border='0'>
 				<tr >
 					<th style="text-align:center">Cliente</th>
-					
+
 					<th style="text-align:center" >Fecha</th>
-					
+
 				</tr>
 			{% for object in latest_list %}
 				<tr>
 					<td><a href="update/{{object.id}}/" data-toggle="tooltip" class="tip-left" data-original-title="Click para agregar servicios">{{object.paciente}}</a></td>
 					<td>{{object.fecha}}</td>
-					
+
 
 
 				</tr>
@@ -45,7 +29,22 @@
 
 		</table>
 	{% else %}
-		<p>No hay Cotizaciones en la base de datos.</p>
+		<p class="lead text-muted text-center">No hay Cotizaciones en la base de datos.</p>
 	{% endif %}
 
+{% endblock %}
+
+{% block javascript %}
+<script type="text/javascript">
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip({
+        placement : 'left'
+    });
+});
+</script>
+<style type="text/css">
+	.bs-example{
+    	margin: 100px 50px;
+    }
+</style>
 {% endblock %}

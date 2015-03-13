@@ -1,13 +1,16 @@
-# Create your views here.
-from django.template.loader import get_template
+from datetime import datetime
+
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
-from django.http import Http404, HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response, render, redirect
-import datetime
 
 from cotizacion.models import Cotizacion, CotizacionDetail
 from cotizacion.forms import CotizacionForm, CotizacionDetailForm
+
+def pending_orders(request):
+
+    return render_to_response('/index.html')
 
 def create(request):
     #when POST
@@ -42,7 +45,7 @@ def details_create(request, id_cotizacion):
     #when POST
     if request.method == 'POST':
         print id_cotizacion
-        cotizacion = Cotizacion.objects.get(id = int(id_cotizacion))       
+        cotizacion = Cotizacion.objects.get(id = int(id_cotizacion))
         cotizaciondetail = CotizacionDetail(cotizacion = cotizacion)
         form = CotizacionDetailForm(request.POST, instance = cotizaciondetail)
         if form.is_valid():
@@ -84,7 +87,7 @@ def update_printit(request, id_cotizacion = None):
     if request.method == 'POST':
         form = CotizacionForm(request.POST, instance = cotizacion)
         if form.is_valid():
-            
+
             form.save()
         return HttpResponseRedirect('/cotizacion/')
     #when NOT POST

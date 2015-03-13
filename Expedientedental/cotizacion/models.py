@@ -1,16 +1,10 @@
-from django.db import models
-from altas.models import Medico,Paciente
-from precios.models import PrecioServicio
-from precios.models import GrupoServicio
-from precios.models import GrupoPrecios
-from ActividadesClinicas.models import Procedimiento,Tratamiento
 from decimal import Decimal
 
+from django.db import models
 
-
-
-
-
+from altas.models import Medico, Paciente
+from precios.models import PrecioServicio, GrupoServicio, GrupoPrecios
+from ActividadesClinicas.models import Procedimiento,Tratamiento
 
 class Cotizacion(models.Model):
 	id=models.AutoField(primary_key=True,null=False)
@@ -19,10 +13,9 @@ class Cotizacion(models.Model):
 	medico = models.ForeignKey(Medico)
 	total=models.DecimalField(max_digits=19, decimal_places=10)
 
-
 	def __unicode__(self):
 		return '['+str(self.fecha.day)+'/'+str(self.fecha.month)+'/'+str(self.fecha.year)+']  '+self.paciente.nombre+' '+self.paciente.apellidoPaterno
-	
+
 	def total(self):
 		cotizaciondetails = CotizacionDetail.objects.filter(cotizacion__id__exact = self.id)
 		total = 0
@@ -30,30 +23,22 @@ class Cotizacion(models.Model):
 			total += cotizaciondetail.servicio.precio
 		return total
 
-
 class CatalogodeServicios(models.Model):
 	nombreDelServicio = models.ForeignKey(Tratamiento)
 	nombreDelGrupo = models.ForeignKey(GrupoPrecios)
 	precio = models.DecimalField(max_digits=19, decimal_places=3)
-	
+
 	def __unicode__(self):
 		return "%s (%s)"%(self.nombreDelServicio ,self.precio)
-		 
-
 
 class CotizacionDetail(models.Model):
 	estado_CHOICES=(
-
 		('aceptado','aceptado'),
 		('pendiente','pendiente'),
-
-
 		)
 	estado      =models.CharField(max_length=10,choices=estado_CHOICES,default='aceptdado')
 	cotizacion  = models.ForeignKey(Cotizacion)
 	servicio    = models.ForeignKey(CatalogodeServicios)
-	
-	
 
 	def __unicode__(self):
 		return "(%s) %s"%(self.cotizacion,self.servicio)
@@ -62,4 +47,4 @@ class CotizacionDetail(models.Model):
 		total = self.precio
 		return total
 
-	
+
