@@ -9,7 +9,7 @@ admin.autodiscover()
 
 from Inventario.views import producto, categoria, busqueda, ingresarCantidad, detallesProd
 from cotizacion.views import Cotizacion
-from procesocoopago.views import Abono, Pago, Proceso
+from procesocoopago.views import  Pago, Proceso
 from historialprocedimientos.views import create
 
 from dajaxice.core import dajaxice_autodiscover, dajaxice_config
@@ -44,7 +44,6 @@ urlpatterns = patterns('',
     url(r'^detalles_producto/(?P<entrada_id>\d+)$',detallesProd),
     url(r'^entradas/$',busqueda),
 
-    url(r'^abono/$',Abono),
     url(r'^pago/$',Pago),
     url(r'^proceso/$',Proceso),
 

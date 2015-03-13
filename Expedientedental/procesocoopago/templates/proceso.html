@@ -1,13 +1,47 @@
 {% extends "base1.html" %}
 {%load static from staticfiles %}
-
 {% block content %}
-
-<h2 class="page-header">Ordenes de Pago</h2>
-
-
-
-
 {% load crispy_forms_tags %}
 {% crispy form %}
+
+
+<h2> Pago de Servicios</h2>
+
+<h3> Lista de servicios Disponibles </h3>
+
+<div class="table-responsive">
+<table class="table table-hover">
+	<tr>
+		<th>Codigo Tratamiento</th>
+		<th>descripcion</th>
+		<th>Costo</th>
+	</tr>
+
+
+	<tr>
+	<td>{{object.servicios}}</td>
+	<td>{{object.movimiento}}</td>
+	<td>{{object.costo}}</td>
+		
+
+
+	</tr>
+
+	
+	
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 {% endblock content %}
