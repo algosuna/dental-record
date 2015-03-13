@@ -1,0 +1,68 @@
+{% extends "base1.html" %}
+
+{%load static from staticfiles %}
+
+{% block content %}
+
+	<h2 class="page-header">Resumen de Odontograma</h2>
+
+<div class="well odontograma clearfix">
+  <div class="col-xs-3">
+    <img src="{% static paciente.imagen %}" alt="{{ paciente.nombre }} {{ paciente.apellidoPaterno }}" class="pull-left img-rounded">
+  </div>
+  <div class="col-xs-9">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Grupo</th>
+          <th>Teléfono</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ paciente.nombre }} {{ paciente.apellidoPaterno }} {{ paciente.apellidoMaterno }}</td>
+          <td>{{ paciente.grupo }}</td>
+          <td>{{ paciente.telefono }}</td>
+        </tr>
+      </tbody>
+      <thead>
+          <tr>
+              <th># de Odontograma</th>
+              <th>Nombre del M&eacute;dico</th>
+              <th>Observaciones</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr>
+              <td>{{ odontograma.id }}</td>
+              <td>{{ odontograma.doctor }}</td>
+              <td>{{ odontograma.notas }}</td>
+          </tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- patient info section -->
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Pieza</th>
+            <th>Cara</th>
+            <th>Tratamiento</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for procedimiento in odontograma.procedimiento_set.all %}
+        <tr>
+            <td>{{ procedimiento.pieza }}</td>
+            <td>{{ procedimiento.get_cara_display }}</td>
+            <td>{{ procedimiento.tratamiento }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<a href="" class="btn btn-primary pull-right">Aceptar</a>
+
+{% endblock content %}
