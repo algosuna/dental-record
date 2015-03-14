@@ -1,8 +1,8 @@
 #encoding: utf-8
 from os.path import splitext
 from django.db import models
-from django.contrib import admin
-from precios.models import GrupoPrecios
+
+from core.models import Grupo
 
 # Create your models here.
 
@@ -40,33 +40,33 @@ class Paciente(models.Model):
 		ruta = 'Pacientes/%s%s'%(imagennombre, ext)
 		return ruta
 
-	sex_CHOICES=(
-		('M', 'M'),
-		('F', 'F'),
+	SEX_CHOICES=(
+		('M', 'Masculino'),
+		('F', 'Femenino'),
 	)
-	estado_CHOICES=(
-		('B.C','Baja California'),
+	ESTADO_CHOICES=(
+		('BC','Baja California'),
 		('CA','California'),
 	)
 
 	credencialPaciente = models.CharField(max_length=15)
 	imagen = models.ImageField(upload_to=url,null=True,blank=True)
-	grupo= models.ForeignKey(GrupoPrecios)
+	grupo= models.ForeignKey(Grupo)
 	nombre	= models.CharField(max_length=40)
 	apellidoPaterno	= models.CharField(max_length=30)
 	apellidoMaterno	= models.CharField(max_length=30)
-	sexo = models.CharField(max_length=2, choices=sex_CHOICES)
+	sexo = models.CharField(max_length=2, choices=SEX_CHOICES)
 	correoElectronico = models.EmailField(max_length=60)
 	direccion = models.CharField(max_length=70)
 	codigoPostal = models.IntegerField(max_length=5)
-	estado = models.CharField(max_length=20 , choices=estado_CHOICES)
+	estado = models.CharField(max_length=20 , choices=ESTADO_CHOICES)
 	ciudad = models.CharField(max_length=30)
 	nSs = models.CharField(max_length=20)
 	telefono = models.CharField(max_length=20)
 
 
 	def __unicode__(self):
-		imagennombre = "%s_%s"%(self.apellidoPaterno,self.nombre)
+		imagennombre = "%s-%s"%(self.apellidoPaterno,self.nombre)
 		return imagennombre
 
 	def __unicode__(self):

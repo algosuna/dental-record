@@ -1,6 +1,6 @@
 from django.db import models
-from altas.models import Medico,Paciente
-from historialprocedimientos.models import CotizacionDetail
+
+from historialprocedimientos.models import CotizacionItem
 
 
 class DateTime(models.Model):
@@ -21,7 +21,7 @@ class Pago(models.Model):
 
 
 class SeervAut(models.Model):
-	servicio=models.ForeignKey(CotizacionDetail)
+	servicio=models.ForeignKey(CotizacionItem)
 	total=models.DecimalField(max_digits=19, decimal_places=10)
 
 	def __unicode__(self):
@@ -35,7 +35,7 @@ class procesoPago(models.Model):
 	movpago=models.ForeignKey(Pago)
 	saldoAnterior=models.DecimalField( max_digits=19, decimal_places=10)
 	saldoActual=models.DecimalField( max_digits=19, decimal_places=10)
-	
+
 
 	def __unicode__(self):
 		servicio ="%s"%(self.servicio)
@@ -45,4 +45,4 @@ class procesoPago(models.Model):
 
 
 
-	
+
