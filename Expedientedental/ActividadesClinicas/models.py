@@ -1,6 +1,6 @@
 from django.db import models
-from altas.models import Medico,Paciente
-from datetime import date
+
+from altas.models import Medico, Paciente
 
 class HistoriaClinica(models.Model):
 	auxBucal_CHOICES=(
@@ -32,7 +32,7 @@ class HistoriaClinica(models.Model):
         ('Alcohol', 'Alcohol'),
 
         )
-	
+
 	#exploracion
 	cabeza_CHOICES=(
 		('Exotosis', 'Exotosis'),
