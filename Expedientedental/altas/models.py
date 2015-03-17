@@ -2,11 +2,19 @@
 from os.path import splitext
 from django.db import models
 
-from core.models import Grupo
 
-# Create your models here.
+class Grupo(models.Model):
+    """The name and number which a patient belongs to.
+    Used throughout the project."""
 
-# Modelo de Medicos
+    nombre = models.CharField(max_length=50)
+    numero = models.CharField(max_length=10)
+
+    def __unicode__(self):
+    	grupo = "%s - %s"%(self.numero,self.nombre)
+    	return grupo
+
+
 class Medico(models.Model):
 
 	nombre	= models.CharField(max_length=40)
@@ -31,8 +39,6 @@ class Medico(models.Model):
 		return nombreCompleto
 
 
-# Modelo de Pacientes
-
 class Paciente(models.Model):
 
 	def url(imagennombre, filename):
@@ -51,8 +57,8 @@ class Paciente(models.Model):
 
 	credencialPaciente = models.CharField(max_length=15)
 	imagen = models.ImageField(upload_to=url,null=True,blank=True)
-	grupo= models.ForeignKey(Grupo)
-	nombre	= models.CharField(max_length=40)
+	grupo = models.ForeignKey(Grupo)
+	nombre = models.CharField(max_length=40)
 	apellidoPaterno	= models.CharField(max_length=30)
 	apellidoMaterno	= models.CharField(max_length=30)
 	sexo = models.CharField(max_length=2, choices=SEX_CHOICES)

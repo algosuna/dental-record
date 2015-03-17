@@ -1,0 +1,26 @@
+{% extends "base1.html" %}
+
+{% block content %}
+
+<h2 class="page-header">Grupos Registrados</h2>
+
+<table class="table table-hover grupos">
+    <thead>
+        <tr>
+            <th># de Grupo</th>
+            <th>Nombre</th>
+            <th>&nbsp;</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for grupo in grupos %}
+        <tr>
+            <td>{{ grupo.numero }}</td>
+            <td>{{ grupo.nombre }}</td>
+            <td class="text-right"><a href="/grupo/edit/{{ grupo.id }}/" title="Editar"><span class="glyphicon glyphicon-pencil"></span></a><a href="/grupo/delete/{{ grupo.id }}/" title="Eliminar" class="text-danger"><span class="glyphicon glyphicon-remove"></span></a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock content %}
