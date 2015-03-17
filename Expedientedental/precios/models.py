@@ -1,6 +1,6 @@
 from django.db import models
 
-from core.models import Grupo
+from altas.models import Grupo
 from ActividadesClinicas.models import Tratamiento
 
 
