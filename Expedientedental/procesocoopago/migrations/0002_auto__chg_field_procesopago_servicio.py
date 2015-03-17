@@ -8,22 +8,22 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Deleting field 'CotizacionDetail.estado'
-        db.delete_column('cotizacion_cotizaciondetail', 'estado')
 
+        # Changing field 'procesoPago.servicio'
+        db.alter_column('procesocoopago_procesopago', 'servicio_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['procesocoopago.SeervAut']))
 
     def backwards(self, orm):
 
-        # User chose to not deal with backwards NULL issues for 'CotizacionDetail.estado'
-        raise RuntimeError("Cannot reverse this migration. 'CotizacionDetail.estado' and its values cannot be restored.")
-        
-        # The following code is provided here to aid in writing a correct migration        # Adding field 'CotizacionDetail.estado'
-        db.add_column('cotizacion_cotizaciondetail', 'estado',
-                      self.gf('django.db.models.fields.CharField')(max_length=50),
-                      keep_default=False)
-
+        # Changing field 'procesoPago.servicio'
+        db.alter_column('procesocoopago_procesopago', 'servicio_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['cotizacion.CotizacionDetail']))
 
     models = {
+        'ActividadesClinicas.tratamiento': {
+            'Meta': {'object_name': 'Tratamiento'},
+            'codigoTratamiento': ('django.db.models.fields.CharField', [], {'max_length': '15'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'nombreTratamiento': ('django.db.models.fields.CharField', [], {'max_length': '150'})
+        },
         'altas.medico': {
             'Ciudad': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
             'Meta': {'object_name': 'Medico'},
@@ -66,20 +66,20 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'CatalogodeServicios'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'nombreDelGrupo': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['precios.GrupoPrecios']"}),
-            'nombreDelServicio': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['precios.PrecioServicio']"}),
+            'nombreDelServicio': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['ActividadesClinicas.Tratamiento']"}),
             'precio': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['precios.GrupoServicio']", 'unique': 'True', 'null': 'True'})
         },
         'cotizacion.cotizacion': {
             'Meta': {'object_name': 'Cotizacion'},
             'fecha': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'folio': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '9'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'medico': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['altas.Medico']"}),
-            'paciente': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['altas.Paciente']"})
+            'paciente': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['altas.Paciente']", 'null': 'True'})
         },
         'cotizacion.cotizaciondetail': {
             'Meta': {'object_name': 'CotizacionDetail'},
             'cotizacion': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['cotizacion.Cotizacion']"}),
+            'estado': ('django.db.models.fields.CharField', [], {'default': "'aceptdado'", 'max_length': '10'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'servicio': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['cotizacion.CatalogodeServicios']"})
         },
@@ -99,7 +99,34 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'PrecioServicio'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'nombreDelServicio': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '50'})
+        },
+        'procesocoopago.datetime': {
+            'Meta': {'object_name': 'DateTime'},
+            'fecha': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'})
+        },
+        'procesocoopago.pago': {
+            'Meta': {'object_name': 'Pago'},
+            'detalles': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
+            'fecha': ('django.db.models.fields.DateTimeField', [], {}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'monto': ('django.db.models.fields.DecimalField', [], {'max_digits': '6', 'decimal_places': '2'})
+        },
+        'procesocoopago.procesopago': {
+            'Meta': {'object_name': 'procesoPago'},
+            'fecha': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'movpago': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['procesocoopago.Pago']"}),
+            'saldoActual': ('django.db.models.fields.DecimalField', [], {'max_digits': '19', 'decimal_places': '10'}),
+            'saldoAnterior': ('django.db.models.fields.DecimalField', [], {'max_digits': '19', 'decimal_places': '10'}),
+            'servicio': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['procesocoopago.SeervAut']"})
+        },
+        'procesocoopago.seervaut': {
+            'Meta': {'object_name': 'SeervAut'},
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'servicio': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['cotizacion.CotizacionDetail']", 'symmetrical': 'False'}),
+            'total': ('django.db.models.fields.DecimalField', [], {'max_digits': '19', 'decimal_places': '10'})
         }
     }
 
-    complete_apps = ['cotizacion']
+    complete_apps = ['procesocoopago']

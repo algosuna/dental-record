@@ -1,4 +1,4 @@
-from django.db import models 
+from django.db import models
 from altas.models import Medico,Paciente
 from datetime import date
 
@@ -12,14 +12,14 @@ class HistoriaClinica(models.Model):
 
     	('Si', 'Si'),
         ('No', 'No'),
-        
+
 
     	)
 	cartilla_CHOICES=(
 
 		('Si', 'Si'),
         ('No', 'No'),
-        
+
 		)
 	esquema_Choices=(
 		('Si', 'Si'),
@@ -30,24 +30,19 @@ class HistoriaClinica(models.Model):
 	antecedentes_Choices=(
 		('Tabaco', 'Tabaco'),
         ('Alcohol', 'Alcohol'),
-        
-        )
-	alergias_CHOICES=(
 
-		('Antibioticos', 'Antibioticos'),
-        ('Analgesicos', 'Analgesicos'),
-        ('Anestesicos','Alimentos')
         )
+	
 	#exploracion
 	cabeza_CHOICES=(
 		('Exotosis', 'Exotosis'),
         ('Endostosis', 'Endostosis'),
-        
+
         )
 	craneo_CHOICES=(
 		('Dolicocefalico', 'Dolicocefalico'),
         ('Mesocefalico','Mesocefalico'),
-        
+
         )
 	cara_CHOICES=(
 		('Asimetrias:Transversales','Asimetrias:Transversales'),
@@ -92,7 +87,7 @@ class HistoriaClinica(models.Model):
 		('O-','O-'),
 
 		)
-	
+
 	#articulacion temporomandibular
 	ruidos_CHOICES=(
 		('Si','No'),
@@ -156,7 +151,7 @@ class HistoriaClinica(models.Model):
 	esquemaCompleto=models.CharField(max_length=2,choices=esquema_Choices, blank=True)
 	esquemaFalta=models.CharField(max_length=200, blank=True)
 	adicciones=models.CharField(max_length=15,choices=antecedentes_Choices)
-	alergias=models.CharField(max_length=400,choices=alergias_CHOICES)
+	alergias=models.CharField(max_length=400)
 	fechaHospitalizaion=models.CharField(max_length=400)
 	motivo=models.CharField(max_length=400, blank=True)
 	padecimientoActual=models.CharField(max_length=500)
@@ -251,7 +246,7 @@ class Procedimiento(models.Model):
 		('I', 'Palatino'),
 	)
 
-	pieza = models.IntegerField()
+	pieza = models.IntegerField(null=True)
 	cara = models.CharField(max_length=4, choices=CARAS_CHOICES)
 	tratamiento = models.ForeignKey(Tratamiento, null=True)
 	odontograma = models.ForeignKey(Odontograma, null=True)

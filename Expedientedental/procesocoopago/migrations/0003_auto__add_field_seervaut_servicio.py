@@ -8,24 +8,35 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding field 'CotizacionDetail.diagnostico'
-        db.add_column('cotizacion_cotizaciondetail', 'diagnostico',
-                      self.gf('django.db.models.fields.related.ForeignKey')(default='', to=orm['ActividadesClinicas.Procedimiento']),
+        # Adding field 'SeervAut.servicio'
+        db.add_column('procesocoopago_seervaut', 'servicio',
+                      self.gf('django.db.models.fields.related.ForeignKey')(default='', to=orm['cotizacion.CotizacionDetail']),
                       keep_default=False)
+
+        # Removing M2M table for field servicio on 'SeervAut'
+        db.delete_table(db.shorten_name('procesocoopago_seervaut_servicio'))
 
 
     def backwards(self, orm):
-        # Deleting field 'CotizacionDetail.diagnostico'
-        db.delete_column('cotizacion_cotizaciondetail', 'diagnostico_id')
+        # Deleting field 'SeervAut.servicio'
+        db.delete_column('procesocoopago_seervaut', 'servicio_id')
+
+        # Adding M2M table for field servicio on 'SeervAut'
+        m2m_table_name = db.shorten_name('procesocoopago_seervaut_servicio')
+        db.create_table(m2m_table_name, (
+            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('seervaut', models.ForeignKey(orm['procesocoopago.seervaut'], null=False)),
+            ('cotizaciondetail', models.ForeignKey(orm['cotizacion.cotizaciondetail'], null=False))
+        ))
+        db.create_unique(m2m_table_name, ['seervaut_id', 'cotizaciondetail_id'])
 
 
     models = {
-        'ActividadesClinicas.procedimiento': {
-            'Meta': {'object_name': 'Procedimiento'},
-            'cara': ('django.db.models.fields.CharField', [], {'max_length': '4'}),
+        'ActividadesClinicas.tratamiento': {
+            'Meta': {'object_name': 'Tratamiento'},
+            'codigoTratamiento': ('django.db.models.fields.CharField', [], {'max_length': '15'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'pieza': ('django.db.models.fields.IntegerField', [], {}),
-            'tratamiento': ('django.db.models.fields.CharField', [], {'max_length': '300', 'null': 'True'})
+            'nombreTratamiento': ('django.db.models.fields.CharField', [], {'max_length': '150'})
         },
         'altas.medico': {
             'Ciudad': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
@@ -69,22 +80,20 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'CatalogodeServicios'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'nombreDelGrupo': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['precios.GrupoPrecios']"}),
-            'nombreDelServicio': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['precios.PrecioServicio']"}),
+            'nombreDelServicio': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['ActividadesClinicas.Tratamiento']"}),
             'precio': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['precios.GrupoServicio']", 'unique': 'True', 'null': 'True'})
         },
         'cotizacion.cotizacion': {
             'Meta': {'object_name': 'Cotizacion'},
             'fecha': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'folio': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '9'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'medico': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['altas.Medico']"}),
-            'paciente': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['altas.Paciente']"})
+            'paciente': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['altas.Paciente']", 'null': 'True'})
         },
         'cotizacion.cotizaciondetail': {
             'Meta': {'object_name': 'CotizacionDetail'},
             'cotizacion': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['cotizacion.Cotizacion']"}),
-            'diagnostico': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['ActividadesClinicas.Procedimiento']"}),
-            'estado': ('django.db.models.fields.CharField', [], {'default': "'aceptado'", 'max_length': '10'}),
+            'estado': ('django.db.models.fields.CharField', [], {'default': "'aceptdado'", 'max_length': '10'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'servicio': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['cotizacion.CatalogodeServicios']"})
         },
@@ -104,7 +113,34 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'PrecioServicio'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'nombreDelServicio': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '50'})
+        },
+        'procesocoopago.datetime': {
+            'Meta': {'object_name': 'DateTime'},
+            'fecha': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'})
+        },
+        'procesocoopago.pago': {
+            'Meta': {'object_name': 'Pago'},
+            'detalles': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
+            'fecha': ('django.db.models.fields.DateTimeField', [], {}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'monto': ('django.db.models.fields.DecimalField', [], {'max_digits': '6', 'decimal_places': '2'})
+        },
+        'procesocoopago.procesopago': {
+            'Meta': {'object_name': 'procesoPago'},
+            'fecha': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'movpago': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['procesocoopago.Pago']"}),
+            'saldoActual': ('django.db.models.fields.DecimalField', [], {'max_digits': '19', 'decimal_places': '10'}),
+            'saldoAnterior': ('django.db.models.fields.DecimalField', [], {'max_digits': '19', 'decimal_places': '10'}),
+            'servicio': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['procesocoopago.SeervAut']"})
+        },
+        'procesocoopago.seervaut': {
+            'Meta': {'object_name': 'SeervAut'},
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'servicio': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['cotizacion.CotizacionDetail']"}),
+            'total': ('django.db.models.fields.DecimalField', [], {'max_digits': '19', 'decimal_places': '10'})
         }
     }
 
-    complete_apps = ['cotizacion']
+    complete_apps = ['procesocoopago']

@@ -12,13 +12,15 @@ from django.forms.formsets import formset_factory
 class CotizacionForm(forms.ModelForm):
 	class Meta:
 		model   = Cotizacion
+		#exclude=('fecha')
 
 
 
 class CotizacionDetailForm(forms.ModelForm):
 	class Meta:
 		model =CotizacionDetail
-		exclude=('cotizacion','estado',)
+		exclude=('cotizacion',)
+		
 
 
 
@@ -37,9 +39,13 @@ class CotizacionDetailForm(forms.ModelForm):
 			),
 			Fieldset(
 				'Consulta',
+			
 
 				
 				Field('servicio'),
+				Field('estado'),
+				
+				
 				
 
 
@@ -52,6 +58,8 @@ class CotizacionDetailForm(forms.ModelForm):
 		)
 		
 		self.fields['servicio'].label='Servicio'
+		self.fields['estado'].label='Status'
+	
 
 
 		

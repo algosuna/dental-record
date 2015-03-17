@@ -18,27 +18,32 @@
 		    }
 		</style>
 
-	<h2 class="page-header">Cotizaciones</h2>
+	<h2 class="page-header">Presupuestos</h2>
 
-	<input style="float:left; margin-right:20px;"  type="button" value="Agregar Cotización" onclick="location.href='{{request.path}}create/'">
-	<br><br>
 	<div class="cleared"></div>
 	{% if latest_list %}
-			<table class="table table-hover table-bordered">
-				<tr>
-					<th>Cliente</th>
+			<table style="text-align:center"class="table table-condensed" border='0'>
+				<tr >
+					<th style="text-align:center">Cliente</th>
 					
-					<th>Fecha</th>
-					<th>Total</th>
+					<th style="text-align:center" >Fecha</th>
+					
 				</tr>
 			{% for object in latest_list %}
 				<tr>
 					<td><a href="update/{{object.id}}/" data-toggle="tooltip" class="tip-left" data-original-title="Click para agregar servicios">{{object.paciente}}</a></td>
 					<td>{{object.fecha}}</td>
-					<td>${{object.total}}</td>
+					
+
+
 				</tr>
 			{% endfor %}
 			</table>
+
+		<table>
+			<input style="float:right; margin-right:20px;"  type="button" value="Agregar Cotización" onclick="location.href='{{request.path}}create/'">
+
+		</table>
 	{% else %}
 		<p>No hay Cotizaciones en la base de datos.</p>
 	{% endif %}

@@ -8,44 +8,14 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding model 'Cotizacion'
-        db.create_table('cotizacion_cotizacion', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('fecha', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-            ('paciente', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['altas.Paciente'], null=True)),
-            ('medico', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['altas.Medico'])),
-        ))
-        db.send_create_signal('cotizacion', ['Cotizacion'])
 
-        # Adding model 'CatalogodeServicios'
-        db.create_table('cotizacion_catalogodeservicios', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('nombreDelServicio', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['ActividadesClinicas.Tratamiento'])),
-            ('nombreDelGrupo', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['precios.GrupoPrecios'])),
-            ('precio', self.gf('django.db.models.fields.DecimalField')(max_digits=19, decimal_places=3)),
-        ))
-        db.send_create_signal('cotizacion', ['CatalogodeServicios'])
-
-        # Adding model 'CotizacionDetail'
-        db.create_table('cotizacion_cotizaciondetail', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('estado', self.gf('django.db.models.fields.CharField')(default='aceptdado', max_length=10)),
-            ('cotizacion', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['cotizacion.Cotizacion'])),
-            ('servicio', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['cotizacion.CatalogodeServicios'])),
-        ))
-        db.send_create_signal('cotizacion', ['CotizacionDetail'])
-
+        # Changing field 'CotizacionDetail.servicio'
+        db.alter_column('cotizacion_cotizaciondetail', 'servicio_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['cotizacion.CatalogodeServicios'], null=True))
 
     def backwards(self, orm):
-        # Deleting model 'Cotizacion'
-        db.delete_table('cotizacion_cotizacion')
 
-        # Deleting model 'CatalogodeServicios'
-        db.delete_table('cotizacion_catalogodeservicios')
-
-        # Deleting model 'CotizacionDetail'
-        db.delete_table('cotizacion_cotizaciondetail')
-
+        # Changing field 'CotizacionDetail.servicio'
+        db.alter_column('cotizacion_cotizaciondetail', 'servicio_id', self.gf('django.db.models.fields.related.ForeignKey')(default='', to=orm['cotizacion.CatalogodeServicios']))
 
     models = {
         'ActividadesClinicas.tratamiento': {
@@ -103,7 +73,7 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'Cotizacion'},
             'fecha': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'medico': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['altas.Medico']"}),
+            'medico': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['altas.Medico']", 'null': 'True'}),
             'paciente': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['altas.Paciente']", 'null': 'True'})
         },
         'cotizacion.cotizaciondetail': {
@@ -111,7 +81,7 @@ class Migration(SchemaMigration):
             'cotizacion': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['cotizacion.Cotizacion']"}),
             'estado': ('django.db.models.fields.CharField', [], {'default': "'aceptdado'", 'max_length': '10'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'servicio': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['cotizacion.CatalogodeServicios']"})
+            'servicio': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['cotizacion.CatalogodeServicios']", 'null': 'True'})
         },
         'precios.grupoprecios': {
             'Meta': {'object_name': 'GrupoPrecios'},

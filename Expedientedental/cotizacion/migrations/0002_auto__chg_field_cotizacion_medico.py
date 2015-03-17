@@ -8,34 +8,22 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Deleting field 'CotizacionDetail.pendiente'
-        db.delete_column('cotizacion_cotizaciondetail', 'pendiente')
 
-        # Deleting field 'CotizacionDetail.aceptado'
-        db.delete_column('cotizacion_cotizaciondetail', 'aceptado')
-
-        # Adding field 'CotizacionDetail.estado'
-        db.add_column('cotizacion_cotizaciondetail', 'estado',
-                      self.gf('django.db.models.fields.CharField')(default='', max_length=50),
-                      keep_default=False)
-
+        # Changing field 'Cotizacion.medico'
+        db.alter_column('cotizacion_cotizacion', 'medico_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['altas.Medico'], null=True))
 
     def backwards(self, orm):
-        # Adding field 'CotizacionDetail.pendiente'
-        db.add_column('cotizacion_cotizaciondetail', 'pendiente',
-                      self.gf('django.db.models.fields.BooleanField')(default=True),
-                      keep_default=False)
 
-        # Adding field 'CotizacionDetail.aceptado'
-        db.add_column('cotizacion_cotizaciondetail', 'aceptado',
-                      self.gf('django.db.models.fields.BooleanField')(default=True),
-                      keep_default=False)
-
-        # Deleting field 'CotizacionDetail.estado'
-        db.delete_column('cotizacion_cotizaciondetail', 'estado')
-
+        # Changing field 'Cotizacion.medico'
+        db.alter_column('cotizacion_cotizacion', 'medico_id', self.gf('django.db.models.fields.related.ForeignKey')(default='', to=orm['altas.Medico']))
 
     models = {
+        'ActividadesClinicas.tratamiento': {
+            'Meta': {'object_name': 'Tratamiento'},
+            'codigoTratamiento': ('django.db.models.fields.CharField', [], {'max_length': '15'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'nombreTratamiento': ('django.db.models.fields.CharField', [], {'max_length': '150'})
+        },
         'altas.medico': {
             'Ciudad': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
             'Meta': {'object_name': 'Medico'},
@@ -78,21 +66,20 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'CatalogodeServicios'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'nombreDelGrupo': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['precios.GrupoPrecios']"}),
-            'nombreDelServicio': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['precios.PrecioServicio']"}),
-            'precio': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['precios.GrupoServicio']", 'unique': 'True', 'null': 'True'})
+            'nombreDelServicio': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['ActividadesClinicas.Tratamiento']"}),
+            'precio': ('django.db.models.fields.DecimalField', [], {'max_digits': '19', 'decimal_places': '3'})
         },
         'cotizacion.cotizacion': {
             'Meta': {'object_name': 'Cotizacion'},
             'fecha': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'folio': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '9'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'medico': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['altas.Medico']"}),
-            'paciente': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['altas.Paciente']"})
+            'medico': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['altas.Medico']", 'null': 'True'}),
+            'paciente': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['altas.Paciente']", 'null': 'True'})
         },
         'cotizacion.cotizaciondetail': {
             'Meta': {'object_name': 'CotizacionDetail'},
             'cotizacion': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['cotizacion.Cotizacion']"}),
-            'estado': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
+            'estado': ('django.db.models.fields.CharField', [], {'default': "'aceptdado'", 'max_length': '10'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'servicio': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['cotizacion.CatalogodeServicios']"})
         },
@@ -100,18 +87,6 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'GrupoPrecios'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'nombreDelGrupo': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '50'})
-        },
-        'precios.gruposervicio': {
-            'Meta': {'object_name': 'GrupoServicio'},
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'nombreDelGrupo': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['precios.GrupoPrecios']"}),
-            'nombreDelServicio': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['precios.PrecioServicio']"}),
-            'precio': ('django.db.models.fields.DecimalField', [], {'max_digits': '8', 'decimal_places': '2'})
-        },
-        'precios.precioservicio': {
-            'Meta': {'object_name': 'PrecioServicio'},
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'nombreDelServicio': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '50'})
         }
     }
 

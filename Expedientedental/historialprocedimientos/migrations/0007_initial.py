@@ -8,43 +8,42 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding model 'Cotizacion'
-        db.create_table('cotizacion_cotizacion', (
+        # Adding model 'DateTime'
+        db.create_table('historialprocedimientos_datetime', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('fecha', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-            ('paciente', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['altas.Paciente'], null=True)),
-            ('medico', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['altas.Medico'])),
         ))
-        db.send_create_signal('cotizacion', ['Cotizacion'])
+        db.send_create_signal('historialprocedimientos', ['DateTime'])
 
-        # Adding model 'CatalogodeServicios'
-        db.create_table('cotizacion_catalogodeservicios', (
+        # Adding model 'HistogramaItem'
+        db.create_table('historialprocedimientos_histogramaitem', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('nombreDelServicio', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['ActividadesClinicas.Tratamiento'])),
-            ('nombreDelGrupo', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['precios.GrupoPrecios'])),
-            ('precio', self.gf('django.db.models.fields.DecimalField')(max_digits=19, decimal_places=3)),
+            ('folio', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['cotizacion.Cotizacion'])),
+            ('inicio', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
+            ('estimado', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
+            ('finalizado', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
         ))
-        db.send_create_signal('cotizacion', ['CatalogodeServicios'])
+        db.send_create_signal('historialprocedimientos', ['HistogramaItem'])
 
-        # Adding model 'CotizacionDetail'
-        db.create_table('cotizacion_cotizaciondetail', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('estado', self.gf('django.db.models.fields.CharField')(default='aceptdado', max_length=10)),
-            ('cotizacion', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['cotizacion.Cotizacion'])),
-            ('servicio', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['cotizacion.CatalogodeServicios'])),
+        # Adding M2M table for field servicio on 'HistogramaItem'
+        m2m_table_name = db.shorten_name('historialprocedimientos_histogramaitem_servicio')
+        db.create_table(m2m_table_name, (
+            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('histogramaitem', models.ForeignKey(orm['historialprocedimientos.histogramaitem'], null=False)),
+            ('cotizaciondetail', models.ForeignKey(orm['cotizacion.cotizaciondetail'], null=False))
         ))
-        db.send_create_signal('cotizacion', ['CotizacionDetail'])
+        db.create_unique(m2m_table_name, ['histogramaitem_id', 'cotizaciondetail_id'])
 
 
     def backwards(self, orm):
-        # Deleting model 'Cotizacion'
-        db.delete_table('cotizacion_cotizacion')
+        # Deleting model 'DateTime'
+        db.delete_table('historialprocedimientos_datetime')
 
-        # Deleting model 'CatalogodeServicios'
-        db.delete_table('cotizacion_catalogodeservicios')
+        # Deleting model 'HistogramaItem'
+        db.delete_table('historialprocedimientos_histogramaitem')
 
-        # Deleting model 'CotizacionDetail'
-        db.delete_table('cotizacion_cotizaciondetail')
+        # Removing M2M table for field servicio on 'HistogramaItem'
+        db.delete_table(db.shorten_name('historialprocedimientos_histogramaitem_servicio'))
 
 
     models = {
@@ -113,6 +112,20 @@ class Migration(SchemaMigration):
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'servicio': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['cotizacion.CatalogodeServicios']"})
         },
+        'historialprocedimientos.datetime': {
+            'Meta': {'object_name': 'DateTime'},
+            'fecha': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'})
+        },
+        'historialprocedimientos.histogramaitem': {
+            'Meta': {'object_name': 'HistogramaItem'},
+            'estimado': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            'finalizado': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            'folio': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['cotizacion.Cotizacion']"}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'inicio': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            'servicio': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['cotizacion.CotizacionDetail']", 'symmetrical': 'False'})
+        },
         'precios.grupoprecios': {
             'Meta': {'object_name': 'GrupoPrecios'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
@@ -120,4 +133,4 @@ class Migration(SchemaMigration):
         }
     }
 
-    complete_apps = ['cotizacion']
+    complete_apps = ['historialprocedimientos']

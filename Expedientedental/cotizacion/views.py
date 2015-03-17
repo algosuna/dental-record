@@ -1,5 +1,6 @@
 # Create your views here.
 from django.template.loader import get_template
+from django.core.urlresolvers import reverse
 from django.template import RequestContext
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response, render, redirect
@@ -40,14 +41,16 @@ def update(request, id_cotizacion = None):
 def details_create(request, id_cotizacion):
     #when POST
     if request.method == 'POST':
-        cotizacion = Cotizacion.objects.get(id = id_cotizacion)       
+        print id_cotizacion
+        cotizacion = Cotizacion.objects.get(id = int(id_cotizacion))       
         cotizaciondetail = CotizacionDetail(cotizacion = cotizacion)
         form = CotizacionDetailForm(request.POST, instance = cotizaciondetail)
         if form.is_valid():
             form.instance.cotizacion = cotizacion
-            form.save()
-            return HttpResponseRedirect('/cotizacion/update/'+id_cotizacion+'/')
+            cotizaciondetalle = form.save()
+            return redirect(reverse('cotizacion-detail', args=[cotizacion.id]))
         else:
+            print form.errors
             return HttpResponse('no fue posible hacer la operacion')
     #when NOT POST
     else:

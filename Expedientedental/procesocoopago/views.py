@@ -4,19 +4,11 @@ from django.template import RequestContext
 from django.http import Http404, HttpResponse
 from django.shortcuts import render_to_response, render, redirect
 
-from procesocoopago.models import Abono,Pago,procesoPago
-from procesocoopago.forms import AbonoForm,PagoForm,procesoPagoForm
+from procesocoopago.models import Pago,procesoPago
+from procesocoopago.forms import PagoForm,procesoPagoForm
 import datetime
 
-def Abono(request):
-    if request.method == "POST":
-        modelform = AbonoForm(request.POST)
-        if modelform.is_valid():
-            modelform.save()
-            return redirect("/abono/")
-    else:
-        modelform = AbonoForm()
-    return render(request, "abono.html", {"form": modelform})
+
 
 
 def Pago(request):
@@ -39,6 +31,5 @@ def Proceso(request):
     else:
         modelform = procesoPagoForm()
     return render(request, "proceso.html", {"form": modelform})
-
 
 
