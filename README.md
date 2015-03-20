@@ -20,8 +20,9 @@ TODO: 13-mar-2015
 - connection to cotizacion
     - ~model rethinking~
     - flow of the administrative section
-        - start - view of pending service orders
-        - then - review pending order summary (include  costs)
+        - ~start - view of pending service orders~
+        - ~then - generate quote~
+        - ~then - update item status~
         - then - go to payment
         - then - services with total payment go to approved orders and you print receipt for client
     - prefix on cotizacion id (models.py)
