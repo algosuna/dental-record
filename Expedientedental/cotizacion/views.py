@@ -1,117 +1,69 @@
-from datetime import datetime
-
-from django.core.urlresolvers import reverse
 from django.template import RequestContext
-from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render_to_response, render, redirect
+from django.http import HttpResponseRedirect
+from django.shortcuts import render_to_response, render, get_object_or_404
 
-from cotizacion.models import Cotizacion, CotizacionDetail
-from cotizacion.forms import CotizacionForm, CotizacionDetailForm
+from cotizacion.models import Cotizacion, CotizacionItem
+from cotizacion.forms import ItemFormSet
+from ActividadesClinicas.models import Odontograma
 
 def pending_orders(request):
+    orders = Odontograma.objects.all()
 
-    return render_to_response('/index.html')
+    return render_to_response('/index.html',
+        {'orders': orders})
 
-def create(request):
-    #when POST
+
+def cotizacion(request, odontograma_id):
+    odontograma = get_object_or_404(Odontograma, pk=odontograma_id)
+    try:
+        cotizacion = odontograma.cotizacion_set.get()
+        items = cotizacion.cotizacionitem_set.filter(status__in=['aceptado','pendiente'])
+
+    except Cotizacion.DoesNotExist:
+        cotizacion = Cotizacion.objects.create(odontograma=odontograma)
+        items = CotizacionItem.objects.create_items(cotizacion)
+
     if request.method == 'POST':
-        form = CotizacionForm(request.POST)
-        if form.is_valid():
-            form.save()
-        return HttpResponseRedirect('/cotizacion/')
+        formset = ItemFormSet(request.POST)
+
+        if formset.is_valid():
+            formset.save()
+
     else:
-        form = CotizacionForm()
-    return render_to_response('/detail.html', {'form':form}, context_instance=RequestContext(request))
+        formset = ItemFormSet(queryset=items)
 
 
-def update(request, id_cotizacion = None):
-    cotizacion = None
-    latest_list = False
-    if id_cotizacion is not None:
-        cotizacion = Cotizacion.objects.get(id = id_cotizacion)
-        latest_list = CotizacionDetail.objects.filter(cotizacion = id_cotizacion)
-    #when POST
-    if request.method == 'POST':
-        form = CotizacionForm(request.POST, instance = cotizacion)
-        if form.is_valid():            form.save()
-        return HttpResponseRedirect('/cotizacion/')
-    #when NOT POST
-    else:
-        form = CotizacionForm(instance = cotizacion)
-    return render_to_response('/detail.html',{'form':form, 'cotizacion':cotizacion, 'latest_list': latest_list}, context_instance=RequestContext(request))
+    auth_items = items.filter(status__in=['aceptado'])
+    total = 0
+
+    for item in auth_items:
+        total += item.precio
+
+    return render(request, 'cotizacion.html',
+        {'cotizacion': cotizacion,
+        'items': items,
+        'formset': formset,
+        'total': total})
 
 
-def details_create(request, id_cotizacion):
-    #when POST
-    if request.method == 'POST':
-        print id_cotizacion
-        cotizacion = Cotizacion.objects.get(id = int(id_cotizacion))
-        cotizaciondetail = CotizacionDetail(cotizacion = cotizacion)
-        form = CotizacionDetailForm(request.POST, instance = cotizaciondetail)
-        if form.is_valid():
-            form.instance.cotizacion = cotizacion
-            cotizaciondetalle = form.save()
-            return redirect(reverse('cotizacion-detail', args=[cotizacion.id]))
-        else:
-            print form.errors
-            return HttpResponse('no fue posible hacer la operacion')
-    #when NOT POST
-    else:
-        form = CotizacionDetailForm()
-    return render_to_response('common/detail.html', {'form':form}, context_instance=RequestContext(request))
+# def update_printit(request, id_cotizacion=None):
+#     cotizacion = None
+#     latest_list = False
+#     if id_cotizacion is not None:
+#         cotizacion = Cotizacion.objects.get(id=id_cotizacion)
+#         latest_list = CotizacionItem.objects.filter(cotizacion=id_cotizacion)
+#     #when POST
+#     if request.method == 'POST':
+#         form = CotizacionForm(request.POST, instance=cotizacion)
+#         if form.is_valid():
+#             form.save()
+#         return HttpResponseRedirect('/cotizacion/')
+#     #when NOT POST
+#     else:
+#         form = CotizacionForm(instance=cotizacion)
+#     return render_to_response('/printit.html',
+#         {'form': form,
+#         'cotizacion': cotizacion,
+#         'latest_list': latest_list
+#         }, context_instance=RequestContext(request))
 
-def details_update(request, id_cotizacion, id_cotizaciondetail):
-    #when POST
-    if request.method == 'POST':
-        consultaPrecio = CotizacionDetail.objects.filter()
-        cotizacion = Cotizacion.objects.get(id = id_cotizacion)
-        cotizaciondetail = CotizacionDetail.objects.get(id = id_cotizaciondetail)
-        cotizaciondetail.cotizacion = cotizacion
-        form = CotizacionDetailForm(request.POST, instance = cotizaciondetail)
-        if form.is_valid():
-            form.save()
-        return HttpResponseRedirect('/cotizacion/update/'+id_cotizacion+'/')
-    #when NOT POST
-    else:
-        cotizaciondetail = CotizacionDetail.objects.get(id = id_cotizaciondetail)
-        form = CotizacionDetailForm(instance = cotizaciondetail)
-    return render_to_response('common/detail.html', {'form':form}, context_instance=RequestContext(request))
-
-def update_printit(request, id_cotizacion = None):
-    cotizacion = None
-    latest_list = False
-    if id_cotizacion is not None:
-        cotizacion = Cotizacion.objects.get(id = id_cotizacion)
-        latest_list = CotizacionDetail.objects.filter(cotizacion = id_cotizacion)
-    #when POST
-    if request.method == 'POST':
-        form = CotizacionForm(request.POST, instance = cotizacion)
-        if form.is_valid():
-
-            form.save()
-        return HttpResponseRedirect('/cotizacion/')
-    #when NOT POST
-    else:
-        form = CotizacionForm(instance = cotizacion)
-    return render_to_response('/printit.html',{'form':form, 'cotizacion':cotizacion, 'latest_list': latest_list}, context_instance=RequestContext(request))
-
-
-
-def servicio_action (request, action, pk):
-
-    """Mark done, toggle onhold or delete a todo item."""
-    if action == "aceptado":
-        servicio = Item.objects.get(pk=pk)
-        servicio.aceptado = True
-        servicio.save()
-    elif action == "pendiente":
-        item = servicio.objects.get(pk=pk)
-        if servicio.pendiente:
-            servicio.pendiente = False
-        else:
-            servicio.pendiente = True
-        servicio.save()
-    elif action == "delete":
-        servicio.objects.filter(pk=pk).delete()
-
-    return HttpResponseRedirect(reverse(''))

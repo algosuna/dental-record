@@ -1,66 +1,41 @@
 # -*- coding: utf-8 -*-
 from django import forms
+from django.forms.models import modelformset_factory
+
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit
-from crispy_forms.layout import(Layout,Fieldset,HTML,Field,ButtonHolder,
-Submit)
-from .models import Cotizacion, CotizacionDetail,CatalogodeServicios
-from django.forms.formsets import formset_factory
+
+from .models import CotizacionItem
 
 
+class ItemForm(forms.ModelForm):
+    class Meta:
+        model = CotizacionItem
+        exclude = ['status', 'cotizacion', 'precio', 'procedimiento']
 
-class CotizacionForm(forms.ModelForm):
-	class Meta:
-		model   = Cotizacion
-		#exclude=('fecha')
+    is_approved = forms.BooleanField(required=False)
 
+    def __init__(self, *args, **kwargs):
+        super(ItemForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_tag = False
+        self.helper.form_show_labels = False
+        status = self.instance.status
+        if status == 'pendiente':
+            self.fields['is_approved'].initial = False
+        else:
+            self.fields['is_approved'].initial = True
 
+    def save(self, commit=True):
+        instance = super(ItemForm, self).save(commit=False)
+        is_approved = self.cleaned_data.get('is_approved')
+        if is_approved:
+            if instance.status == 'pendiente':
+                instance.status = 'aceptado'
+        else:
+            if instance.status == 'aceptado':
+                instance.status = 'pendiente'
+        if commit:
+            instance.save()
+        return instance
 
-class CotizacionDetailForm(forms.ModelForm):
-	class Meta:
-		model =CotizacionDetail
-		exclude=('cotizacion',)
-		
-
-
-
-	def __init__(self, *args, **kwargs):
-		super(CotizacionDetailForm,self).__init__(*args,**kwargs)
-		self.helper=FormHelper()
-		self.helper.form_class = 'form-horizontal'
-		self.helper.label_class = 'col-md-2'
-		self.helper.field_class = 'col-md-8'
-		self.helper.layout=Layout(
-			HTML("""
-							<p class="parrafo"> Campos con ( * ) Son Requeridos. </p>
-
-
-							"""
-			),
-			Fieldset(
-				'Consulta',
-			
-
-				
-				Field('servicio'),
-				Field('estado'),
-				
-				
-				
-
-
-			
-			),
-			ButtonHolder(
-					Submit('save','Guardar')
-
-			)
-		)
-		
-		self.fields['servicio'].label='Servicio'
-		self.fields['estado'].label='Status'
-	
-
-
-		
-		
+ItemFormSet = modelformset_factory(CotizacionItem, form=ItemForm, extra=0)
