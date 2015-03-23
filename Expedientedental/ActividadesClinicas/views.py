@@ -62,12 +62,21 @@ def odontograma(request, paciente_id):
 def detalle(request, paciente_id, odontograma_id):
     paciente = get_object_or_404(Paciente, pk=paciente_id)
     odontograma = get_object_or_404(Odontograma, pk=odontograma_id)
-    procedimientos = Procedimiento.objects.filter(odontograma__in=Odontograma.objects.filter(id=odontograma.id))
+    procedimientos = Procedimiento.objects.all()
 
     return render(request, 'detalle.html',
         {'paciente': paciente,
         'procedimientos': procedimientos,
         'odontograma': odontograma
+        })
+
+def detallePaciente(request, paciente_id):
+    paciente = get_object_or_404(Paciente, pk=paciente_id)
+    procedimientos = Procedimiento.objects.all()
+
+    return render(request, 'detalle-paciente.html',
+        {'paciente': paciente,
+        'procedimientos': procedimientos
         })
 
 def HistoriaClinicaView(request, paciente_id):

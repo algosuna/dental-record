@@ -39,6 +39,11 @@
               <td>{{ odontograma.doctor }}</td>
               <td>{{ odontograma.notas }}</td>
           </tr>
+          <tr>
+            <td>{{ odontograma.fechayHora }}</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+          </tr>
       </tbody>
     </table>
   </div>
@@ -63,6 +68,6 @@
     </tbody>
 </table>
 
-<a href="" class="btn btn-primary pull-right">Aceptar</a>
+<a href="/paciente/{{ paciente.id }}" class="btn btn-primary pull-right">Aceptar</a>
 
 {% endblock content %}

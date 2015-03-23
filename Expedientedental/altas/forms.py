@@ -1,49 +1,59 @@
 from django import forms
 
 from crispy_forms.helper import FormHelper
-from altas.models import Medico
-from altas.models import Paciente
 from crispy_forms.layout import Layout, Fieldset, HTML, Field, ButtonHolder, Submit
+
+from altas.models import Medico, Paciente, Grupo
+
+
+class GrupoForm(forms.ModelForm):
+	class Meta:
+		model = Grupo
+
+	def __init__(self, *args, **kwargs):
+		super(GrupoForm, self).__init__(*args, **kwargs)
+		self.helper = FormHelper()
+		self.helper.form_class = 'form-horizontal'
+		self.helper.label_class = 'col-lg-2'
+		self.helper.field_class = 'col-lg-8'
+		self.helper.form_method = 'post'
+
+		self.helper.add_input(
+            Submit('submit', 'Guardar', css_class='col-md-offset-2')
+        )
 
 
 class PacienteForm(forms.ModelForm):
 	class Meta:
-		model   = Paciente
-
+		model = Paciente
 
 	def __init__(self, *args, **kwargs):
 		super(PacienteForm,self).__init__(*args,**kwargs)
 		self.helper=FormHelper()
 		self.helper.layout=Layout(
 			HTML("""
-							<p class="parrafo"> Todos Los Campos Con ( * ) Son Requeridos.</p>
-
+				<p> Todos Los Campos Con ( * ) Son Requeridos.</p>
 				"""
 			),
 			Fieldset(
 				'',
-
-
-				Field('credencialPaciente' , wrapper_class='col-md-12'),
-				Field('grupo' , wrapper_class='col-md-6'),
-				Field('imagen' , wrapper_class='col-md-6'),
-				Field('nombre' , wrapper_class='col-md-4'),
-				Field('apellidoPaterno',	wrapper_class='col-md-4'),
-				Field('apellidoMaterno',	wrapper_class='col-md-4'),
+				Field('credencialPaciente', wrapper_class='col-md-12'),
+				Field('grupo', wrapper_class='col-md-6'),
+				Field('imagen', wrapper_class='col-md-6'),
+				Field('nombre', wrapper_class='col-md-4'),
+				Field('apellidoPaterno', wrapper_class='col-md-4'),
+				Field('apellidoMaterno', wrapper_class='col-md-4'),
 				Field('nSs', wrapper_class='col-md-4'),
-				Field('sexo',wrapper_class='col-md-2'),
+				Field('sexo', wrapper_class='col-md-2'),
 				Field('correoElectronico', wrapper_class='col-md-6'),
 				Field('direccion', wrapper_class='col-md-7'),
 				Field('codigoPostal', wrapper_class='col-md-2'),
 				Field('estado' ,wrapper_class='col-md-3'),
-				Field('ciudad', 	wrapper_class='col-md-7'),
-				Field('telefono', wrapper_class='col-md-5'),
-
-
+				Field('ciudad', wrapper_class='col-md-7'),
+				Field('telefono' , wrapper_class='col-md-5'),
 			),
 			ButtonHolder(
-				Submit('save','Guardar')
-
+				Submit('save', 'Guardar')
 			)
 		)
 		self.fields['credencialPaciente'].label='DNI Paciente'
@@ -63,21 +73,18 @@ class PacienteForm(forms.ModelForm):
 
 class MedicoForm(forms.ModelForm):
 	class Meta:
-		model   = Medico
-
+		model = Medico
 
 	def __init__(self, *args, **kwargs):
-		super(MedicoForm,self).__init__(*args,**kwargs)
+		super(MedicoForm, self).__init__(*args,**kwargs)
 		self.helper=FormHelper()
 		self.helper.layout=Layout(
-		HTML("""
-						<p class='parrafo'> Todos Los campos con ( * ) son Requeridos .</p>
-
-						"""
-		),
-		Fieldset(
-			'',
-
+			HTML("""
+				<p> Todos Los campos con ( * ) son Requeridos .</p>
+				"""
+			),
+			Fieldset(
+				'',
 				Field('nombreUsuario', wrapper_class='col-md-4'),
 				Field('nombre', wrapper_class='col-md-4'),
 				Field('apellidoPaterno',wrapper_class='col-md-4'),
@@ -95,9 +102,9 @@ class MedicoForm(forms.ModelForm):
 				Field('estado',wrapper_class='col-md-4'),
 				Field('Ciudad',wrapper_class='col-md-4'),
 
-				),
+			),
 			ButtonHolder(
-					Submit('save','Guardar')
+				Submit('save','Guardar')
 
 			)
 		)
@@ -117,40 +124,3 @@ class MedicoForm(forms.ModelForm):
 		self.fields['codigoPostal'].label='C.P.'
 		self.fields['estado'].label='Estado'
 		self.fields['Ciudad'].label='Cuidad'
-
-# class fotoPaciente(forms.FileField, object):
-
-# 	def __init__(self, *args, **kwargs):
-# 		super(fotoPaciente, self).__init__(*args, **kwargs)
-# 		self.help_text = 'Help Text'
-
-# 	def validate(self, image):
-# 		if not str(image).split('.')[-1].lower() in ['jpg', 'jpeg', 'png', 'gif']:
-# 			raise ValidationError('File format not supported. Please try again and upload a JPG/PNG/GIF file.')
-	
-# 	def to_python(self, image):
-# 		try:
-# 			limit = 500000
-# 			tries = 10
-# 			img = Image.open(image.file)
-# 			width, height = img.size
-# 			ratio = float(width) / float(height)
-
-# 			upload_dir = settings.FILE_UPLOAD_TEMP_DIR if settings.FILE_UPLOAD_TEMP_DIR else '/tmp'
-# 			tmp_file = open(os.path.join(upload_dir, str(uuid.uuid1())), 'w')
-# 			tmp_file.write(image.file.read())
-# 			tmp_file.close()
-
-# 			while os.path.getsize(tmp_file.name) > limit:
-# 				tries -= 1
-# 				width = 900 if tries == 0 else width - 100
-# 					height = int(width / ratio)
-# 					img.thumbnail((width, height), Image.ANTIALIAS)
-# 					img.save(tmp_file.name, img.format)
-# 					image.file = open(tmp_file.name)
-# 					if tries == 0:
-# 						break
-# 					except:
-# 						pass
-
-# 					return image
