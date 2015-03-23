@@ -5,7 +5,7 @@
 {% block content %}
 
 	<h2 class="page-header">Búsqueda</h2>
-
+{{ search_string }}
 
 	{% if search_string %}
 	<p class="text-center">Usted ingresó "{{ search_string }}" :</p>
@@ -13,9 +13,12 @@
 			<table class="table table-bordered">
 				<thead>
 					<tr>
-						<th>Producto</th>
+						<th>Folio</th>
+						<th>Paquete</th>
+						<th>Medico</th>
+						<th>fecha</th>
 
-						<th class="text-center">Cantidad</th>
+						
 					<!--  Campos de Precio y Total
 						<th class="text-center">Precio</th>
 						<th class="text-center">Total</th>
@@ -27,16 +30,19 @@
 					</tr>
 				</thead>
 				<tbody>
-  		{% for producto in objects %}
+  		{% for paquete in objects %}
   			<tr>
-  				<td>{{ producto.producto }}</td>
-  				<td>{{ producto.porciones}}</td>
+  				<td>{{paquete.id}}</td>
+  				<td>{{ paquete.paquete }}</td>
+  				<td>{{ paquete.medico }}</td>
+  				<td>{{ paquete.fecha }}</td>
+  				
   				
 
   		
 
   				
-  				<td class="text-center"><a href="/producto/edit/{{ producto.id }}" class="btn btn-info">Editar</a></td>
+  				<td class="text-center"><a href="/tipoPaquete/edit/{{ id_paquete }}" class="btn btn-info">Editar</a></td>
   				<td class="text-center"><a href="/detalles_producto/{{ producto.id }}" class="btn btn-default">Ver Detalles</a></td>
   				
   			</tr>
@@ -44,10 +50,10 @@
   			</tbody>
 			</table>
 			<p class="lead text-center">
-			<a href="/entradas/" class="btn btn-primary">Nueva Búsqueda <span class="glyphicon glyphicon-chevron-right"></span></a href="/"></p>
+			<a href="/pack/detalles/" class="btn btn-primary">Nueva Búsqueda <span class="glyphicon glyphicon-chevron-right"></span></a href="/"></p>
 		{% else %}
-			<p class="lead text-center text-muted">No se han encontrado productos con ese nombre.
-			<a href="/entradas/" class="btn btn-primary">Nueva Búsqueda <span class="glyphicon glyphicon-chevron-right"></span></a href="/"></p>
+			<p class="lead text-center text-muted">No se han encontrado paquetes con ese folio.
+			<a href="/pack/detalles/" class="btn btn-primary">Nueva Búsqueda <span class="glyphicon glyphicon-chevron-right"></span></a href="/"></p>
 		{% endif %}
 
 		{% else %}
@@ -55,8 +61,8 @@
 		<div class="text-center search clearfix">
 			<form action="" method="GET">
 				
-				<label for="q" class="lead">Ingrese el nombre del Producto:</label>
-				<input type="text" name="q" class="form-control" placeholder="Nombre del producto..." value="{{ query|escape }}">
+				<label for="q" class="lead">Ingrese el nombre del Paquete:</label>
+				<input type="text" name="q" class="form-control" placeholder="Nombre del paquete..." value="{{ query|escape }}">
 				<input type="submit" class="btn btn-primary" value="Buscar">
 				
 			</form>

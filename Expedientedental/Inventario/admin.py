@@ -1,21 +1,20 @@
 from django.contrib import admin
-from Inventario.models import Producto, Categoria, Entradas, Detalles
+from Inventario.models import Producto,UnidadMedida,Entradas
 
 
-class CategoriaAdmin(admin.ModelAdmin):
-	list_display = ['nombre']
-	
+class UnidadMedidaAdmin(admin.ModelAdmin):
+	list_display=('unidad','prefix')
+	fields=('unidad','prefix')
+
 class ProductoAdmin(admin.ModelAdmin):
-	list_display = ['id','categoria','nombre','precio',]
+	list_display=('producto','unidad_medida','porciones','precio','descripcion','precioUnidad')
+	fields=('producto','unidad_medida','porciones','precio','descripcion','precioUnidad')
 
-class EntradasAdmin(admin.ModelAdmin):
-	list_display = ['nombre','cantidad','fecha','total',]
 
-class DetallesAdmin(admin.ModelAdmin):
-	list_display = ['producto','cantidad','fecha',]
+	
+	
 
-admin.site.register(Categoria,CategoriaAdmin)
+admin.site.register(UnidadMedida,UnidadMedidaAdmin)
 admin.site.register(Producto,ProductoAdmin)
-admin.site.register(Entradas,EntradasAdmin)
-admin.site.register(Detalles,DetallesAdmin)
+admin.site.register(Entradas)
        

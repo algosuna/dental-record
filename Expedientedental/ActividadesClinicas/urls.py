@@ -4,7 +4,7 @@ from ActividadesClinicas.views import (
     InterrogatorioPDF, TratamientoNewView, TratamientoUpdateView, TratamientosView,
     DiagnosticoNewView, DiagnosticoUpdateView, DiagnosticosView
     )
-from Inventario.views import ProductosPDF
+
 
 urlpatterns = patterns('ActividadesClinicas.views',
 
@@ -29,7 +29,7 @@ urlpatterns += patterns('',
     url(r'^diagnosticos/$', DiagnosticosView.as_view(), name='diagnosticos'),
 
     #Reportes PDF
-    url(r'^productos/pdf/$',ProductosPDF.as_view()),
+
     url(r'^interrogatorios/(?P<paciente_id>\d+)/pdf/$',InterrogatorioPDF.as_view()),
 
 )

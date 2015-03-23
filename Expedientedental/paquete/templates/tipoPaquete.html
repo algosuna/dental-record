@@ -4,30 +4,24 @@
 {% block css %}
 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">
 <link rel="stylesheet" href="{% static 'css/bootstrap-duallistbox.css' %}">
+
 {% endblock css %}
 
 {% block content %}
 
-<h2 class="page-header">Registrar 2</h2>
+<h2 class="page-header">1.-Paso 1 Seleccione Items</h2>
 
 {% load crispy_forms_tags %}
 {% crispy form %}
-
-<!-- <form action="" method="POST">{% csrf_token %}
-    <table>
-     {{ form.as_table }}
-    </table>
-    <input type="submit" value="Guardar Formulario" class="btn btn-primary">
-</form> -->
-
 {% endblock content %}
-
+<input style="float:right; margin-right:20px;"  type="button" value="Paso 2" onclick="location.href='{{request.path}}create/'">
 
 {% block javascript %}
+<script src="{% static 'js/knockout-3.3.0.js'%}"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/r298/run_prettify.min.js"></script>
 <script src="{% static 'js/jquery.bootstrap-duallistbox.js' %}"></script>
 <script>
-$('#id_producto').bootstrapDualListbox({
+$('#id_productos').bootstrapDualListbox({
 	nonSelectedListLabel: 'A-seleccionar',
 	selectedListLabel: 'Seleccionados',
 	preserveSelectionOnMove: 'moved',

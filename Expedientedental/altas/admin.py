@@ -1,5 +1,5 @@
 from django.contrib	import admin
-from altas.models import Medico, Paciente
+from altas.models import Medico, Paciente,Grupo
 
 class medicoAdmin(admin.ModelAdmin):
 	list_display = ('nombre','apellidoPaterno',)
@@ -15,4 +15,5 @@ class pacienteAdmin(admin.ModelAdmin):
 	fields = ()
 
 admin.site.register(Medico,medicoAdmin)
+admin.site.register(Grupo)
 admin.site.register(Paciente,pacienteAdmin)
