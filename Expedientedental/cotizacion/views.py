@@ -21,7 +21,8 @@ def cotizacion(request, odontograma_id):
 
     except Cotizacion.DoesNotExist:
         cotizacion = Cotizacion.objects.create(odontograma=odontograma)
-        items = CotizacionItem.objects.create_items(cotizacion)
+        CotizacionItem.objects.create_items(cotizacion)
+        items = cotizacion.cotizacionitem_set.filter(status__in=['aceptado','pendiente'])
 
     if request.method == 'POST':
         formset = ItemFormSet(request.POST)
