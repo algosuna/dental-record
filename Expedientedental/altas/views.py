@@ -18,8 +18,9 @@ def datosmedico_view(request):
 			return HttpResponseRedirect('/medicos/')
 	else:
 		form=MedicoForm()
-	ctx = {'form':form}
-	return render_to_response('/medicos.html',ctx,context_instance=RequestContext(request))
+
+	return render_to_response('/medicos.html',
+		{'form':form},context_instance=RequestContext(request))
 
 
 def datospaciente_view(request):
@@ -31,8 +32,9 @@ def datospaciente_view(request):
 			return HttpResponseRedirect('/pacientes/')
 	else:
 		form=PacienteForm()
-	ctx = {'form':form}
-	return render_to_response('/pacientes.html',ctx,context_instance=RequestContext(request))
+
+	return render_to_response('/pacientes.html',
+		{'form':form}, context_instance=RequestContext(request))
 
 
 class GrupoNewView(CreateView):
