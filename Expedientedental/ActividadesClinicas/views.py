@@ -66,7 +66,7 @@ def odontograma(request, paciente_id):
             else:
                 print formset.errors
 
-            return redirect(reverse('detalle', args=[paciente.id, odontograma.id]))
+            return redirect(reverse('detalle_odontograma', args=[paciente.id, odontograma.id]))
     else:
         modelform = OdontogramaForm()
         formset = ProcedimientoFormSet()
