@@ -1,60 +1,27 @@
-{% extends "base1.html" %}
+{% extends "dash.html" %}
 
 {% load static from staticfiles %}
 {% load crispy_forms_tags %}
 
+{% block title %}Odontograma{% endblock %}
+
 {% block css %}
 <link rel="stylesheet" href="{%static 'css/jquery-ui-1.8.17.custom.css' %}">
-
-<style>
-  .hidden {
-    display: none;
-  }
-</style>
-
 <script src="{% static 'js/modernizr-2.0.6.min.js' %}"></script>
 {% endblock %}
 
 {% block content %}
 
-<h2>Odontograma</h2>
+<h2 class="page-header">Odontograma</h2>
 
-<div class="well odontograma clearfix">
-  <div class="col-xs-3">
-    <img src="{% static paciente.imagen %}" alt="{{ paciente.nombre }} {{ paciente.apellidoPaterno }}" class="pull-left img-rounded">
-  </div>
-  <div class="col-xs-9">
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Nombre</th>
-          <th>Grupo</th>
-          <th>Teléfono</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>{{ paciente.nombre }} {{ paciente.apellidoPaterno }} {{ paciente.apellidoMaterno }}</td>
-          <td>{{ paciente.grupo }}</td>
-          <td>{{ paciente.telefono }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div><!-- patient info section -->
-
-<div class="row">
-  <div class="col-md-4">
-    <p class="lead">1) Seleccione un tratamiento:</p>
-  </div>
-  <div class="col-md-8">
-    <select name="tratamiento" id="tratamientos" class="form-control" data-bind="value: tratamientoSeleccionado,">
-      <option>Seleccione un tratamiento...</option>
-      {% for tratamiento in tratamientos %}
-      <option value="{{ tratamiento.id }}">{{ tratamiento.codigoTratamiento }} - {{ tratamiento.nombreTratamiento }}</option>
-      {% endfor %}
-    </select>
-  </div>
+<div class="form-inline">
+  <label for="tratamiento" class="control-label lead">1) Seleccione tratamiento:</label>
+  <select name="tratamiento" id="tratamientos" class="form-control form-inline" data-bind="value: tratamientoSeleccionado,">
+    <option>Seleccione un tratamiento...</option>
+    {% for tratamiento in tratamientos %}
+    <option value="{{ tratamiento.id }}">{{ tratamiento.codigoTratamiento }} - {{ tratamiento.nombreTratamiento }}</option>
+    {% endfor %}
+  </select>
 </div>
 
 <form method="post" action="">
@@ -122,13 +89,15 @@
         </div>
         <a href="#" data-bind="click: $parent.quitarTratamiento" class="pull-left btn btn-warning">Eliminar</a>
       </li>
-      {%endfor%}
+      {% endfor %}
     </ul><!-- end foreach -->
   </div>
 
   <h3 class="page-header">Detalle informaci&oacute;n adicional</h3>
 
+<div class="col-md-8 col-md-offset-2">
   {% crispy form %}
+</div>
 
 </form>
 {% endblock %}
@@ -144,12 +113,12 @@
 <script>
   // some widgets and such
   $(function() {
-    var submitButton = $('#odontograma ~ .buttonHolder input'),
+    var submitButton = $('.odontograma-submit'),
         pacienteId = '{{ paciente.id }}',
         pacienteSelect = $('#id_paciente');
 
     // aligns the submit button
-    submitButton.addClass(' pull-right odontograma-submit');
+    submitButton.addClass(' pull-right');
 
     // gives a value to the paciente field
     pacienteSelect.val(pacienteId);

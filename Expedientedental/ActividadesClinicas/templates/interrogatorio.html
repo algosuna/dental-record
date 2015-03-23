@@ -1,5 +1,7 @@
-{% extends "base1.html" %}
-{%load static from staticfiles %}
+{% extends "dash.html" %}
+{% load static from staticfiles %}
+
+{% block title %}Expediente Medico y Dental{% endblock %}
 
 {% block content %}
 {% load dajaxice_templatetags %}
@@ -8,7 +10,7 @@
 {% dajaxice_js_import %}
 
 
-<h2 class="page-header">Interrogatorio</h2>
+<h2 class="page-header">Expediente M&eacute;dico y Dental</h2>
 
 {% load crispy_forms_tags %}
 {% crispy form %}

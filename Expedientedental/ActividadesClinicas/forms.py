@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 from django import forms
-from django.forms.formsets import formset_factory, BaseFormSet
+from django.forms.formsets import formset_factory
 
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, HTML, Field, ButtonHolder, Submit
 
-from ActividadesClinicas.models import HistoriaClinica, Odontograma, Tratamiento, Procedimiento
+from ActividadesClinicas.models import HistoriaClinica, Odontograma, Tratamiento
+from ActividadesClinicas.models import Diagnostico, Procedimiento
 
 class HistoriaClinicaForm(forms.ModelForm):
     class Meta:
@@ -279,19 +280,39 @@ class OdontogramaForm(forms.ModelForm):
                 '',
                 Field('paciente'),
                 Field('doctor'),
+                Field('diagnostico'),
                 Field('notas'),
             ),
             ButtonHolder(
-                    Submit('save','Guardar')
+                    Submit('save', 'Guardar', css_class='odontograma-submit')
 
             )
         )
         self.fields['doctor'].label = 'M&eacute;dico '
+        self.fields['diagnostico'].label = 'Diagnostico '
         self.fields['notas'].label = 'Observaciones '
 
 class TratamientoForm(forms.ModelForm):
     class Meta:
         model = Tratamiento
+
+    def __init__(self, *args, **kwargs):
+        super(TratamientoForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.add_input(
+            Submit('submit', 'Guardar')
+        )
+
+class DiagnosticoForm(forms.ModelForm):
+    class Meta:
+        model = Diagnostico
+
+    def __init__(self, *args, **kwargs):
+        super(DiagnosticoForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.add_input(
+            Submit('submit', 'Guardar')
+        )
 
 class ProcedimientoForm(forms.ModelForm):
     class Meta:
@@ -307,12 +328,14 @@ class ProcedimientoForm(forms.ModelForm):
                 Field('pieza', data_bind='value: diente.id'),
                 Field('cara', data_bind='value: cara'),
                 Field('tratamiento', data_bind='value: tratamiento'),
+                Field('notas')
 
                 ),
             )
         self.fields['pieza'].label = 'Pieza '
         self.fields['cara'].label = 'Cara '
         self.fields['tratamiento'].label = 'Tratamiento '
+        self.fields['notas'].label = 'Notas '
 
 ProcedimientoFormSet = formset_factory(ProcedimientoForm,)
 
