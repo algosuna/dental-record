@@ -232,6 +232,8 @@ class Tratamiento(models.Model):
 	codigoTratamiento = models.CharField(max_length=15)
 	nombreTratamiento = models.CharField(max_length=150)
 
+
+
 	def __unicode__(self):
 		tratamiento = '%s %s'%(self.codigoTratamiento, self.nombreTratamiento)
 		return tratamiento

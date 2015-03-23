@@ -9,7 +9,7 @@ from django.core.urlresolvers import reverse
 from django.contrib import admin
 admin.autodiscover()
 
-from Inventario.views import productoView, unidadView, producto, categoria, busqueda, ingresarCantidad, detallesProd, EditProductView
+from Inventario.views import productoView, unidadView, busqueda, ingresarCantidad, detallesProd, EditProductView
 from procesocoopago.views import  Pago, Proceso
 
 from historialprocedimientos.views import create
