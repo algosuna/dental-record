@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{%load static from staticfiles %}
+
+{% block bodyclass %}class="dash"{% endblock %}
+
+{% block nav %}
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+
+    <div class="navbar-header">
+
+      <a class="navbar-brand" href="/">Sistema Administrativo Dental MediExcel</a>
+
+    </div><!-- end .navbar-header -->
+
+    <ul class="nav navbar-nav navbar-right">
+
+      <li>
+
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user-md fa-fw"></i> Juan Perez <span class="caret"></span></a>
+
+        <ul class="dropdown-menu">
+
+          <li><a href="#"><i class="fa fa-wrench fa-fw"></i> Settings</a></li>
+          <li class="divider"></li>
+          <li><a href="#"><i class="fa fa-sign-out fa-fw"></i> Log Out</a></li>
+
+        </ul>
+
+      </li>
+
+    </ul>
+
+  </nav><!-- end .navbar -->
+{% endblock nav %}
+
+{% block dash %}
+  <div class="col-sm-3 col-md-2 sidebar">
+
+    <div class="client-info clearfix">
+      <img src="{% static paciente.imagen %}" alt="Cliente" width="50" height="50" class="pull-left">
+      <p>{{ paciente.nombre }} {{ paciente.apellidoPaterno }} {{ paciente.apellidoMaterno }}</p>
+    </div><!-- TODO: remove and turn into a block -->
+
+    <ul class="nav nav-sidebar">
+      <li class="{{ detalle_paciente }}"><a href="/detalle-paciente/{{ paciente.id }}/"><i class="fa fa-user fa-fw"></i> Datos Personales</a></li>
+      <li class="{{ expediente }}"><a href="/interrogatorio/{{ paciente.id }}/"><i class="fa fa-folder fa-fw"></i> Expediente Medico/Dental</a></li>
+      <li class="sidebar-header text-center">Actividades Clinicas</li>
+      <li class="{{ var_name }}"><a href="#"><i class="fa fa-th-list fa-fw"></i> Plan de Tratamiento</a></li>
+      <li class="{{ odontograma_active }}"><a href="/odontograma/{{ paciente.id }}/"><i class="fa fa-puzzle-piece fa-fw"></i> Odontograma</a></li>
+      <li class="{{ var_name }}"><a href="#"><i class="fa fa-clipboard fa-fw"></i> Historial de Procedimiento</a></li>
+    </ul>
+
+  </div><!-- end .sidebar -->
+
+  <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+    {% block content %}
+    {% endblock %}
+
+  </div>
+{% endblock dash %}
+
+{% block footer %}
+  <footer>
+
+    <div class=" col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
+
+      <p class="alert alert-danger">Derivado del contrato de prestación de Servicios Profesionales celebrado entre Usted y MediExcel Health Plan, le manifestamos que en términos de la Ley Federal de Protección de Datos Personales en Posesión de los Particulares, deberá apegarse al Aviso de Privacidad que MediExcel HealthPlan comprometió a los titulares respecto de su información Personal, mismo que anexamos para su conocimiento y observación. Aviso De Confidencialidad de Datos Personales MediExcel Health Plan, con domicilio Fiscal en Av. Paseo de los Héroes No. 2507 Zona Río Tijuana, B.C. 22320, establece que, conforme lo marca la Ley Federal de Protección de Datos Personales en Posesión de los Particulares, todos aquellos datos entregados y obtenidos con motivo del contrato de servicios realizado con la empresa, serán utilizados unicamente para la operación y administración de su Plan de Salud, garantizando que sus datos personales no serán utilizados para fines distintos a lo indicado previamente, ni serán transferidos a terceros, obligandose MediExcel Health Plan a salva guardar la privacidad de los mismos. Usted tiene derecho a limitar el uso de divulgación de sus datos personales, rectificarlos y cancelarlos mediante solicitud por escrito a nuestro departamento de atención a asegurados o con el Registro Único de Usuarios (REUS). Todo cambio al presente aviso por MediExcel Health Plan será notificado en nuestro portal www.mediexcelHP.com</p>
+      <p class="text-muted">Gracias por usar el Sistema Administrativo Dental MediExcel Health Plan.</p>
+
+    </div>
+
+  </footer>
+{% endblock %}
