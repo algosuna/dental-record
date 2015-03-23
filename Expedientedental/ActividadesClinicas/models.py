@@ -1,6 +1,7 @@
 from django.db import models
-from altas.models import Medico,Paciente
-from datetime import date
+
+from altas.models import Medico, Paciente
+from core.models import TimeStampedModel
 
 class HistoriaClinica(models.Model):
 	auxBucal_CHOICES=(
@@ -32,7 +33,7 @@ class HistoriaClinica(models.Model):
         ('Alcohol', 'Alcohol'),
 
         )
-	
+
 	#exploracion
 	cabeza_CHOICES=(
 		('Exotosis', 'Exotosis'),
@@ -222,11 +223,25 @@ class HistoriaClinica(models.Model):
 		nombres ="%s %s"% (self.medico,self.paciente)
 		return nombres
 
-class Odontograma(models.Model):
+
+class Diagnostico(models.Model):
+	codigo = models.CharField(max_length=15)
+	nombre = models.CharField(max_length=150)
+
+	def __unicode__(self):
+		diagnostico = '%s - %s'%(self.codigo, self.nombre)
+		return diagnostico
+
+
+class Odontograma(TimeStampedModel):
  	doctor = models.ForeignKey(Medico, null=True)
  	paciente = models.ForeignKey(Paciente, null=True)
- 	fechayHora = models.DateTimeField(auto_now_add=True)
  	notas = models.TextField()
+ 	diagnostico = models.ForeignKey(Diagnostico, null=True)
+
+ 	def __unicode__(self):
+ 		odontograma = '%s %s'%(self.id, self.fechayHora)
+ 		return odontograma
 
 class Tratamiento(models.Model):
 	codigoTratamiento = models.CharField(max_length=15)
@@ -250,3 +265,4 @@ class Procedimiento(models.Model):
 	cara = models.CharField(max_length=4, choices=CARAS_CHOICES)
 	tratamiento = models.ForeignKey(Tratamiento, null=True)
 	odontograma = models.ForeignKey(Odontograma, null=True)
+	notas = models.TextField(null=True, blank=True)

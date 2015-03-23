@@ -1,65 +1,52 @@
 from django.db import models
-from altas.models import Medico,Paciente
-from precios.models import PrecioServicio
-from precios.models import GrupoServicio
-from precios.models import GrupoPrecios
-from ActividadesClinicas.models import Procedimiento,Tratamiento
-from decimal import Decimal
+
+from core.models import TimeStampedModel
+from ActividadesClinicas.models import Procedimiento, Odontograma
+from precios.models import PrecioTratamiento
 
 
+class Cotizacion(TimeStampedModel):
+	odontograma = models.ForeignKey(Odontograma, null=True)
 
 
+class CotizacionItemManager(models.Manager):
+	def create_items(self, cotizacion):
+		odontograma = cotizacion.odontograma
+
+		procedimiento_qs = odontograma.procedimiento_set.all()
+		grupo = odontograma.paciente.grupo
+
+		items = []
+
+		for procedimiento in procedimiento_qs:
+
+			precio = PrecioTratamiento.objects.get(
+				grupo = grupo,
+				tratamiento = procedimiento.tratamiento
+			).precio
+			item = self.create(
+				status = 'pendiente',
+				cotizacion = cotizacion,
+				precio = precio,
+				procedimiento = procedimiento
+			)
+			items.append(item)
+
+		return items
 
 
+class CotizacionItem(TimeStampedModel):
+	STATUS_CHOICES=(
+		('aceptado','Aceptado'),
+		('pendiente','Pendiente'),
+	)
+	status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='aceptado')
+	cotizacion = models.ForeignKey(Cotizacion)
+	precio = models.DecimalField(max_digits=8, decimal_places=2)
+	procedimiento = models.ForeignKey(Procedimiento)
 
-class Cotizacion(models.Model):
-	id=models.AutoField(primary_key=True,null=False)
-	fecha = models.DateTimeField(auto_now_add = True)
-	paciente = models.ForeignKey(Paciente,null=True)
-	medico = models.ForeignKey(Medico)
-	total=models.DecimalField(max_digits=19, decimal_places=10)
-
-
-	def __unicode__(self):
-		return '['+str(self.fecha.day)+'/'+str(self.fecha.month)+'/'+str(self.fecha.year)+']  '+self.paciente.nombre+' '+self.paciente.apellidoPaterno
-	
-	def total(self):
-		cotizaciondetails = CotizacionDetail.objects.filter(cotizacion__id__exact = self.id)
-		total = 0
-		for cotizaciondetail in cotizaciondetails:
-			total += cotizaciondetail.servicio.precio
-		return total
-
-
-class CatalogodeServicios(models.Model):
-	nombreDelServicio = models.ForeignKey(Tratamiento)
-	nombreDelGrupo = models.ForeignKey(GrupoPrecios)
-	precio = models.DecimalField(max_digits=19, decimal_places=3)
-	
-	def __unicode__(self):
-		return "%s (%s)"%(self.nombreDelServicio ,self.precio)
-		 
-
-
-class CotizacionDetail(models.Model):
-	estado_CHOICES=(
-
-		('aceptado','aceptado'),
-		('pendiente','pendiente'),
-
-
-		)
-	estado      =models.CharField(max_length=10,choices=estado_CHOICES,default='aceptdado')
-	cotizacion  = models.ForeignKey(Cotizacion)
-	servicio    = models.ForeignKey(CatalogodeServicios)
-	
-	
+	objects = CotizacionItemManager()
 
 	def __unicode__(self):
-		return "(%s) %s"%(self.cotizacion,self.servicio)
+		return "(%s) %s"%(self.cotizacion,self.procedimiento)
 
-	def total(self):
-		total = self.precio
-		return total
-
-	

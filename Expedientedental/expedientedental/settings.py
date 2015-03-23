@@ -147,16 +147,19 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 INSTALLED_APPS = (
     'suit',
     'django.contrib.admin',
+    # Uncomment the next line to enable admin documentation:
+    'django.contrib.admindocs',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-   
+
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     'wkhtmltopdf',
+    'core',
     'altas',
     'precios',
     'bitacora',
@@ -168,11 +171,9 @@ INSTALLED_APPS = (
     'dajax',
     'crispy_forms',
     'historialprocedimientos',
-    
+
     'procesocoopago',
-    
-    # Uncomment the next line to enable admin documentation:
-    'django.contrib.admindocs',
+
     'south',
 )
 

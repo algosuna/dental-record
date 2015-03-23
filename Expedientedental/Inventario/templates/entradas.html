@@ -21,7 +21,7 @@
 						<th class="text-center">Total</th>
 					-->
 					
-						<th class="text-center">Última Modificación</th>
+						
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 					</tr>
@@ -29,19 +29,16 @@
 				<tbody>
   		{% for producto in objects %}
   			<tr>
-  				<td>{{ producto.nombre }}</td>
-  				{% with entrada=producto.entradas_set.get %}
-  				<td align="center">{{ entrada.cantidad }}</td>
+  				<td>{{ producto.producto }}</td>
+  				<td>{{ producto.porciones}}</td>
+  				
 
-  			<!--  Campos de Precio y Total
-  				<td align="center">${{ entrada.nombre.precio }}</td>
-  				<td align="center">{{ entrada.total }}</td>
-  			-->
+  		
 
-  				<td align="center">{{ entrada.fecha }}</td> 
-  				<td class="text-center"><a href="/ingresar/{{ entrada.id }}" class="btn btn-info">Agregar Cantidad</a></td>
-  				<td class="text-center"><a href="/detalles_producto/{{ entrada.id }}" class="btn btn-default">Ver Detalles</a></td>
-  				{% endwith %}
+  				
+  				<td class="text-center"><a href="/producto/edit/{{ producto.id }}" class="btn btn-info">Editar</a></td>
+  				<td class="text-center"><a href="/detalles_producto/{{ producto.id }}" class="btn btn-default">Ver Detalles</a></td>
+  				
   			</tr>
   		{% endfor %}
   			</tbody>

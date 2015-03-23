@@ -27,7 +27,7 @@ class PagoForm(forms.ModelForm):
 			Fieldset(
 				'',
 
-				Field('fecha' , wrapper_class='col-md-4'),
+				
 				Field('monto' , wrapper_class='col-md-8'),
 				Field('detalles' , wrapper_class='col-md-8'),
 				
@@ -40,7 +40,7 @@ class PagoForm(forms.ModelForm):
 
 			)
 		)
-		self.fields['fecha'].label='Fecha'
+		
 		self.fields['monto'].label='Monto'
 		self.fields['detalles'].label='Detalles'
 

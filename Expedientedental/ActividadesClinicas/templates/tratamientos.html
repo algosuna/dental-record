@@ -1,0 +1,31 @@
+{% extends "base1.html" %}
+
+{% block content %}
+
+<h2 class="page-header">Lista de Tratamientos</h2>
+
+{% if tratamientos %}
+<table class="table table-hover grupos">
+    <thead>
+        <tr>
+            <th>Codigo</th>
+            <th>Nombre</th>
+            <th>&nbsp;</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for tratamiento in tratamientos %}
+        <tr>
+            <td>{{ tratamiento.codigoTratamiento }}</td>
+            <td>{{ tratamiento.nombreTratamiento }}</td>
+            <td class="text-right"><a href="/tratamiento/edit/{{ tratamiento.id }}/" title="Editar"><span class="glyphicon glyphicon-pencil"></span></a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a href="/tratamiento/new/" class="btn btn-primary pull-right">Agregar Tratamiento <span class="glyphicon glyphicon-plus"></span></a>
+{% else %}
+<p class="lead text-center text-muted">No hay tratamientos en la base de datos.<br><br>
+<a href="/tratamiento/new/" class="btn btn-primary">Agregar Tratamiento <span class="glyphicon glyphicon-chevron-right"></span></a></p>
+{% endif %}
+{% endblock content %}

@@ -2,14 +2,16 @@ import settings
 
 from django.conf.urls.defaults import patterns, include, url
 from django.conf import settings
+from django.core.urlresolvers import reverse 
+
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 admin.autodiscover()
 
-from Inventario.views import producto, categoria, busqueda, ingresarCantidad, detallesProd
-from cotizacion.views import Cotizacion
+from Inventario.views import productoView, unidadView, busqueda, ingresarCantidad, detallesProd, EditProductView
 from procesocoopago.views import  Pago, Proceso
+
 from historialprocedimientos.views import create
 
 from dajaxice.core import dajaxice_autodiscover, dajaxice_config
@@ -29,6 +31,7 @@ urlpatterns = patterns('',
     url(r'^',include('altas.urls')),
     url(r'^',include('precios.urls')),
     url(r'^',include('bitacora.urls')),
+    
 
     url(r'^cotizacion/', include('cotizacion.urls')),
 
@@ -36,9 +39,15 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', 'indexmhp'),
 
-    url(r'^producto/$',producto),
+    url(r'^producto/$',productoView),
+   
     url(r'^historialprocedimientos/$',create),
-    url(r'^categoria/$',categoria),
+    url(r'^producto/unidad/$',unidadView),
+    url(r'^producto/edit/(?P<pk>\d+)$',EditProductView.as_view(),name='producto-edit'),
+    
+    
+
+    
 
     url(r'^ingresar/(?P<entrada_id>\d+)$',ingresarCantidad),
     url(r'^detalles_producto/(?P<entrada_id>\d+)$',detallesProd),

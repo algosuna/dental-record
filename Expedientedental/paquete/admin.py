@@ -1,21 +1,24 @@
 from django.contrib import admin
-from paquete.models import Paquete, EntryPaquete
+from paquete.models import Paquete,PaqueteItem,PaqueteConsumido,PaqueteConsumidoItem
 
 
-class PaqueteAdmin(admin.ModelAdmin):
-	list_display = ('nombre','descripcion',)
-	list_filter = ('nombre','descripcion',)
-	search_fields = ['nombre','descripcion']
-	fields = ()
 
-class EntryPaqueteAdmin(admin.ModelAdmin):
-	list_display = ('nombre',)
-	list_filter = ('nombre',)
-	search_fields = ['nombre',]
-	filter_horizontal = ('producto',)
-	fields = ()
+class PaqueteConsumidoAdmin(admin.ModelAdmin):
+	list_display=[
+		'paquete',
+		'medico',
+		'fecha',
 
+	]
+	list_filter=[
+	'medico',
+	'fecha',
+	'paquete',
+	]
 
-admin.site.register(EntryPaquete, EntryPaqueteAdmin)
-admin.site.register(Paquete, PaqueteAdmin)
+admin.site.register(Paquete)
+admin.site.register(PaqueteItem)
+admin.site.register(PaqueteConsumido)#,PaqueteConsumidoAdmin)
+admin.site.register(PaqueteConsumidoItem)
+
 	

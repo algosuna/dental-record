@@ -1,0 +1,144 @@
+{% extends "base1.html" %}
+
+{%load static from staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="well odontograma clearfix">
+  <div class="col-xs-3">
+    <img src="{% static cotizacion.odontograma.paciente.imagen %}" alt="{{ cotizacion.odontograma.paciente.nombre }} {{ cotizacion.odontograma.paciente.apellidoPaterno }}" class="pull-left img-rounded">
+  </div>
+  <div class="col-xs-9">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Grupo</th>
+          <th># Cotizaci&oacute;n</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ cotizacion.odontograma.paciente}}</td>
+          <td>{{ cotizacion.odontograma.paciente.grupo }}</td>
+          <td>{{ cotizacion.id}}</td>
+        </tr>
+      </tbody>
+      <thead>
+        <tr>
+        	<th>Medico Tratante</th>
+        	<th>&nbsp;</th>
+        	<th>&nbsp;</th>
+        </tr>
+        <tr>
+        	<td>{{ cotizacion.odontograma.doctor }}</td>
+        	<td>&nbsp;</td>
+        	<td>&nbsp;</td>
+        </tr>
+      </thead>
+    </table>
+  </div>
+</div><!-- patient info section -->
+
+<h2 class="page-header">Cotizacion <small>#{{ cotizacion.id }}</small></h2>
+
+<div class="row">
+  <div class="col-md-8">
+    <form method="post" action="" class="cotizacion clearfix">
+      {{ formset.management_form }}
+
+      <div class="panel panel-default">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Plan de Tratamiento</th>
+              <th>Costo</th>
+              <th>Status</th>
+              <th>&nbsp;</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for form in formset %}
+            {% with item=form.instance %}
+            <tr>
+              <td>{{ item.procedimiento.tratamiento }}</td>
+              <td class="precio">{{ item.precio }}</td>
+              <td><span class="label">{{ item.get_status_display }}</span></td>
+              <td>{% crispy form %}</td>
+            </tr>
+            {% endwith %}
+            {% endfor %}
+          </tbody>
+        </table>
+
+        <input class="btn btn-success pull-right" type="submit" value="Actualizar">
+
+      </form>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="panel panel-default">
+      <!-- <div class="panel-heading">Panel heading</div> -->
+
+      <table class="table table-bordered">
+        <tr>
+          <th>Total</th>
+          <td class="total"></td>
+        </tr>
+        <tr>
+          <th>Total Autorizado</th>
+          <td>{{ total }}</td>
+        </tr>
+      </table>
+    </div>
+
+    <a href="#" class="btn btn-primary btn-block">Aceptar &amp; Pagar <span class="glyphicon glyphicon-chevron-right"></span></a>
+
+  </div>
+</div>
+
+{% endblock content %}
+
+{% block javascript %}
+<script>
+$(function() {
+
+  // for adding the cost
+  var precio = $('.precio'),
+      total = $('.total'),
+      status = $('.label');
+
+  total.text(function() {
+  	var sum = 0;
+
+  	precio.each(function() {
+
+  		sum += +$(this).text()
+
+  	})
+  	return sum;
+
+  })
+
+  // for setting the label color
+  $.each(status, function(){
+    var status = $(this);
+
+    if(status.text() == 'Aceptado'){
+
+      status.addClass(' label-success');
+
+    } else {
+
+      status.addClass(' label-warning');
+
+    }
+
+  })
+})
+</script>
+{% endblock javascript %}
+
+
+

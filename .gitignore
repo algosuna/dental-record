@@ -1,3 +1,4 @@
 *.pyc
 dentaldb.sqlite3
 migrations
+media

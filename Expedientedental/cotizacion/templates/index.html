@@ -1,51 +1,32 @@
 {% extends "base1.html" %}
-{%load static from staticfiles %}
+
 {% block content %}
 
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<h2 class="page-header">Ordenes Pendientes</h2>
 
-		<script type="text/javascript">
-		$(document).ready(function(){
-		    $('[data-toggle="tooltip"]').tooltip({
-		        placement : 'left'
-		    });
-		});
-		</script>
-		<style type="text/css">
-			.bs-example{
-		    	margin: 100px 50px;
-		    }
-		</style>
-
-	<h2 class="page-header">Presupuestos</h2>
-
-	<div class="cleared"></div>
-	{% if latest_list %}
-			<table style="text-align:center"class="table table-condensed" border='0'>
-				<tr >
-					<th style="text-align:center">Cliente</th>
-					
-					<th style="text-align:center" >Fecha</th>
-					
-				</tr>
-			{% for object in latest_list %}
-				<tr>
-					<td><a href="update/{{object.id}}/" data-toggle="tooltip" class="tip-left" data-original-title="Click para agregar servicios">{{object.paciente}}</a></td>
-					<td>{{object.fecha}}</td>
-					
-
-
-				</tr>
-			{% endfor %}
-			</table>
-
-		<table>
-			<input style="float:right; margin-right:20px;"  type="button" value="Agregar Cotización" onclick="location.href='{{request.path}}create/'">
-
-		</table>
-	{% else %}
-		<p>No hay Cotizaciones en la base de datos.</p>
-	{% endif %}
+{% if orders %}
+	<table class="table table-hover">
+		<tr>
+			<th>#</th>
+			<th>Medico</th>
+			<th>Cliente</th>
+			<th>Fecha</th>
+			<th>&nbsp;</th>
+		</tr>
+		{% for order in orders %}
+		<tr>
+			<td>{{ order.id }}</td>
+			<td>{{ order.doctor }}</td>
+			<td>{{ order.paciente }}</td>
+			<td>{{ order.fechayHora }}</td>
+			<td class="text-right">
+				<a href="{{ order.id }}/" title="Ver Cotizaci&oacute;n" class="btn btn-primary">Ver Cotizaci&oacute;n</a>
+			</td>
+		</tr>
+		{% endfor %}
+	</table>
+{% else %}
+	<p class="lead text-muted text-center">No hay ordenes pendientes.</p>
+{% endif %}
 
 {% endblock %}
