@@ -4,40 +4,40 @@ local css
 
 */
 html {
-    position: relative;
-    min-height: 100%;
+  position: relative;
+  min-height: 100%;
 }
 
 body {
-    padding-top: 70px;
-    margin-bottom: 177px;
+  padding-top: 70px;
+  margin-bottom: 177px;
 }
 
 nav.navbar + .page-header { margin-top: 10px; }
 
 footer {
-    position: absolute;
-    bottom: 0px;
-    width: 100%;
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
 }
 
 footer .alert {
-    text-align: justify;
-    font-size: 8px;
+  text-align: justify;
+  font-size: 8px;
 }
 
 /* styling del header principal */
 .page-header h2 {
-    font-size: 50px;
-    color: #999999;
-    margin-left: 80px;
-    padding-top: 20px;
+  font-size: 50px;
+  color: #999999;
+  margin-left: 80px;
+  padding-top: 20px;
 }
 
 /* color de la barra de navegacion */
 .navbar-inverse {
-    background-color: #4096ee;
-    border-color: #cccccc;
+  background-color: #4096ee;
+  border-color: #cccccc;
 }
 
 .navbar-inverse .navbar-nav > .open > a,
@@ -56,24 +56,67 @@ form styling
 fieldset { margin-top: 20px; }
 
 legend {
-    padding: 10px 0px 10px 20px;
-    background-color: #cbefff;
+  padding: 10px 0px 10px 20px;
+  background-color: #cbefff;
 }
 
 .section-header {
-    border-bottom: 1px solid #ccc;
-    padding-bottom: 10px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
 }
 
-/* 
+/* cotizacion */
+
+.cotizacion .form-group {
+  margin-bottom: 0px;
+}
+
+.cotizacion .form-group .checkbox {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.cotizacion .form-group .checkbox label {
+  min-height: 12px;
+}
+
+.cotizacion input[type=submit] {
+  margin-top: 20px;
+}
+
+/*
 
 tables
 
 */
 
 .table thead ~ thead tr th {
-    padding-top: 25px;
+  padding-top: 25px;
 }
+
+/*
+
+login
+
+*/
+.login {
+  padding-top: 0px;
+  margin-bottom: 30px;
+}
+
+.login .login-container {
+  margin: 0 auto;
+  float: none;
+}
+
+.login .logo img {
+  width: 100%;
+  max-width: 180px;
+  max-height: 85px;
+  display: block;
+  margin: 10px auto;
+}
+
 
 /*
 
@@ -82,27 +125,28 @@ busqueda
 */
 
 .search {
-    max-width: 600px;
-    margin: 0 auto;
+  max-width: 600px;
+  margin: 0 auto;
+  padding-bottom: 20px;
 }
 .search label {
-    display: block;
-    width: 100%;
+  display: block;
+  width: 100%;
 }
 .search input {
-    width: 480px;
-    display: block;
-    float: left;
+  width: 480px;
+  display: block;
+  float: left;
 }
 
 .search input + input {
-    width: 100px;
-    margin-left: 20px;
+  width: 100px;
+  margin-left: 20px;
 }
 
 .search ~ table tbody tr:hover {
-    background-color: #eeeeee;
-    cursor: pointer;
+  background-color: #eeeeee;
+  cursor: pointer;
 }
 
 /*
@@ -115,13 +159,13 @@ odontograma
 svg\:svg { display: none; }
 
 .svg_error {
-    color: red;
-    font-weight: bold;
+  color: red;
+  font-weight: bold;
 }
 
 .odontograma {
-    background-color: #cbefff;
-    border-color: #a8e1fa;
+  background-color: #cbefff;
+  border-color: #a8e1fa;
 }
 
 .odontograma img { max-width: 100%; }
@@ -133,42 +177,52 @@ svg\:svg { display: none; }
 .odontograma ~ .clearfix form .lead { margin-top: 20px; }
 
 #odontograma {
-    width: 620px;
-    margin: 0 auto;
+  width: 620px;
+  margin: 0 auto;
 }
 
 #odontograma ~ .clearfix fieldset {
-    float: left;
-    margin-top: 0px;
-    margin-bottom: 20px;
+  float: left;
+  margin-top: 0px;
+  margin-bottom: 20px;
 }
 
 #odontograma ~ .clearfix ul {
-    margin: 0px;
-    padding: 0px;
+  margin: 0px;
+  padding: 0px;
 }
 
 #odontograma ~ .clearfix ul li { list-style: none; }
 
-#odontograma ~ .clearfix ul li .form-group { clear: both; }
+#odontograma ~ .clearfix ul li .form-group {
+  clear: both;
+}
 
 #odontograma ~ .clearfix ul li .form-group label,
 #odontograma ~ .clearfix ul li .form-group .controls {
-    float: left;
-    display: inline;
+  float: left;
+  display: inline;
 }
 
 #odontograma ~ .clearfix ul li .form-group label { margin: 7px 7px 0px 0px; }
 
 #odontograma ~ .clearfix ul li .form-group .controls { margin-right: 20px; }
 
-#odontograma ~ .clearfix ul li .form-group:last-of-type .controls select { width: 260px; }
+#odontograma ~ .clearfix ul li .form-group:first-of-type .controls input { width: 45px; }
+
+#odontograma ~ .clearfix ul li .form-group:nth-child(3) .controls select { width: 90px; }
+
+#odontograma ~ .clearfix ul li .form-group:last-of-type .controls textarea {
+  max-width: 430px;
+  height: 34px;
+}
 
 #tooth-images {
-    position: relative;
-    bottom: 305px;
-    left: 157px;
-    height: 60px;
+  position: relative;
+  bottom: 305px;
+  height: 60px;
+  width: 620px;
+  margin: 0 auto;
 }
 
 #tooth-images img + img { margin-left: 10px; }
@@ -176,9 +230,9 @@ svg\:svg { display: none; }
 #tooth-images img[alt="11"] { margin-right: 5px; }
 
 #tooth-images .bottom {
-    position: relative;
-    top: 125px;
-    left: 5px;
+  position: relative;
+  top: 125px;
+  left: 5px;
 }
 
 #tooth-images .bottom img[alt="47"],
@@ -193,8 +247,8 @@ svg\:svg { display: none; }
 #tooth-images .bottom img[alt="36"] { margin-left: 12px; }
 
 #tooth-images .bottom img[alt="41"] {
-    margin-left: 16px;
-    margin-right: 15px;
+  margin-left: 16px;
+  margin-right: 15px;
 }
 
 #tooth-images .bottom img[alt="32"] { margin-left: 16px; }
@@ -204,3 +258,12 @@ svg\:svg { display: none; }
 #tooth-images .bottom img[alt="37"] { margin-left: 7px; }
 
 .odontograma-submit { margin: 20px; }
+
+/*
+
+grupos
+
+*/
+.grupos a.text-danger {
+  margin-left: 20px;
+}
