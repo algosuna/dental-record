@@ -246,7 +246,7 @@ class Procedimiento(models.Model):
 		('I', 'Palatino'),
 	)
 
-	pieza = models.IntegerField(null=True)
+	pieza = models.IntegerField(null=True, default='X')
 	cara = models.CharField(max_length=4, choices=CARAS_CHOICES)
 	tratamiento = models.ForeignKey(Tratamiento, null=True)
 	odontograma = models.ForeignKey(Odontograma, null=True)

@@ -3,18 +3,12 @@
 
 {% block content %}
 
+<h2 class="page-header">Registrar Producto-Unidades de Medida</h2>
 
 {% load crispy_forms_tags %}
 {% crispy form %}
 
-{% if producto.id %}
-<h1>Editar Producto</h1>
-{% else %}
-<h1> agergar producto</h1>
-{% endif %}
 
 
-<form action="{{action}}" method="POST">
 
 {% endblock content %}
-

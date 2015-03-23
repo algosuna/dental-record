@@ -16,7 +16,7 @@ class Cotizacion(models.Model):
 	id=models.AutoField(primary_key=True,null=False)
 	fecha = models.DateTimeField(auto_now_add = True)
 	paciente = models.ForeignKey(Paciente,null=True)
-	medico = models.ForeignKey(Medico)
+	medico = models.ForeignKey(Medico, null=True)
 	total=models.DecimalField(max_digits=19, decimal_places=10)
 
 

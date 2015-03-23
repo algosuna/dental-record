@@ -1,6 +1,5 @@
 from django.conf.urls import patterns, url
 from ActividadesClinicas.views import InterrogatorioPDF
-from Inventario.views import ProductosPDF
 
 urlpatterns = patterns('ActividadesClinicas.views',
 
@@ -18,7 +17,7 @@ urlpatterns = patterns('ActividadesClinicas.views',
 urlpatterns += patterns('',
 
     #Reportes PDF
-    url(r'^productos/pdf/$',ProductosPDF.as_view()),
+    
     url(r'^interrogatorios/(?P<paciente_id>\d+)/pdf/$',InterrogatorioPDF.as_view()),
 
 )

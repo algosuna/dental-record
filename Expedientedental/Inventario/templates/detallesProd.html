@@ -13,16 +13,16 @@
 						<th>Producto</th>
 						<th class="text-center">Cantidad</th>
 						<th class="text-center">Precio</th>
-						<th class="text-center">Total</th>
+						
 						<th class="text-center">Última Modificación</th>
 					</tr>
 				</thead>
 				<tbody>
   			<tr>
-  				<td>{{ entrada.nombre }}</td>
-  				<td align="center">{{ entrada.cantidad }}</td>
-  				<td align="center">${{ entrada.nombre.precio }}</td>
-  				<td align="center">{{ entrada.total }}</td>
+  				<td>{{ entrada.producto }}</td>
+  				<td align="center">{{ entrada.producto.porciones }}</td>
+  				<td align="center">${{ entrada.producto.precio }}</td>
+  				
   				<td align="center">{{ entrada.fecha }}</td>
   			</tr>
 				</tbody>
