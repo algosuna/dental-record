@@ -224,32 +224,43 @@ class HistoriaClinica(models.Model):
 		return nombres
 
 
-class Diagnostico(models.Model):
+class Evaluacion(models.Model):
 	codigo = models.CharField(max_length=15)
 	nombre = models.CharField(max_length=150)
 
 	def __unicode__(self):
-		diagnostico = '%s - %s'%(self.codigo, self.nombre)
-		return diagnostico
+		evaluacion = '%s - %s'%(self.codigo, self.nombre)
+		return evaluacion
+
+
+class TratamientoPreventivo(models.Model):
+	codigo = models.CharField(max_length=15)
+	nombre = models.CharField(max_length=150)
+
+def __unicode__(self):
+	tratamiento_preventivo = '%s %s'%(self.codigo, self.nombre)
+	return tratamiento_preventivo
+
+
+class Tratamiento(models.Model):
+	codigo = models.CharField(max_length=15)
+	nombre = models.CharField(max_length=150)
+
+def __unicode__(self):
+	tratamiento = '%s %s'%(self.codigo, self.nombre)
+	return tratamiento
 
 
 class Odontograma(TimeStampedModel):
- 	doctor = models.ForeignKey(Medico, null=True)
- 	paciente = models.ForeignKey(Paciente, null=True)
+ 	doctor = models.ForeignKey(Medico)
+ 	paciente = models.ForeignKey(Paciente)
  	notas = models.TextField()
- 	diagnostico = models.ForeignKey(Diagnostico, null=True)
+ 	evaluacion = models.ForeignKey(Evaluacion)
 
  	def __unicode__(self):
  		odontograma = '%s %s'%(self.id, self.fechayHora)
  		return odontograma
 
-class Tratamiento(models.Model):
-	codigoTratamiento = models.CharField(max_length=15)
-	nombreTratamiento = models.CharField(max_length=150)
-
-	def __unicode__(self):
-		tratamiento = '%s %s'%(self.codigoTratamiento, self.nombreTratamiento)
-		return tratamiento
 
 class Procedimiento(models.Model):
 	CARAS_CHOICES = (
@@ -261,8 +272,10 @@ class Procedimiento(models.Model):
 		('I', 'Palatino'),
 	)
 
-	pieza = models.IntegerField(null=True)
+	pieza = models.IntegerField()
 	cara = models.CharField(max_length=4, choices=CARAS_CHOICES)
-	tratamiento = models.ForeignKey(Tratamiento, null=True)
-	odontograma = models.ForeignKey(Odontograma, null=True)
-	notas = models.TextField(null=True, blank=True)
+	tratamiento = models.ForeignKey(Tratamiento)
+	odontograma = models.ForeignKey(Odontograma)
+	diagnostico = models.TextField()
+	tratamiento_preventivo = models.foreignKey()
+	notas = models.TextField(blank=True)

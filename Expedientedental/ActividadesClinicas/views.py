@@ -55,6 +55,7 @@ def odontograma(request, paciente_id):
     if request.method == 'POST':
         modelform = OdontogramaForm(request.POST)
         formset = ProcedimientoFormSet(request.POST, request.FILES)
+
         if modelform.is_valid():
             odontograma = modelform.save()
 
@@ -66,7 +67,8 @@ def odontograma(request, paciente_id):
             else:
                 print formset.errors
 
-            return redirect(reverse('detalle_odontograma', args=[paciente.id, odontograma.id]))
+            return redirect(reverse(
+            'detalle_odontograma', args=[paciente.id, odontograma.id]))
     else:
         modelform = OdontogramaForm()
         formset = ProcedimientoFormSet()
@@ -125,8 +127,9 @@ class InterrogatorioPDF(PDFTemplateView):
         context = super(InterrogatorioPDF, self).get_context_data(**kwargs)
         self.paciente_id = int(kwargs.get('paciente_id'))
         paciente = get_object_or_404(Paciente, pk=self.paciente_id)
+        interrogatorio = HistoriaClinica.objects.get(paciente=paciente)
         context['paciente'] = paciente
-        context['interrogatorio'] = HistoriaClinica.objects.get(paciente=paciente)
+        context['interrogatorio'] = interrogatorio
         context['fecha'] = datetime.now().strftime("%d/%m/%Y")
         context['hora'] = datetime.now().strftime("%I:%M %p")
         return context
