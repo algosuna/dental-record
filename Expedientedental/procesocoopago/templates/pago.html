@@ -1,10 +1,34 @@
 {% extends "base1.html" %}
-{%load static from staticfiles %}
 
 {% block content %}
 
-<h2 class="page-header">Registro Del Paciente</h2>
+<h2 class="page-header">Pagos</h2>
 
-{% load crispy_forms_tags %}
-{% crispy form %}
-{% endblock content %}
+{% if Pago %}
+    <table class="table table-hover">
+        <tr>
+            <th>#</th>
+            <th>Fecha</th>
+            <th>Paciente</th>
+            <th>Total</th>
+            <th>&nbsp;</th>
+        </tr>
+        {% for pago in pago %}
+        <td >{{pago.id}}</td>
+        <td >{{pago.fecha}}</td>
+        <td >{{pago.monto}}</td>
+        
+        <tr>
+            
+            <td class="text-right">
+                <a href="{{ pago.id }}/" title="Ver Pago&oacute;n" class="btn btn-primary">Ver Detalles&oacute;n</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p class="lead text-muted text-center">No hay Pagos Realizados .</p>
+{% endif %}
+
+{% endblock %}
+ 

@@ -3,10 +3,13 @@ from django.db import models
 from core.models import TimeStampedModel
 from ActividadesClinicas.models import Procedimiento, Odontograma
 from precios.models import PrecioTratamiento
-
+from django.db.models import Sum
 
 class Cotizacion(TimeStampedModel):
 	odontograma = models.ForeignKey(Odontograma, null=True)
+
+	def total(self):
+		resultado = self.cotizacionitem_set.total_aceptado()
 
 
 class CotizacionItemManager(models.Manager):
@@ -21,24 +24,28 @@ class CotizacionItemManager(models.Manager):
 		for procedimiento in procedimiento_qs:
 
 			precio = PrecioTratamiento.objects.get(
-				grupo = grupo,
-				tratamiento = procedimiento.tratamiento
+				grupo=grupo,
+				tratamiento=procedimiento.tratamiento
 			).precio
 			item = self.create(
-				status = 'pendiente',
-				cotizacion = cotizacion,
-				precio = precio,
-				procedimiento = procedimiento
+				status='pendiente',
+				cotizacion=cotizacion,
+				precio=precio,
+				procedimiento=procedimiento
 			)
 			items.append(item)
 
 		return items
 
+	def total_aceptado(self):
+		resultado = self.filter(status='aceptado').aggregate(Sum('precio'))
+		return resultado['precio__sum']
+
 
 class CotizacionItem(TimeStampedModel):
-	STATUS_CHOICES=(
-		('aceptado','Aceptado'),
-		('pendiente','Pendiente'),
+	STATUS_CHOICES = (
+		('aceptado', 'Aceptado'),
+		('pendiente', 'Pendiente'),
 	)
 	status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='aceptado')
 	cotizacion = models.ForeignKey(Cotizacion)
@@ -48,5 +55,5 @@ class CotizacionItem(TimeStampedModel):
 	objects = CotizacionItemManager()
 
 	def __unicode__(self):
-		return "(%s) %s"%(self.cotizacion,self.procedimiento)
+		return "(%s) %s" % (self.cotizacion, self.procedimiento)
 
