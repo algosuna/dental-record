@@ -10,7 +10,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 from Inventario.views import productoView, unidadView, busqueda, ingresarCantidad, detallesProd, EditProductView
-from procesocoopago.views import pending_pays
+from procesocoopago.views import pagos, aplicarpago
 
 from historialprocedimientos.views import create
 
@@ -51,14 +51,15 @@ urlpatterns = patterns('',
 
     url(r'^ingresar/(?P<entrada_id>\d+)$',ingresarCantidad),
     url(r'^detalles_producto/(?P<entrada_id>\d+)$',detallesProd),
-    url(r'^entradas/$',busqueda),
+    url(r'^entradas/$', busqueda),
 
     #WSSSurl(r'^pago/$',Pago),
     #url(r'^pago/list/$',pagoupdate),
-    url(r'^pago/list/$', pending_pays),
+    url(r'^pago/list/$', pagos),
+    url(r'^pago/process/$', aplicarpago),
 
 
-    url(r'^media/(?P<path>.*)$','django.views.static.serve',{'document_root':settings.MEDIA_ROOT}),
+    url(r'^media/(?P<path>.*)$', 'django.views.static.serve',{'document_root':settings.MEDIA_ROOT}),
 
     #url(r'^prueba/$',busqueda),
 

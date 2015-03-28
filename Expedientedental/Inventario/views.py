@@ -52,27 +52,22 @@ def productoView(request):
     if request.method=='POST':
         modelform=ProductoForm(request.POST)
         if modelform.is_valid():
-            producto=modelform.save(commit=False)
-            producto.precioUnidad=producto.total()
+            producto = modelform.save(commit=False)
+            producto.precioUnidad = producto.total()
             producto.save()
             return redirect('/producto/')
     else:
-        modelform=ProductoForm()
+        modelform = ProductoForm()
     return render(request, "producto.html", {"form": modelform})
 
-
-
-
-
-
 def unidadView(request):
-    if request.method=='POST':
-        modelform=UnidadMedidaForm(request.POST)
+    if request.method == 'POST':
+        modelform = UnidadMedidaForm(request.POST)
         if modelform.is_valid():
             modelform.save()
-            return redirect('/UM/')
+            return redirect('producto/unidad/')
     else:
-        modelform=UnidadMedidaForm()
+        modelform = UnidadMedidaForm()
     return render(request, "unidad.html", {"form": modelform})
 
 

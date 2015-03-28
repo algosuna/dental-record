@@ -9,7 +9,7 @@ def precio_view(request):
 		form = PrecioForm(request.POST)
 		if form.is_valid():
 			form.save()
-			return redirect(precio)
+			return redirect('/precio/')
 	else:
 		form = PrecioForm()
 	return render(request, 'precio.html', {'form': form})

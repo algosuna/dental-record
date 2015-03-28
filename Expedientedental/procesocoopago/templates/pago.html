@@ -2,33 +2,35 @@
 
 {% block content %}
 
-<h2 class="page-header">Pagos</h2>
+<h2 class="page-header">Pagos
+</h2>
 
-{% if Pago %}
+{% if orders %}
     <table class="table table-hover">
         <tr>
-            <th>#</th>
+            <th># Documento</th>
+            <th>Medico</th>
+            <th>Cliente</th>
             <th>Fecha</th>
-            <th>Paciente</th>
-            <th>Total</th>
             <th>&nbsp;</th>
         </tr>
-        {% for pago in pago %}
-        <td >{{pago.id}}</td>
-        <td >{{pago.fecha}}</td>
-        <td >{{pago.monto}}</td>
-        
+        {% for order in orders %}
         <tr>
-            
+            <td>CTMCX-{{ order.id }}</td>
+            <td>{{ order.doctor }}</td>
+            <td>{{ order.paciente }}</td>
+            <td>{{ order.created_at }}</td>
             <td class="text-right">
-                <a href="{{ pago.id }}/" title="Ver Pago&oacute;n" class="btn btn-primary">Ver Detalles&oacute;n</a>
+                <a href="/pago/process/" title="Detalle" class="btn btn-primary">Pagos
+                 </a>
             </td>
         </tr>
         {% endfor %}
     </table>
 {% else %}
-    <p class="lead text-muted text-center">No hay Pagos Realizados .</p>
+    <p class="lead text-muted text-center">No hay ordenes pendientes.</p>
 {% endif %}
 
 {% endblock %}
+
  

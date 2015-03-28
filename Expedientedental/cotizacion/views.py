@@ -47,24 +47,5 @@ def cotizacion(request, odontograma_id):
         'total': total})
 
 
-# def update_printit(request, id_cotizacion=None):
-#     cotizacion = None
-#     latest_list = False
-#     if id_cotizacion is not None:
-#         cotizacion = Cotizacion.objects.get(id=id_cotizacion)
-#         latest_list = CotizacionItem.objects.filter(cotizacion=id_cotizacion)
-#     #when POST
-#     if request.method == 'POST':
-#         form = CotizacionForm(request.POST, instance=cotizacion)
-#         if form.is_valid():
-#             form.save()
-#         return HttpResponseRedirect('/cotizacion/')
-#     #when NOT POST
-#     else:
-#         form = CotizacionForm(instance=cotizacion)
-#     return render_to_response('/printit.html',
-#         {'form': form,
-#         'cotizacion': cotizacion,
-#         'latest_list': latest_list
-#         }, context_instance=RequestContext(request))
+
 

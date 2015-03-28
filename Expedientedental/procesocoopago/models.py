@@ -31,8 +31,6 @@ class Pago(TimeStampedModel):
 
 			return 'Parcialmente Aplicado'
 
-
-
 class PagoAplicado(models.Model):
 		pago = models.ForeignKey(Pago)
 		cotizacion_item = models.ForeignKey(CotizacionItem)
@@ -42,7 +40,8 @@ class PagoAplicado(models.Model):
 
 
 		def __unicode__(self):
-			pagodetalle = "%s %s %s %s " % (self.fecha, self.monto, self.procedimiento_item, self.importe)
+			pagodetalle = "%s %s %s %s " % (self.fecha, self.monto, 
+				self.procedimiento_item, self.importe)
 			return pagodetalle
 
 

@@ -45,7 +45,7 @@
 
 <div class="row">
   <div class="col-md-8">
-    <form method="post" action="" class="cotizacion clearfix">
+      <form method="post" action="" class="cotizacion clearfix">
       {{ formset.management_form }}
 
       <div class="panel panel-default">
@@ -72,7 +72,7 @@
           </tbody>
         </table>
 
-        <input class="btn btn-success pull-right" type="submit" value="Actualizar">
+        <input class="btn btn-success pull-right" type="submit" value="Actualizar">{% csrf_token %}
 
       </form>
     </div>
@@ -82,18 +82,18 @@
       <!-- <div class="panel-heading">Panel heading</div> -->
 
       <table class="table table-bordered">
-        <tr>
+        <tr class="info">
           <th>Total</th>
           <td class="total"></td>
         </tr>
-        <tr>
+        <tr class="success">
           <th>Total Autorizado</th>
           <td>{{ total }}</td>
         </tr>
       </table>
     </div>
 
-    <a href="#" class="btn btn-primary btn-block">Aceptar &amp; Pagar <span class="glyphicon glyphicon-chevron-right"></span></a>
+    <a href="/pago/list/" class="btn btn-primary btn-block">Aceptar &amp; Pagar <span class="glyphicon glyphicon-chevron-right"></span></a>
 
   </div>
 </div>
