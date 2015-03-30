@@ -3,6 +3,8 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from crispy_forms.layout import(Layout, Fieldset, HTML, Field, ButtonHolder,
 Submit)
+from django.forms.formsets import formset_factory
+
 from .models import Pago, PagoAplicado
 
 
@@ -49,7 +51,7 @@ class PagoAplicadoForm(forms.ModelForm):
 		self.helper = self.helper = FormHelper()
 		self.helper.layout=Layout(
                HTML("""
-                           <p class="parrafo"> Campos con ( * ) Son Requeridos. </p>
+                           <p> informacion de servicios </p>
 
 
                            """
@@ -57,9 +59,9 @@ class PagoAplicadoForm(forms.ModelForm):
                Fieldset(
                   '',
                   
-                  Field('cotizacion_item', wrapper_class='col-md-12'),
+                  Field('cotizacion_item', wrapper_class='col-md-4'),
                   Field('pago', wrapper_class='col-md-4'),                  
-                  Field('importe', wrapper_class='col-md-3'),
+                  Field('importe', wrapper_class='col-md-4'),
                                    
                   
 
@@ -73,7 +75,8 @@ class PagoAplicadoForm(forms.ModelForm):
                )
             )
 		self.fields['cotizacion_item'].label = 'Servicios'
-		self.fields['pago'].label = 'Descripcion'
+		self.fields['pago'].label = 'Pago'
 		self.fields['importe'].label = 'Importe'
+PagoAplicadoFormset = formset_factory(PagoAplicadoForm,)
 		
 

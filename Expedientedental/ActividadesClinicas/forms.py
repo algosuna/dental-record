@@ -319,10 +319,10 @@ class ProcedimientoForm(forms.ModelForm):
         model = Procedimiento
         exclude = ('odontograma',)
     def __init__(self, *args, **kwargs):
-        super(ProcedimientoForm,self).__init__(*args,**kwargs)
+        super(ProcedimientoForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_tag = False
-        self.helper.layout=Layout(
+        self.helper.layout = Layout(
             Fieldset(
                 '',
                 Field('pieza', data_bind='value: diente.id'),

@@ -50,17 +50,6 @@ def PaqueteItem(request):
     return render(request, "tipoPaquete.html", {"form": modelform})
 
 
-
-
-
-
-
-
-
-
-
-
-
 class PaquetesPDF(PDFTemplateView):
     filename = 'paquetes.pdf'
     template_name = 'paquetes_pdf.html'

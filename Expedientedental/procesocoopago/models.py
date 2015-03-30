@@ -37,11 +37,8 @@ class PagoAplicado(models.Model):
 		fecha = models.DateTimeField(auto_now_add=True)
 		importe = models.DecimalField(max_digits=6, decimal_places=3)
 
-
-
 		def __unicode__(self):
-			pagodetalle = "%s %s %s %s " % (self.fecha, self.monto, 
-				self.procedimiento_item, self.importe)
+			pagodetalle = " %s %s %s " % (self.pago, self.cotizacion_item,self.importe)
 			return pagodetalle
 
 

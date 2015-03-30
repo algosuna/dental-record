@@ -5,28 +5,41 @@ from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.views.generic import CreateView, ListView, UpdateView
 from django.shortcuts import render_to_response, render, get_object_or_404
 from django.shortcuts import render_to_response, render, redirect
-from cotizacion.models import Cotizacion,CotizacionItem
+from cotizacion.models import Cotizacion, CotizacionItem
 from ActividadesClinicas.models import Odontograma
-from procesocoopago.models import Pago,PagoAplicado
-from procesocoopago.forms import PagoForm,PagoAplicadoForm
+from procesocoopago.models import Pago, PagoAplicado
+from procesocoopago.forms import PagoForm, PagoAplicadoForm
 from django.core.urlresolvers import reverse
 import datetime
 
 def pagos(request):
-        orders = Odontograma.objects.all()
-        return render_to_response('/pago.html',
-        {'orders': orders})
-        
-
-def aplicarpago(request):
-    if request.method=='POST':
-        modelform =PagoAplicadoForm(request.POST)
+    if request.method == "POST":
+        modelform = PagoForm(request.POST)
         if modelform.is_valid():
             modelform.save()
-            return redirect('pago/process/')
+            return redirect("/pago/list/")
+    else:
+        modelform = PagoForm()
+    return render(request, "pago.html", {"form": modelform})
+
+
+
+def aplicarpagoitem(request):
+    pago = Pago.objects.all()
+    paciente = 'meh'
+
+    if request.method == "POST":
+        modelform = PagoAplicadoForm(request.post)
+        if modelform.is_valid():
+            modelform.save()
+            return redirect("/pago/process/")
     else:
         modelform = PagoAplicadoForm()
-    return render(request, "proceso.html", {"form": modelform})
+    return render(request, 'proceso.html',
+                  {'form': modelform,
+                   'pago': pago,
+                   'paciente': paciente})
+
 
 
 

@@ -10,7 +10,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 from Inventario.views import productoView, unidadView, busqueda, ingresarCantidad, detallesProd, EditProductView
-from procesocoopago.views import pagos, aplicarpago
+from procesocoopago.views import pagos, aplicarpagoitem
 
 from historialprocedimientos.views import create
 
@@ -56,7 +56,7 @@ urlpatterns = patterns('',
     #WSSSurl(r'^pago/$',Pago),
     #url(r'^pago/list/$',pagoupdate),
     url(r'^pago/list/$', pagos),
-    url(r'^pago/process/$', aplicarpago),
+    url(r'^pago/process/$', aplicarpagoitem),
 
 
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve',{'document_root':settings.MEDIA_ROOT}),
