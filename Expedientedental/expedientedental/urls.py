@@ -55,7 +55,7 @@ urlpatterns = patterns('',
 
     #WSSSurl(r'^pago/$',Pago),
     #url(r'^pago/list/$',pagoupdate),
-    url(r'^pago/list/(?P<cotizacion_id>\d+)$', pagos),
+    url(r'^pago/detalle/(?P<cotizacion_id>\d+)$', pagos),
     #url(r'^pago/process/(?P<pk>\d+)$', aplicarpagoitem),
 
 

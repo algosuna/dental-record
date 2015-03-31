@@ -1,51 +1,50 @@
 # encoding:utf-8
-from django.template.loader import get_template
-from django.template import RequestContext
-from django.http import Http404, HttpResponse, HttpResponseRedirect
-from django.views.generic import CreateView, ListView, UpdateView
-from django.shortcuts import render_to_response, render, get_object_or_404
-from django.shortcuts import render_to_response, render, redirect
-from cotizacion.models import Cotizacion, CotizacionItem
-from ActividadesClinicas.models import Odontograma
-from procesocoopago.models import Pago, PagoAplicado
-from procesocoopago.forms import PagoForm, PagoAplicadoForm,PagoAplicadoFormset
-from django.core.urlresolvers import reverse
-import datetime
+from django.shortcuts import render_to_response, render, get_object_or_404,\
+    redirect
 
-def pagos(request , cotizacion_id):
-    
+from cotizacion.models import Cotizacion
+from procesocoopago.models import Pago, PagoAplicado
+from procesocoopago.forms import PagoForm, PagoAplicadoForm, PagoAplicadoFormset
+
+
+def pagos(request, cotizacion_id):
+
     cotizacion = get_object_or_404(Cotizacion, pk=cotizacion_id)
+    total = cotizacion.total()
     items = cotizacion.cotizacionitem_set.filter(status__in=['aceptado'])
     initial = []
+
     for item in items:
         initial.append({
-            'importe':0,
-            'cotizacion_item':item
+            'importe': 0,
+            'cotizacion_item': item
             })
-        
+
     pa_formset = None
+
     if request.method == "POST":
         modelform = PagoForm(request.POST)
         pa_formset = PagoAplicadoFormset(request.POST, initial=initial)
-       
+
         if modelform.is_valid():
-            pago=modelform.save()
+            pago = modelform.save()
 
             for form in pa_formset:
                 if form.is_valid():
                     form.save(pago)
     else:
-        modelform = PagoForm()
+        modelform = PagoForm(initial={'monto': cotizacion.total()})
         pa_formset = PagoAplicadoFormset(initial=initial)
 
     items = [form.item for form in pa_formset]
 
     return render(request, "pago.html", {
-                        'form': modelform,
-                        'pa_formset': pa_formset,
-                        'items': items
-                    })
-
+                  'form': modelform,
+                  'pa_formset': pa_formset,
+                  'items': items,
+                  'total': total,
+                  'cotizacion': cotizacion
+                  })
 
 
 def aplicarpagoitem(request):
@@ -63,13 +62,7 @@ def aplicarpagoitem(request):
                   {'form': modelform,
                    'pago': pago,
                    'paciente': paciente})
-
-
-
-
-
-
-        
+       
 
 
 

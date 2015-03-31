@@ -1,19 +1,45 @@
 {% extends "base1.html" %}
-{%load static from staticfiles %}
+{% load static from staticfiles %}
 {% load crispy_forms_tags %}
+
+{% block css %}
+<style>
+    .importe .form-group {
+        margin-bottom: 0px;
+        max-width: 100px;
+    }
+    .precio:before {
+        content: "$";
+    }
+    #div_id_total,
+    #div_id_fecha,
+    #div_id_monto {
+        max-width: 160px;
+        float: left;
+        margin-right: 100px;
+    }
+    .btn-primary {
+        margin-top: 24px;
+    }
+</style>
+{% endblock %}
 
 {% block content %}
 
-  <h2 class="page-header">Pago</h2>
+  <h2 class="page-header">Pago <small class="pull-right">Cotizacion #{{ cotizacion.id }}</small></h2>
 
 
 <form action="" method="post">
     {{ pa_formset.management_form }}
 
-    <div class="col-md-8 col-md-offset-2">
-        {% crispy form %}
-        <input type="submit" class="btn btn-primary" value="Aplicar">
+    <div id="div_id_total" class="form-group">
+        <label for="id_total">Costo Total</label>
+        <div class="controls">
+            <p id="id_total">{{ total }}</p>
+        </div>
     </div>
+    {% crispy form %}
+    <input type="submit" class="btn btn-primary" value="Aplicar">
 
   <table class="table table-bordered">
       <tr>
@@ -23,18 +49,41 @@
       <th>Importe</th>
 
       </tr>
-    {% for pa_form in pa_formset %}
-    <tr>
-        <td>{{pa_form.item.procedimiento.tratamiento.nombreTratamiento}}</td>
-        <td>${{pa_form.item.precio}}</td>
-        <td>{% crispy pa_form %}</td>
-    </tr>
-    {% endfor %}
+    <tbody>
+        {% for pa_form in pa_formset %}
+        <tr>
+            <td>{{ pa_form.item.procedimiento.tratamiento.nombreTratamiento }}</td>
+            <td class="precio">{{ pa_form.item.precio }}</td>
+            <td class="importe">{% crispy pa_form %}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
   </table>
 
 </form>
  
     
 {% endblock content %}
-{% block javascript%}
+
+{% block javascript %}
+<script>
+$(function() {
+    var rows = $('tbody').children(),
+        montoField = $('#id_monto'),
+        monto = montoField.val();
+
+    montoField.change(function(){
+        monto = montoField.text();
+        console.log(montoField.text()); // for testing
+        
+        rows.each(function () {
+            var importe = $('.importe input[type="text"]').val(),
+                costo = $('.precio').val();
+            
+            // TODO finish da logic
+        })
+    })
+})
+
+</script>
 {% endblock javascript%}

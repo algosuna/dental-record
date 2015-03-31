@@ -252,21 +252,21 @@ class Tratamiento(models.Model):
 		return tratamiento
 
 class Procedimiento(models.Model):
-	CARAS_CHOICES = (
-		('S', 'Vestibular'),
-		('C', 'Oclusal'),
-		('X', 'Pieza Completa'),
-		('Z', 'Distal'),
-		('D', 'Mesial'),
-		('I', 'Palatino'),
-	)
+    CARAS_CHOICES = (
+        ('S', 'Vestibular'),
+        ('C', 'Oclusal'),
+        ('X', 'Pieza Completa'),
+        ('Z', 'Distal'),
+        ('D', 'Mesial'),
+        ('I', 'Palatino'),
+    )
 
-	pieza = models.IntegerField(null=True)
-	cara = models.CharField(max_length=4, choices=CARAS_CHOICES)
-	tratamiento = models.ForeignKey(Tratamiento, null=True)
-	odontograma = models.ForeignKey(Odontograma, null=True)
-	notas = models.TextField(null=True, blank=True)
+    pieza = models.IntegerField(null=True)
+    cara = models.CharField(max_length=4, choices=CARAS_CHOICES)
+    tratamiento = models.ForeignKey(Tratamiento, null=True)
+    odontograma = models.ForeignKey(Odontograma, null=True)
+    notas = models.TextField(null=True, blank=True)
 
-	def __unicode__(self):
-		procedimiento="%s"%(self.tratamiento)
-		return procedimiento
+    def __unicode__(self):
+        procedimiento = "%s" % (self.tratamiento)
+        return procedimiento
