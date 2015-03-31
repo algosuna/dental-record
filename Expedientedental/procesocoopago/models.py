@@ -3,14 +3,11 @@ from core.models import TimeStampedModel
 from cotizacion.models import CotizacionItem
 
 
-
-
-
 class Pago(TimeStampedModel):
 		fecha = models.DateTimeField()
 		cotizacion_items = models.ManyToManyField(CotizacionItem, through='PagoAplicado')
-		monto = models.DecimalField(max_digits=6, decimal_places=3)
-		monto_aplicado = models.DecimalField(max_digits=6, decimal_places=3, default=0)
+		monto = models.DecimalField(max_digits=9, decimal_places=3)
+		monto_aplicado = models.DecimalField(max_digits=9, decimal_places=3, default=0)
 
 		def montodisponible(self):
 			resta = self.monto-self.monto_aplicado
@@ -31,6 +28,11 @@ class Pago(TimeStampedModel):
 
 			return 'Parcialmente Aplicado'
 
+		def __unicode__(self):
+			pago="%s %s %s " % (self.monto,self.monto_aplicado,self.fecha)
+			return pago
+
+
 class PagoAplicado(models.Model):
 		pago = models.ForeignKey(Pago)
 		cotizacion_item = models.ForeignKey(CotizacionItem)
@@ -38,7 +40,7 @@ class PagoAplicado(models.Model):
 		importe = models.DecimalField(max_digits=6, decimal_places=3)
 
 		def __unicode__(self):
-			pagodetalle = " %s %s %s " % (self.pago, self.cotizacion_item,self.importe)
+			pagodetalle = " %s %s  " % (self.pago, self.cotizacion_item)
 			return pagodetalle
 
 

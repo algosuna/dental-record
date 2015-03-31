@@ -8,19 +8,43 @@ from django.shortcuts import render_to_response, render, redirect
 from cotizacion.models import Cotizacion, CotizacionItem
 from ActividadesClinicas.models import Odontograma
 from procesocoopago.models import Pago, PagoAplicado
-from procesocoopago.forms import PagoForm, PagoAplicadoForm
+from procesocoopago.forms import PagoForm, PagoAplicadoForm,PagoAplicadoFormset
 from django.core.urlresolvers import reverse
 import datetime
 
-def pagos(request):
+def pagos(request , cotizacion_id):
+    
+    cotizacion = get_object_or_404(Cotizacion, pk=cotizacion_id)
+    items = cotizacion.cotizacionitem_set.filter(status__in=['aceptado'])
+    initial = []
+    for item in items:
+        initial.append({
+            'importe':0,
+            'cotizacion_item':item
+            })
+        
+    pa_formset = None
     if request.method == "POST":
         modelform = PagoForm(request.POST)
+        pa_formset = PagoAplicadoFormset(request.POST, initial=initial)
+       
         if modelform.is_valid():
-            modelform.save()
-            return redirect("/pago/list/")
+            pago=modelform.save()
+
+            for form in pa_formset:
+                if form.is_valid():
+                    form.save(pago)
     else:
         modelform = PagoForm()
-    return render(request, "pago.html", {"form": modelform})
+        pa_formset = PagoAplicadoFormset(initial=initial)
+
+    items = [form.item for form in pa_formset]
+
+    return render(request, "pago.html", {
+                        'form': modelform,
+                        'pa_formset': pa_formset,
+                        'items': items
+                    })
 
 
 

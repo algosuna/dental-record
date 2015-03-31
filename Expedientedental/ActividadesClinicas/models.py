@@ -240,7 +240,7 @@ class Odontograma(TimeStampedModel):
  	diagnostico = models.ForeignKey(Diagnostico, null=True)
 
  	def __unicode__(self):
- 		odontograma = '%s %s'%(self.id, self.fechayHora)
+ 		odontograma = 'odontograma %s '%(self.id)
  		return odontograma
 
 class Tratamiento(models.Model):
@@ -266,3 +266,7 @@ class Procedimiento(models.Model):
 	tratamiento = models.ForeignKey(Tratamiento, null=True)
 	odontograma = models.ForeignKey(Odontograma, null=True)
 	notas = models.TextField(null=True, blank=True)
+
+	def __unicode__(self):
+		procedimiento="%s"%(self.tratamiento)
+		return procedimiento

@@ -12,6 +12,11 @@ class Cotizacion(TimeStampedModel):
 		resultado = self.cotizacionitem_set.total_aceptado()
 
 
+ 	def __unicode__(self):
+ 		cotizacion ="cotizacion %s "%(self.odontograma)
+ 		return cotizacion 
+
+
 class CotizacionItemManager(models.Manager):
 	def create_items(self, cotizacion):
 		odontograma = cotizacion.odontograma
@@ -55,5 +60,5 @@ class CotizacionItem(TimeStampedModel):
 	objects = CotizacionItemManager()
 
 	def __unicode__(self):
-		return "(%s) %s" % (self.cotizacion, self.procedimiento)
+		return " %s" % ( self.procedimiento)
 

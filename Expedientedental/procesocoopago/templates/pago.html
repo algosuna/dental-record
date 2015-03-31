@@ -1,36 +1,40 @@
 {% extends "base1.html" %}
+{%load static from staticfiles %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 
-<h2 class="page-header">Pagos
-</h2>
+  <h2 class="page-header">Pago</h2>
 
-{% if orders %}
-    <table class="table table-hover">
-        <tr>
-            <th># Documento</th>
-            <th>Medico</th>
-            <th>Cliente</th>
-            <th>Fecha</th>
-            <th>&nbsp;</th>
-        </tr>
-        {% for order in orders %}
-        <tr>
-            <td>CTMCX-{{ order.id }}</td>
-            <td>{{ order.doctor }}</td>
-            <td>{{ order.paciente }}</td>
-            <td>{{ order.created_at }}</td>
-            <td class="text-right">
-                <a href="/pago/process/" title="Detalle" class="btn btn-primary">Pagos
-                 </a>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
-{% else %}
-    <p class="lead text-muted text-center">No hay ordenes pendientes.</p>
-{% endif %}
 
-{% endblock %}
+<form action="" method="post">
+    {{ pa_formset.management_form }}
 
+    <div class="col-md-8 col-md-offset-2">
+        {% crispy form %}
+        <input type="submit" class="btn btn-primary" value="Aplicar">
+    </div>
+
+  <table class="table table-bordered">
+      <tr>
+      
+      <th>Servicio</th>
+      <th>Costo de servicio</th>
+      <th>Importe</th>
+
+      </tr>
+    {% for pa_form in pa_formset %}
+    <tr>
+        <td>{{pa_form.item.procedimiento.tratamiento.nombreTratamiento}}</td>
+        <td>${{pa_form.item.precio}}</td>
+        <td>{% crispy pa_form %}</td>
+    </tr>
+    {% endfor %}
+  </table>
+
+</form>
  
+    
+{% endblock content %}
+{% block javascript%}
+{% endblock javascript%}

@@ -55,8 +55,8 @@ urlpatterns = patterns('',
 
     #WSSSurl(r'^pago/$',Pago),
     #url(r'^pago/list/$',pagoupdate),
-    url(r'^pago/list/$', pagos),
-    url(r'^pago/process/$', aplicarpagoitem),
+    url(r'^pago/list/(?P<cotizacion_id>\d+)$', pagos),
+    #url(r'^pago/process/(?P<pk>\d+)$', aplicarpagoitem),
 
 
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve',{'document_root':settings.MEDIA_ROOT}),
