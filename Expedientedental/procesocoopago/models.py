@@ -1,6 +1,6 @@
 from django.db import models
 
-from historialprocedimientos.models import CotizacionItem
+from cotizacion.models import CotizacionItem
 
 
 class DateTime(models.Model):
@@ -40,9 +40,3 @@ class procesoPago(models.Model):
 	def __unicode__(self):
 		servicio ="%s"%(self.servicio)
 		return servicio
-
-
-
-
-
-
