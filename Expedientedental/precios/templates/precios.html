@@ -1,0 +1,52 @@
+{% extends "base1.html" %}
+
+{% block content %}
+
+<h2 class="page-header">Precio</h2>
+
+<p class="lead">Ingrese precios para tratamientos.</p>
+
+{% load crispy_forms_tags %}
+
+{% if tratamientos %}
+<form action="" method="post">
+{{ formset.management_form }}
+
+  <table class="table table-bordered">
+
+    <thead>
+
+      <tr>
+
+        <th>Codigo</th>
+        <th>Nombre</th>
+        <th>Precio</th>
+
+      </tr>
+
+    </thead>
+
+    <tbody>
+      {% for form in formset %}
+      <tr>
+
+        <td>{{ form.tratamiento_value.codigo }}</td>
+        <td>{{ form.tratamiento_value.nombre }}</td>
+        <td>{% crispy form %}</td>
+
+      </tr>
+      {% endfor %}
+
+    </tbody>
+
+  </table>
+
+  <input type="submit" class="btn btn-primary pull-right" value="Guardar">
+
+</form>
+
+{% else %}
+<p class="lead text-muted text-center">No hay tratamientos disponibles. <br><br><a href="/altas/tratamiento/new/" class="btn btn-primary">Agregar Tratamientos <span class="glyphicon glyphicon-plus"></span></a></p>
+{% endif %}
+
+{% endblock content %}
