@@ -43,7 +43,7 @@ class Paciente(models.Model):
 
     def imagen_url(self, filename):
         name, ext = splitext(filename)
-        url = 'Pacientes/%s%s' % (self.nombre_imagen, ext)
+        url = 'pacientes/%s%s' % (self.nombre, ext)
         return url
 
     SEX_CHOICES = (
