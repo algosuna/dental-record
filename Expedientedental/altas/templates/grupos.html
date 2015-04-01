@@ -4,23 +4,27 @@
 
 <h2 class="page-header">Grupos Registrados</h2>
 
-<table class="table table-hover grupos">
-    <thead>
-        <tr>
-            <th># de Grupo</th>
-            <th>Nombre</th>
-            <th>&nbsp;</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for grupo in grupos %}
-        <tr>
-            <td>{{ grupo.numero }}</td>
-            <td>{{ grupo.nombre }}</td>
-            <td class="text-right"><a href="/grupo/edit/{{ grupo.id }}/" title="Editar"><span class="glyphicon glyphicon-pencil"></span></a></td>
-        </tr>
-        {% endfor %}
-    </tbody>
+{% if grupos %}
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th># de Grupo</th>
+      <th>Nombre</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for grupo in grupos %}
+    <tr>
+      <td>{{ grupo.numero }}</td>
+      <td>{{ grupo.nombre }}</td>
+      <td class="text-right"><a href="/altas/grupo/edit/{{ grupo.id }}/" title="Editar"><span class="glyphicon glyphicon-pencil"></span></a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
 </table>
-
+<a href="/altas/grupo/new/" class="btn btn-primary pull-right"><span class="glyphicon glyphicon-plus"></span> Registrar Nuevo Grupo</a>
+{% else %}
+<p class="lead text-center text-muted">No hay grupos registrados.<br><br><a href="/altas/grupo/new/" class="gtn btn-primary">Registrar un Grupo <span class="glyphicon glyphicon-chevron-right"></span></a></p>
+{% endif %}
 {% endblock content %}
