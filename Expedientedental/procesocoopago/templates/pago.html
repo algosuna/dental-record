@@ -47,6 +47,7 @@
       <th>Servicio</th>
       <th>Costo de servicio</th>
       <th>Importe</th>
+      <th>Status</th>
 
       </tr>
     <tbody>
@@ -55,6 +56,7 @@
             <td>{{ pa_form.item.procedimiento.tratamiento.nombreTratamiento }}</td>
             <td class="precio">{{ pa_form.item.precio }}</td>
             <td class="importe">{% crispy pa_form %}</td>
+            <td> {{pa_form.item.pago.status}}</td>
         </tr>
         {% endfor %}
     </tbody>
@@ -72,18 +74,36 @@ $(function() {
         montoField = $('#id_monto'),
         monto = montoField.val();
 
-    montoField.change(function(){
+        montoField.change(function(){
         monto = montoField.text();
         console.log(montoField.text()); // for testing
         
         rows.each(function () {
             var importe = $('.importe input[type="text"]').val(),
                 costo = $('.precio').val();
-            
+
+                if (monto==costo) {
+                    document.write(importe);
+                    console.log(importe);
+                    return importe
+
+                } else if(monto>costo){
+                    console.log(importe)
+                    return importe
+                    
+                }else{
+                    console.log (importe);
+                    return importe
+                }                  
+                
+   
+
+
             // TODO finish da logic
         })
     })
 })
+
 
 </script>
 {% endblock javascript%}

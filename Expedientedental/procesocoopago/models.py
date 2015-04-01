@@ -7,9 +7,9 @@ class Pago(TimeStampedModel):
         fecha = models.DateTimeField()
         cotizacion_items = models.ManyToManyField(
             CotizacionItem, through='PagoAplicado')
-        monto = models.DecimalField(max_digits=9, decimal_places=3)  # lo que el cliente da
+        monto = models.DecimalField(max_digits=9, decimal_places=3)  # lo que el cliente debe
         monto_aplicado = models.DecimalField(
-            max_digits=9, decimal_places=3, default=0)  # lo que se ha asignado a cotizacion_item
+            max_digits=9, decimal_places=3, default=0)  # dependiendo de lo que abone este se aplica al tratamiento
 
         def montodisponible(self):
             resta = self.monto-self.monto_aplicado
@@ -39,7 +39,7 @@ class PagoAplicado(models.Model):
         pago = models.ForeignKey(Pago)
         cotizacion_item = models.ForeignKey(CotizacionItem)
         fecha = models.DateTimeField(auto_now_add=True)
-        importe = models.DecimalField(max_digits=6, decimal_places=3)
+        importe = models.DecimalField(max_digits=6, decimal_places=3) # aqui se despliega si esta cubierto o no 
 
         def __unicode__(self):
             pagodetalle = "%s %s" % (self.pago, self.cotizacion_item)

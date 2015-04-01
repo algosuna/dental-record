@@ -1,12 +1,11 @@
 import settings
-
 from django.conf.urls.defaults import patterns, include, url
 from django.conf import settings
 from django.core.urlresolvers import reverse 
 
-
 # Uncomment the next two lines to enable the admin:
-from django.contrib import admin
+from django.contrib import admin 
+
 admin.autodiscover()
 
 from Inventario.views import productoView, unidadView, busqueda, ingresarCantidad, detallesProd, EditProductView
