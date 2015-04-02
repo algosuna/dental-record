@@ -4,6 +4,7 @@
 
 {% block css %}
 <style>
+
     .importe .form-group {
         margin-bottom: 0px;
         max-width: 100px;
@@ -37,19 +38,25 @@
         <div class="controls">
             <p id="id_total">{{ total }}</p>
         </div>
+        <span>
+
+
+            <a class="mybtn">Aplicar</a>
+        </span>
     </div>
     {% crispy form %}
-    <input type="submit" class="btn btn-primary" value="Aplicar">
-
+    
+    
   <table class="table table-bordered">
+    <thead>
       <tr>
-      
       <th>Servicio</th>
       <th>Costo de servicio</th>
       <th>Importe</th>
       <th>Status</th>
 
       </tr>
+    </thead>
     <tbody>
         {% for pa_form in pa_formset %}
         <tr>
@@ -57,8 +64,18 @@
             <td class="precio">{{ pa_form.item.precio }}</td>
             <td class="importe">{% crispy pa_form %}</td>
             <td> {{pa_form.item.pago.status}}</td>
+
         </tr>
+       
         {% endfor %}
+         <tr>
+
+            <td></td>
+            <td></td>
+            <td></td>
+            <td> <input type="submit" class="btn btn-primary" value="Aplicar y guardar"></td>
+
+        </tr>
     </tbody>
   </table>
 
@@ -69,40 +86,32 @@
 
 {% block javascript %}
 <script>
-$(function() {
-    var rows = $('tbody').children(),
-        montoField = $('#id_monto'),
-        monto = montoField.val();
 
-        montoField.change(function(){
-        monto = montoField.text();
-        console.log(montoField.text()); // for testing
-        
-        rows.each(function () {
-            var importe = $('.importe input[type="text"]').val(),
-                costo = $('.precio').val();
+$(document).ready(function(){
 
-                if (monto==costo) {
-                    document.write(importe);
-                    console.log(importe);
-                    return importe
+var rows = $('tbody').children(),
+    montoField = $('#id_monto');
 
-                } else if(monto>costo){
-                    console.log(importe)
-                    return importe
-                    
-                }else{
-                    console.log (importe);
-                    return importe
-                }                  
-                
-   
+function asignarImportes(){
+    var monto = parseInt(montoField.val());
+    console.log(montoField.val()); // for testing
+
+    rows.each(function () {
+        var importe = $('.importe input[type="text"]', this),
+            costo = parseInt($('.precio', this).text()),
+            valor_a_asignar = Math.min(costo,monto);
+        monto = monto - valor_a_asignar;
+        importe.val(valor_a_asignar);
+            
+    });
+}
+
+asignarImportes();
 
 
-            // TODO finish da logic
-        })
-    })
-})
+$('.mybtn').on('click',asignarImportes);
+
+});
 
 
 </script>
