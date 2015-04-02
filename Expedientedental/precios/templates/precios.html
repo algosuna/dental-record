@@ -1,8 +1,17 @@
 {% extends "base1.html" %}
 
+{% block css %}
+<style>
+.form-group {
+  max-width: 70px;
+  margin-bottom: 0px;
+}
+</style>
+{% endblock %}
+
 {% block content %}
 
-<h2 class="page-header">Precio</h2>
+<h2 class="page-header">Precios <small class="pull-right">{{ grupo.numero }} - {{ grupo.nombre }}</small></h2>
 
 <p class="lead">Ingrese precios para tratamientos.</p>
 
@@ -12,7 +21,7 @@
 <form action="" method="post">
 {{ formset.management_form }}
 
-  <table class="table table-bordered">
+  <table class="table table-bordered table-hover">
 
     <thead>
 

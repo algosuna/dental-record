@@ -1,7 +1,7 @@
 from django.db import models
 
 from altas.models import Grupo
-from clinica.models import Tratamiento
+from altas.models import Tratamiento
 
 
 class PrecioTratamiento(models.Model):
