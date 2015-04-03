@@ -1,4 +1,5 @@
 # encoding:utf-8
+from django.core.urlresolvers import reverse
 from django.views.generic import CreateView, ListView, UpdateView
 
 from altas.models import Grupo, Tratamiento, Evaluacion, TratamientoPreventivo,\
@@ -48,7 +49,9 @@ class PacienteUpdate(UpdateView):
 class GrupoNewView(CreateView):
     form_class = GrupoForm
     template_name = 'grupo.html'
-    success_url = '/altas/grupos/'
+
+    def get_success_url(self):
+        return reverse('precios', args=[self.object.id])
 
 
 class GruposView(ListView):
