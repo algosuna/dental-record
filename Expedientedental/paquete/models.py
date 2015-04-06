@@ -11,7 +11,7 @@ from altas.models import Medico
 class Paquete(models.Model):
 	nombre      = models.CharField(max_length=50)
 	descripcion = models.CharField(max_length=50)
-	
+
 
 	def __unicode__(self):
 		return'%s' %(self.nombre)
@@ -41,13 +41,3 @@ class PaqueteConsumidoItem(models.Model):
 
 	def __unicode__(self):
 		return '%s %s %s '%(self.producto,self.cantidad,self.precio)
-
-
-
-
-
-
-
-
-
-	

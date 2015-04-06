@@ -7,7 +7,7 @@
 {% block content %}
 <div class="col-md-8">
 
-  <div class="well odontograma clearfix">
+  <div class="well odontograma clearfix row">
 
     <div class="col-xs-2">
 
@@ -101,7 +101,7 @@
 
   </table>
 
-  <p class="text-right text-muted">Pulse el boton para marcar los tratamientos seleccionados como realizados <button class="btn btn-success">Actualizar</button></p>
+  <p class="text-right text-muted">Pulse el boton para marcar los tratamientos seleccionados como realizados <button type="submit" class="btn btn-success">Actualizar</button></p>
 
 </div>
 
@@ -109,12 +109,12 @@
   <h3 class="page-header">&Uacute;ltimos Odontogramas</h3>
   {% if odontograma %}
     {% for odontograma in odontograma %}
-    <h4><a href="/odontograma/{{ paciente.id }}/detalle/{{ odontograma.id }}/">{{ odontograma.created_at }}</a></h4>
+    <h4><a href="/clinica/detalle/{{ paciente.id }}/odontograma/{{ odontograma.id }}/">{{ odontograma.created_at }}</a></h4>
     <p><strong>{{ odontograma.diagnostico.nombre }}</strong>{{ odontograma.notas }}</p>
     {% endfor %}
   {% else %}
   <p class="lead text-muted">No hay odontogramas.</p>
-  <a href="/odontograma/{{ paciente.id }}/" class="btn btn-primary btn-block">Nuevo Odontograma <span class="glyphicon glyphicon-plus"></i></a>
+  <a href="/clinica/odontograma/{{ paciente.id }}/" class="btn btn-primary btn-block">Nuevo Odontograma <span class="glyphicon glyphicon-plus"></i></a>
   {% endif %}
   </ul>
 </div>

@@ -1,7 +1,7 @@
 from django.db import models
 
 from core.models import TimeStampedModel
-from ActividadesClinicas.models import Procedimiento, Odontograma
+from clinica.models import Procedimiento, Odontograma
 from precios.models import PrecioTratamiento
 from django.db.models import Sum
 
@@ -52,6 +52,8 @@ class CotizacionItem(TimeStampedModel):
     STATUS_CHOICES = (
         ('aceptado', 'Aceptado'),
         ('pendiente', 'Pendiente'),
+        ('parcial', 'Pago Parcial'),
+        ('pagado', 'Pagado'),
     )
     status = models.CharField(
         max_length=10, choices=STATUS_CHOICES, default='aceptado')

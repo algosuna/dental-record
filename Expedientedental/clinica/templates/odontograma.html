@@ -15,21 +15,27 @@
 <h2 class="page-header">Odontograma</h2>
 
 <div class="form-inline">
+
   <label for="tratamiento" class="control-label lead">1) Seleccione tratamiento:</label>
   <select name="tratamiento" id="tratamientos" class="form-control form-inline" data-bind="value: tratamientoSeleccionado,">
+
     <option>Seleccione un tratamiento...</option>
     {% for tratamiento in tratamientos %}
-    <option value="{{ tratamiento.id }}">{{ tratamiento.codigoTratamiento }} - {{ tratamiento.nombreTratamiento }}</option>
+    <option value="{{ tratamiento.id }}">{{ tratamiento }}</option>
     {% endfor %}
+
   </select>
+
 </div>
 
 <form method="post" action="">
+
   {{ formset.management_form }}
 
   <p class="lead">2) Seleccione una pieza:</p>
 
   <div id="odontograma"></div>
+
   <div id="tooth-images">
     <!--top -->
     <!-- left-side -->
@@ -71,13 +77,19 @@
       <img src="{% static 'img/piezas/36.jpg' %}" alt="36" width="28">
       <img src="{% static 'img/piezas/37.jpg' %}" alt="37" width="28">
       <img src="{% static 'img/piezas/38.jpg' %}" alt="38" width="28">
+
     </div>
+
   </div>
 
   <p class="lead">3) Verifique detalles:</p>
-  <div class="clearfix">
+
+  <div class="clearfix" id="formsets">
+
     <ul>
-      {% for procedimientoForm in formset %}
+
+    {% for procedimientoForm in formset %}
+
       {% if forloop.last %}
       <li data-bind="foreach: tratamientosAplicados">
         <div class="form-inline" data-bind='attr: { id: form_div_id }'>
@@ -85,19 +97,21 @@
       <li>
         <div class="form-inline" id="form_div_{{forloop.counter0}}">
       {% endif %}
-          {% crispy procedimientoForm %}
+
+        {% crispy procedimientoForm %}
+
         </div>
-        <a href="#" data-bind="click: $parent.quitarTratamiento" class="pull-left btn btn-warning">Eliminar</a>
+        <a href="#" data-bind="click: $parent.quitarTratamiento" class="pull-left text-warning bin"><i class="fa fa-trash fa-lg"></i></a>
       </li>
-      {% endfor %}
+    {% endfor %}
+
     </ul><!-- end foreach -->
+
   </div>
 
   <h3 class="page-header">Detalle informaci&oacute;n adicional</h3>
 
-<div class="col-md-8 col-md-offset-2">
   {% crispy form %}
-</div>
 
 </form>
 {% endblock %}
@@ -113,7 +127,7 @@
 <script>
   // some widgets and such
   $(function() {
-    var submitButton = $('.odontograma-submit'),
+    var submitButton = $('.normalized-btn'),
         pacienteId = '{{ paciente.id }}',
         pacienteSelect = $('#id_paciente');
 
@@ -123,10 +137,8 @@
     // gives a value to the paciente field
     pacienteSelect.val(pacienteId);
 
-    // hides paciente field
-    $('#div_id_paciente').addClass(' hidden');
-
-    // for saving multiple forms
+    // hides paciente field TODO: uncomment this.
+    // $('#div_id_paciente').addClass(' hidden');
 
   });
 </script>

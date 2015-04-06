@@ -1,0 +1,46 @@
+{% extends "base1.html" %}
+{%load static from staticfiles %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/jasny-bootstrap.min.css' %}">
+<style>
+  .fileinput { margin-bottom: 0px; }
+  #div_id_imagen { margin-bottom: 16px; }
+  .fileinput-filename {
+    max-width: 240px;
+    height: 19px;
+  }
+
+</style>
+{% endblock css %}
+
+{% block content %}
+
+<h2 class="page-header">Registro Del Paciente</h2>
+{% if POST %}Meh.{% endif %}
+{% load crispy_forms_tags %}
+{% crispy form %}
+{% endblock content %}
+
+{% block javascript %}
+<script src="{% static 'js/jasny-bootstrap.min.js' %}"></script>
+<script>
+  /*!
+  * calls jasny bootstrap on the file input
+  * to pretty it up. Must contain specific
+  * markup so I added it using jQuery.
+  * Andrea. @andiosuna
+  */
+
+  var target = $('#div_id_imagen > .controls'),
+      container = target.addClass('fileinput fileinput-new input-group'),
+      fileInput = $('input[type="file"]');
+
+  container.prepend('<div class="form-control" data-trigger="fileinput"><i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>');
+  fileInput.wrap('<span class="input-group-addon btn btn-default btn-file"></span>');
+  fileInput.before('<span class="fileinput-new">Select file</span><span class="fileinput-exists">Change</span>');
+  container.append('<a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>');
+
+  $('.fileinput').fileinput();
+</script>
+{% endblock javascript %}
