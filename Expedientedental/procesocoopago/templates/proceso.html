@@ -3,72 +3,92 @@
 {% load crispy_forms_tags %}
 {% block content %}
 <div class="well odontograma clearfix">
+
   <div class="col-xs-3">
+
     <img src="{% static cotizacion.paciente.imagen %}" alt="{{ cotizacion.paciente.nombre }} {{ cotizacion.paciente.apellidoPaterno }}" class="pull-left img-rounded">
+
   </div>
+
   <div class="col-xs-9">
+
     <table class="table">
+
       <thead>
+
         <tr>
+
           <th>Nombre</th>          
           <th>Grupo</th>
           <th># Estado de Cuenta</th>
+
         </tr>
+
       </thead>
+
       <tbody>
+
         <tr>
+
           <td>{{ paciente.nombre }}</td>
           <td>{{ paciente.grupo }}</td>
           <td>{{ pago.cotizacion_item.cotizacion.id}}</td>
+
         </tr>
+
       </tbody>
+
       <thead>
+
         <tr>
+
           <th>Medico Tratante</th>
           <th>&nbsp;</th>
           <th>&nbsp;</th>
+
         </tr>
+
         <tr>
+
           <td>{{ pago.medico }}</td>
           <td>&nbsp;</td>
           <td>&nbsp;</td>         
+
         </tr>
+
       </thead>
+
     </table>
+
   </div>
+
 </div><!-- patient info section -->
+
 {% load crispy_forms_tags %}
 {% crispy form %}
-
 
 <h3> Lista de servicios Disponibles </h3>
 
 <table class="table table-hover">
+
   <tr>
+
     <th>Codigo Tratamiento</th>
     <th>descripcion</th>
     <th>Costo</th>
+
   </tr>
 
-   {% for objects in cotizacion_item %}
-   
-   
+  {% for objects in cotizacion_item %}
   <tr>
+
     <td>{{object.servicios}}</td>
     <td>{{pago.movimiento}}</td>
     <td>{{pago.costo}}</td>
+
   </tr>
+  {% endfor %}
 
-
-{% endfor %}
-  
-  
 </table>
-
-
-
-
-
-
 
 {% endblock content %}

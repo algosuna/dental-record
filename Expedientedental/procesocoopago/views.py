@@ -1,9 +1,9 @@
 # encoding:utf-8
-from django.shortcuts import render_to_response, render, get_object_or_404,\
+from django.shortcuts import render, get_object_or_404,\
     redirect
 
 from cotizacion.models import Cotizacion
-from procesocoopago.models import Pago, PagoAplicado
+from procesocoopago.models import Pago
 from procesocoopago.forms import PagoForm, PagoAplicadoForm, PagoAplicadoFormset
 
 
@@ -62,17 +62,3 @@ def aplicarpagoitem(request):
                   {'form': modelform,
                    'pago': pago,
                    'paciente': paciente})
-       
-
-
-
-
-
-
-
-
-
-
-
-
-

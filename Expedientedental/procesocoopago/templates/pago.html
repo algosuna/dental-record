@@ -4,127 +4,131 @@
 
 {% block css %}
 <style>
-
-    .importe .form-group {
-        margin-bottom: 0px;
-        max-width: 100px;
-    }
-    .precio:before {
-        content: "$";
-    }
-    #div_id_total,
-    #div_id_fecha,
-    #div_id_monto {
-        max-width: 160px;
-        float: left;
-        margin-right: 100px;
-    }
-    .btn-primary {
-        margin-top: 24px;
-    }
+.importe .form-group {
+  margin-bottom: 0px;
+  max-width: 100px;
+}
+.precio:before,
+#id_total:before {
+  content: "$ ";
+}
+#div_id_total,
+#div_id_fecha,
+#div_id_monto {
+  max-width: 160px;
+  float: left;
+  margin-right: 100px;
+}
+.padded {
+  padding: 14px!important;
+}
 </style>
 {% endblock %}
 
 {% block content %}
 
-  <h2 class="page-header">Pago <small class="pull-right">Cotizacion #{{ cotizacion.id }}</small></h2>
-
+<h2 class="page-header">Pago <small class="pull-right">Cotizacion #{{ cotizacion.id }}</small></h2>
 
 <form action="" method="post">
-    {{ pa_formset.management_form }}
+  {{ pa_formset.management_form }}
 
-    <div id="div_id_total" class="form-group">
-        <label for="id_total">Costo Total</label>
-        <div class="controls">
-            <p id="id_total">{{ total }}</p>
-        </div>
-        <span>
-
-
-            <a class="mybtn">Aplicar</a>
-        </span>
+  <div id="div_id_total" class="form-group">
+    <label for="id_total">Costo Total</label>
+    <div class="controls">
+      <p id="id_total">{{ total }}</p>
     </div>
-    {% crispy form %}
-    
-    
+  </div>
+  <a class="btn btn-success aplicar pull-right normalized-btn">Aplicar</a>
+
+  {% crispy form %}
+
   <table class="table table-bordered">
+
     <thead>
+
       <tr>
-      <th>Servicio</th>
-      <th>Costo de servicio</th>
-      <th>Importe</th>
-      <th>Status</th>
+        <th>Servicio</th>
+        <th>Costo de servicio</th>
+        <th>Importe</th>
+        <th>Status</th>
 
       </tr>
+
     </thead>
+
     <tbody>
-        {% for pa_form in pa_formset %}
-        <tr>
-            <td>{{ pa_form.item.procedimiento.tratamiento.nombreTratamiento }}</td>
-            <td class="precio">{{ pa_form.item.precio }}</td>
-            <td class="importe">{% crispy pa_form %}</td>
-            <td> <span class="status">{{pa_form..status}}</span></td>
+      {% for pa_form in pa_formset %}
+      <tr>
+        <td class="padded">{{ pa_form.item.procedimiento.tratamiento.nombre }}</td>
+        <td class="precio padded">{{ pa_form.item.precio }}</td>
+        <td class="importe">{% crispy pa_form %}</td>
+        <td class="padded"><span class="label">{{ pa_form.item.get_status_display }}</span></td>
+      </tr>
+      {% endfor %}
 
-        </tr>
-       
-        {% endfor %}
-         <tr>
-
-            <td></td>
-            <td></td>
-            <td></td>
-            <td> <input type="submit" class="btn btn-primary" value="Aplicar y guardar"></td>
-
-        </tr>
     </tbody>
+
   </table>
 
+  <input type="submit" class="btn btn-primary pull-right" value="Aplicar y guardar">
 </form>
- 
-    
 {% endblock content %}
 
 {% block javascript %}
 <script>
 
-$(document).ready(function(){
+$(function() {
 
-var rows = $('tbody').children(),
-    status=$('.label'),
-    montoField = $('#id_monto');
+  var rows = $('tbody').children(),
+      status = $('.label'),
+      montoField = $('#id_monto');
 
-function asignarImportes(){
+  function asignar() {
     var monto = parseInt(montoField.val());
-    console.log(montoField.val()); // for testing
 
     rows.each(function () {
-        var importe = $('.importe input[type="text"]', this),
-            costo = parseInt($('.precio', this).text()),
+      var importe = $('.importe input[type="text"]', this),
+          costo = parseInt($('.precio', this).text()),
 
-            valor_a_asignar = Math.min(costo,monto);
-        monto = monto - valor_a_asignar;
-        importe.val(valor_a_asignar);
+      valor = Math.min(costo,monto);
+      monto = monto - valor;
+      importe.val(valor);
 
-    if (valor_a_asignar == costo && importe<costo)
-    {
+      if (valor == costo && importe<costo) {
         document.write("algunos items deberan cubrirse posteriormente")
-    }
-            
+      }
+              
     });
+  }
+
+
+  asignar();
+
+  $('.aplicar').on('click', asignar);
+
+
+  // add stuff to the inputs
+  $('#div_id_monto .controls').addClass('input-group');
+  $('.importe .controls').addClass('input-group');
+  $('.input-group').prepend('<span class="input-group-addon">$</span>');
+
+
+  // for setting the label color
+  $.each(status, function(){
+    var status = $(this);
+
+    if(status.text() == 'Aceptado'){
+
+      status.addClass(' label-success');
+
+    } else {
+
+      status.addClass(' label-warning');
+
     }
 
-
-asignarImportes();
-
-$('.mybtn').on('click',asignarImportes);
+  })
 
 });
-
-
-
-
-
-
-
 </script>
 {% endblock javascript%}
