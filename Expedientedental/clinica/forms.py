@@ -299,7 +299,7 @@ class OdontogramaForm(forms.ModelForm):
 class ProcedimientoForm(forms.ModelForm):
     class Meta:
         model = Procedimiento
-        exclude = ('odontograma',)
+        exclude = ('odontograma', 'status')
 
     def __init__(self, *args, **kwargs):
         super(ProcedimientoForm, self).__init__(*args, **kwargs)

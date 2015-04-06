@@ -165,7 +165,7 @@ class Odontograma(TimeStampedModel):
     notas = models.TextField()
     evaluacion = models.ForeignKey(Evaluacion)
     tratamiento_preventivo = models.ForeignKey(
-        TratamientoPreventivo, blank=True)
+        TratamientoPreventivo, blank=True, null=True)
 
     def __unicode__(self):
         odontograma = '%s %s' % (self.id, self.evaluacion)
@@ -194,7 +194,8 @@ class Procedimiento(models.Model):
     odontograma = models.ForeignKey(Odontograma)
     diagnostico = models.TextField()
     notas = models.TextField(blank=True)
-    status = models.CharField(max_length=12, choices=STATUS_CHOICES)
+    status = models.CharField(
+        max_length=12, choices=STATUS_CHOICES, default='recomendado')
 
     def __unicode__(self):
         procedimiento = '%s' % (self.tratamiento)
