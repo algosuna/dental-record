@@ -1,0 +1,31 @@
+{% extends "base1.html" %}
+
+{% block content %}
+
+<h2 class="page-header">Precios</h2>
+
+{% if grupos %}
+<p class="lead">Seleccione Grupo</p>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Nombre</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for grupo in grupos %}
+    <tr>
+      <td>{{ grupo.numero }}</td>
+      <td>{{ grupo.nombre }}</td>
+      <td><a href="/altas/precios/{{ grupo.id }}/" class="btn btn-primary pull-right"><span class="glyphicon glyphicon-pencil"></span> Editar Precios</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p class="lead text-muted text-center">No hay grupos registrados.<br><br><a href="/altas/grupo/new/" class="btn btn-primary">Registrar Grupo <span class="glyphicon glyphicon-chevron-right"></span></a></p>
+{% endif %}
+{% endblock content %}
