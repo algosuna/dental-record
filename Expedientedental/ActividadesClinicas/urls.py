@@ -30,6 +30,11 @@ urlpatterns += patterns('',
 
     #Reportes PDF
 
-    url(r'^interrogatorios/(?P<paciente_id>\d+)/pdf/$',InterrogatorioPDF.as_view()),
+    url(r'^interrogatorios/(?P<paciente_id>\d+)/pdf/$',InterrogatorioPDF.as_view(
+        template_name='interrogatorio_pdf.html',
+        filename='Interrogatoio_pdf.pdf'),name='pdf'),
+    
+
+
 
 )
