@@ -2,3 +2,5 @@
 dentaldb.sqlite3
 migrations
 media
+*.sublime-*
+
