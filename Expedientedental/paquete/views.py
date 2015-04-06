@@ -10,7 +10,7 @@ from datetime import datetime
 from django.views.generic import UpdateView
 from django.views.generic import ListView
 from django.core.urlresolvers import reverse
-from ActividadesClinicas.utils import generic_search
+from core.utils import generic_search
 
 def busqueda(request):
     query = 'q'

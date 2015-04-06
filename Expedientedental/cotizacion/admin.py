@@ -8,7 +8,7 @@ class CotizacionAdmin(admin.ModelAdmin):
 
 
 class CotizacionItemAdmin(admin.ModelAdmin):
-	fields = ('cotizacion', 'procedimiento', 'status')
+    fields = ('cotizacion', 'procedimiento', 'status')
 
 
 admin.site.register(Cotizacion, CotizacionAdmin)

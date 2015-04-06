@@ -2,17 +2,33 @@
 {%load static from staticfiles %}
 
 {% block content %}
+<h2 class="page-header">Médicos Registrados</h2>
 
-<h2 class="page-header">Registrar Médico</h2>
-
-{% load crispy_forms_tags %}
-{% crispy form %}
-
-<!-- <form action="" method="POST">{% csrf_token %}
-    <table>
-     {{ form.as_table }}
-    </table>
-    <input type="submit" value="Guardar Formulario" class="btn btn-primary">
-</form> -->
-
+{% if medicos %}
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Apellido</th>
+      <th>Apellido Materno</th>
+      <th>Nombre(s)</th>
+      <th>Especialidad</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for medico in medicos %}
+    <tr>
+      <td>{{ medico.apellidoPaterno }}</td>
+      <td>{{ medico.apellidoMaterno }}</td>
+      <td>{{ medico.nombre }}</td>
+      <td>{{ medico.especialidad }}</td>
+      <td><a href="/altas/medico/edit/{{ medico.id }}/"><span class="glyphicon glyphicon-pencil"></span></a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<a href="/altas/medico/new/" class="btn btn-primary pull-right">Registrar Nuevo M&eacute;dico <span class="glyphicon glyphicon-plus"></span></a>
+{% else %}
+<p class="lead text-center text-muted">No hay medicos registrados en la base de datos.<br><br><a href="/altas/medico/new/" class="btn btn-primary">Registrar M&eacute;dico <span class="glyphicon glyphicon-chevron-right"></span></a></p>
+{% endif %}
 {% endblock content %}

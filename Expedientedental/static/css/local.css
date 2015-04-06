@@ -181,41 +181,52 @@ svg\:svg { display: none; }
   margin: 0 auto;
 }
 
-#odontograma ~ .clearfix fieldset {
+#formsets fieldset {
   float: left;
   margin-top: 0px;
   margin-bottom: 20px;
 }
 
-#odontograma ~ .clearfix ul {
+#formsets ul {
   margin: 0px;
   padding: 0px;
 }
 
-#odontograma ~ .clearfix ul li { list-style: none; }
+#formsets li { list-style: none; }
 
-#odontograma ~ .clearfix ul li .form-group {
-  clear: both;
-}
+#formsets .form-inline { width: 98%; }
 
-#odontograma ~ .clearfix ul li .form-group label,
-#odontograma ~ .clearfix ul li .form-group .controls {
-  float: left;
-  display: inline;
-}
+#formsets .bin { margin-top: 5px; }
 
-#odontograma ~ .clearfix ul li .form-group label { margin: 7px 7px 0px 0px; }
+#formsets .form-group label,
+#formsets .form-group .controls { display: inline; }
 
-#odontograma ~ .clearfix ul li .form-group .controls { margin-right: 20px; }
+#formsets .form-group label { margin: 7px 7px 0px 0px; }
 
-#odontograma ~ .clearfix ul li .form-group:first-of-type .controls input { width: 45px; }
+#formsets .form-group .controls { margin-right: 20px; }
 
-#odontograma ~ .clearfix ul li .form-group:nth-child(3) .controls select { width: 90px; }
+#formsets .form-group:first-of-type .controls input { width: 45px; }
 
-#odontograma ~ .clearfix ul li .form-group:last-of-type .controls textarea {
-  max-width: 430px;
+#formsets .form-group:nth-child(3) .controls select { width: 90px; }
+
+#formsets .form-group .controls textarea {
+  max-width: 100%;
   height: 34px;
 }
+
+#formsets .form-group:nth-child(4),
+#formsets .form-group:nth-child(5) { width: 25%; }
+
+#formsets .form-group:nth-child(4) .controls { width: 61%; }
+
+#formsets .form-group:nth-child(4) .controls textarea { max-width: 58%; }
+
+#formsets .form-group:nth-child(5) .controls {
+    width: 77%;
+    margin-right: 0px;
+}
+
+#formsets ul li .form-group:nth-child(5) .controls textarea { max-width: 74%; }
 
 #tooth-images {
   position: relative;
@@ -257,20 +268,21 @@ svg\:svg { display: none; }
 
 #tooth-images .bottom img[alt="37"] { margin-left: 7px; }
 
-.odontograma-submit { margin: 20px; }
+.normalized-btn { margin: 20px; }
 
 /*
 
 grupos
 
 */
+
 .grupos a.text-danger {
   margin-left: 20px;
 }
 
-  .mybtn{
-    float:left !important; margin-left:800px; margin-top: -30px; padding: 6px 50px !important;
-        display: inline-block;
+.mybtn{
+  float:left !important; margin-left:800px; margin-top: -30px; padding: 6px 50px !important;
+  display: inline-block;
   padding: 6px 50px;
   margin-bottom: 0;
   font-size: 14px;
@@ -292,7 +304,7 @@ grupos
   color: #ffffff;
 }
 
-  .mybtn:hover {
+.mybtn:hover {
   background: #169c50;
   background-image: -webkit-linear-gradient(top, #169c50, #34d989);
   background-image: -moz-linear-gradient(top, #169c50, #34d989);
@@ -305,4 +317,3 @@ grupos
 /*
 status de pagos
 */
-
