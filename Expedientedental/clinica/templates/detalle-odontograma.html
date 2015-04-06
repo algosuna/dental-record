@@ -9,7 +9,7 @@
 <h2 class="page-header">Detalle de Odontograma</h2>
 
 <div class="col-md-6">
-  <table class="table table-bordered">
+  <table class="table">
     <tr>
       <th># de Odontograma:</th>
       <td>{{ odontograma.id }}</td>
@@ -23,12 +23,23 @@
       <td>{{ odontograma.paciente }}</td>
     </tr>
     <tr>
+      <th>Evaluacion:</th>
+      <td>{{ odontograma.evaluacion }}</td>
+    </tr>
+    {% if odontograma.tratamiento_preventivo %}
+    <tr>
+      <th>Tratamiento Preventivo:</th>
+      <td>{{ odontograma.tratamiento_preventivo }}</td>
+    </tr>
+    {% endif %}
+    <tr>
       <th>Observaciones:</th>
       <td>{{ odontograma.notas }}</td>
     </tr>
   </table>
 </div>
 
+{% if odontograma.procedimiento_set.all %}
 <div class="col-md-6">
   <table class="table table-bordered">
     <thead>
@@ -49,5 +60,5 @@
     </tbody>
   </table>
 </div>
-
+{% endif %}
 {% endblock content %}
