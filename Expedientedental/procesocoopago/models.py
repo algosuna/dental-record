@@ -4,6 +4,10 @@ from cotizacion.models import CotizacionItem
 
 
 class Pago(TimeStampedModel):
+
+
+
+    
         fecha = models.DateTimeField()
         cotizacion_items = models.ManyToManyField(
             CotizacionItem, through='PagoAplicado')

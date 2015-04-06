@@ -62,4 +62,4 @@ class CotizacionItem(TimeStampedModel):
     objects = CotizacionItemManager()
 
     def __unicode__(self):
-        return " %s" % ( self.procedimiento)
+        return " %s" % (self.procedimiento)

@@ -63,7 +63,7 @@
             <td>{{ pa_form.item.procedimiento.tratamiento.nombreTratamiento }}</td>
             <td class="precio">{{ pa_form.item.precio }}</td>
             <td class="importe">{% crispy pa_form %}</td>
-            <td> {{pa_form.item.pago.status}}</td>
+            <td> <span class="status">{{pa_form..status}}</span></td>
 
         </tr>
        
@@ -90,6 +90,7 @@
 $(document).ready(function(){
 
 var rows = $('tbody').children(),
+    status=$('.label'),
     montoField = $('#id_monto');
 
 function asignarImportes(){
@@ -99,19 +100,30 @@ function asignarImportes(){
     rows.each(function () {
         var importe = $('.importe input[type="text"]', this),
             costo = parseInt($('.precio', this).text()),
+
             valor_a_asignar = Math.min(costo,monto);
         monto = monto - valor_a_asignar;
         importe.val(valor_a_asignar);
+
+    if (valor_a_asignar == costo && importe<costo)
+    {
+        document.write("algunos items deberan cubrirse posteriormente")
+    }
             
     });
-}
+    }
+
 
 asignarImportes();
-
 
 $('.mybtn').on('click',asignarImportes);
 
 });
+
+
+
+
+
 
 
 </script>
