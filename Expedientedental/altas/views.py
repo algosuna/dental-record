@@ -4,7 +4,8 @@ from django.views.generic import CreateView, ListView, UpdateView
 
 from altas.models import Grupo, Tratamiento, TratamientoPreventivo,\
     Evaluacion, Medico, Paciente
-from altas.forms import MedicoForm, PacienteForm, GrupoForm, MetodoForm
+from altas.forms import MedicoForm, PacienteForm, GrupoForm, TratamientoForm,\
+    TratamientoPreventivoForm, EvaluacionForm
 
 
 class MedicoCreate(CreateView):
@@ -69,18 +70,27 @@ class GrupoUpdateView(UpdateView):
 class MetodoMixin(object):
     name = None
     slug = None
-    form_class = MetodoForm
+    # form_class = MetodoForm
     template_name = 'metodo.html'
 
     def get_success_url(self):
-        return '/altas/%s/' % self.name
+        if self.slug:
+            path_name = self.slug
+        else:
+            path_name = self.name
+
+        return '/altas/%s/' % path_name
 
     def get_context_data(self, **kwargs):
         context = super(MetodoMixin, self).get_context_data(**kwargs)
         context['title'] = self.name.title()
-        context['name'] = self.name
+
         if self.slug:
             context['name'] = self.slug
+
+        else:
+            context['name'] = self.name
+
         return context
 
 
@@ -98,6 +108,7 @@ class MetodoUpdateView(MetodoMixin, UpdateView):
 
 class TratamientoNewView(MetodoNewView):
     name = 'tratamiento'
+    form_class = TratamientoForm
 
 
 class TratamientosView(MetodoListView):
@@ -107,10 +118,12 @@ class TratamientosView(MetodoListView):
 
 class TratamientoUpdateView(MetodoUpdateView):
     name = 'tratamiento'
+    form_class = TratamientoForm
 
 
 class EvaluacionNewView(MetodoNewView):
     name = 'evaluacion'
+    form_class = EvaluacionForm
 
 
 class EvaluacionesView(MetodoListView):
@@ -120,11 +133,13 @@ class EvaluacionesView(MetodoListView):
 
 class EvaluacionUpdateView(MetodoUpdateView):
     name = 'evaluacion'
+    form_class = EvaluacionForm
 
 
 class TratamientoPreventivoNewView(MetodoNewView):
     name = 'tratamiento preventivo'
     slug = 'preventivo'
+    form_class = TratamientoPreventivoForm
 
 
 class TratamientosPreventivosView(MetodoListView):
@@ -136,3 +151,4 @@ class TratamientosPreventivosView(MetodoListView):
 class TratamientoPreventivoUpdateView(MetodoUpdateView):
     name = 'tratamiento preventivo'
     slug = 'preventivo'
+    form_class = TratamientoPreventivoForm

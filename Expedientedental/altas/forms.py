@@ -4,7 +4,8 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, HTML, Field, ButtonHolder,\
     Submit
 
-from altas.models import Medico, Paciente, Grupo, Metodo
+from altas.models import Medico, Paciente, Grupo, Evaluacion, Tratamiento,\
+    TratamientoPreventivo
 from core.forms import SimpleCrispyForm
 
 
@@ -25,9 +26,19 @@ class GrupoForm(forms.ModelForm):
         )
 
 
-class MetodoForm(SimpleCrispyForm):
+class TratamientoForm(SimpleCrispyForm):
     class Meta:
-        model = Metodo
+        model = Tratamiento
+
+
+class TratamientoPreventivoForm(SimpleCrispyForm):
+    class Meta:
+        model = TratamientoPreventivo
+
+
+class EvaluacionForm(SimpleCrispyForm):
+    class Meta:
+        model = Evaluacion
 
 
 class PacienteForm(forms.ModelForm):
