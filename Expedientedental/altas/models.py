@@ -83,28 +83,25 @@ class Paciente(models.Model):
         return self.nombre_completo()
 
 
-class Evaluacion(models.Model):
+class Metodo(models.Model):
     codigo = models.CharField(max_length=15)
     nombre = models.CharField(max_length=150)
 
-    def __unicode__(self):
-        evaluacion = '%s - %s' % (self.codigo, self.nombre)
-        return evaluacion
-
-
-class TratamientoPreventivo(models.Model):
-    codigo = models.CharField(max_length=15)
-    nombre = models.CharField(max_length=150)
+    class Meta:
+        abstract = True
 
     def __unicode__(self):
-        tratamiento_preventivo = '%s %s' % (self.codigo, self.nombre)
-        return tratamiento_preventivo
+        str_ = '%s - %s' % (self.codigo, self.nombre)
+        return str_
 
 
-class Tratamiento(models.Model):
-    codigo = models.CharField(max_length=15)
-    nombre = models.CharField(max_length=150)
+class Evaluacion(Metodo):
+    pass
 
-    def __unicode__(self):
-        tratamiento = '%s %s' % (self.codigo, self.nombre)
-        return tratamiento
+
+class TratamientoPreventivo(Metodo):
+    pass
+
+
+class Tratamiento(Metodo):
+    pass

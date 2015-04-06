@@ -2,10 +2,9 @@
 from django.core.urlresolvers import reverse
 from django.views.generic import CreateView, ListView, UpdateView
 
-from altas.models import Grupo, Tratamiento, Evaluacion, TratamientoPreventivo,\
-    Medico, Paciente
-from altas.forms import MedicoForm, PacienteForm, GrupoForm, TratamientoForm,\
-    EvaluacionForm, TratamientoPreventivoForm
+from altas.models import Grupo, Tratamiento, TratamientoPreventivo,\
+    Evaluacion, Medico, Paciente
+from altas.forms import MedicoForm, PacienteForm, GrupoForm, MetodoForm
 
 
 class MedicoCreate(CreateView):
@@ -67,58 +66,73 @@ class GrupoUpdateView(UpdateView):
     success_url = '/altas/grupos/'
 
 
-class TratamientoNewView(CreateView):
-    form_class = TratamientoForm
-    template_name = 'tratamiento.html'
-    success_url = '/altas/tratamientos/'
+class MetodoMixin(object):
+    name = None
+    slug = None
+    form_class = MetodoForm
+    template_name = 'metodo.html'
+
+    def get_success_url(self):
+        return '/altas/%s/' % self.name
+
+    def get_context_data(self, **kwargs):
+        context = super(MetodoMixin, self).get_context_data(**kwargs)
+        context['title'] = self.name.title()
+        context['name'] = self.name
+        if self.slug:
+            context['name'] = self.slug
+        return context
 
 
-class TratamientosView(ListView):
+class MetodoNewView(MetodoMixin, CreateView):
+    pass
+
+
+class MetodoListView(MetodoMixin, ListView):
+    template_name = 'metodos.html'
+
+
+class MetodoUpdateView(MetodoMixin, UpdateView):
+    pass
+
+
+class TratamientoNewView(MetodoNewView):
+    name = 'tratamiento'
+
+
+class TratamientosView(MetodoListView):
+    name = 'tratamiento'
     model = Tratamiento
-    context_object_name = 'tratamientos'
-    template_name = 'tratamientos.html'
 
 
-class TratamientoUpdateView(UpdateView):
-    model = Tratamiento
-    form_class = TratamientoForm
-    template_name = 'tratamiento.html'
-    success_url = '/altas/tratamientos/'
+class TratamientoUpdateView(MetodoUpdateView):
+    name = 'tratamiento'
 
 
-class EvaluacionNewView(CreateView):
-    form_class = EvaluacionForm
-    template_name = 'evaluacion.html'
-    success_url = '/altas/evaluaciones/'
+class EvaluacionNewView(MetodoNewView):
+    name = 'evaluacion'
 
 
-class EvaluacionesView(ListView):
+class EvaluacionesView(MetodoListView):
+    name = 'evaluacion'
     model = Evaluacion
-    context_object_name = 'evaluaciones'
-    template_name = 'evaluaciones.html'
 
 
-class EvaluacionUpdateView(UpdateView):
-    model = Evaluacion
-    form_class = EvaluacionForm
-    template_name = 'evaluacion.html'
-    success_url = '/altas/evaluaciones/'
+class EvaluacionUpdateView(MetodoUpdateView):
+    name = 'evaluacion'
 
 
-class TratamientoPreventivoNewView(CreateView):
-    form_class = TratamientoPreventivoForm
-    template_name = 'tratamiento.html'
-    success_url = '/altas/tratamientos-preventivos/'
+class TratamientoPreventivoNewView(MetodoNewView):
+    name = 'tratamiento preventivo'
+    slug = 'preventivo'
 
 
-class TratamientosPreventivosView(ListView):
+class TratamientosPreventivosView(MetodoListView):
+    name = 'tratamiento preventivo'
     model = TratamientoPreventivo
-    context_object_name = 'tratamientos'
-    template_name = 'tratamientos.html'
+    slug = 'preventivo'
 
 
-class TratamientoPreventivoUpdateView(UpdateView):
-    model = TratamientoPreventivo
-    form_class = TratamientoPreventivoForm
-    template_name = 'tratamiento.html'
-    success_url = '/altas/tratamientos-preventivos/'
+class TratamientoPreventivoUpdateView(MetodoUpdateView):
+    name = 'tratamiento preventivo'
+    slug = 'preventivo'
