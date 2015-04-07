@@ -30,21 +30,21 @@
 <body>
 	<div style="width:960px; margin:0 auto;">
 		<h2>Cotización</h2>
-		<h3>Cliente: {{cotizacion.cliente}}</h3>
+		<h3>Cliente: {{cotizacion.paciente}}</h3>
 		<h3>{{cotizacion.fecha}}</h3>
 		<br>
-		{% if latest_list %}
+		{% if cotizacion %}
 				<table>
 					<tr>
 						<th>servicio</th>					
 						
 						<th>Precio total</th>
 					</tr>
-				{% for object in latest_list %}
+				{% for cotizacion_item in  cotizacion_tem %}
 					<tr>
 						<td><a>{{object.servicio.nombreDelServicio.precio}</td>
 						
-						<td>${{object.servicio.precio}}</td>
+						<td>${{cotizacion.servicio.precio}}</td>
 						
 					</tr>
 				{% endfor %}

@@ -1,4 +1,5 @@
 from django.conf.urls.defaults import patterns, url
+from cotizacion.views import CotizacionPDF
 
 urlpatterns = patterns(
     'cotizacion.views',
@@ -10,3 +11,9 @@ urlpatterns = patterns(
     url(r'^(?P<odontograma_id>\d+)/$', 'cotizacion', name='cotizacion'),
 
 )
+urlpatterns +=patterns(
+    '',
+    #reporte de cotizacion)
+    url(r'^cotizacion/(?P<cotizacion_id>\d+)/pdf/$',
+        CotizacionPDF.as_view()),
+    )
