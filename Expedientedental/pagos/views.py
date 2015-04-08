@@ -1,10 +1,18 @@
 # encoding:utf-8
-from django.shortcuts import render, get_object_or_404,\
-    redirect
+# from django.core.urlresolvers import reverse
+from django.shortcuts import render, get_object_or_404  # , redirect
 
 from cotizacion.models import Cotizacion
-from procesocoopago.models import Pago
-from procesocoopago.forms import PagoForm, PagoAplicadoForm, PagoAplicadoFormset
+from pagos.models import Pago
+from pagos.forms import PagoForm, PagoAplicadoFormset
+
+
+def pagos_list(request):
+    pagos = Pago.objects.all()
+
+    return render(request, 'pago-list.html', {
+                  'pagos': pagos
+                  })
 
 
 def pagos(request, cotizacion_id):
@@ -26,19 +34,26 @@ def pagos(request, cotizacion_id):
         modelform = PagoForm(request.POST)
         pa_formset = PagoAplicadoFormset(request.POST, initial=initial)
 
-        if modelform.is_valid():
+        if modelform.is_valid() and pa_formset.is_valid():
             pago = modelform.save()
 
+            monto_aplicado = 0
             for form in pa_formset:
-                if form.is_valid():
-                    form.save(pago)
+                pago_aplicado = form.save(pago)
+                monto_aplicado += pago_aplicado.importe
+
+            pago.aplicamonto(monto_aplicado)
+            pago.save()
+
+            # TODO: add a return
+
     else:
         modelform = PagoForm(initial={'monto': cotizacion.total()})
         pa_formset = PagoAplicadoFormset(initial=initial)
 
     items = [form.item for form in pa_formset]
 
-    return render(request, "pago.html", {
+    return render(request, 'pago.html', {
                   'form': modelform,
                   'pa_formset': pa_formset,
                   'items': items,
@@ -47,18 +62,11 @@ def pagos(request, cotizacion_id):
                   })
 
 
-def aplicarpagoitem(request):
-    pago = Pago.objects.all()
-    paciente = 'meh'
+def pagos_detail(request, pago_id):
+    pago = get_object_or_404(Pago, pk=pago_id)
+    cotizacion = pago.cotizacionitem.cotizacion.get()
 
-    if request.method == "POST":
-        modelform = PagoAplicadoForm(request.post)
-        if modelform.is_valid():
-            modelform.save()
-            return redirect("/pago/process/")
-    else:
-        modelform = PagoAplicadoForm()
-    return render(request, 'proceso.html',
-                  {'form': modelform,
-                   'pago': pago,
-                   'paciente': paciente})
+    return render(request, 'pago-detail.html', {
+                  'pago': pago,
+                  'cotizacion': cotizacion
+                  })

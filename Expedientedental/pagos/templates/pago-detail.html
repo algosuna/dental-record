@@ -1,0 +1,115 @@
+{% extends "base1.html" %}
+{% load static from staticfiles %}
+
+{% block content %}
+
+<h2 class="page-header">Pago <small class="pull-right">Cotizacion #{{ cotizacion.id }}</small></h2>
+
+<form action="" method="post">
+  {{ pa_formset.management_form }}
+
+  <div class="center-block clearfix">
+
+    <div id="div_id_total" class="form-group">
+      <label for="id_total">Costo Total</label>
+      <div class="controls">
+        <p id="id_total" style="margin:8px 0px 0px;">{{ total }}</p>
+      </div>
+    </div>
+
+    {% crispy form %}
+
+    <a class="btn btn-success aplicar pull-left">Aplicar</a>
+
+  </div>
+
+  <table class="table table-bordered">
+
+    <thead>
+
+      <tr>
+        <th>Servicio</th>
+        <th>Costo de servicio</th>
+        <th>Importe</th>
+        <th>Status</th>
+
+      </tr>
+
+    </thead>
+
+    <tbody>
+      {% for pa_form in pa_formset %}
+      <tr>
+        <td class="padded">{{ pa_form.item.procedimiento.tratamiento.nombre }}</td>
+        <td class="precio padded">{{ pa_form.item.precio }}</td>
+        <td class="importe">{% crispy pa_form %}</td>
+        <td class="padded"><span class="label">{{ pa_form.item.get_status_display }}</span></td>
+      </tr>
+      {% endfor %}
+
+    </tbody>
+
+  </table>
+
+  <input type="submit" class="btn btn-primary pull-right" value="Aceptar">
+</form>
+{% endblock content %}
+
+{% block javascript %}
+<script>
+
+$(function() {
+
+  var rows = $('tbody').children(),
+      status = $('.label'),
+      montoField = $('#id_monto');
+
+  function asignar() {
+    var monto = parseInt(montoField.val());
+
+    rows.each(function () {
+      var importe = $('.importe input[type="text"]', this),
+          costo = parseInt($('.precio', this).text()),
+
+      valor = Math.min(costo,monto);
+      monto = monto - valor;
+      importe.val(valor);
+
+      if (valor == costo && importe<costo) {
+        document.write("algunos items deberan cubrirse posteriormente")
+      }
+              
+    });
+  }
+
+
+  asignar();
+
+  $('.aplicar').on('click', asignar);
+
+
+  // add stuff to the inputs
+  $('#div_id_monto .controls').addClass('input-group');
+  $('.importe .controls').addClass('input-group');
+  $('.input-group').prepend('<span class="input-group-addon">$</span>');
+
+
+  // for setting the label color
+  $.each(status, function(){
+    var status = $(this);
+
+    if(status.text() == 'Aceptado'){
+
+      status.addClass(' label-success');
+
+    } else {
+
+      status.addClass(' label-warning');
+
+    }
+
+  })
+
+});
+</script>
+{% endblock javascript%}

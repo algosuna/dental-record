@@ -17,10 +17,16 @@
 #div_id_monto {
   max-width: 160px;
   float: left;
-  margin-right: 100px;
+  margin-right: 30px;
 }
 .padded {
   padding: 14px!important;
+}
+.aplicar {
+  margin-top: 25px;
+}
+.center-block {
+  width: 560px;
 }
 </style>
 {% endblock %}
@@ -32,15 +38,20 @@
 <form action="" method="post">
   {{ pa_formset.management_form }}
 
-  <div id="div_id_total" class="form-group">
-    <label for="id_total">Costo Total</label>
-    <div class="controls">
-      <p id="id_total">{{ total }}</p>
-    </div>
-  </div>
-  <a class="btn btn-success aplicar pull-right normalized-btn">Aplicar</a>
+  <div class="center-block clearfix">
 
-  {% crispy form %}
+    <div id="div_id_total" class="form-group">
+      <label for="id_total">Costo Total</label>
+      <div class="controls">
+        <p id="id_total" style="margin:8px 0px 0px;">{{ total }}</p>
+      </div>
+    </div>
+
+    {% crispy form %}
+
+    <a class="btn btn-success aplicar pull-left">Aplicar</a>
+
+  </div>
 
   <table class="table table-bordered">
 
@@ -70,7 +81,7 @@
 
   </table>
 
-  <input type="submit" class="btn btn-primary pull-right" value="Aplicar y guardar">
+  <input type="submit" class="btn btn-primary pull-right" value="Aceptar">
 </form>
 {% endblock content %}
 

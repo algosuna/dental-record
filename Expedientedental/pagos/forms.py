@@ -3,13 +3,13 @@ from django import forms
 from crispy_forms.helper import FormHelper
 from django.forms.formsets import formset_factory
 
-from .models import Pago, PagoAplicado
+from pagos.models import Pago, PagoAplicado
 
 
 class PagoForm(forms.ModelForm):
     class Meta:
         model = Pago
-        exclude = ('cotizacion', 'monto_aplicado', 'cotizacion_items')
+        exclude = ('monto_aplicado', 'cotizacion_items')
 
     def __init__(self, *args, **kwargs):
         super(PagoForm, self).__init__(*args, **kwargs)
@@ -24,7 +24,7 @@ class PagoForm(forms.ModelForm):
 class PagoAplicadoForm(forms.ModelForm):
     class Meta:
         model = PagoAplicado
-        exclude = ('pago','cotizacion_item')
+        exclude = ('pago', 'cotizacion_item')
 
     def __init__(self, *args, **kwargs):
         super(PagoAplicadoForm, self).__init__(*args, **kwargs)
