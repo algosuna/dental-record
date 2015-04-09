@@ -15,7 +15,7 @@
         <tr>
           <th>Nombre</th>
           <th>Grupo</th>
-          <th># Cotizaci&oacute;n</th>
+          <th># Presupuesto</th>
         </tr>
       </thead>
       <tbody>
@@ -41,7 +41,7 @@
   </div>
 </div><!-- patient info section -->
 
-<h2 class="page-header">Cotizacion <small>#{{ cotizacion.id }}</small></h2>
+<h2 class="page-header">Presupuesto <small>#{{ cotizacion.id }}</small></h2>
 
 <div class="row">
   <div class="col-md-8">
@@ -92,8 +92,15 @@
         </tr>
       </table>
     </div>
+<div class="btn-group" role="group" aria-label="...">
+    <button><a href="/pago/detalle/{{cotizacion.id}}" class="btn btn-primary btn-block">Aceptar &amp; Pagar <span class="glyphicon glyphicon-chevron-right"></span></a>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+   
 
-    <a href="/pago/detalle/{{cotizacion.id}}" class="btn btn-primary btn-block">Aceptar &amp; Pagar <span class="glyphicon glyphicon-chevron-right"></span></a>
+    <a href="/cotizacion/cotizacion/{{cotizacion.id}}/pdf/" class="btn btn-primary ">Imprimir Presupuesto <span class=" glyphicon glyphicon-print"></span></a>
+
+
 
   </div>
 </div>
