@@ -1,4 +1,6 @@
+from datetime import datetime
 from django.shortcuts import render_to_response, render, get_object_or_404
+from wkhtmltopdf.views import PDFTemplateView
 
 from cotizacion.models import Cotizacion, CotizacionItem
 from cotizacion.forms import ItemFormSet
@@ -45,3 +47,21 @@ def cotizacion(request, odontograma_id):
                    'items': items,
                    'formset': formset,
                    'total': total})
+
+class CotizacionPDF(PDFTemplateView):
+    filename = 'cotizacion.pdf'
+    template_name = 'printit.html'
+    cmd_options = {
+        'margin-top': 13,
+    }
+
+    def get_context_data(self, **kwargs):
+        context = super(CotizacionPDF, self).get_context_data(**kwargs)
+        self.cotizacion_id = int(kwargs.get('cotizacion_id'))
+        cotizacion = get_object_or_404(Cotizacion, pk=self.cotizacion_id)
+        # cotizacion_items = CotizacionItem.objects.filter(cotizacion=cotizacion)
+        context['cotizacion'] = cotizacion
+        context['fecha'] = datetime.now().strftime("%d/%m/%Y")
+        context['hora'] = datetime.now().strftime("%I:%M %p")
+        return context
+

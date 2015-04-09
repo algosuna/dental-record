@@ -27,15 +27,7 @@ def busqueda(request):
         {'objects':objects, 'search_string': request.GET.get(query,''), } )
 
 
-def paquete(request):
-    if request.method == "POST":
-        modelform = PaqueteForm(request.POST)
-        if modelform.is_valid():
-            modelform.save()
-            return redirect("/paquete/")
-    else:
-        modelform = PaqueteForm()
-    return render(request, "paquete.html", {"form": modelform})
+
 
 
 

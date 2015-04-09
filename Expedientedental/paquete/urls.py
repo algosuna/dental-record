@@ -3,7 +3,6 @@ from paquete.views import PaquetesPDF,ReportarPaquete,busqueda,EditPaqueteView
 
 urlpatterns = patterns('paquete.views',
 
-    url(r'^paquete/$', 'paquete'),
     
     url(r'^tipoPaquete/$', 'PaqueteItem'),
     url(r'^tipoPaquete/edit/(?P<pk>\d+)$',EditPaqueteView.as_view()),

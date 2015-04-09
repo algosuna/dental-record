@@ -87,7 +87,7 @@ def detalle_odontograma(request, paciente_id, odontograma_id):
 
 def interrogatorio(request, paciente_id):
     paciente = get_object_or_404(Paciente, pk=paciente_id)
-    interrogatorio = paciente.interrogatorio_set.all()
+    interrogatorio = paciente.interrogatorio_set.get()
     expediente = 'active'
 
     if request.method == 'POST':
@@ -95,7 +95,7 @@ def interrogatorio(request, paciente_id):
 
         if modelform.is_valid():
             modelform.save()
-            return redirect('interrogatorio')
+
     else:
         modelform = InterrogatorioForm()
 
@@ -123,3 +123,4 @@ class InterrogatorioPDF(PDFTemplateView):
         context['fecha'] = datetime.now().strftime("%d/%m/%Y")
         context['hora'] = datetime.now().strftime("%I:%M %p")
         return context
+
