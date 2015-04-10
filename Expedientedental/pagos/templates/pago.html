@@ -60,6 +60,7 @@
       <tr>
         <th>Servicio</th>
         <th>Costo de servicio</th>
+        <th>Pagado</th>
         <th>Importe</th>
         <th>Status</th>
 
@@ -70,8 +71,9 @@
     <tbody>
       {% for pa_form in pa_formset %}
       <tr>
-        <td class="padded">{{ pa_form.item.procedimiento.tratamiento.nombre }}</td>
+        <td class="padded">{{ pa_form.item }}</td>
         <td class="precio padded">{{ pa_form.item.precio }}</td>
+        <td class="padded">$ <span class="saldo">{{ pa_form.item.pagoaplicado_set.total_pagado }}</span></td>
         <td class="importe">{% crispy pa_form %}</td>
         <td class="padded"><span class="label">{{ pa_form.item.get_status_display }}</span></td>
       </tr>
@@ -100,20 +102,23 @@ $(function() {
     rows.each(function () {
       var importe = $('.importe input[type="text"]', this),
           costo = parseInt($('.precio', this).text()),
+          saldo = parseInt($('.saldo', this).text()),
+          valor = Math.min(costo, monto);
 
-      valor = Math.min(costo,monto);
+      if (!isNaN(saldo)) {
+        costo = costo - saldo;
+        valor = Math.min(costo, monto);
+      }
+
       monto = monto - valor;
       importe.val(valor);
-
-      if (valor == costo && importe<costo) {
-        document.write("algunos items deberan cubrirse posteriormente")
-      }
               
     });
   }
 
-
+{% if not form.errors and not pa_formset.errors %}
   asignar();
+{% endif %}
 
   $('.aplicar').on('click', asignar);
 
@@ -131,6 +136,10 @@ $(function() {
     if(status.text() == 'Aceptado'){
 
       status.addClass(' label-success');
+
+    } else if(status.text() == 'Pago Parcial'){
+
+      status.addClass(' label-info');
 
     } else {
 

@@ -1,7 +1,8 @@
 from django.db import models
+from django.db.models import Sum
 
 from core.models import TimeStampedModel
-from cotizacion.models import CotizacionItem
+from altas.models import Paciente
 
 
 class Pago(TimeStampedModel):
@@ -13,12 +14,13 @@ class Pago(TimeStampedModel):
     # TODO: cambiar el campo a date.
     fecha = models.DateTimeField()  # fecha en que se da el pago
     cotizacion_items = models.ManyToManyField(
-        CotizacionItem, through='PagoAplicado')
+        'cotizacion.CotizacionItem', through='PagoAplicado')
     # lo que el cliente da / monto a aplicar
-    monto = models.DecimalField(max_digits=9, decimal_places=3)
+    monto = models.DecimalField(max_digits=9, decimal_places=2)
     # lo que se aplica a items / lo que se ha consumido del pago(monto)
     monto_aplicado = models.DecimalField(
         max_digits=9, decimal_places=3, default=0)
+    paciente = models.ForeignKey(Paciente)
 
     def montodisponible(self):
         '''
@@ -41,15 +43,27 @@ class Pago(TimeStampedModel):
             return pago
 
 
+class PagoAplicadoManager(models.Manager):
+
+    def total_pagado(self):
+        pa_qs = self.all()
+        if not pa_qs.exists():
+            return 0
+        total_pagado = self.all().aggregate(Sum('importe'))
+        return total_pagado['importe__sum']
+
+
 class PagoAplicado(models.Model):
     '''
     Tabla puente entre Pago y CotizacionItem. Asigna cantidad por item.
     '''
     pago = models.ForeignKey(Pago)
-    cotizacion_item = models.ForeignKey(CotizacionItem)
+    cotizacion_item = models.ForeignKey('cotizacion.CotizacionItem')
     fecha = models.DateTimeField(auto_now_add=True)
     # aqui se aplica parte del pago para un item
-    importe = models.DecimalField(max_digits=6, decimal_places=3)
+    importe = models.DecimalField(max_digits=6, decimal_places=2)
+
+    objects = PagoAplicadoManager()
 
     def __unicode__(self):
             pagodetalle = "%s %s" % (self.pago, self.cotizacion_item)

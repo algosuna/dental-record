@@ -1,6 +1,6 @@
 # encoding:utf-8
-# from django.core.urlresolvers import reverse
-from django.shortcuts import render, get_object_or_404  # , redirect
+from django.core.urlresolvers import reverse
+from django.shortcuts import render, get_object_or_404, redirect
 
 from cotizacion.models import Cotizacion
 from pagos.models import Pago
@@ -19,7 +19,8 @@ def pagos(request, cotizacion_id):
 
     cotizacion = get_object_or_404(Cotizacion, pk=cotizacion_id)
     total = cotizacion.total()
-    items = cotizacion.cotizacionitem_set.filter(status__in=['aceptado'])
+    items = cotizacion.cotizacionitem_set\
+                      .filter(status__in=['aceptado', 'parcial'])
     initial = []
 
     for item in items:
@@ -39,16 +40,32 @@ def pagos(request, cotizacion_id):
 
             monto_aplicado = 0
             for form in pa_formset:
+                form.instance.importe
                 pago_aplicado = form.save(pago)
                 monto_aplicado += pago_aplicado.importe
+
+                # TODO: simplificar esta condicion
+                if pago_aplicado.importe > 0:
+                    item = pago_aplicado.cotizacion_item
+                    total_aplicado = item.pagoaplicado_set.total_pagado()
+
+                    if total_aplicado == item.precio:
+                        item.status = 'pagado'
+
+                    else:
+                        item.status = 'parcial'
+
+                    item.save()
 
             pago.aplicamonto(monto_aplicado)
             pago.save()
 
-            # TODO: add a return
+            return redirect(reverse('pagos_detail', args=[pago.id]))
 
     else:
-        modelform = PagoForm(initial={'monto': cotizacion.total()})
+        monto_total = cotizacion.total_adeudado()
+
+        modelform = PagoForm(initial={'monto': monto_total})
         pa_formset = PagoAplicadoFormset(initial=initial)
 
     items = [form.item for form in pa_formset]
@@ -64,9 +81,10 @@ def pagos(request, cotizacion_id):
 
 def pagos_detail(request, pago_id):
     pago = get_object_or_404(Pago, pk=pago_id)
-    cotizacion = pago.cotizacionitem.cotizacion.get()
+    # TODO: arreglar este query feo
+    # cotizacion = pago.paciente.odontograma_set.get().cotizacion_set.get()
 
     return render(request, 'pago-detail.html', {
                   'pago': pago,
-                  'cotizacion': cotizacion
+                  # 'cotizacion': cotizacion
                   })
