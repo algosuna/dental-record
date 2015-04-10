@@ -1,6 +1,6 @@
-from django.contrib	import admin
-from procesocoopago.models import Pago, PagoAplicado
-from django.core.urlresolvers import reverse
+from django.contrib import admin
+
+from pagos.models import Pago, PagoAplicado
 
 
 class PagoAplicadoAdmin(admin.ModelAdmin):

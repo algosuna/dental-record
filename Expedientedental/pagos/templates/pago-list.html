@@ -1,0 +1,43 @@
+{% extends "base1.html" %}
+{% load static from staticfiles %}
+
+{% block content %}
+
+<h2 class="page-header">Pagos</h2>
+
+{% if pagos %}
+<table class="table">
+
+  <thead>
+
+    <tr>
+
+      <th>Fecha</th>
+      <th>Paciente</th>
+      <th>Medico</th>
+      <th>&nbsp;</th>
+
+    </tr>
+
+  </thead>
+
+  <tbody>
+
+    {% for pago in pagos %}
+    <tr>
+
+      <td>{{ cotizacion.created_at }}</td>
+      <td>{{ paciente.nombre }}</td>
+      <td>{{ medico.nombre }}</td>
+      <td><a href="" class="btn btn-primary pull-right">Completar Pago</a><!-- boton para ir a pago --></td>
+
+    </tr>
+    {% endfor %}
+
+  </tbody>
+
+</table>
+{% else %}
+<!-- TODO: a message in case there are no pending payments -->
+{% endif %}
+{% endblock content %}

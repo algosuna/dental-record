@@ -170,7 +170,7 @@ INSTALLED_APPS = (
     'Inventario',
     'paquete',
     'precios',
-    'procesocoopago',
+    'pagos',
 
 )
 

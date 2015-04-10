@@ -1,0 +1,99 @@
+{% extends "base1.html" %}
+{% load static from staticfiles %}
+
+{% block css %}
+<style>
+  .custom-table th {
+    padding: 8px 15px !important;
+  }
+  .custom-table td {
+    background-color: #ddd;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<h2 class="page-header">Resumen de Pago <small class="pull-right">Cotizacion #{{ cotizacion.id }}</small></h2>
+
+<div class="row">
+
+  <div class="col-md-10 col-md-offset-1">
+    <!-- <p class="text-right"><strong>Fecha:</strong> {{ pago.fecha }}</p> -->
+
+    <table class="table table-bordered custom-table">
+
+      <tr>
+
+        <th style="width:175px;">Nombre del Paciente: </th>
+        <td>{{ pago.paciente.nombre }} {{ pago.paciente.apellidoPaterno }} {{ pago.paciente.apellidoMaterno }}</td>
+
+        <th style="width: 60px;">Fecha:</th>
+        <td>{{ pago.fecha }}</td>
+
+        <th style="width: 60px;">Monto: </th>
+        <td>$ {{ pago.monto }}</td>
+
+      </tr>
+
+    </table>
+
+  </div><!-- end .col-md-10 -->
+
+</div>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Servicio</th>
+      <th>Costo</th>
+      <th>Imoprte</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for pago in pago.pagoaplicado_set.all %}
+    <tr>
+      <td>{{ pago.cotizacion_item }}</td>
+      <td>$ {{ pago.cotizacion_item.precio }}</td>
+      <td>$ {{ pago.importe }}</td>
+      <td><span class="label">{{ pago.cotizacion_item.get_status_display }}</span></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<a href="#" class="pull-right">Imprimir Recibo <span class="glyphicon glyphicon-print"></span></a>
+
+{% endblock content %}
+
+{% block javascript %}
+<script>
+
+$(function() {
+
+  var status = $('.label');
+
+  // for setting the label color
+  $.each(status, function(){
+    var status = $(this);
+
+    if(status.text() == 'Pagado'){
+
+      status.addClass(' label-primary');
+
+    } else if(status.text() == 'Pago Parcial'){
+
+      status.addClass(' label-info');
+
+    } else {
+
+      status.addClass(' label-warning');
+
+    }
+
+  })
+
+});
+</script>
+{% endblock %}

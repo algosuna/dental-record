@@ -2,6 +2,7 @@ from django.db import models
 
 from core.models import TimeStampedModel
 from clinica.models import Procedimiento, Odontograma
+from pagos.models import PagoAplicado
 from precios.models import PrecioTratamiento
 from django.db.models import Sum
 
@@ -11,6 +12,10 @@ class Cotizacion(TimeStampedModel):
 
     def total(self):
         resultado = self.cotizacionitem_set.total_aceptado()
+        return resultado
+
+    def total_adeudado(self):
+        resultado = self.cotizacionitem_set.total_adeudado()
         return resultado
 
     def __unicode__(self):
@@ -44,8 +49,21 @@ class CotizacionItemManager(models.Manager):
         return items
 
     def total_aceptado(self):
-        resultado = self.filter(status='aceptado').aggregate(Sum('precio'))
+        resultado = self.filter(status__in=['aceptado', 'parcial']
+                                ).aggregate(Sum('precio'))
         return resultado['precio__sum']
+
+    def total_pagado(self):
+        pa_qs = PagoAplicado.objects\
+                .filter(cotizacion_item__in=self
+                        .filter(status__in=['parcial', 'aceptado']))
+        if not pa_qs.exists():
+            return 0
+        total_pagado = pa_qs.aggregate(Sum('importe'))
+        return total_pagado['importe__sum']
+
+    def total_adeudado(self):
+        return max(0, self.total_aceptado() - self.total_pagado())
 
 
 class CotizacionItem(TimeStampedModel):
