@@ -4,8 +4,8 @@ from django.template import RequestContext
 from django.http import Http404, HttpResponse
 from django.shortcuts import render_to_response, render, redirect
 from wkhtmltopdf.views import PDFTemplateView
-from .forms import PaqueteForm, PaqueteConsumidoForm,PaqueteConsumidoItemForm
-from paquete.models import Paquete, PaqueteItem,PaqueteConsumido,PaqueteConsumidoItem
+from .forms import PaqueteForm, PaqueteConsumidoItemForm
+from paquete.models import Paquete, PaqueteItem, PaqueteConsumido,PaqueteConsumidoItem
 from datetime import datetime
 from django.views.generic import UpdateView
 from django.views.generic import ListView
@@ -28,9 +28,6 @@ def busqueda(request):
 
 
 
-
-
-
 def PaqueteItem(request):
     if request.method == "POST":
         modelform = PaqueteForm(request.POST)
@@ -42,19 +39,60 @@ def PaqueteItem(request):
     return render(request, "tipoPaquete.html", {"form": modelform})
 
 
-class PaquetesPDF(PDFTemplateView):
-    filename = 'paquetes.pdf'
-    template_name = 'paquetes_pdf.html'
-    cmd_options = {
-        'margin-top': 13,
-    }
 
-    def get_context_data(self, **kwargs):
-        context = super(PaquetesPDF, self).get_context_data(**kwargs)
-        context['paquetes'] = EntryPaquete.objects.order_by('nombre__nombre')
-        context['fecha'] = datetime.now().strftime("%d/%m/%Y")
-        context['hora'] = datetime.now().strftime("%I:%M %p")
-        return context
+def PaqueteC(request):
+    if request.method == "POST":
+        modelform = PaqueteConsumidoItemForm(request.POST)
+        if modelform.is_valid():
+            modelform.save()
+            return redirect('/paquetes/')
+    else:
+        modelform = PaqueteConsumidoItemForm()
+    return render(request, "salida_pack.html",{"form": modelform})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -83,6 +121,27 @@ class EditPaqueteView(UpdateView):
         context['action']=reverse('paquete-edit',
                                     kwargs={'pk': self.object.id})
         return context
+
+
+#class Paquetes(ListView):
+    #model = PaqueteConsumido
+    #context_object_name= "paquetes"
+    #template_name="paquetes.html"
+
+class PaquetesPDF(PDFTemplateView):
+    filename = 'paquetes.pdf'
+    template_name = 'paquetes_pdf.html'
+    cmd_options = {
+        'margin-top': 13,
+    }
+
+    def get_context_data(self, **kwargs):
+        context = super(PaquetesPDF, self).get_context_data(**kwargs)
+        context['paquetes'] = EntryPaquete.objects.order_by('nombre__nombre')
+        context['fecha'] = datetime.now().strftime("%d/%m/%Y")
+        context['hora'] = datetime.now().strftime("%I:%M %p")
+        return context
+
 
 
 

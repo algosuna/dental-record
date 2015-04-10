@@ -41,9 +41,9 @@ class Entradas(models.Model):
         def agregar(self, cantidad_a_agregar):
                 self.cantidad += cantidad_a_agregar
 
-        def quitar(self, cantidad_a_quitar):
-                if self.cantidad >= self.cantidad_a_quitar:
-                        self.cantidad -= cantidad_a_agregar
+        def disminuir(self, cantidad_a_disminuir):
+                if self.cantidad >= self.cantidad_a_disminuir:
+                        self.cantidad -= cant_a_disminuir
                         return True
                 return False
 

@@ -1,0 +1,20 @@
+{% extends "base1.html" %}
+{%load static from staticfiles %}
+
+{% load crispy_forms_tags %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">
+<link rel="stylesheet" type="text/css" href="../src/bootstrap-duallistbox.css">
+{% endblock css %}
+
+{% block content %}
+
+<h2 class="page-header">Registrar </h2>
+{% crispy form %}
+
+
+
+
+
+{% endblock content %}
