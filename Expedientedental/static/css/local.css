@@ -65,6 +65,19 @@ legend {
   padding-bottom: 10px;
 }
 
+
+/* header form */
+/*
+.header-form .form-control {
+  display: inline-block;
+  width: 80%;
+}
+
+.header-form button {
+  margin: 5px 0px 0px 9px;
+}*/
+
+
 /* cotizacion */
 
 .cotizacion .form-group {
