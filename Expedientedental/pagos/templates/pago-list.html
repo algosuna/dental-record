@@ -3,7 +3,7 @@
 
 {% block content %}
 
-<h2 class="page-header">Pagos</h2>
+<h2 class="page-header">Pagos <form action="" method="get" class="form-inline pull-right header-form"><div class="input-group"><input type="text" placeholder="Busque paciente..." class="form-control"><span class="input-group-btn"><button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button></span></div></form></h2>
 
 {% if pagos %}
 <table class="table">
@@ -14,7 +14,9 @@
 
       <th>Fecha</th>
       <th>Paciente</th>
-      <th>Medico</th>
+      <th>Total</th>
+      <th>Su Pago</th>
+      <th>Adeudo</th>
       <th>&nbsp;</th>
 
     </tr>
@@ -26,10 +28,12 @@
     {% for pago in pagos %}
     <tr>
 
-      <td>{{ cotizacion.created_at }}</td>
-      <td>{{ paciente.nombre }}</td>
-      <td>{{ medico.nombre }}</td>
-      <td><a href="" class="btn btn-primary pull-right">Completar Pago</a><!-- boton para ir a pago --></td>
+      <td>{{ pago.updated_at }}</td>
+      <td>{{ pago.paciente.nombre }} {{ pago.paciente.apellidoPaterno }} {{ pago.paciente.apellidoMaterno }}</td>
+      <td>{{ total_precio }}</td>
+      <td>{{ pago.monto_aplicado }}</td>
+      <td>{{ total_adeudado }}</td>
+      <td><a href="/pagos/{{ pago.id }}/" class="btn btn-success pull-right">Completar Pago</a><!-- boton para ir a pago --></td>
 
     </tr>
     {% endfor %}
