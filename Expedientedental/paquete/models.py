@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 from django.db import models
+import datetime as dt
 #from Inventario.models import Producto
 from altas.models import Medico, Paciente
 
@@ -29,7 +30,8 @@ class PaqueteConsumido(models.Model):
 	paquete=models.ForeignKey(Paquete)
 	medico=models.ForeignKey(Medico)
 	paciente=models.ForeignKey(Paciente)
-	fecha= models.DateTimeField(auto_now_add = True)
+	fecha= models.DateTimeField()
+	       
 
 	def __unicode__(self):
 		return '%s %s'%(self.paquete,self.medico)

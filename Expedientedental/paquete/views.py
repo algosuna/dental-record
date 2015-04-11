@@ -4,11 +4,11 @@ from django.template import RequestContext
 from django.http import Http404, HttpResponse
 from django.shortcuts import render_to_response, render, redirect
 from wkhtmltopdf.views import PDFTemplateView
-from .forms import PaqueteForm, PaqueteConsumidoItemForm
+from .forms import PaqueteForm, PaqueteConsumidoForm
 from paquete.models import Paquete, PaqueteItem, PaqueteConsumido,PaqueteConsumidoItem
 from datetime import datetime
-from django.views.generic import UpdateView
-from django.views.generic import ListView
+from django.views.generic import UpdateView, ListView
+
 from django.core.urlresolvers import reverse
 from core.utils import generic_search
 
@@ -20,13 +20,11 @@ def busqueda(request):
 
     objects = []
 
-    for model, fields in MODEL_MAP.iteritems():
+    for model, fields in MODEL_MAP.items():
         objects += generic_search(request,model,fields,query)
 
     return render_to_response('paqueteedit.html',
         {'objects':objects, 'search_string': request.GET.get(query,''), } )
-
-
 
 def PaqueteItem(request):
     if request.method == "POST":
@@ -39,64 +37,24 @@ def PaqueteItem(request):
     return render(request, "tipoPaquete.html", {"form": modelform})
 
 
-
 def PaqueteC(request):
     if request.method == "POST":
-        modelform = PaqueteConsumidoItemForm(request.POST)
+        modelform = PaqueteConsumidoForm(request.POST)
         if modelform.is_valid():
+
             modelform.save()
             return redirect('/paquetes/')
     else:
-        modelform = PaqueteConsumidoItemForm()
-    return render(request, "salida_pack.html",{"form": modelform})
+        modelform = PaqueteConsumidoForm()
+    return render(request, "salida_pack.html", {"form": modelform})
+
+class Pending(ListView):
+    model = PaqueteConsumido
+    context_object_name = 'paquetes'
+    template_name = 'pendingorders.html'
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-def ReportarPaquete (request):
+def ReportarPaquete(request):
     if request.method == "POST":
         modelform = PaqueteForm(request.POST)
         if modelform.is_valid():
@@ -106,41 +64,25 @@ def ReportarPaquete (request):
         modelform = PaqueteForm()
     return render(request, "packDetail.html", {"form": modelform})
 
-class EditPaqueteView(UpdateView):  
-    model=PaqueteConsumidoItem
-    succes_url='/'
+
+class EditPaqueteView(UpdateView):
+    model = PaqueteConsumidoItem
+    succes_url = '/'
     template_name = 'packDetail.html'
     form_class = PaqueteConsumidoItem
-    
 
     def get_succes_url(self):
-        return  '/'
+        return '/'
 
-    def get_context_data(self,**kwargs):
-        context=super(EditPaqueteView,self).get_context_data(**kwargs)
-        context['action']=reverse('paquete-edit',
+    def get_context_data(self, **kwargs):
+        context = super(EditPaqueteView, self).get_context_data(**kwargs)
+        context['action'] = reverse('paquete-edit',
                                     kwargs={'pk': self.object.id})
         return context
 
 
-#class Paquetes(ListView):
-    #model = PaqueteConsumido
-    #context_object_name= "paquetes"
-    #template_name="paquetes.html"
 
-class PaquetesPDF(PDFTemplateView):
-    filename = 'paquetes.pdf'
-    template_name = 'paquetes_pdf.html'
-    cmd_options = {
-        'margin-top': 13,
-    }
 
-    def get_context_data(self, **kwargs):
-        context = super(PaquetesPDF, self).get_context_data(**kwargs)
-        context['paquetes'] = EntryPaquete.objects.order_by('nombre__nombre')
-        context['fecha'] = datetime.now().strftime("%d/%m/%Y")
-        context['hora'] = datetime.now().strftime("%I:%M %p")
-        return context
 
 
 

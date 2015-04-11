@@ -1,4 +1,5 @@
 from django import forms
+import datetime as dt
 from django.forms.formsets import formset_factory, BaseFormSet
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
@@ -37,7 +38,7 @@ class PaqueteForm(forms.ModelForm):
 
 				),
 			ButtonHolder(
-					Submit('save','Paso 2')
+					Submit('save','Generar')
 
 			)
 		)
@@ -67,16 +68,15 @@ class PaqueteForm(forms.ModelForm):
 
 
 
-class PaqueteConsumidoItemForm(forms.ModelForm):
-	paquetes=forms.ModelMultipleChoiceField(queryset=Paquete.objects.all())
+class PaqueteConsumidoForm(forms.ModelForm):
 	class Meta:
-		model=PaqueteConsumido
+		model = PaqueteConsumido
 
 	def __init__(self, *args, **kwargs):
-		super(PaqueteConsumidoItemForm,self).__init__(*args,**kwargs)
-		self.helper=FormHelper()
-		self.helper=FormHelper()
-		self.helper.layout=Layout(
+		super(PaqueteConsumidoForm, self).__init__(*args, **kwargs)
+		self.helper = FormHelper()
+		
+		self.helper.layout = Layout(
 			HTML("""
 							<p class="parrafo"> Campos con ( * ) Son Requeridos. </p>
 
@@ -85,40 +85,22 @@ class PaqueteConsumidoItemForm(forms.ModelForm):
 			Fieldset(
 				'',
 
-				Field('paquete' , wrapper_class='col-md-2'),
-				Field('medico' , wrapper_class='col-md-6'),
-				Field('fecha' , wrapper_class='col-md-2'),
-				Field('paciente' , wrapper_class='col-md-2'),
+				Field('paquete', wrapper_class='col-md-3'),
+				Field('medico', wrapper_class='col-md-3'),
+				Field('fecha', wrapper_class='col-md-3'),
+				Field('paciente', wrapper_class='col-md-3'),
 
 
 				),
-			ButtonHolder(
-					Submit('save','Generar salida')
+			
 
 			)
-		)
-		self.fields['paquete'].label = 'Paquete'
-		self.fields['medico'].label = 'Medidco'
-		self.fields['paciente'].label = 'Paciente'
+		
+		# self.fields['paquete'].label = 'Paquete'
+		self.fields['medico'].label = 'M&eacute;dico'
+		# self.fields['paciente'].label = 'Paciente'
+		
+		self.fields['fecha'].initial = dt.datetime.now()
 
-	def save(self, commit=True):
-		paquete = super(PaqueteConsumidoItem, self).save(commit)
-		items = self.save_to_items(paquete, commit)
-		return (paquete, items)
-
-	def save_to_items(self, paquete, commit=True):
-		productos = self.cleaned_data.get('productos')
-		items = []
-
-		for producto in productos:
-			item = PaqueteConsumidoItem(
-							paquete=paquete,
-							producto=producto,
-							cantidad=1
-							)
-			if commit:
-				item.save()
-			items.append(item)
-		return items
-
+	
 
