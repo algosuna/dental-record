@@ -15,10 +15,10 @@ def pagos_list(request):
     # pagos = Paciente.pago_set.all().order_by('-fecha')[:1]
     query = 'q'
 
+    total_adeudado = 0
+    total_precio = 0
     for pago in pagos:
         pagosaplicados = pago.pagoaplicado_set.all()
-        total_adeudado = 0
-        total_precio = 0
 
         for pagoaplicado in pagosaplicados:
             item = pagoaplicado.cotizacion_item
