@@ -13,7 +13,7 @@ jQuery(function(){
       totalFormId.attr('value', counter);
     }
     // Resta 1 por la forma que quita foreach.
-    setTotalForms(getTotalForms()-1);
+    setTotalForms(0);
 
     // Isolates the number that should be incremented
     function updateElementIndex(elem, prefix, ndx) {
@@ -95,6 +95,7 @@ jQuery(function(){
 
 		$.each([caraCentral, caraIzquierda, caraDerecha, caraInferior, caraSuperior, caraCompleto], function(index, value){
 	    	value.click(function(){
+	    		// Evento que agrega procedimiento a odontograma
 	    		var me = $(this);
 	    		var cara = me.data('cara');
 
@@ -166,7 +167,9 @@ jQuery(function(){
 		self.tratamientosAplicados = ko.observableArray([]);
 
 		self.quitarTratamiento = function(tratamiento){
-			self.tratamientosAplicados.remove(tratamiento);
+			self.tratamientosAplicados.destroy(tratamiento);
+			// Resta 1 para mantenter actualizado contador de formas en formset
+		    // setTotalForms(getTotalForms()-1);
 			renderSvg();
 		}
 

@@ -1,5 +1,6 @@
 from django import forms
 import datetime as dt
+from django.forms.models import modelformset_factory
 from django.forms.formsets import formset_factory, BaseFormSet
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
@@ -67,7 +68,6 @@ class PaqueteForm(forms.ModelForm):
 		return items
 
 
-
 class PaqueteConsumidoForm(forms.ModelForm):
 	class Meta:
 		model = PaqueteConsumido
@@ -102,5 +102,35 @@ class PaqueteConsumidoForm(forms.ModelForm):
 		
 		self.fields['fecha'].initial = dt.datetime.now()
 
-	
+class PaqueteConsumidoIForm(forms.ModelForm):
+	class Meta:
+		model = PaqueteConsumidoItem
 
+	def __init__(self, *args, **kwargs):
+		super(PaqueteConsumidoIForm, self).__init__(*args, **kwargs)
+		self.helper = FormHelper()
+		
+		self.helper.layout = Layout(
+			HTML("""
+							<p class="parrafo"> Campos con ( * ) Son Requeridos. </p>
+
+							"""
+			),
+			Fieldset(
+				'',
+
+				Field('paquete_consumido', wrapper_class='col-md-3'),
+				Field('tratamiento_pago', wrapper_class='col-md-2'),
+				Field('producto', wrapper_class='col-md-3'),
+				Field('cantidad', wrapper_class='col-md-2'),
+				Field('precio', wrapper_class='col-md-2'),
+
+
+				),
+			ButtonHolder(
+					Submit('save','Generar')
+			
+
+			)
+
+			)

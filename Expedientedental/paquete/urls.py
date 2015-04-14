@@ -4,12 +4,11 @@ from paquete.views import ReportarPaquete, busqueda, EditPaqueteView,PaqueteC,\
 
 urlpatterns = patterns('paquete.views',
 
-    url(r'^pendientes/$',Pending.as_view()),
+    url(r'^pendientes/$', Pending.as_view()),
     url(r'^tipoPaquete/$', 'PaqueteItem'),
-    url(r'^paquetes/', PaqueteC),    
-    url(r'^paquetes/matreq/', PaqueteC),
-    url(r'^tipoPaquete/edit/(?P<pk>\d+)$',EditPaqueteView.as_view()),
-    url(r'^detalle/$',ReportarPaquete),
+    url(r'^paquetes/', PaqueteC),
+    url(r'^tipoPaquete/edit/(?P<pk>\d+)$', EditPaqueteView.as_view()),
+    url(r'^orden/detalle/$', ReportarPaquete),
     
     
 

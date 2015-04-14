@@ -1,31 +1,34 @@
 {% extends "base1.html" %}
 {%load static from staticfiles %}
 
+{% load crispy_forms_tags %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">
+<link rel="stylesheet" type="text/css" href="../src/bootstrap-duallistbox.css">
+{% endblock css %}
+
 {% block content %}
 
-<h2 class="page-header">Paquetes Registrados</h2>
 
-{% if paquetes %}
-<table class="table table-hover">
-  <thead>
-    <tr>
-      <th>Paquete</th>
-      <th>Descripcion</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for paquete in paquetes %}
-    <tr>
-      <td>{{ paquete.nombre }}</td>
-      <td>{{ paquete.descripcion }}</td>
-      
-      <td><a href="/altas/paciente/edit/{{ paciente.id }}/"><span class="glyphicon glyphicon-pencil"></span></a></td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
-<a href="/altas/paciente/new/" class="btn btn-primary pull-right">Registrar Nuevo paquete <span class="glyphicon glyphicon-plus"></span></a>
-{% else %}
-<p class="lead text-center text-muted">No hay paquetes registrados en la base de datos.<br><br><a href="/altas/paciente/new/" class="btn btn-primary">Registrar Paquete <span class="glyphicon glyphicon-chevron-right"></span></a></p>
-{% endif %}
+<form action="{{action}}" method="POST">
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 class="page-header">Registrar Orden </h2>
+{% crispy form %}
+
+
+
+
+
 {% endblock content %}

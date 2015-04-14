@@ -26,7 +26,7 @@ class Producto(models.Model):
         precioUnidad  = models.DecimalField(max_digits = 8, decimal_places = 2,default=Decimal(u'0.00'))
         
         def __unicode__(self): 
-                return '%s %s %s %s '%(self.producto,self.unidad_medida,self.porciones,self.descripcion)
+                return u'%s %s %s %s '%(self.producto,self.unidad_medida,self.porciones,self.descripcion)
 
         def total(self):
                 precioUnidad =self.precio/self.porciones
