@@ -11,6 +11,8 @@ from pagos.forms import PagoForm, PagoAplicadoFormset
 
 def pagos_list(request):
     pagos = Pago.objects.all()
+    # pagos = Pago.objects.order_by('fecha')[:1]
+    # pagos = Paciente.pago_set.all().order_by('-fecha')[:1]
     query = 'q'
 
     for pago in pagos:
@@ -109,9 +111,5 @@ def pagos(request, cotizacion_id):
 
 def pagos_detail(request, pago_id):
     pago = get_object_or_404(Pago, pk=pago_id)
-    # cotizacion = Cotizacion.objects.all()
-    cotizaciones = pago.pago_aplicado_set.all.cotizacion
 
-    return render(request, 'pago-detail.html', {
-                  'pago': pago,
-                  'cotizaciones': cotizaciones})
+    return render(request, 'pago-detail.html', {'pago': pago})

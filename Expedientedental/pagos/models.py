@@ -37,9 +37,11 @@ class Pago(TimeStampedModel):
         if monto_a_aplicar <= self.montodisponible():
             aplica = self.monto_aplicado + monto_a_aplicar
             self.monto_aplicado = aplica
+        else:
+            raise ValueError
 
     def __unicode__(self):
-            pago = "%s %s %s " % (self.monto, self.monto_aplicado, self.fecha)
+            pago = "%s %s %s" % (self.monto, self.monto_aplicado, self.fecha)
             return pago
 
 
@@ -49,8 +51,10 @@ class PagoAplicadoManager(models.Manager):
         pa_qs = self.all()
         if not pa_qs.exists():
             return 0
-        total_pagado = self.all().aggregate(Sum('importe'))
+        total_pagado = pa_qs.aggregate(Sum('importe'))
         return total_pagado['importe__sum']
+
+    # TODO: something  here I don't remember anymore.
 
 
 class PagoAplicado(models.Model):
