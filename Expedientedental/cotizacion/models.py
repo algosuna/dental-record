@@ -55,8 +55,9 @@ class CotizacionItemManager(models.Manager):
 
     def total_pagado(self):
         pa_qs = PagoAplicado.objects\
-                .filter(cotizacion_item__in=self
-                        .filter(status__in=['parcial', 'aceptado']))
+            .filter(cotizacion_item__in=self
+                    .filter(status__in=['parcial', 'aceptado']))
+
         if not pa_qs.exists():
             return 0
         total_pagado = pa_qs.aggregate(Sum('importe'))
