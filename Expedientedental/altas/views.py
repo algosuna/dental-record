@@ -117,6 +117,7 @@ class TratamientosView(MetodoListView):
 
 
 class TratamientoUpdateView(MetodoUpdateView):
+    model = Tratamiento
     name = 'tratamiento'
     form_class = TratamientoForm
 
@@ -132,6 +133,7 @@ class EvaluacionesView(MetodoListView):
 
 
 class EvaluacionUpdateView(MetodoUpdateView):
+    model = Evaluacion
     name = 'evaluacion'
     form_class = EvaluacionForm
 
@@ -149,6 +151,7 @@ class TratamientosPreventivosView(MetodoListView):
 
 
 class TratamientoPreventivoUpdateView(MetodoUpdateView):
+    model = TratamientoPreventivo
     name = 'tratamiento preventivo'
     slug = 'preventivo'
     form_class = TratamientoPreventivoForm
