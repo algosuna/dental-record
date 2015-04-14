@@ -1,0 +1,32 @@
+{% extends 'base1.html' %}
+{% block title %}Pagos - Pendientes{% endblock %}
+
+{% block content %}
+<h2 class="page-header">Meh</h2>
+
+<table class="table table-bordered">
+
+  <thead>
+
+    <tr>  
+
+      <th>Nombre</th>
+      <th>&nbsp;</th>
+
+    </tr>
+
+  </thead>
+
+  <tbody>
+
+    {% for paciente in pacientes %}
+    <tr>
+      <td class="padded">{{ paciente.nombre }} {{ paciente.apellidoPaterno }} {{ paciente.apellidoMaterno }}</td>
+      <td><a href="" class="btn btn-primary pull-right">Ver Procedimientos</a></td>
+    </tr>
+    {% endfor %}
+
+  </tbody>
+
+</table>
+{% endblock %}

@@ -95,6 +95,10 @@ tables
   padding-top: 25px;
 }
 
+.padded {
+  padding: 14px!important;
+}
+
 /*
 
 login

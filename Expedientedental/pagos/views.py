@@ -11,8 +11,6 @@ from pagos.forms import PagoForm, PagoAplicadoFormset
 
 def pagos_list(request):
     pagos = Pago.objects.all()
-    # pagos = Pago.objects.order_by('fecha')[:1]
-    # pagos = Paciente.pago_set.all().order_by('-fecha')[:1]
     query = 'q'
 
     total_adeudado = 0
@@ -113,3 +111,19 @@ def pagos_detail(request, pago_id):
     pago = get_object_or_404(Pago, pk=pago_id)
 
     return render(request, 'pago-detail.html', {'pago': pago})
+
+
+def pagos_pending(request):
+    cotizaciones = Cotizacion.objects.all()
+    pacientes = Paciente.objects.all()
+
+    return render(request, 'pago-pending.html', {
+                  'cotizaciones': cotizaciones,
+                  'pacientes': pacientes
+                  })
+
+
+def pagos_paciente(request, paciente_id):
+    paciente = get_object_or_404(Paciente, pk=paciente_id)
+
+    return render(request, 'pago-paciente.html', {'paciente': paciente})

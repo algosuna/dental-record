@@ -22,17 +22,25 @@
 
 </head>
 <body>
+
   <nav class="navbar navbar-inverse navbar-fixed-top">
+
     <div class="container">
+
       <div class="navbar-header">
+
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navigation">
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
+
       </div><!-- end .navbar-header -->
+
       <div class="collapse navbar-collapse" id="navigation">
+
         <ul class="nav navbar-nav">
+
           <li><a href="/clinica/">Actividades Clinicas</a></li>
           <li>
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Altas <span class="caret"></span></a>
@@ -46,8 +54,9 @@
               <li><a href="/altas/evaluacion/">Evaluaciones</a></li>
             </ul><!-- end .dropdown-menu -->
           </li>
+
           <li>
-            <a href="" class="dropdown=toggle" data-toggle="dropdown">Actividades Administrativas<span class="caret"></span></a>
+            <a href="" class="dropdown-toggle" data-toggle="dropdown">Actividades Administrativas<span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><a href="/producto/">Alta de Productos</a></li>
               <li><a href="/entradas/">Entrada de Productos</a></li>
@@ -56,38 +65,63 @@
               <li><a href="/paquetes/">Generar Orden de Salida</a></li>
             </ul><!-- end .dropdown-menu -->
           </li>
-          <li><a href="/cotizacion/">Presupuestos</a></li>
-          <li><a href="/pagos/">Pagos</a></li>
+
+          <li><a href="/cotizacion/">Cotizaciones</a></li>
+
+          <li>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Pagos<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="/pagos/">Lista de Pagos</a></li>
+              <li><a href="/pagos/pendientes/">Pagos a Realizar</a></li>
+            </ul>
+          </li>
+
       </div><!-- end .navbar-collapse -->
+
     </div><!-- end .container -->
+
   </nav><!-- end .navbar -->
 
   <div class="page-header container clearfix">
+
     <img src="{% static 'img/logo.png'%}" alt="Logo" height="125" width="170" class="pull-left">
 
     <h2 class="pull-left">Sistema Administrativo Dental</h2>
+
     <div class="muela pull-right">
+
       <img src="{% static 'img/muela.png' %}" height="112" width="77">
+
     </div>
+
   </div>
 
   <div class="container">
+
     <div class="row">
+
       <div class="col-md-10 col-md-offset-1">
 
   {% block content %}
   {% endblock content%}
 
       </div>
+
     </div><!-- end .row -->
+
   </div>
 
-    <footer>
-      <div class="container">
-        <p class="alert alert-danger">Derivado del contrato de prestación de Servicios Profesionales celebrado entre Usted y MediExcel Health Plan, le manifestamos que en términos de la Ley Federal de Protección de Datos Personales en Posesión de los Particulares, deberá apegarse al Aviso de Privacidad que MediExcel HealthPlan comprometió a los titulares respecto de su información Personal, mismo que anexamos para su conocimiento y observación. Aviso De Confidencialidad de Datos Personales MediExcel Health Plan, con domicilio Fiscal en Av. Paseo de los Héroes No. 2507 Zona Río Tijuana, B.C. 22320, establece que, conforme lo marca la Ley Federal de Protección de Datos Personales en Posesión de los Particulares, todos aquellos datos entregados y obtenidos con motivo del contrato de servicios realizado con la empresa, serán utilizados unicamente para la operación y administración de su Plan de Salud, garantizando que sus datos personales no serán utilizados para fines distintos a lo indicado previamente, ni serán transferidos a terceros, obligandose MediExcel Health Plan a salva guardar la privacidad de los mismos. Usted tiene derecho a limitar el uso de divulgación de sus datos personales, rectificarlos y cancelarlos mediante solicitud por escrito a nuestro departamento de atención a asegurados o con el Registro Único de Usuarios (REUS). Todo cambio al presente aviso por MediExcel Health Plan será notificado en nuestro portal www.mediexcelHP.com</p>
-        <p class="text-muted">Gracias por usar el Sistema Administrativo Dental MediExcel Health Plan.</p>
-      </div>
-    </footer>
+  <footer>
+
+    <div class="container">
+
+      <p class="alert alert-danger">Derivado del contrato de prestación de Servicios Profesionales celebrado entre Usted y MediExcel Health Plan, le manifestamos que en términos de la Ley Federal de Protección de Datos Personales en Posesión de los Particulares, deberá apegarse al Aviso de Privacidad que MediExcel HealthPlan comprometió a los titulares respecto de su información Personal, mismo que anexamos para su conocimiento y observación. Aviso De Confidencialidad de Datos Personales MediExcel Health Plan, con domicilio Fiscal en Av. Paseo de los Héroes No. 2507 Zona Río Tijuana, B.C. 22320, establece que, conforme lo marca la Ley Federal de Protección de Datos Personales en Posesión de los Particulares, todos aquellos datos entregados y obtenidos con motivo del contrato de servicios realizado con la empresa, serán utilizados unicamente para la operación y administración de su Plan de Salud, garantizando que sus datos personales no serán utilizados para fines distintos a lo indicado previamente, ni serán transferidos a terceros, obligandose MediExcel Health Plan a salva guardar la privacidad de los mismos. Usted tiene derecho a limitar el uso de divulgación de sus datos personales, rectificarlos y cancelarlos mediante solicitud por escrito a nuestro departamento de atención a asegurados o con el Registro Único de Usuarios (REUS). Todo cambio al presente aviso por MediExcel Health Plan será notificado en nuestro portal www.mediexcelHP.com</p>
+
+      <p class="text-muted">Gracias por usar el Sistema Administrativo Dental MediExcel Health Plan.</p>
+
+    </div>
+
+  </footer>
 
 
   <script src="{% static 'js/jquery-1.11.2.min.js' %}"></script>
