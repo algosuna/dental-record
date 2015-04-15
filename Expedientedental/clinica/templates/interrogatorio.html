@@ -311,11 +311,11 @@ $( document ).ready(function() {
 
 // disables paciente select
 // and fills in the value by id
-(function() {
+$(function() {
   var paciente = $('#id_paciente');
 
   paciente.val('{{ paciente.id }}');
   paciente.attr('readonly', '');
-})();
+})
 </script>
 {% endblock javascript %}
