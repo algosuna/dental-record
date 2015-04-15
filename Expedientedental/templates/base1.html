@@ -9,8 +9,8 @@
 
   {%load static from staticfiles %}
 
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-  <link rel="stylesheet" href="{% static 'css/local.css'%}">
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/local.css' %}">
 
   {% block css %}
   {% endblock css %}
@@ -90,8 +90,8 @@
     </footer>
 
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+  <script src="{% static 'js/jquery-1.11.2.min.js' %}"></script>
+  <script src="{% static 'js/bootstrap.min.js' %}"></script>
   {% block javascript %}
   {% endblock javascript %}
 </body>

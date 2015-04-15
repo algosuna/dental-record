@@ -89,7 +89,6 @@ def detalle_odontograma(request, paciente_id, odontograma_id):
 
 def interrogatorio(request, paciente_id):
     paciente = get_object_or_404(Paciente, pk=paciente_id)
-    interrogatorio = paciente.interrogatorio_set.get()
     expediente = 'active'
 
     if request.method == 'POST':
@@ -104,7 +103,6 @@ def interrogatorio(request, paciente_id):
     return render(request, 'interrogatorio.html',
                   {'form': modelform,
                    'paciente': paciente,
-                   'interrogatorio': interrogatorio,
                    'expediente': expediente})
 
 
