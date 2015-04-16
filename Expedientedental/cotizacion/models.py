@@ -11,11 +11,23 @@ class Cotizacion(TimeStampedModel):
     odontograma = models.ForeignKey(Odontograma, null=True)
 
     def total(self):
+        resultado = self.cotizacionitem_set.total()
+        return resultado
+
+    def total_adeudo(self):
+        resultado = self.cotizacionitem_set.total_adeudo()
+        return resultado
+
+    def total_aceptado(self):
         resultado = self.cotizacionitem_set.total_aceptado()
         return resultado
 
     def total_adeudado(self):
         resultado = self.cotizacionitem_set.total_adeudado()
+        return resultado
+
+    def total_pagado(self):
+        resultado = self.cotizacionitem_set.total_pagado()
         return resultado
 
     def __unicode__(self):
@@ -48,9 +60,24 @@ class CotizacionItemManager(models.Manager):
 
         return items
 
+    def total(self):
+        resultado = self.filter(status__in=['aceptado', 'parcial', 'pagado']
+                                ).aggregate(Sum('precio'))
+        if resultado['precio__sum'] is None:
+            return 0
+        return resultado['precio__sum']
+
+    def total_adeudo(self):
+        '''
+        Este total considera items pagados (a diferencia de total_adeudado)
+        '''
+        return max(0, self.total() - self.total_pagado())
+
     def total_aceptado(self):
         resultado = self.filter(status__in=['aceptado', 'parcial']
                                 ).aggregate(Sum('precio'))
+        if resultado['precio__sum'] is None:
+            return 0
         return resultado['precio__sum']
 
     def total_pagado(self):
