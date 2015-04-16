@@ -18,6 +18,10 @@ class Cotizacion(TimeStampedModel):
         resultado = self.cotizacionitem_set.total_adeudo()
         return resultado
 
+    def total_pago(self):
+        resultado = self.cotizacionitem_set.total_pago()
+        return resultado
+
     def total_aceptado(self):
         resultado = self.cotizacionitem_set.total_aceptado()
         return resultado
@@ -71,7 +75,17 @@ class CotizacionItemManager(models.Manager):
         '''
         Este total considera items pagados (a diferencia de total_adeudado)
         '''
-        return max(0, self.total() - self.total_pagado())
+        return max(0, self.total() - self.total_pago())
+
+    def total_pago(self):
+        pa_qs = PagoAplicado.objects\
+            .filter(cotizacion_item__in=self
+                    .filter(status__in=['parcial', 'pagado']))
+
+        if not pa_qs.exists():
+            return 0
+        total_pagado = pa_qs.aggregate(Sum('importe'))
+        return total_pagado['importe__sum']
 
     def total_aceptado(self):
         resultado = self.filter(status__in=['aceptado', 'parcial']
