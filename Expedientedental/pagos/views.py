@@ -15,6 +15,7 @@ def pagos(request, cotizacion_id):
     total = cotizacion.total_aceptado()
     items = cotizacion.cotizacionitem_set\
                       .filter(status__in=['aceptado', 'parcial'])
+    paciente = cotizacion.odontograma.paciente
     initial = []
 
     for item in items:
@@ -57,7 +58,10 @@ def pagos(request, cotizacion_id):
             return redirect(reverse('pagos_detail', args=[pago.id]))
 
     else:
-        modelform = PagoForm(initial={'monto': cotizacion.total_adeudado()})
+        modelform = PagoForm(initial={
+                             'monto': cotizacion.total_adeudado(),
+                             'paciente': paciente
+                             })
         pa_formset = PagoAplicadoFormset(initial=initial)
 
     items = [form.item for form in pa_formset]
@@ -72,7 +76,7 @@ def pagos(request, cotizacion_id):
 
 
 def pagos_list(request):
-    pagos = Pago.objects.all()
+    pagos = Pago.objects.order_by('-fecha')
     query = 'q'
 
     MODEL_MAP = {
@@ -142,7 +146,9 @@ def pagos_pending(request, paciente_id):
     paciente = get_object_or_404(Paciente, pk=paciente_id)
     cotizaciones = Cotizacion.objects.filter(odontograma__paciente=paciente)
     # Quitamos cotizaciones que no tengan items que cobrar (total = 0)
-    cotizaciones = [c for c in cotizaciones if c.total() != 0]
+    cotizaciones = [
+        c for c in cotizaciones if c.total() != 0 and c.total_adeudado() != 0
+    ]
 
     return render(request, 'pago-pending.html', {
                   'paciente': paciente,
