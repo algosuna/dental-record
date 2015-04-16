@@ -1,32 +1,118 @@
 {% extends 'base1.html' %}
 {% block title %}Pagos - Pendientes{% endblock %}
 
+{% block css %}
+<style>
+  .cotizacion-table {
+    margin-bottom: 0px;
+  }
+</style>
+{% endblock %}
+
 {% block content %}
-<h2 class="page-header">Meh</h2>
+<h2 class="page-header">Pagos Pendientes <small class="pull-right">{{ paciente.nombre }} {{ paciente.apellidoPaterno }} {{ paciente.apellidoMaterno }} #{{ paciente.credencialPaciente }}</small></h2>
 
-<table class="table table-bordered">
+{% if cotizaciones %}
+{% for cotizacion in cotizaciones %}
+{% with items=cotizacion.cotizacionitem_set.all %}
 
-  <thead>
+<h3>Cotizacion #{{ cotizacion.id }}</h3>
+<div class="row">
+<div class="col-md-9">
+<div class="well clearfix">
 
-    <tr>  
+  <table class="table table-bordered cotizacion-table">
 
-      <th>Nombre</th>
-      <th>&nbsp;</th>
+    <thead>
 
-    </tr>
+      <tr>
 
-  </thead>
+        <th>Procedimiento</th>
+        <th style="width:102px;">Status</th>
+        <th style="width:85px;">Precio</th>
 
-  <tbody>
+      </tr>
 
-    {% for paciente in pacientes %}
-    <tr>
-      <td class="padded">{{ paciente.nombre }} {{ paciente.apellidoPaterno }} {{ paciente.apellidoMaterno }}</td>
-      <td><a href="" class="btn btn-primary pull-right">Ver Procedimientos</a></td>
-    </tr>
-    {% endfor %}
+    </thead>
 
-  </tbody>
+    <tbody>
+      {% for item in items %}
+      {% if item.status != 'pendiente' %}
+      <tr>
 
-</table>
+        <td>{{ item }}</td>
+        <td><span class="label">{{ item.get_status_display}}</span></td>
+        <td>$ {{ item.precio }}</td>
+
+      </tr>
+      {% endif %}
+      {% endfor %}
+      
+    </tbody>
+
+  </table>
+
+  <div class="pull-right" style="width:188px;">
+    <table class="table table-bordered">
+      <tr>
+        <th><span class="pull-right">Total:</span></th>
+        <td>$ {{ cotizacion.total }}</td>
+      </tr>
+      <tr>
+        <th><span class="pull-right">Su Pago:</span></th>
+        <td>$ {{ cotizacion.total_pagado }}</td>
+      </tr>
+      <tr>
+        <th><span class="pull-right">Adeudo:</span></th>
+        <td>$ {{ cotizacion.total_adeudo }}</td>
+      </tr>
+    </table>
+  </div>
+
+</div>
+</div>
+<div class="col-md-3">
+    <a href="/pagos/{{ cotizacion.id }}/" class="btn btn-primary btn-block">Pagar</a>
+    </div>
+    </div>
+{% endwith %}
+{% endfor %}
+{% else %}
+<p class="lead">Este paciente no tiene cotizaciones aun.</p>
+{% endif %}
+{% endblock %}
+
+{% block javascript %}
+<script>
+
+$(function() {
+
+  var status = $('.label');
+
+  // for setting the label color
+  $.each(status, function(){
+    var status = $(this);
+
+    if(status.text() == 'Pagado'){
+
+      status.addClass(' label-primary');
+
+    } else if(status.text() == 'Pago Parcial'){
+
+      status.addClass(' label-info');
+
+    } else if(status.text() == 'Aceptado'){
+
+      status.addClass(' label-success');
+
+    } else {
+
+      status.addClass(' label-warning');
+
+    }
+
+  })
+
+});
+</script>
 {% endblock %}

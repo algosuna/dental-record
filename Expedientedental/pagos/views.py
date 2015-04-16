@@ -9,46 +9,10 @@ from pagos.models import Pago
 from pagos.forms import PagoForm, PagoAplicadoFormset
 
 
-def pagos_list(request):
-    pagos = Pago.objects.all()
-    query = 'q'
-
-    total_adeudado = 0
-    total_precio = 0
-    for pago in pagos:
-        pagosaplicados = pago.pagoaplicado_set.all()
-
-        for pagoaplicado in pagosaplicados:
-            item = pagoaplicado.cotizacion_item
-            precio = item.precio
-            pagado = item.pagoaplicado_set.total_pagado()
-            adeudado = precio - pagado
-
-            total_adeudado += adeudado
-            total_precio += precio
-
-    MODEL_MAP = {
-        Paciente: ['nombre', 'apellidoPaterno', 'apellidoMaterno'],
-    }
-
-    objects = []
-
-    for model, fields in MODEL_MAP.iteritems():
-        objects += generic_search(request, model, fields, query)
-
-    return render(request, 'pago-list.html', {
-                  'pagos': pagos,
-                  'total_adeudado': total_adeudado,
-                  'total_precio': total_precio,
-                  'objects': objects,
-                  'search_string': request.GET.get(query, '')
-                  })
-
-
 def pagos(request, cotizacion_id):
 
     cotizacion = get_object_or_404(Cotizacion, pk=cotizacion_id)
-    total = cotizacion.total()
+    total = cotizacion.total_aceptado()
     items = cotizacion.cotizacionitem_set\
                       .filter(status__in=['aceptado', 'parcial'])
     initial = []
@@ -107,23 +71,89 @@ def pagos(request, cotizacion_id):
                   })
 
 
-def pagos_detail(request, pago_id):
-    pago = get_object_or_404(Pago, pk=pago_id)
+def pagos_list(request):
+    pagos = Pago.objects.all()
+    query = 'q'
 
-    return render(request, 'pago-detail.html', {'pago': pago})
+    MODEL_MAP = {
+        Paciente: [
+            'nombre',
+            'apellidoPaterno',
+            'apellidoMaterno',
+            'credencialPaciente'
+        ],
+    }
+
+    objects = []
+
+    for model, fields in MODEL_MAP.iteritems():
+        objects += generic_search(request, model, fields, query)
+
+    return render(request, 'pago-list.html', {
+                  'pagos': pagos,
+                  'objects': objects,
+                  'search_string': request.GET.get(query, '')
+                  })
 
 
-def pagos_pending(request):
-    cotizaciones = Cotizacion.objects.all()
-    pacientes = Paciente.objects.all()
+def paciente_search(request):
+    '''
+    Lista de pacientes con pagos pendientes.
+    '''
+    query = 'q'
 
-    return render(request, 'pago-pending.html', {
-                  'cotizaciones': cotizaciones,
-                  'pacientes': pacientes
+    MODEL_MAP = {
+        Paciente: [
+            'nombre',
+            'apellidoPaterno',
+            'apellidoMaterno',
+            'credencialPaciente'
+        ],
+    }
+
+    objects = []
+
+    for model, fields in MODEL_MAP.iteritems():
+        objects += generic_search(request, model, fields, query)
+
+    return render(request, 'paciente-search.html', {
+                  'objects': objects,
+                  'search_string': request.GET.get(query, '')
                   })
 
 
 def pagos_paciente(request, paciente_id):
+    '''
+    Lista de pagos por paciente.
+    '''
     paciente = get_object_or_404(Paciente, pk=paciente_id)
+    pagos = paciente.pago_set.all()
 
-    return render(request, 'pago-paciente.html', {'paciente': paciente})
+    return render(request, 'pago-paciente.html', {
+                  'paciente': paciente,
+                  'pagos': pagos
+                  })
+
+
+def pagos_pending(request, paciente_id):
+    '''
+    Lista de pagos pendientes agrupados por cotizacion.
+    '''
+    paciente = get_object_or_404(Paciente, pk=paciente_id)
+    cotizaciones = Cotizacion.objects.filter(odontograma__paciente=paciente)
+    # Quitamos cotizaciones que no tengan items que cobrar (total = 0)
+    cotizaciones = [c for c in cotizaciones if c.total() != 0]
+
+    return render(request, 'pago-pending.html', {
+                  'paciente': paciente,
+                  'cotizaciones': cotizaciones,
+                  })
+
+
+def pagos_detail(request, pago_id):
+    '''
+    Resumen de pago.
+    '''
+    pago = get_object_or_404(Pago, pk=pago_id)
+
+    return render(request, 'pago-detail.html', {'pago': pago})
