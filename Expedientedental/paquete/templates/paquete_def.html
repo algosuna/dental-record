@@ -1,0 +1,33 @@
+{% extends "base1.html" %}
+{%load static from staticfiles %}
+
+{% load crispy_forms_tags %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">
+<link rel="stylesheet" type="text/css" href="../src/bootstrap-duallistbox.css">
+{% endblock css %}
+
+{% block content %}
+
+<ul>
+    <li><strong>Paquete:</strong> {{paquete.paquete}}</li>
+    <li><strong>Medico:</strong> {{paquete.medico}}</li>
+    <li><strong>Fecha:</strong> {{paquete.fecha|date:"d-M-Y"}}</li>
+    <li><strong>Paciente:</strong> {{paquete.paciente}}</li>
+</ul>
+
+
+
+    {{ formset.management_form }}
+    <table>
+    {% csrf_token %}
+    
+        {% for form in formset %}
+        {% crispy form %}
+        {% endfor %}
+    </table>
+    <input class="btn btn-success pull-right" type="submit" value="Actualizar">
+</form>
+
+{% endblock content %}
