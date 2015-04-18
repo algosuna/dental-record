@@ -38,13 +38,15 @@ def pagos(request, paquete_id):
                 pago_aplicado = form.save(pago)
                 monto_aplicado += pago_aplicado.importe
 
-                # TODO: simplificar esta condicion. ver si mover a forms.py
                 if pago_aplicado.importe > 0:
                     servicio = pago_aplicado.servicio
                     total_aplicado = servicio.pagoaplicado_set.total_pagado()
 
                     if total_aplicado == servicio.precio:
                         servicio.status = 'pagado'
+
+                        servicio.procedimiento.status = 'autorizado'
+                        servicio.procedimiento.save()
 
                     else:
                         servicio.status = 'parcial'
