@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models import Sum
+from django.db.models.query import QuerySet
 
 from core.models import TimeStampedModel
 from clinica.models import Odontograma, Procedimiento
@@ -13,35 +14,59 @@ class Paquete(TimeStampedModel):
         '''
         suma aceptado, parcial, pagado
         '''
-        resultado = self.servicio_set.total()
-        return resultado
+        r = self.servicio_set.total()
+        return r
 
     def total_adeudado(self):
-        resultado = self.servicio_set.total_adeudado()
-        return resultado
+        r = self.servicio_set.total_adeudado()
+        return r
 
     def total_pagado(self):
-        resultado = self.servicio_set.total_pagado()
-        return resultado
+        r = self.servicio_set.total_pagado()
+        return r
 
     def total_adeudo(self):
-        servicios = self.servicio_set.filter(status__in=['parcial', 'aceptado'])
-        resultado = servicios.total_adeudado()
-        return resultado
+        s = self.servicio_set.filter(status__in=['parcial', 'aceptado'])
+        r = s.total_adeudado()
+        return r
 
     def total_pago(self):
-        servicios = self.servicio_set.filter(status__in=['parcial', 'pagado'])
-        resultado = servicios.total_pagado()
-        return resultado
+        s = self.servicio_set.filter(status__in=['parcial', 'pagado'])
+        r = s.total_pagado()
+        return r
 
     def __unicode__(self):
         paquete = 'Paquete de Servicios %s' % (self.odontograma)
         return paquete
 
 
+class ServicioQuerySet(QuerySet):
+
+    def total(self):
+        r = self.aggregate(Sum('precio'))
+
+        if r['precio__sum'] is None:
+            return 0
+
+        return r['precio__sum']
+
+    def total_pagado(self):
+        pa_qs = PagoAplicado.objects.filter(servicio__in=self)
+
+        if not pa_qs.exists():
+            return 0
+
+        total_pagado = pa_qs.aggregate(Sum('importe'))
+
+        return total_pagado['importe__sum']
+
+    def total_adeudado(self):
+        return max(0, self.total() - self.total_pagado())
+
+
 class ServicioManager(models.Manager):
     def create_servicios(self, paquete, cotizacion):
-        cotizacionitems = cotizacion.cotizacionitem_set.all()
+        cotizacionitems = cotizacion.cotizacionitem_set.aceptados()
 
         servicios = []
 
@@ -55,23 +80,22 @@ class ServicioManager(models.Manager):
             )
             servicios.append(servicio)
 
+            item.status = 'procesado'
+            item.save()
+
         return servicios
 
+    def get_query_set(self):
+        return ServicioQuerySet(self.model, using=self._db)
+
     def total(self):
-        resultado = self.all().aggregate(Sum('precio'))
-        if resultado['precio__sum'] is None:
-            return 0
-        return resultado['precio__sum']
+        return self.get_query_set().total()
 
     def total_pagado(self):
-        pa_qs = PagoAplicado.objects.filter(cotizacion_item__in=self.all())
-        if not pa_qs.exists():
-            return 0
-        total_pagado = pa_qs.aggregate(Sum('importe'))
-        return total_pagado['importe__sum']
+        return self.get_query_set().total_pagado()
 
     def total_adeudado(self):
-        return max(0, self.total() - self.total_pagado())
+        return self.get_query_set().total_adeudado()
 
 
 class Servicio(TimeStampedModel):

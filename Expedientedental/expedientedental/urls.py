@@ -25,6 +25,7 @@ urlpatterns = patterns(
     url(r'^clinica/', include('clinica.urls')),
     url(r'^cotizacion/', include('cotizacion.urls')),
     url(r'^pagos/', include('pagos.urls')),
+    url(r'^', include('servicios.urls')),
 
     url(r'^', include('paquete.urls')),
     url(r'^', include('precios.urls')),

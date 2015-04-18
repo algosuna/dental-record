@@ -54,10 +54,10 @@
   <tbody>
   {% for pago in pago.pagoaplicado_set.all %}
     <tr>
-      <td>{{ pago.cotizacion_item }}</td>
-      <td>$ {{ pago.cotizacion_item.precio }}</td>
+      <td>{{ pago.servicio }}</td>
+      <td>$ {{ pago.servicio.precio }}</td>
       <td>$ {{ pago.importe }}</td>
-      <td><span class="label">{{ pago.cotizacion_item.get_status_display }}</span></td>
+      <td><span class="label">{{ pago.servicio.get_status_display }}</span></td>
     </tr>
     {% endfor %}
   </tbody>

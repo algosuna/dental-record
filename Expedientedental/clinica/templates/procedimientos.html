@@ -1,0 +1,80 @@
+{% extends "dash.html" %}
+
+{%load static from staticfiles %}
+
+{%block title%}Plan de Tratamiento{%endblock%}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-8">
+
+    <h3 class="page-header">Tratamientos Autorizados</h3>
+    <table class="table table-bordered table-hover">
+
+      <thead>
+
+        <tr>
+
+          <th>Pieza</th>
+          <th>Cara</th>
+          <th>Procedimiento</th>
+          <th>Observaciones</th>
+          <th>Status</th>
+          <th>&nbsp;</th>
+
+        </tr>
+
+      </thead>
+
+      <tbody>
+
+        {% for procedimiento in procedimientos %}
+        <tr>
+          <td class="padded">{{ procedimiento.pieza }}</td>
+          <td>{{ procedimiento.get_cara_display }}</td>
+          <td>{{ procedimiento.tratamiento }}</td>
+          <td>{{ procedimiento.observaciones }}</td>
+          <td class="padded"><span class="label">{{ procedimiento.get_status_display }}</span></td>
+          <td><a href="/clinica/procedimiento/{{ procedimiento.id }}/" class="btn btn-default">Ver</a></td>
+        </tr>
+        {% endfor %}
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+  <div class="col-md-4">
+    <h3 class="page-header">Entradas a Bit&aacute;cora</h3>
+    <p class="lead text-muted">No hay entradas.</p>
+  </div>
+</div>
+
+{% endblock content %}
+
+{% block javascript %}
+<script>
+$(function() {
+
+  $.each($('.label'), function(){
+    var status = $(this);
+
+    if(status.text() == 'Autorizado'){
+
+      status.addClass(' label-primary');
+
+    } else if(status.text() == 'En Proceso'){
+
+      status.addClass(' label-info');
+
+    } else {
+
+      status.addClass(' label-warning');
+
+    }
+
+  })
+})
+</script>
+{% endblock javascript %}
