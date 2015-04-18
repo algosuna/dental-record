@@ -41,7 +41,7 @@
   </div>
 </div><!-- patient info section -->
 
-<h2 class="page-header">Presupuesto <small>#{{ cotizacion.id }}</small></h2>
+<h2 class="page-header">Presupuesto <small>#{{ cotizacion.id }}</small> <a href="/cotizacion/cotizacion/{{cotizacion.id}}/pdf/" class="btn button-second pull-right"> Imprimir Forma  <span class=" glyphicon glyphicon-print"></span></a></h2>
 
 <div class="row">
   <div class="col-md-8">
@@ -82,24 +82,24 @@
       <!-- <div class="panel-heading">Panel heading</div> -->
 
       <table class="table table-bordered">
-        <tr class="info">
+        <tr>
           <th>Total</th>
           <td class="total"></td>
         </tr>
         <tr class="success">
-          <th>Total Autorizado</th>
-          <td>{{ total }}</td>
+          <th>Total Aceptado</th>
+          <td>{{ cotizacion.total_aceptado }}</td>
         </tr>
+        {% if cotizacion.total_procesado %}
+        <tr class="info">
+          <th>Total Procesado</th>
+          <td>{{ cotizacion.total_procesado }}</td>
+        </tr>
+        {% endif %}
       </table>
     </div>
-    <div class="btn-group" role="group" aria-label="...">
-      <a href="/pagos/{{cotizacion.id}}/" class="btn btn-primary ">Aceptar &amp; Pagar <span class="glyphicon glyphicon-chevron-right"></span></a>
-   
-
-      <a href="/cotizacion/cotizacion/{{cotizacion.id}}/pdf/" class="btn btn-second "> Imprimir Forma  <span class=" glyphicon glyphicon-print"></span></a>
-
+    <a href="/servicios/create/{{ cotizacion.id }}/" class="btn btn-primary pull-right">Aceptar <span class="glyphicon glyphicon-chevron-right"></span></a>
   </div>
-</div>
 
 {% endblock content %}
 

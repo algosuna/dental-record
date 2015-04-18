@@ -65,6 +65,7 @@ legend {
   padding-bottom: 10px;
 }
 
+
 /* cotizacion */
 
 .cotizacion .form-group {
@@ -92,6 +93,10 @@ tables
 
 .table thead ~ thead tr th {
   padding-top: 25px;
+}
+
+.padded {
+  padding: 14px!important;
 }
 
 /*

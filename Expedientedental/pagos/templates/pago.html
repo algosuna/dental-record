@@ -19,9 +19,6 @@
   float: left;
   margin-right: 30px;
 }
-.padded {
-  padding: 14px!important;
-}
 .aplicar {
   margin-top: 25px;
 }
@@ -33,7 +30,7 @@
 
 {% block content %}
 
-<h2 class="page-header">Pago <small class="pull-right">Cotizacion #{{ cotizacion.id }}</small></h2>
+<h2 class="page-header">Pago <small class="pull-right">Cotizacion #{{ paquete.id }}</small></h2>
 
 <form action="" method="post">
   {{ pa_formset.management_form }}
@@ -71,11 +68,11 @@
     <tbody>
       {% for pa_form in pa_formset %}
       <tr>
-        <td class="padded">{{ pa_form.item }}</td>
-        <td class="precio padded">{{ pa_form.item.precio }}</td>
-        <td class="padded">$ <span class="saldo">{{ pa_form.item.pagoaplicado_set.total_pagado }}</span></td>
+        <td class="padded">{{ pa_form.servicio }}</td>
+        <td class="precio padded">{{ pa_form.servicio.precio }}</td>
+        <td class="padded">$ <span class="saldo">{{ pa_form.servicio.pagoaplicado_set.total_pagado }}</span></td>
         <td class="importe">{% crispy pa_form %}</td>
-        <td class="padded"><span class="label">{{ pa_form.item.get_status_display }}</span></td>
+        <td class="padded"><span class="label">{{ pa_form.servicio.get_status_display }}</span></td>
       </tr>
       {% endfor %}
 
@@ -148,6 +145,9 @@ $(function() {
     }
 
   })
+
+  // for hiding paciente field
+  $('#div_id_paciente').addClass('hidden');
 
 });
 </script>

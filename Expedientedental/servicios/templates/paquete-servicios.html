@@ -1,0 +1,57 @@
+{% extends 'base1.html' %}
+
+{% block title %}Paquete de Servicios{% endblock %}
+
+{% block content %}
+<h3 class="page-header">Paquete de Servicios</h3>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Procedimiento</th>
+      <th>Precio</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for servicio in servicios %}
+    <tr>
+      <td>{{ servicio.procedimiento }}</td>
+      <td>{{ servicio.precio }}</td>
+      <td><span class="label">{{ servicio.get_status_display }}</span></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<a href="/pagos/{{ paquete.id }}/" class="btn btn-primary pull-right">Pagar Servicios <span class="glyphicon glyphicon-chevron-right"></span></a>
+{% endblock %}
+
+{% block javascript %}
+<script>
+$(function() {
+  // for setting the label color
+  $.each($('.label'), function(){
+    var status = $(this);
+
+    if(status.text() == 'Aceptado'){
+
+      status.addClass(' label-success');
+
+    } else if(status.text() == 'Pagado'){
+
+      status.addClass(' label-primary');
+
+    } else if(status.text() == 'Pago Parcial'){
+
+      status.addClass(' label-info');
+
+    } else {
+
+      status.addClass(' label-warning');
+
+    }
+
+  })
+})
+</script>
+{% endblock %}

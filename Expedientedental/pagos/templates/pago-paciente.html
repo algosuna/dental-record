@@ -1,0 +1,40 @@
+{% extends 'base1.html' %}
+{% block title %}Pagos - Pendientes{% endblock %}
+
+{% block content %}
+<h2 class="page-header">Pagos <small class="pull-right">{{ paciente.nombre }} {{ paciente.apellidoPaterno }} {{ paciente.apellidoMaterno }} #{{ paciente.credencialPaciente }}</small></h2>
+
+{% if pagos %}
+<table class="table table-hover">
+
+  <thead>
+
+    <tr>
+
+      <th>Fecha</th>
+      <th>Su Pago</th>
+      <th>&nbsp;</th>
+
+    </tr>
+
+  </thead>
+
+  <tbody>
+
+    {% for pago in pagos %}
+    <tr>
+
+      <td class="padded">{{ pago.updated_at }}</td>
+      <td class="padded">{{ pago.monto_aplicado }}</td>
+      <td><a href="/pagos/detalle/{{ pago.id }}/" class="btn btn-primary pull-right">Ver Pago</a><!-- boton para ir a pago --></td>
+
+    </tr>
+    {% endfor %}
+
+  </tbody>
+
+</table>
+{% else %}
+<!-- TODO: a message in case there are no pending payments -->
+{% endif %}
+{% endblock %}

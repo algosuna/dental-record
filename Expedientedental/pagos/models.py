@@ -13,8 +13,8 @@ class Pago(TimeStampedModel):
 
     # TODO: cambiar el campo a date.
     fecha = models.DateTimeField()  # fecha en que se da el pago
-    cotizacion_items = models.ManyToManyField(
-        'cotizacion.CotizacionItem', through='PagoAplicado')
+    servicios = models.ManyToManyField(
+        'servicios.Servicio', through='PagoAplicado')
     # lo que el cliente da / monto a aplicar
     monto = models.DecimalField(max_digits=9, decimal_places=2)
     # lo que se aplica a items / lo que se ha consumido del pago(monto)
@@ -37,9 +37,11 @@ class Pago(TimeStampedModel):
         if monto_a_aplicar <= self.montodisponible():
             aplica = self.monto_aplicado + monto_a_aplicar
             self.monto_aplicado = aplica
+        else:
+            raise ValueError
 
     def __unicode__(self):
-            pago = "%s %s %s " % (self.monto, self.monto_aplicado, self.fecha)
+            pago = "%s %s %s" % (self.monto, self.monto_aplicado, self.fecha)
             return pago
 
 
@@ -49,7 +51,7 @@ class PagoAplicadoManager(models.Manager):
         pa_qs = self.all()
         if not pa_qs.exists():
             return 0
-        total_pagado = self.all().aggregate(Sum('importe'))
+        total_pagado = pa_qs.aggregate(Sum('importe'))
         return total_pagado['importe__sum']
 
 
@@ -58,7 +60,7 @@ class PagoAplicado(models.Model):
     Tabla puente entre Pago y CotizacionItem. Asigna cantidad por item.
     '''
     pago = models.ForeignKey(Pago)
-    cotizacion_item = models.ForeignKey('cotizacion.CotizacionItem')
+    servicio = models.ForeignKey('servicios.Servicio')
     fecha = models.DateTimeField(auto_now_add=True)
     # aqui se aplica parte del pago para un item
     importe = models.DecimalField(max_digits=6, decimal_places=2)
@@ -66,5 +68,5 @@ class PagoAplicado(models.Model):
     objects = PagoAplicadoManager()
 
     def __unicode__(self):
-            pagodetalle = "%s %s" % (self.pago, self.cotizacion_item)
+            pagodetalle = "%s %s" % (self.pago, self.servicio)
             return pagodetalle

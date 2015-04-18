@@ -171,6 +171,7 @@ INSTALLED_APPS = (
     'paquete',
     'precios',
     'pagos',
+    'servicios',
 
 )
 

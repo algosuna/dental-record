@@ -3,7 +3,52 @@
 
 {% block content %}
 
-<h2 class="page-header">Pagos</h2>
+<h2 class="page-header">Pagos <form action="" method="get" class="form-inline pull-right"><div class="input-group"><input type="text" name="q" placeholder="Buscar paciente..." value="{{ query|escape }}" class="form-control"><span class="input-group-btn"><button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button></span></div></form></h2>
+
+{% if search_string %}
+<div class="well">
+  <p class="text-center">Usted ingres&oacute; "{{ search_string }}":</p>
+
+    {% if objects %}
+    <table class="table table-hover">
+
+      <thead>
+
+        <tr>
+
+          <th>Fecha</th>
+          <th>Paciente</th>
+          <th>Su Pago</th>
+          <th>&nbsp;</th>
+
+        </tr>
+
+      </thead>
+
+      <tbody>
+
+        {% for paciente in objects %}
+        {% for pago in paciente.pago_set.all %}
+        <tr>
+
+          <td>{{ pago.updated_at }}</td>
+          <td>{{ paciente.nombre }} {{ paciente.apellidoPaterno }} {{ paciente.apellidoMaterno }}</td>
+          <td>{{ pago.monto_aplicado }}</td>
+          <td><a href="/pagos/detalle/{{ pago.id }}/" class="btn btn-primary pull-right">Ver Pago</a><!-- boton para ir a pago --></td>
+
+        </tr>
+        {% endfor %}
+        {% endfor %}
+
+      </tbody>
+
+    </table>
+    {% else %}
+    <p class="lead text-center text-muted">No se han encontrado pacientes con ese nombre.</p>
+    {% endif %}
+</div>
+<hr>
+{% endif %}
 
 {% if pagos %}
 <table class="table">
@@ -14,7 +59,7 @@
 
       <th>Fecha</th>
       <th>Paciente</th>
-      <th>Medico</th>
+      <th>Su Pago</th>
       <th>&nbsp;</th>
 
     </tr>
@@ -26,10 +71,10 @@
     {% for pago in pagos %}
     <tr>
 
-      <td>{{ cotizacion.created_at }}</td>
-      <td>{{ paciente.nombre }}</td>
-      <td>{{ medico.nombre }}</td>
-      <td><a href="" class="btn btn-primary pull-right">Completar Pago</a><!-- boton para ir a pago --></td>
+      <td>{{ pago.updated_at }}</td>
+      <td>{{ pago.paciente.nombre }} {{ pago.paciente.apellidoPaterno }} {{ pago.paciente.apellidoMaterno }}</td>
+      <td>{{ pago.monto_aplicado }}</td>
+      <td><a href="/pagos/detalle/{{ pago.id }}/" class="btn btn-primary pull-right">Ver Pago</a><!-- boton para ir a pago --></td>
 
     </tr>
     {% endfor %}
@@ -38,6 +83,6 @@
 
 </table>
 {% else %}
-<!-- TODO: a message in case there are no pending payments -->
+<!-- TODO: a message in case there are no payments -->
 {% endif %}
 {% endblock content %}

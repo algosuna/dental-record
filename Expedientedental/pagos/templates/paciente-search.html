@@ -1,0 +1,63 @@
+{% extends 'base1.html' %}
+{% block title %}Pagos - Pendientes{% endblock %}
+
+{% block content %}
+<h2 class="page-header">Pagos</h2>
+
+{% if search_string %}
+
+<p class="text-center">Usted ingres&oacute; "{{ search_string }}":</p>
+
+  {% if objects %}
+  <table class="table table-hover">
+
+    <thead>
+
+      <tr>
+
+        <th>DNI</th>
+        <th>Nombre</th>
+        <th>Grupo</th>
+        <th>&nbsp;</th>
+
+      </tr>
+
+    </thead>
+
+    <tbody>
+
+      {% for paciente in objects %}
+      <tr>
+        <td class="padded">{{ paciente.credencialPaciente }}</td>
+        <td class="padded">{{ paciente.nombre }} {{ paciente.apellidoPaterno }} {{ paciente.apellidoMaterno }}</td>
+        <td class="padded">{{ paciente.grupo }}</td>
+        <td><div class="btn-group pull-right"><a href="/pagos/pending/{{ paciente.id }}/" class="btn btn-success">Ver Pendientes</a><a href="/pagos/list/{{ paciente.id }}/" class="btn btn-default">Ver Pagos</a></div></td>
+      </tr>
+      {% endfor %}
+
+    </tbody>
+
+  </table>
+  {% else %}
+  <p class="lead text-center text-muted">No se han encontrado pacientes con ese nombre.</p>
+  {% endif %}
+  <p class="text-center">
+    <a href="/pagos/" class="btn btn-primary">Nueva Búsqueda <span class="glyphicon glyphicon-arrow-right"></span></a>
+  </p>
+
+{% else %}
+
+  <div class="text-center search clearfix">
+
+    <form action="" method="GET">
+
+      <label for="q" class="lead">Ingrese el nombre del paciente:</label>
+      <input type="text" name="q" class="form-control" placeholder="Nombre del paciente..." value="{{ query|escape }}">
+      <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-search'></span> Buscar</button>
+
+    </form>
+
+  </div>
+
+{% endif %}
+{% endblock %}

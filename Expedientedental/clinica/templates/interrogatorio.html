@@ -9,9 +9,10 @@
 <script src="{% static 'js/jquery.dajax.core.js'%}"></script>
 {% dajaxice_js_import %}
 
-<h2 class="page-header">Expediente M&eacute;dico y Dental{% if interrogatorio %}<small><a href="pdf/" class="pull-right"><i class="fa fa-print fa-fw"></i> Imprimir</a></small>{% endif %}</h2>
+<h2 class="page-header">Expediente M&eacute;dico y Dental{% if paciente.interrogatorio_set.get %}<small><a href="pdf/" class="pull-right"><i class="fa fa-print fa-fw"></i> Imprimir</a></small>{% endif %}</h2>
 
-{% if interrogatorio %}
+{% if paciente.interrogatorio_set.get %}
+{% with interrogatorio=paciente.interrogatorio_set.get %}
 <h3 class="page-header">Antecedentes Patológicos Hereditarios</h3>
 <table class="table table-bordered table-hover">
   <tbody>
@@ -285,6 +286,7 @@
     </tr>
   </tbody>
 </table>
+{% endwith %}
 {% else %}
 
   {% load crispy_forms_tags %}
@@ -309,11 +311,11 @@ $( document ).ready(function() {
 
 // disables paciente select
 // and fills in the value by id
-(function() {
+$(function() {
   var paciente = $('#id_paciente');
 
   paciente.val('{{ paciente.id }}');
   paciente.attr('readonly', '');
-})();
+})
 </script>
 {% endblock javascript %}
