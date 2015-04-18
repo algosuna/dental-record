@@ -26,9 +26,10 @@ def inicio(request):
     for model, fields in MODEL_MAP.iteritems():
         objects += generic_search(request, model, fields, query)
 
-    return render_to_response('inicio.html',
-                              {'objects': objects,
-                               'search_string': request.GET.get(query, ''), })
+    return render_to_response('inicio.html', {
+                              'objects': objects,
+                              'search_string': request.GET.get(query, '')
+                              })
 
 
 def detalle_paciente(request, paciente_id):
@@ -66,12 +67,13 @@ def odontograma(request, paciente_id):
 
     odontograma_active = 'active'
 
-    return render(request, 'odontograma.html',
-                  {'form': modelform,
-                   'formset': formset,
-                   'paciente': paciente,
-                   'tratamientos': tratamientos,
-                   'odontograma_active': odontograma_active})
+    return render(request, 'odontograma.html', {
+                  'form': modelform,
+                  'formset': formset,
+                  'paciente': paciente,
+                  'tratamientos': tratamientos,
+                  'odontograma_active': odontograma_active
+                  })
 
 
 def detalle_odontograma(request, paciente_id, odontograma_id):
@@ -79,10 +81,38 @@ def detalle_odontograma(request, paciente_id, odontograma_id):
     odontograma = get_object_or_404(Odontograma, pk=odontograma_id)
     procedimientos = Procedimiento.objects.all()
 
-    return render(request, 'detalle-odontograma.html',
-                  {'paciente': paciente,
-                   'procedimientos': procedimientos,
-                   'odontograma': odontograma})
+    return render(request, 'detalle-odontograma.html', {
+                  'paciente': paciente,
+                  'procedimientos': procedimientos,
+                  'odontograma': odontograma
+                  })
+
+
+def procedimientos(request, paciente_id):
+    paciente = get_object_or_404(Paciente, pk=paciente_id)
+
+    procedimientos = Procedimiento.objects.filter(
+        odontograma__paciente=paciente,
+        status__in=['autorizado', 'en_proceso']
+    )
+
+    procedimiento = 'active'
+
+    return render(request, 'procedimientos.html', {
+                  'paciente': paciente,
+                  'procedimientos': procedimientos,
+                  'procedimiento': procedimiento
+                  })
+
+
+def procedimiento(request, procedimiento_id):
+    procedimiento = get_object_or_404(Procedimiento, pk=procedimiento_id)
+    paciente = procedimiento.odontograma.paciente
+
+    return render(request, 'procedimiento.html', {
+                  'procedimiento': procedimiento,
+                  'paciente': paciente,
+                  })
 
 
 def interrogatorio(request, paciente_id):
@@ -98,10 +128,11 @@ def interrogatorio(request, paciente_id):
     else:
         modelform = InterrogatorioForm()
 
-    return render(request, 'interrogatorio.html',
-                  {'form': modelform,
-                   'paciente': paciente,
-                   'expediente': expediente})
+    return render(request, 'interrogatorio.html', {
+                  'form': modelform,
+                  'paciente': paciente,
+                  'expediente': expediente
+                  })
 
 
 class InterrogatorioPDF(PDFTemplateView):
@@ -121,4 +152,3 @@ class InterrogatorioPDF(PDFTemplateView):
         context['fecha'] = datetime.now().strftime("%d/%m/%Y")
         context['hora'] = datetime.now().strftime("%I:%M %p")
         return context
-
