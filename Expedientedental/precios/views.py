@@ -17,7 +17,8 @@ def precios_grupos_view(request):
 def precios_view(request, grupo_id):
     grupo = get_object_or_404(Grupo, pk=grupo_id)
     precios = grupo.preciotratamiento_set.all()
-    tratamientos = Tratamiento.objects.all()
+    precios_tratamientos_pks = [p.tratamiento.pk for p in precios]
+    tratamientos = Tratamiento.objects.exclude(pk__in=precios_tratamientos_pks)
 
     initial = []
 
@@ -28,17 +29,7 @@ def precios_view(request, grupo_id):
             'precio': 0
             })
 
-    extra = 0
-    kwargs = {}
-
-    if precios:
-        kwargs['queryset'] = precios
-
-    else:
-        extra = len(tratamientos)
-        kwargs['initial'] = initial
-        kwargs['queryset'] = precios
-
+    extra = len(tratamientos)
     PreciosFormSet = modelformset_factory(
         PrecioTratamiento, form=PreciosForm, extra=extra)
 
@@ -53,9 +44,11 @@ def precios_view(request, grupo_id):
         return redirect('precios_grupos')
 
     else:
-        formset = PreciosFormSet(**kwargs)
+        formset = PreciosFormSet(initial=initial, queryset=precios)
+
+    existen_tratamientos = tratamientos or precios
 
     return render(request, 'precios.html',
                   {'formset': formset,
-                   'tratamientos': tratamientos,
+                   'tratamientos': existen_tratamientos,
                    'grupo': grupo})

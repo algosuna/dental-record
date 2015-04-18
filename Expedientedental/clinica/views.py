@@ -55,10 +55,8 @@ def odontograma(request, paciente_id):
 
             if formset.is_valid():
                 for form in formset:
-                    if form.cleaned_data:
-                        print form.cleaned_data
-                        form.instance.odontograma = odontograma
-                        form.save()
+                    form.instance.odontograma = odontograma
+                    form.save()
 
             return redirect(reverse(
                 'detalle_odontograma', args=[paciente.id, odontograma.id]))

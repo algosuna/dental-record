@@ -4,61 +4,23 @@ from django.shortcuts import render, get_object_or_404, redirect
 
 from altas.models import Paciente
 from core.utils import generic_search
-from cotizacion.models import Cotizacion
+from servicios.models import Paquete
 from pagos.models import Pago
 from pagos.forms import PagoForm, PagoAplicadoFormset
 
 
-def pagos_list(request):
-    pagos = Pago.objects.all()
-    # pagos = Pago.objects.order_by('fecha')[:1]
-    # pagos = Paciente.pago_set.all().order_by('-fecha')[:1]
-    query = 'q'
+def pagos(request, paquete_id):
 
-    total_adeudado = 0
-    total_precio = 0
-    for pago in pagos:
-        pagosaplicados = pago.pagoaplicado_set.all()
-
-        for pagoaplicado in pagosaplicados:
-            item = pagoaplicado.cotizacion_item
-            precio = item.precio
-            pagado = item.pagoaplicado_set.total_pagado()
-            adeudado = precio - pagado
-
-            total_adeudado += adeudado
-            total_precio += precio
-
-    MODEL_MAP = {
-        Paciente: ['nombre', 'apellidoPaterno', 'apellidoMaterno'],
-    }
-
-    objects = []
-
-    for model, fields in MODEL_MAP.iteritems():
-        objects += generic_search(request, model, fields, query)
-
-    return render(request, 'pago-list.html', {
-                  'pagos': pagos,
-                  'total_adeudado': total_adeudado,
-                  'total_precio': total_precio,
-                  'objects': objects,
-                  'search_string': request.GET.get(query, '')
-                  })
-
-
-def pagos(request, cotizacion_id):
-
-    cotizacion = get_object_or_404(Cotizacion, pk=cotizacion_id)
-    total = cotizacion.total()
-    items = cotizacion.cotizacionitem_set\
-                      .filter(status__in=['aceptado', 'parcial'])
+    paquete = get_object_or_404(Paquete, pk=paquete_id)
+    total = paquete.total()
+    servicios = paquete.servicio_set.filter(status__in=['aceptado', 'parcial'])
+    paciente = paquete.odontograma.paciente
     initial = []
 
-    for item in items:
+    for servicio in servicios:
         initial.append({
             'importe': 0,
-            'cotizacion_item': item
+            'servicio': servicio
             })
 
     pa_formset = None
@@ -78,16 +40,16 @@ def pagos(request, cotizacion_id):
 
                 # TODO: simplificar esta condicion. ver si mover a forms.py
                 if pago_aplicado.importe > 0:
-                    item = pago_aplicado.cotizacion_item
-                    total_aplicado = item.pagoaplicado_set.total_pagado()
+                    servicio = pago_aplicado.servicio
+                    total_aplicado = servicio.pagoaplicado_set.total_pagado()
 
-                    if total_aplicado == item.precio:
-                        item.status = 'pagado'
+                    if total_aplicado == servicio.precio:
+                        servicio.status = 'pagado'
 
                     else:
-                        item.status = 'parcial'
+                        servicio.status = 'parcial'
 
-                    item.save()
+                    servicio.save()
 
             pago.aplicamonto(monto_aplicado)
             pago.save()
@@ -95,21 +57,108 @@ def pagos(request, cotizacion_id):
             return redirect(reverse('pagos_detail', args=[pago.id]))
 
     else:
-        modelform = PagoForm(initial={'monto': cotizacion.total_adeudado()})
+        modelform = PagoForm(initial={
+                             'monto': paquete.total_adeudado(),
+                             'paciente': paciente
+                             })
         pa_formset = PagoAplicadoFormset(initial=initial)
 
-    items = [form.item for form in pa_formset]
+    servicios = [form.servicio for form in pa_formset]
 
     return render(request, 'pago.html', {
                   'form': modelform,
                   'pa_formset': pa_formset,
-                  'items': items,
+                  'servicios': servicios,
                   'total': total,
-                  'cotizacion': cotizacion
+                  'paquete': paquete
+                  })
+
+
+def pagos_list(request):
+    pagos = Pago.objects.order_by('-fecha')
+    query = 'q'
+
+    MODEL_MAP = {
+        Paciente: [
+            'nombre',
+            'apellidoPaterno',
+            'apellidoMaterno',
+            'credencialPaciente'
+        ],
+    }
+
+    objects = []
+
+    for model, fields in MODEL_MAP.iteritems():
+        objects += generic_search(request, model, fields, query)
+
+    return render(request, 'pago-list.html', {
+                  'pagos': pagos,
+                  'objects': objects,
+                  'search_string': request.GET.get(query, '')
+                  })
+
+
+def paciente_search(request):
+    '''
+    Lista de pacientes con pagos pendientes.
+    '''
+    query = 'q'
+
+    MODEL_MAP = {
+        Paciente: [
+            'nombre',
+            'apellidoPaterno',
+            'apellidoMaterno',
+            'credencialPaciente'
+        ],
+    }
+
+    objects = []
+
+    for model, fields in MODEL_MAP.iteritems():
+        objects += generic_search(request, model, fields, query)
+
+    return render(request, 'paciente-search.html', {
+                  'objects': objects,
+                  'search_string': request.GET.get(query, '')
+                  })
+
+
+def pagos_paciente(request, paciente_id):
+    '''
+    Lista de pagos por paciente.
+    '''
+    paciente = get_object_or_404(Paciente, pk=paciente_id)
+    pagos = paciente.pago_set.all()
+
+    return render(request, 'pago-paciente.html', {
+                  'paciente': paciente,
+                  'pagos': pagos
+                  })
+
+
+def pagos_pending(request, paciente_id):
+    '''
+    Lista de pagos pendientes agrupados por cotizacion.
+    '''
+    paciente = get_object_or_404(Paciente, pk=paciente_id)
+    paquetes = Paquete.objects.filter(odontograma__paciente=paciente)
+    # Quitamos paquetes que no tengan items que cobrar (total = 0)
+    paquetes = [
+        p for p in paquetes if p.total() != 0 and p.total_adeudado() != 0
+    ]
+
+    return render(request, 'pago-pending.html', {
+                  'paciente': paciente,
+                  'paquetes': paquetes,
                   })
 
 
 def pagos_detail(request, pago_id):
+    '''
+    Resumen de pago.
+    '''
     pago = get_object_or_404(Pago, pk=pago_id)
 
     return render(request, 'pago-detail.html', {'pago': pago})
