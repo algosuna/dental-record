@@ -3,13 +3,13 @@ from datetime import datetime
 from django.shortcuts import render, redirect, render_to_response, get_object_or_404
 from django.db.models import Q
 from django.views.generic import UpdateView
-from django.views.generic import CreateView
+from django.views.generic import CreateView, ListView
 from django.core.urlresolvers import reverse
 
 from wkhtmltopdf.views import PDFTemplateView
 
-from Inventario.forms import ProductoForm,UnidadMedidaForm,EntradasForm
-from Inventario.models import UnidadMedida , Producto,Entradas
+from Inventario.forms import ProductoForm, UnidadMedidaForm, EntradasForm
+from Inventario.models import UnidadMedida, Producto, Entradas
 
 from Inventario.utils import generic_search
 
@@ -30,8 +30,8 @@ def busqueda(request):
 
 
 class EditProductView(UpdateView):  
-    model=Producto
-    success_url='/entradas/'
+    model = Producto
+    success_url = '/entradas/'
     template_name = 'producto.html'
     form_class = ProductoForm
 
@@ -65,10 +65,15 @@ def unidadView(request):
         modelform = UnidadMedidaForm(request.POST)
         if modelform.is_valid():
             modelform.save()
-            return redirect('producto/unidad/')
+            return redirect('/unidad/')
     else:
         modelform = UnidadMedidaForm()
     return render(request, "unidad.html", {"form": modelform})
+
+class Unidad(ListView):
+    model = UnidadMedida
+    context_object_name = 'unidades'
+    template_name = 'unidades.html'
 
 
 def ingresarCantidad(request, entrada_id):

@@ -45,6 +45,7 @@ class PaqueteConsumido(models.Model):
             initial_list.append(initial)
         return initial_list
 
+
 class PaqueteConsumidoItem(models.Model):
     paquete_consumido = models.ForeignKey(PaqueteConsumido)
     producto = models.ForeignKey('Inventario.Producto')

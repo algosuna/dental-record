@@ -7,8 +7,7 @@ from django.shortcuts import render_to_response, render, redirect, get_object_or
 from django.core.context_processors import csrf
 from wkhtmltopdf.views import PDFTemplateView
 from .forms import (PaqueteForm, PaqueteConsumidoForm, PCItemForm)
-from paquete.models import Paquete, PaqueteItem, PaqueteConsumido,\
-Paquet
+from paquete.models import Paquete, PaqueteItem, PaqueteConsumido,PaqueteConsumidoItem
 from django.views.generic import UpdateView, ListView
 
 from core.utils import generic_search

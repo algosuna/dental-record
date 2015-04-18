@@ -48,6 +48,7 @@ def cotizacion(request, odontograma_id):
                    'formset': formset,
                    'total': total})
 
+
 class CotizacionPDF(PDFTemplateView):
     filename = 'cotizacion.pdf'
     template_name = 'printit.html'
@@ -64,4 +65,3 @@ class CotizacionPDF(PDFTemplateView):
         context['fecha'] = datetime.now().strftime("%d/%m/%Y")
         context['hora'] = datetime.now().strftime("%I:%M %p")
         return context
-
