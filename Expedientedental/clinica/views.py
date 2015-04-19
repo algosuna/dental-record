@@ -7,8 +7,8 @@ from django.shortcuts import render, redirect, render_to_response,\
 
 from wkhtmltopdf.views import PDFTemplateView
 
-from clinica.models import Interrogatorio, Odontograma, Procedimiento
-from clinica.forms import OdontogramaForm, InterrogatorioForm,\
+from clinica.models import Interrogatorio, Odontograma, Procedimiento, Bitacora
+from clinica.forms import OdontogramaForm, InterrogatorioForm, BitacoraForm,\
     ProcedimientoFormSet
 from altas.models import Paciente, Tratamiento
 
@@ -96,22 +96,53 @@ def procedimientos(request, paciente_id):
         status__in=['autorizado', 'en_proceso']
     )
 
-    procedimiento = 'active'
+    bitacoras = Bitacora.objects\
+        .filter(procedimiento__odontograma__paciente=paciente)\
+        .order_by('-created_at')[:10]
+
+    p_active = 'active'
 
     return render(request, 'procedimientos.html', {
                   'paciente': paciente,
                   'procedimientos': procedimientos,
-                  'procedimiento': procedimiento
+                  'bitacoras': bitacoras,
+                  'p_active': p_active
                   })
 
 
 def procedimiento(request, procedimiento_id):
     procedimiento = get_object_or_404(Procedimiento, pk=procedimiento_id)
     paciente = procedimiento.odontograma.paciente
+    bitacoras = procedimiento.bitacora_set.all()
+
+    if request.method == 'POST':
+        form = BitacoraForm(request.POST)
+
+        if form.is_valid():
+            is_complete = form.cleaned_data.get('is_complete')
+
+            if is_complete:
+                procedimiento.status = 'completado'
+
+            else:
+                procedimiento.status = 'en_proceso'
+
+            form.save()
+            procedimiento.save()
+
+            return redirect(reverse('procedimientos', args=[paciente.id]))
+
+    else:
+        form = BitacoraForm(initial={'procedimiento': procedimiento})
+
+    p_active = 'active'
 
     return render(request, 'procedimiento.html', {
                   'procedimiento': procedimiento,
                   'paciente': paciente,
+                  'form': form,
+                  'bitacoras': bitacoras,
+                  'p_active': p_active
                   })
 
 

@@ -204,6 +204,7 @@ class Procedimiento(models.Model):
 
 class Bitacora(TimeStampedModel):
     procedimiento = models.ForeignKey(Procedimiento)
+    titulo = models.CharField(max_length=140)
     descripcion = models.TextField()
 
     def __unicode__(self):

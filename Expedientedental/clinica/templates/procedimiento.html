@@ -1,23 +1,37 @@
 {% extends "dash.html" %}
 
-{%load static from staticfiles %}
+{% load static from staticfiles %}
+{% load crispy_forms_tags %}
 
-{%block title%}Plan de Tratamiento{%endblock%}
+{% block title %}Plan de Tratamiento{% endblock %}
 
 {% block content %}
 <div class="row">
-  <div class="col-md-10">
 
-    <h3 class="page-header">{{ procedimiento.tratamiento }} <small>{{ procedimiento.pieza }} {{ procedimiento.get_cara_display }} <span class="label">{{ procedimiento.get_status_display }}</span></small></h3>
+  <div class="col-md-9">
+
+    <h3 class="page-header">Bit&aacute;cora</h3>
+    <h4>{{ procedimiento.tratamiento }} <small>{{ procedimiento.pieza }} {{ procedimiento.get_cara_display }} <span class="label">{{ procedimiento.get_status_display }}</span></small></h4>
 
     <p class="lead">{{ procedimiento.observaciones }}</p>
 
+    {% crispy form %}
+
   </div>
 
-  <div class="col-md-2">
+  <div class="col-md-3">
+
     <h3 class="page-header">Entradas a Bit&aacute;cora</h3>
+    {% if bitacoras %}
+      {% for bitacora in bitacoras %}
+      <h4><a href="">{{ bitacora.titulo }}</a> <small>- {{ bitacora.created_at }}</small></h4>  <!-- TODO: link to bitacora single view. -->
+      <p>{{ bitacora.descripcion }}</p>
+      {% endfor %}
+    {% else %}
     <p class="lead text-muted">No hay entradas.</p>
+    {% endif %}
   </div>
+
 </div>
 
 {% endblock content %}

@@ -6,7 +6,7 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, HTML, Field, ButtonHolder,\
     Submit
 
-from clinica.models import Interrogatorio, Odontograma, Procedimiento
+from clinica.models import Interrogatorio, Odontograma, Procedimiento, Bitacora
 
 
 class InterrogatorioForm(forms.ModelForm):
@@ -318,3 +318,24 @@ class ProcedimientoForm(forms.ModelForm):
             )
 
 ProcedimientoFormSet = formset_factory(ProcedimientoForm)
+
+
+class BitacoraForm(forms.ModelForm):
+    class Meta:
+        model = Bitacora
+
+    is_complete = forms.BooleanField(required=False)
+
+    def __init__(self, *args, **kwargs):
+        super(BitacoraForm, self).__init__(*args, **kwargs)
+        self.procedimiento = self.initial.get('procedimiento')
+        print self.procedimiento
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            Field('procedimiento', wrapper_class='hidden'),
+            Field('titulo'),
+            Field('descripcion'),
+            Field('is_complete'),
+            Submit('save', 'Guardar'),
+        )
+        self.fields['is_complete'].label = 'Marcar Procedimiento como Completado.'

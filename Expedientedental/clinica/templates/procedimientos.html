@@ -9,6 +9,8 @@
   <div class="col-md-8">
 
     <h3 class="page-header">Tratamientos Autorizados</h3>
+
+    {% if procedimientos %}
     <table class="table table-bordered table-hover">
 
       <thead>
@@ -42,12 +44,22 @@
       </tbody>
 
     </table>
-
+    {% else %}
+    <p class="lead text-muted text-center">No hay tratamientos en espera.</p>
+    {% endif %}
   </div>
 
   <div class="col-md-4">
     <h3 class="page-header">Entradas a Bit&aacute;cora</h3>
+    {% if bitacoras %}
+      {% for bitacora in bitacoras %}
+      <h4><a href="">{{ bitacora.titulo }}</a> <small>- {{ bitacora.created_at }}</small></h4>  <!-- TODO: link to bitacora single view. -->
+      <p>{{ bitacora.descripcion }}</p>
+      <p></p>
+      {% endfor %}
+    {% else %}
     <p class="lead text-muted">No hay entradas.</p>
+    {% endif %}
   </div>
 </div>
 
