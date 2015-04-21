@@ -1,0 +1,70 @@
+{% extends "dash.html" %}
+
+{%load static from staticfiles %}
+
+{%block title%}Plan de Tratamiento{%endblock%}
+
+{% block content %}
+
+<h3 class="page-header">Detalle de Procedimiento</h3>
+<h4>{{ procedimiento.tratamiento }} <small>{{ procedimiento.pieza }} {{ procedimiento.get_cara_display }} <span class="label">{{ procedimiento.get_status_display }}</span></small></h4>
+
+<p>{{ procedimiento.diagnostico }}</p>
+<p>{{ procedimiento.notas }}</p>
+
+{% if bitacoras %}
+<div class="row">
+
+  {% for bitacora in bitacoras %}
+  <div class="col-md-4">
+
+    <div class="well">
+
+      <h4>{{ bitacora.titulo }} <small>{{ bitacora.created_at }}</small></h4>
+      <p>{{ bitacora.descripcion }}</p>
+
+    </div>
+
+  </div>
+  {% endfor %}
+
+</div>
+{% else %}
+{% if procedimiento.status == 'autorizado' %}
+<p class="lead text-muted">Este procedimiento no tiene entradas. <a href="/clinica/procedimiento/{{ procedimiento.id }}/">Agregar entrada a bit&aacute;cora.</a></p>
+{% else %}
+<p class="lead text-muted">Este procedimiento no esta autorizado. <a href="/clinica/procedimientos/{{ paciente.id }}/">Ir a Plan de Tratamiento.</a></p>
+{% endif %}
+{% endif %}
+
+{% endblock content %}
+
+{% block javascript %}
+<script>
+$(function() {
+
+  $.each($('.label'), function(){
+    var status = $(this);
+
+    if(status.text() == 'Completado') {
+
+      status.addClass(' label-default');
+
+    } else if(status.text() == 'Autorizado') {
+
+      status.addClass(' label-primary');
+
+    } else if(status.text() == 'En Proceso') {
+
+      status.addClass(' label-info');
+
+    } else {
+
+      status.addClass(' label-warning');
+
+    }
+
+  })
+})
+</script>
+{% endblock javascript %}

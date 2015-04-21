@@ -2,7 +2,7 @@
 
 {%load static from staticfiles %}
 
-{%block title%}Detales de Paciente{%endblock%}
+{%block title%}Detalles de Paciente{%endblock%}
 
 {% block content %}
 <div class="col-md-8">
@@ -47,7 +47,7 @@
 
   </div><!-- patient info section -->
 
-  <h3 class="page-header">Tratamientos Autorizados</h3>
+  <h3 class="page-header">Procedimientos</h3>
   <table class="table table-bordered table-hover">
 
     <thead>
@@ -57,7 +57,6 @@
         <th>Pieza</th>
         <th>Cara</th>
         <th>Procedimiento</th>
-        <th>Observaciones</th>
         <th>Status</th>
         <th>&nbsp;</th>
 
@@ -66,50 +65,27 @@
     </thead>
 
     <tbody>
-      <!-- {% for procedimiento in procedimientos %}
+      {% for procedimiento in procedimientos %}
       <tr>
         <td>{{ procedimiento.pieza }}</td>
         <td>{{ procedimiento.get_cara_display }}</td>
         <td>{{ procedimiento.tratamiento }}</td>
-        <td>{{ procedimiento.observaciones }}</td>
+        <td><span class="label">{{ procedimiento.get_status_display }}</span></td>
+        <td><a href="/clinica/historial/procedimiento/{{ procedimiento.id }}/" class="btn btn-default">Ver</a></td>
       </tr>
-      {% endfor %} -->
+      {% endfor %}
       <!-- TODO: quitar esto y correjir lo de arriba. es por mientras -->
-      <tr>
-
-        <td>11</td>
-        <td>Vestibular</td>
-        <td>D6211 Pontic - Cast Predominantly Base Metal</td>
-        <td>Lorem ipsum dolor sit amet.</td>
-        <td><span class="label label-primary">Autorizado</span></td>
-        <td><input type="checkbox"></td>
-
-      </tr>
-
-      <tr>
-
-        <td>24</td>
-        <td>Pieza Completa</td>
-        <td>D2740 Crown - Porcelain/Ceramic Substrate</td>
-        <td>Lorem ipsum dolor sit amet.</td>
-        <td><span class="label label-primary">Autorizado</span></td>
-        <td><input type="checkbox"></td>
-
-      </tr>
-
     </tbody>
 
   </table>
-
-  <p class="text-right text-muted">Pulse el boton para marcar los tratamientos seleccionados como realizados <button type="submit" class="btn btn-success">Actualizar</button></p>
 
 </div>
 
 <div class="col-md-4">
   <h3 class="page-header">&Uacute;ltimos Odontogramas</h3>
-  {% if odontograma %}
-    {% for odontograma in odontograma %}
-    <h4><a href="/clinica/detalle/{{ paciente.id }}/odontograma/{{ odontograma.id }}/">{{ odontograma.created_at }}</a></h4>
+  {% if odontogramas %}
+    {% for odontograma in odontogramas %}
+    <h4><a href="/clinica/odontograma/detail/{{ odontograma.id }}/">{{ odontograma.created_at }}</a></h4>
     <p><strong>{{ odontograma.diagnostico.nombre }}</strong>{{ odontograma.notas }}</p>
     {% endfor %}
   {% else %}
@@ -120,3 +96,33 @@
 </div>
 
 {% endblock content %}
+
+{% block javascript %}
+<script>
+$(function() {
+
+  $.each($('.label'), function(){
+    var status = $(this);
+
+    if(status.text() == 'Recomendado') {
+
+      status.addClass(' label-warning');
+
+    } else if(status.text() == 'Autorizado') {
+
+      status.addClass(' label-primary');
+
+    } else if(status.text() == 'En Proceso') {
+
+      status.addClass(' label-info');
+
+    } else {
+
+      status.addClass(' label-default');
+
+    }
+
+  })
+})
+</script>
+{% endblock javascript %}

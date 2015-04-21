@@ -6,14 +6,17 @@ from clinica.views import InterrogatorioPDF
 urlpatterns = patterns(
     'clinica.views',
 
-    url(r'^$', 'inicio'),
-    url(r'^detalle/(?P<paciente_id>\d+)/$', 'detalle_paciente'),
+    url(r'^$', 'paciente_search'),
+    url(r'^detail/(?P<paciente_id>\d+)/$', 'paciente_detail'),
     url(r'^odontograma/(?P<paciente_id>\d+)/$', 'odontograma'),
-    url(r'^detalle/(?P<paciente_id>\d+)/odontograma/(?P<odontograma_id>\d+)/$',
-        'detalle_odontograma', name='detalle_odontograma'),
+    url(r'^odontograma/detail/(?P<odontograma_id>\d+)/$',
+        'odontograma_detail', name='odontograma_detail'),
     url(r'^procedimientos/(?P<paciente_id>\d+)/$', 'procedimientos',
         name='procedimientos'),
-    url(r'^procedimiento/(?P<procedimiento_id>\d+)/$', 'procedimiento'),
+    url(r'^procedimiento/(?P<procedimiento_id>\d+)/$', 'bitacora_create'),
+    url(r'^historial/(?P<paciente_id>\d+)/$', 'historial'),
+    url(r'^historial/procedimiento/(?P<procedimiento_id>\d+)/$',
+        'historial_detail'),
 
     # Agregado para Interrogatorio
     url(r'^interrogatorio/(?P<paciente_id>\d+)/$',

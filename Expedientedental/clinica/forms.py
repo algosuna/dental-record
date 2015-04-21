@@ -339,3 +339,18 @@ class BitacoraForm(forms.ModelForm):
             Submit('save', 'Guardar'),
         )
         self.fields['is_complete'].label = 'Marcar Procedimiento como Completado.'
+
+    def save(self, commit=True):
+        instance = super(BitacoraForm, self).save(commit)
+        is_complete = self.cleaned_data.get('is_complete')
+        procedimiento = instance.procedimiento
+
+        if is_complete:
+            procedimiento.status = 'completado'
+        else:
+            procedimiento.status = 'en_proceso'
+
+        if commit:
+            procedimiento.save()
+
+        return instance

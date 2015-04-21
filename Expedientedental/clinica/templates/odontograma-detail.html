@@ -1,0 +1,123 @@
+{% extends "dash.html" %}
+
+{%load static from staticfiles %}
+
+{% block title %}Detalle de Odontograma{% endblock %}
+
+{% block content %}
+
+<h2 class="page-header">Detalle de Odontograma <small class="pull-right">#{{ odontograma.id }}</small></h2>
+
+<div class="row">
+
+  <div class="col-md-8">
+
+  {% if odontograma.procedimiento_set.all %}
+  <table class="table table-bordered">
+
+    <thead>
+
+      <tr>
+
+        <th>Pieza</th>
+        <th>Cara</th>
+        <th>Tratamiento</th>
+        <th>Status</th>
+        <th>&nbsp;</th>
+
+      </tr>
+
+    </thead>
+
+    <tbody>
+
+      {% for procedimiento in odontograma.procedimiento_set.all %}
+      <tr>
+
+        <td>{{ procedimiento.pieza }}</td>
+        <td>{{ procedimiento.get_cara_display }}</td>
+        <td>{{ procedimiento.tratamiento }}</td>
+        <td><span class="label">{{ procedimiento.get_status_display }}</span></td>
+        <td><a href="/clinica/historial/procedimiento/{{ procedimiento.id }}/" class="btn btn-default">Ver</a></td>
+
+      </tr>
+      {% endfor %}
+
+    </tbody>
+
+  </table>
+  {% endif %}
+
+  </div>
+
+  <div class="col-md-4">
+
+    <div class="panel panel-default">
+
+      <table class="table">
+
+        <tr>
+          <th>Medico:</th>
+          <td>{{ odontograma.medico }}</td>
+        </tr>
+
+        <tr>
+          <th>Paciente:</th>
+          <td>{{ odontograma.paciente }}</td>
+        </tr>
+
+        <tr>
+          <th>Evaluacion:</th>
+          <td>{{ odontograma.evaluacion }}</td>
+        </tr>
+
+        {% if odontograma.tratamiento_preventivo %}
+        <tr>
+          <th>Tratamiento Preventivo:</th>
+          <td>{{ odontograma.tratamiento_preventivo }}</td>
+        </tr>
+        {% endif %}
+
+        <tr>
+          <th>Observaciones:</th>
+          <td>{{ odontograma.notas }}</td>
+        </tr>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</div>
+{% endblock content %}
+
+{% block javascript %}
+<script>
+$(function() {
+
+  $.each($('.label'), function(){
+    var status = $(this);
+
+    if(status.text() == 'Recomendado') {
+
+      status.addClass(' label-warning');
+
+    } else if(status.text() == 'Autorizado') {
+
+      status.addClass(' label-primary');
+
+    } else if(status.text() == 'En Proceso') {
+
+      status.addClass(' label-info');
+
+    } else {
+
+      status.addClass(' label-default');
+
+    }
+
+  })
+})
+</script>
+{% endblock javascript %}

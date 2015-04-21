@@ -15,10 +15,18 @@ from altas.models import Paciente, Tratamiento
 from core.utils import generic_search
 
 
-def inicio(request):
+def paciente_search(request):
+    '''
+    Aqui empieza el flujo de clinica. Busqueda de paciente por nombre o DNI.
+    '''
     query = 'q'
     MODEL_MAP = {
-        Paciente: ['nombre', 'apellidoPaterno', 'apellidoMaterno'],
+        Paciente: [
+            'nombre',
+            'apellidoPaterno',
+            'apellidoMaterno',
+            'credencialPaciente'
+        ],
     }
 
     objects = []
@@ -26,21 +34,25 @@ def inicio(request):
     for model, fields in MODEL_MAP.iteritems():
         objects += generic_search(request, model, fields, query)
 
-    return render_to_response('inicio.html', {
+    return render_to_response('paciente-search.html', {
                               'objects': objects,
                               'search_string': request.GET.get(query, '')
                               })
 
 
-def detalle_paciente(request, paciente_id):
+def paciente_detail(request, paciente_id):
     paciente = get_object_or_404(Paciente, pk=paciente_id)
-    odontograma = paciente.odontograma_set.order_by('-created_at')[:10]
-    detalle_paciente = 'active'
+    odontogramas = paciente.odontograma_set.order_by('-created_at')[:10]
+    procedimientos = Procedimiento.objects.filter(
+        odontograma__paciente=paciente
+        ).exclude(status='completado').order_by('id')
+    pd_active = 'active'
 
-    return render(request, 'detalle-paciente.html',
+    return render(request, 'paciente-detail.html',
                   {'paciente': paciente,
-                   'odontograma': odontograma,
-                   'detalle_paciente': detalle_paciente})
+                   'odontogramas': odontogramas,
+                   'procedimientos': procedimientos,
+                   'pd_active': pd_active})
 
 
 def odontograma(request, paciente_id):
@@ -60,45 +72,54 @@ def odontograma(request, paciente_id):
                     form.save()
 
             return redirect(reverse(
-                'detalle_odontograma', args=[paciente.id, odontograma.id]))
+                'odontograma_detail', args=[odontograma.id]))
     else:
         modelform = OdontogramaForm()
         formset = ProcedimientoFormSet()
 
-    odontograma_active = 'active'
+    o_active = 'active'
 
     return render(request, 'odontograma.html', {
                   'form': modelform,
                   'formset': formset,
                   'paciente': paciente,
                   'tratamientos': tratamientos,
-                  'odontograma_active': odontograma_active
+                  'o_active': o_active
                   })
 
 
-def detalle_odontograma(request, paciente_id, odontograma_id):
-    paciente = get_object_or_404(Paciente, pk=paciente_id)
+def odontograma_detail(request, odontograma_id):
     odontograma = get_object_or_404(Odontograma, pk=odontograma_id)
-    procedimientos = Procedimiento.objects.all()
+    procedimientos = odontograma.procedimiento_set.all()
+    paciente = odontograma.paciente
 
-    return render(request, 'detalle-odontograma.html', {
+    o_active = 'active'
+
+    return render(request, 'odontograma-detail.html', {
                   'paciente': paciente,
                   'procedimientos': procedimientos,
-                  'odontograma': odontograma
+                  'odontograma': odontograma,
+                  'o_active': o_active
                   })
 
 
 def procedimientos(request, paciente_id):
+    '''
+    Vista para los procedimientos autorizados (pagados).
+    Muestra una lista que va a detalle o 'procedimiento'.
+    '''
     paciente = get_object_or_404(Paciente, pk=paciente_id)
 
     procedimientos = Procedimiento.objects.filter(
         odontograma__paciente=paciente,
         status__in=['autorizado', 'en_proceso']
-    )
+        )
 
     bitacoras = Bitacora.objects\
-        .filter(procedimiento__odontograma__paciente=paciente)\
-        .order_by('-created_at')[:10]
+        .filter(
+            procedimiento__odontograma__paciente=paciente,
+            procedimiento__status__in=['autorizado', 'en_proceso']
+            ).order_by('-created_at')[:10]
 
     p_active = 'active'
 
@@ -110,7 +131,11 @@ def procedimientos(request, paciente_id):
                   })
 
 
-def procedimiento(request, procedimiento_id):
+def bitacora_create(request, procedimiento_id):
+    '''
+    Agregar una entrada de bitacora a un procedimiento en particular y \
+    actualizar el status de este.
+    '''
     procedimiento = get_object_or_404(Procedimiento, pk=procedimiento_id)
     paciente = procedimiento.odontograma.paciente
     bitacoras = procedimiento.bitacora_set.all()
@@ -119,30 +144,56 @@ def procedimiento(request, procedimiento_id):
         form = BitacoraForm(request.POST)
 
         if form.is_valid():
-            is_complete = form.cleaned_data.get('is_complete')
-
-            if is_complete:
-                procedimiento.status = 'completado'
-
-            else:
-                procedimiento.status = 'en_proceso'
-
             form.save()
-            procedimiento.save()
 
             return redirect(reverse('procedimientos', args=[paciente.id]))
-
     else:
         form = BitacoraForm(initial={'procedimiento': procedimiento})
 
     p_active = 'active'
 
-    return render(request, 'procedimiento.html', {
+    return render(request, 'bitacora-create.html', {
                   'procedimiento': procedimiento,
                   'paciente': paciente,
                   'form': form,
                   'bitacoras': bitacoras,
                   'p_active': p_active
+                  })
+
+
+def historial(request, paciente_id):
+    '''
+    Aqui se presentan todos los procedimientos con status completado.
+    '''
+    paciente = get_object_or_404(Paciente, pk=paciente_id)
+    procedimientos = Procedimiento.objects.filter(
+        odontograma__paciente=paciente, status='completado'
+        )
+
+    h_active = 'active'
+
+    return render(request, 'historial.html', {
+                  'paciente': paciente,
+                  'procedimientos': procedimientos,
+                  'h_active': h_active
+                  })
+
+
+def historial_detail(request, procedimiento_id):
+    '''
+    Procedimiento con entradas a bitacora asociadas a este.
+    '''
+    procedimiento = get_object_or_404(Procedimiento, pk=procedimiento_id)
+    paciente = procedimiento.odontograma.paciente
+    bitacoras = procedimiento.bitacora_set.all().order_by('-created_at')
+
+    h_active = 'active'
+
+    return render(request, 'historial-detail.html', {
+                  'procedimiento': procedimiento,
+                  'paciente': paciente,
+                  'bitacoras': bitacoras,
+                  'h_active': h_active
                   })
 
 
