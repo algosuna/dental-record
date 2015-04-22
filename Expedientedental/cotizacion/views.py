@@ -44,6 +44,7 @@ def cotizacion_detail(request, odontograma_id):
                   })
 
 
+
 class CotizacionPDF(PDFTemplateView):
     filename = 'cotizacion.pdf'
     template_name = 'printit.html'

@@ -31,13 +31,39 @@ class PaqueteConsumido(models.Model):
     def __unicode__(self):
         return '%s %s' % (self.paquete, self.medico)
 
+    def get_item_initials(self):
+        paquete = self.paquete
+        paquete_items = paquete.paqueteitem_set.all()
+        initial_list = []
+        for pitem in paquete_items:
+            initial = {
+                'paquete_consumido': self,
+                'producto': pitem.producto,
+                'cantidad': pitem.cantidad_producto,
+                'precio': pitem.producto.precioUnidad
+            }
+            initial_list.append(initial)
+        return initial_list
+
 
 class PaqueteConsumidoItem(models.Model):
     paquete_consumido = models.ForeignKey(PaqueteConsumido)
-    tratamiento_pago = models.ForeignKey(PagoAplicado)
     producto = models.ForeignKey('Inventario.Producto')
     cantidad = models.DecimalField(max_digits=8, decimal_places=2)
     precio = models.DecimalField(max_digits=8, decimal_places=2)
 
+    #def stock(slef):
+        # disponible = 
+        # return disponible
+
+    def disminuir(self, stock):
+                if self.cantidad >= self.stock:
+                        self.cantidad -= stock
+                        return True
+                return False
+
     def __unicode__(self):
         return u'%s %s %s ' % (self.producto, self.cantidad, self.precio)
+
+    # TODO: metodo save debe restar unidades de inventario (consumir)
+    # TODO: metodo delete debe sumar unidades de inventario (devoluciones)

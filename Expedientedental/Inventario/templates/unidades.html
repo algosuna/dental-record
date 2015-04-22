@@ -1,0 +1,33 @@
+{% extends "base1.html" %}
+{%load static from staticfiles %}
+
+{% block content %}
+
+<h2 class="page-header">Paquetes</h2>
+
+{% if paquetes %}
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Unidad</th>
+      <th>Prefijo</th>
+      
+    </tr>
+  </thead>
+  <tbody>
+    {% for unidad in unidades %}
+    <tr>
+      <td>{{ unidad.unidad }}</td>
+      <td>{{ unidad.prefix }}</td>
+      
+      
+      <td><a href="/paquetes/insumos/{{ paquete.id }}/"><span class="glyphicon glyphicon-pencil"></span></a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<a href="/paquetes/" class="btn btn-primary pull-right">Registrar Nuevo paquete <span class="glyphicon glyphicon-plus"></span></a>
+{% else %}
+<p class="lead text-center text-muted">No hay unidades en la base de datos.<br><br><a href="/altas/paciente/new/" class="btn btn-primary">Registrar Salida de Insumos <span class="glyphicon glyphicon-chevron-right"></span></a></p>
+{% endif %}
+{% endblock content %}

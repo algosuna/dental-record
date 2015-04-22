@@ -1,4 +1,5 @@
 from django.conf.urls import patterns, url
+from pagos.views import RecibodePagoPDF
 
 urlpatterns = patterns(
     'pagos.views',
@@ -12,6 +13,12 @@ urlpatterns = patterns(
     url(r'^(?P<paquete_id>\d+)/$', 'pagos'),
 
     # patment detail
-    url(r'^detalle/(?P<pago_id>\d+)/$', 'pagos_detail', name='pagos_detail')
+    url(r'^detalle/(?P<pago_id>\d+)/$', 'pagos_detail', name='pagos_detail'),
+    )
 
+
+urlpatterns += patterns(
+    '',
+
+    url(r'^pago/(?P<pago_id>\d+)/pdf/$', RecibodePagoPDF.as_view()),
 )
