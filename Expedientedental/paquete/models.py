@@ -37,7 +37,7 @@ class PaqueteConsumido(models.Model):
         initial_list = []
         for pitem in paquete_items:
             initial = {
-                'paquete': self,
+                'paquete_consumido': self,
                 'producto': pitem.producto,
                 'cantidad': pitem.cantidad_producto,
                 'precio': pitem.producto.precioUnidad
@@ -51,6 +51,16 @@ class PaqueteConsumidoItem(models.Model):
     producto = models.ForeignKey('Inventario.Producto')
     cantidad = models.DecimalField(max_digits=8, decimal_places=2)
     precio = models.DecimalField(max_digits=8, decimal_places=2)
+
+    #def stock(slef):
+        # disponible = 
+        # return disponible
+
+    def disminuir(self, stock):
+                if self.cantidad >= self.stock:
+                        self.cantidad -= stock
+                        return True
+                return False
 
     def __unicode__(self):
         return u'%s %s %s ' % (self.producto, self.cantidad, self.precio)

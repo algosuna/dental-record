@@ -1,33 +1,82 @@
 {% extends "base1.html" %}
-{%load static from staticfiles %}
 
+{% load static from staticfiles %}
 {% load crispy_forms_tags %}
 
+{% block title %}Paquete{% endblock %}
+
 {% block css %}
-<link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">
-<link rel="stylesheet" type="text/css" href="../src/bootstrap-duallistbox.css">
-{% endblock css %}
+<style>
+  
+</style>
+{% endblock %}
 
 {% block content %}
-
-<ul>
-    <li><strong>Paquete:</strong> {{paquete.paquete}}</li>
-    <li><strong>Medico:</strong> {{paquete.medico}}</li>
-    <li><strong>Fecha:</strong> {{paquete.fecha|date:"d-M-Y"}}</li>
-    <li><strong>Paciente:</strong> {{paquete.paciente}}</li>
-</ul>
-
-
-
-    {{ formset.management_form }}
-    <table>
-    {% csrf_token %}
-    
-        {% for form in formset %}
-        {% crispy form %}
-        {% endfor %}
+<div class="well paquete clearfix">
+  <div class="col-xs-3">
+    <img src="{% static paquete.paciente.imagen %}" alt="{{ paquete.paciente.nombre }} {{ paquete.paciente.apellidoPaterno }}" class="pull-left img-rounded">
+  </div>
+  <div class="col-xs-9">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Nombre:</th>
+          <th>Paquete:</th>
+          <th>Fecha:</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ paquete.paciente}}</td>
+          <td>{{ paquete.paquete }}</td>
+         <td>{{paquete.fecha|date:"d-M-Y"}}</td>
+        </tr>
+      </tbody>
+      <thead>
+        <tr>
+          <th>Medico Tratante</th>
+          <th>&nbsp;</th>
+          <th>&nbsp;</th>
+        </tr>
+        <tr>
+          <td>{{ paquete.medico }}</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+      </thead>
     </table>
-    <input class="btn btn-success pull-right" type="submit" value="Actualizar">
+  </div>
+</div><!-- patient info section -->
+
+
+
+<h2>Lista de Productos </h2>
+<form action="" method="post">{% csrf_token %}
+  {{ formset.management_form }}
+  {% for form in formset %}
+  <div class="formset row">
+    {% crispy form %}
+  </div>
+  {% endfor %}
+<div id="empty-form" class="formset row" style="display:none;">
+  {% crispy formset.empty_form %}
+</div>
+  <input type="submit" class="btn btn-primary" value="Guardar">
 </form>
 
-{% endblock content %}
+
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'js/jquery.formset.js' %}"></script>
+<script>
+$('.formset').formset({
+  addText: 'Agregar Producto <span class="glyphicon glyphicon-plus"></span>',
+  deleteText: 'remove',
+  addCssClass: 'add-row btn btn-success',
+  deleteCssClass: 'delete-row btn btn-default normalized-btn',
+  formCssClass: 'dynamic-form',
+  formTemplate: '#empty-form',
+});
+</script>
+{% endblock %}

@@ -1,11 +1,15 @@
 # encoding:utf-8
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, get_object_or_404, redirect
+from datetime import datetime
+
 
 from altas.models import Paciente
 from core.utils import generic_search
+from wkhtmltopdf.views import PDFTemplateView
+
 from servicios.models import Paquete
-from pagos.models import Pago
+from pagos.models import Pago, PagoAplicado
 from pagos.forms import PagoForm, PagoAplicadoFormset
 
 
@@ -162,3 +166,20 @@ def pagos_detail(request, pago_id):
     pago = get_object_or_404(Pago, pk=pago_id)
 
     return render(request, 'pago-detail.html', {'pago': pago})
+
+
+class RecibodePagoPDF(PDFTemplateView):
+    filename = 'recibo.pdf'
+    template_name = 'recibo_pago.html'
+    cmd_options = {
+        'margin-top': 13,
+    }
+
+    def get_context_data(self, **kwargs):
+        context = super(RecibodePagoPDF, self).get_context_data(**kwargs)
+        self.pago_id = int(kwargs.get('pago_id'))
+        pago = get_object_or_404(Pago, pk=self.pago_id)
+        context['pago'] = pago
+        context['fecha'] = datetime.now().strftime("%d/%m/%Y")
+        context['hora'] = datetime.now().strftime("%I:%M %p")
+        return context
