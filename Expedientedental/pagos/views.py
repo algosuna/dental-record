@@ -121,7 +121,7 @@ def paciente_search(request):
     for model, fields in MODEL_MAP.iteritems():
         objects += generic_search(request, model, fields, query)
 
-    return render(request, 'paciente-search.html', {
+    return render(request, 'pago-paciente-search.html', {
                   'objects': objects,
                   'search_string': request.GET.get(query, '')
                   })
