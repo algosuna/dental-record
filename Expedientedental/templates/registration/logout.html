@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% load static from staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block title %}Login{% endblock %}
+
+{% block bodyclass %}class="login"{% endblock %}
+
+{% block login %}
+  <div class="col-md-3 login-container">
+    <div class="logo">
+      <svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" id="svg3274" version="1.1" inkscape:version="0.48.4 r9939" width="131.96536" height="115.72103"> <metadata id="metadata3280"> <rdf:RDF> <cc:Work rdf:about=""> <dc:format>image/svg+xml</dc:format> <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" /> </cc:Work> </rdf:RDF> </metadata> <defs id="defs3278"> <clipPath id="clipPath26" clipPathUnits="userSpaceOnUse"> <path id="path28" d="m 0,1100 900,0 L 900,0 0,0 0,1100 z" inkscape:connector-curvature="0" /> </clipPath> </defs> <sodipodi:namedview pagecolor="#ffffff" bordercolor="#666666" borderopacity="1" objecttolerance="10" gridtolerance="10" guidetolerance="10" inkscape:pageopacity="0" inkscape:pageshadow="2" inkscape:window-width="640" inkscape:window-height="480" id="namedview3276" /> <inkscape:clipboard id="clipboard3282" style="color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke-width:0.68827331;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" min="30729.931,889.30734" max="30861.896,1005.0284" /> <g transform="matrix(0.68827332,0,0,-0.68827332,-245.31328,476.91256)" id="g22"> <g transform="translate(296.41841,-367.08809)" clip-path="url(#clipPath26)" id="g24"> <g transform="translate(159,1028.2003)" id="g30"> <path inkscape:connector-curvature="0" id="path32" style="fill:#ef2c3c;fill-opacity:1;fill-rule:nonzero;stroke:none" d="m 0,0 c -38.667,27.333 -82.688,13.695 -82.688,-37.562 0,-28.381 13.021,-49.105 79.688,-98.771 -55.491,26.717 -96,63.666 -96,100 0,62.333 61.667,89.666 99.333,48.666 44.667,43 121,4 81.334,-66.333 C 95.041,20.333 34,23.333 0,0" /> </g> <g transform="translate(165.4784,960.1335)" id="g34" /> <g transform="translate(202.9053,938.4236)" id="g38" /> <g transform="translate(241.1144,949.4039)" id="g46" /> <g transform="translate(267.6237,932.6197)" id="g50" /> <g transform="translate(303.7954,954.11)" id="g54" /> <g transform="translate(326.0067,954.11)" id="g58" /> <g transform="translate(389.8802,938.4236)" id="g64" /> <g transform="translate(407.5738,928.9177)" id="g68" /> <g transform="translate(155.5654,1003.7822)" id="g72" /> <g transform="translate(159.7778,1003.7822)" id="g76" /> <g transform="translate(189.7832,991.146)" id="g80" /> <g transform="translate(182.9331,909.0937)" id="g84" /> <g transform="translate(222.2339,895.0537)" id="g88" /> <g transform="translate(241.7729,891.8135)" id="g92" /> <g transform="translate(265.0122,901.1738)" id="g98" /> <g transform="translate(271.1323,909.0937)" id="g102" /> <g transform="translate(303.6919,886.2539)" id="g106" /> <g transform="translate(326.811,901.1738)" id="g110" /> <g transform="translate(356.8521,897.1538)" id="g114" /> <g transform="translate(372.4106,901.1738)" id="g118" /> <g transform="translate(390.3911,895.0537)" id="g122" /> <g transform="translate(399.1304,901.1738)" id="g126" /> </g> </g> </svg>
+    </div>
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Inicie Sesi&oacute;n</h3>
+      </div>
+      <div class="panel-body">
+        {% block content %}
+        <form method="post" action="">
+          {% csrf_token %}
+          {{ form|crispy }}
+          <input type="submit" class="btn btn-success btn-block">
+        </form>
+        {% endblock content %}
+      </div>
+    </div>
+  </div>
+{% endblock %}

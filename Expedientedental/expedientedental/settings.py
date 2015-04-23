@@ -163,6 +163,7 @@ INSTALLED_APPS = (
     'dajax',
     'south',
 
+    'accounts',
     'altas',
     'clinica',
     'core',
