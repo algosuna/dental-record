@@ -2,11 +2,10 @@
 from django.db import models
 import datetime as dt
 from altas.models import Medico, Paciente
-from pagos.models import PagoAplicado
 
 
 class Paquete(models.Model):
-    nombre = models.CharField(max_length=50)
+    nombre = models.CharField(max_length=50, unique=True)
     descripcion = models.CharField(max_length=50)
 
     def __unicode__(self):
@@ -52,13 +51,18 @@ class PaqueteConsumidoItem(models.Model):
     cantidad = models.DecimalField(max_digits=8, decimal_places=2)
     precio = models.DecimalField(max_digits=8, decimal_places=2)
 
-    #def stock(slef):
-        # disponible = 
-        # return disponible
+    def in_stock(self):
+        return self.producto.in_stock()
+
+    def get_stock(self):
+        return self.producto.get_stock()
+
+    def disminuir_stock(self, cantidad=1):
+        self.producto.disminuir_stock(cantidad)
 
     def disminuir(self, stock):
-                if self.cantidad >= self.stock:
-                        self.cantidad -= stock
+                if self.cantidad >= self.in_stock():
+                        self.cantidad -= stock()
                         return True
                 return False
 

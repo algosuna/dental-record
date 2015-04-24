@@ -4,6 +4,7 @@ from datetime import datetime
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect, render_to_response,\
     get_object_or_404
+from django.views.generic import UpdateView
 
 from wkhtmltopdf.views import PDFTemplateView
 
@@ -215,6 +216,13 @@ def interrogatorio(request, paciente_id):
                   'paciente': paciente,
                   'expediente': expediente
                   })
+
+
+class interrogatorioUpdateView(UpdateView):
+    model = Interrogatorio
+    form_class = InterrogatorioForm
+    template_name = 'interrogatorio.html'
+    succes_url = '/clinica/interrogatorio/'
 
 
 class InterrogatorioPDF(PDFTemplateView):

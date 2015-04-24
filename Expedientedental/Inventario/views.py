@@ -6,7 +6,7 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import (render, redirect, render_to_response,
                               get_object_or_404)
 from wkhtmltopdf.views import PDFTemplateView
-from Inventario.forms import ProductoForm, UnidadMedidaForm, EntradasForm
+from Inventario.forms import ProductoForm, UnidadMedidaForm, EntradasForm, DevolucionesForm
 from Inventario.models import UnidadMedida, Producto, Entradas
 from Inventario.utils import generic_search
 
@@ -96,12 +96,6 @@ def ingresarCantidad(request, entrada_id):
                                              'entrada': entrada, })
 
 
-def detallesProd(request, entrada_id):
-    # id de la entrada de producto
-    entrada = get_object_or_404(Entradas, pk=entrada_id)
-    return render(request, "detallesProd.html", {'entrada': entrada, })
-
-
 class ProductosPDF(PDFTemplateView):
     filename = 'productos.pdf'
     template_name = 'productos_pdf.html'
@@ -112,7 +106,18 @@ class ProductosPDF(PDFTemplateView):
     def get_context_data(self, **kargs):
         context = super(ProductosPDF).get_context_data(**kargs)
         context['productos'] = Producto.objects.order_by('producto__producto')
-        context['categorias'] = Categoria.objects.order_by('nombre')
         context['fecha'] = datetime.now().strftime("%d/%m/%Y")
         context['hora'] = datetime.now().strftime("%I:%M %p")
         return context
+
+
+def devoluciones(request):
+    if request.method == 'POST':
+        modelform = DevolucionesForm(request.POST)
+        if modelform.is_valid():
+            modelform.save()
+            return redirect('/devolucion/')
+    else:
+        modelform = DevolucionesForm()
+    print modelform.helper
+    return render(request, "devoluciones.html", {"form": modelform})
