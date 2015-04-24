@@ -191,6 +191,10 @@ login
   padding: 20px 0px;
 }
 
+.login .alert ul { padding-left: 0px; }
+
+.login .alert ul li { list-style: none; }
+
 
 /*
 

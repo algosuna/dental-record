@@ -86,6 +86,8 @@ STATICFILES_FINDERS = (
     'dajaxice.finders.DajaxiceFinder',
 )
 
+LOGIN_URL = '/login/'
+
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'a*whdmryd)m91g7su-ul!7%*z5qhe05t^)x12xeio^qco36hp-'
 

@@ -1,0 +1,10 @@
+{% extends "dash.html" %}
+
+{% load static from staticfiles %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+Meh.
+{{ user.get_full_name }}
+{% endblock %}
