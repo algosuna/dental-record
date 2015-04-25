@@ -11,7 +11,7 @@
 
         <div class="navbar-header">
 
-          <a class="navbar-brand" href="/clinica/">Sistema Administrativo Dental MediExcel</a>
+          <a class="navbar-brand" href="{% url clinica:paciente_search %}">Sistema Administrativo Dental MediExcel</a>
 
         </div><!-- end .navbar-header -->
 
@@ -25,12 +25,12 @@
 
               <li><a href="#"><i class="fa fa-wrench fa-fw"></i> Configuraci&oacute;n</a></li>
               <li class="divider"></li>
-              <li><a href="/logout/"><i class="fa fa-sign-out fa-fw"></i> Cerrar Sesi&oacute;n</a></li>
+              <li><a href="{% url logout %}"><i class="fa fa-sign-out fa-fw"></i> Cerrar Sesi&oacute;n</a></li>
 
             </ul>
 
           </li>
-          <li><a href="/clinica/"><i class="fa fa-plus fa-fw"></i> B&uacute;squeda de Paciente</a></li>
+          <li><a href="{% url clinica:paciente_search %}"><i class="fa fa-plus fa-fw"></i> B&uacute;squeda de Paciente</a></li>
 
         </ul>
 

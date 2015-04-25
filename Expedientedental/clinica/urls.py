@@ -6,7 +6,7 @@ from clinica.views import InterrogatorioPDF
 urlpatterns = patterns(
     'clinica.views',
 
-    url(r'^$', 'paciente_search'),
+    url(r'^$', 'paciente_search', name='paciente_search'),
     url(r'^detail/(?P<paciente_id>\d+)/$', 'paciente_detail'),
     url(r'^odontograma/(?P<paciente_id>\d+)/$', 'odontograma'),
     url(r'^odontograma/detail/(?P<odontograma_id>\d+)/$',
