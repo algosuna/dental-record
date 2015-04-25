@@ -7,6 +7,8 @@
 
 {% if search_string %}
 <div class="well">
+  <a href="/pagos/list/" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></a>
+
   <p class="text-center">Usted ingres&oacute; "{{ search_string }}":</p>
 
     {% if objects %}
@@ -47,42 +49,45 @@
     <p class="lead text-center text-muted">No se han encontrado pacientes con ese nombre.</p>
     {% endif %}
 </div>
+
 <hr>
-{% endif %}
 
-{% if pagos %}
-<table class="table">
-
-  <thead>
-
-    <tr>
-
-      <th>Fecha</th>
-      <th>Paciente</th>
-      <th>Su Pago</th>
-      <th>&nbsp;</th>
-
-    </tr>
-
-  </thead>
-
-  <tbody>
-
-    {% for pago in pagos %}
-    <tr>
-
-      <td>{{ pago.updated_at }}</td>
-      <td>{{ pago.paciente.nombre }} {{ pago.paciente.apellidoPaterno }} {{ pago.paciente.apellidoMaterno }}</td>
-      <td>{{ pago.monto_aplicado }}</td>
-      <td><a href="/pagos/detalle/{{ pago.id }}/" class="btn btn-primary pull-right">Ver Pago</a><!-- boton para ir a pago --></td>
-
-    </tr>
-    {% endfor %}
-
-  </tbody>
-
-</table>
 {% else %}
-<!-- TODO: a message in case there are no payments -->
-{% endif %}
+
+  {% if pagos %}
+  <table class="table">
+
+    <thead>
+
+      <tr>
+
+        <th>Fecha</th>
+        <th>Paciente</th>
+        <th>Su Pago</th>
+        <th>&nbsp;</th>
+
+      </tr>
+
+    </thead>
+
+    <tbody>
+
+      {% for pago in pagos %}
+      <tr>
+
+        <td>{{ pago.updated_at }}</td>
+        <td>{{ pago.paciente.nombre }} {{ pago.paciente.apellidoPaterno }} {{ pago.paciente.apellidoMaterno }}</td>
+        <td>{{ pago.monto_aplicado }}</td>
+        <td><a href="/pagos/detalle/{{ pago.id }}/" class="btn btn-primary pull-right">Ver Pago</a><!-- boton para ir a pago --></td>
+
+      </tr>
+      {% endfor %}
+
+    </tbody>
+
+  </table>
+  {% else %}
+  <p class="lead text-muted text-center">No hay pagos registrados en la base de datos.</p>
+  {% endif %}<!-- end if pagos -->
+{% endif %}<!-- end if  search_string -->
 {% endblock content %}

@@ -1,6 +1,7 @@
 # encoding:utf-8
 from datetime import datetime
 
+from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect, render_to_response,\
     get_object_or_404
@@ -16,6 +17,7 @@ from altas.models import Paciente, Tratamiento
 from core.utils import generic_search
 
 
+@login_required
 def paciente_search(request):
     '''
     Aqui empieza el flujo de clinica. Busqueda de paciente por nombre o DNI.
