@@ -74,7 +74,7 @@ def odontograma(request, paciente_id):
                     form.save()
 
             return redirect(reverse(
-                'odontograma_detail', args=[odontograma.id]))
+                'clinica:odontograma_detail', args=[odontograma.id]))
     else:
         modelform = OdontogramaForm()
         formset = ProcedimientoFormSet()

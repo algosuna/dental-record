@@ -90,7 +90,7 @@
     {% endfor %}
   {% else %}
   <p class="lead text-muted">No hay odontogramas.</p>
-  <a href="{% url clinica:odontograma paciente.id }}/" class="btn btn-primary btn-block">Nuevo Odontograma <span class="glyphicon glyphicon-plus"></i></a>
+  <a href="{% url clinica:odontograma paciente.id %}" class="btn btn-primary btn-block">Nuevo Odontograma <span class="glyphicon glyphicon-plus"></i></a>
   {% endif %}
   </ul>
 </div>

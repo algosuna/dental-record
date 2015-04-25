@@ -12,7 +12,7 @@ urlpatterns = patterns(
 urlpatterns += patterns(
     '',
 
-    url(r'^$', CotizacionList.as_view()),
+    url(r'^$', CotizacionList.as_view(), name='cotizacion_list'),
 
 
     # reporte de cotizacion
