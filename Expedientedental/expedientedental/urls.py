@@ -21,18 +21,15 @@ urlpatterns = patterns(
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
-    # url(r'^', include('django.contrib.auth.urls')),
+    url(r'^', include('accounts.urls', namespace='accounts')),
+    url(r'^altas/', include('altas.urls', namespace='altas')),
+    url(r'^clinica/', include('clinica.urls', namespace='clinica')),
+    url(r'^cotizacion/', include('cotizacion.urls', namespace='cotizacion')),
+    url(r'^pagos/', include('pagos.urls', namespace='pagos')),
+    url(r'^', include('servicios.urls', namespace='servicios')),
+    url(r'^', include('precios.urls', namespace='precios')),
 
-    url(r'^', include('accounts.urls')),
-
-    url(r'^altas/', include('altas.urls')),
-    url(r'^clinica/', include('clinica.urls')),
-    url(r'^cotizacion/', include('cotizacion.urls')),
-    url(r'^pagos/', include('pagos.urls')),
-    url(r'^', include('servicios.urls')),
-
-    url(r'^', include('paquete.urls')),
-    url(r'^', include('precios.urls')),
+    url(r'^', include('paquete.urls', namespace='paquete')),
 
     url(r'^producto/$', productoView),
 
@@ -44,9 +41,10 @@ urlpatterns = patterns(
     url(r'^detalles_producto/(?P<entrada_id>\d+)$', detallesProd),
     url(r'^entradas/$', busqueda),
 
-
+    # Esto es necesario para tener un folder de media funcional.
+    # Agregado para foto de paciente (imagenpaciente)
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve',
         {'document_root': settings.MEDIA_ROOT}),
 
-    (r'^dajaxice/', include('dajaxice.urls')),
+    url(r'^dajaxice/', include('dajaxice.urls')),
 )

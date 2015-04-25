@@ -25,7 +25,7 @@
 
               <li><a href="#"><i class="fa fa-wrench fa-fw"></i> Configuraci&oacute;n</a></li>
               <li class="divider"></li>
-              <li><a href="{% url logout %}"><i class="fa fa-sign-out fa-fw"></i> Cerrar Sesi&oacute;n</a></li>
+              <li><a href="{% url accounts:logout %}"><i class="fa fa-sign-out fa-fw"></i> Cerrar Sesi&oacute;n</a></li>
 
             </ul>
 
@@ -48,12 +48,12 @@
     </div><!-- TODO: remove and turn into a block -->
 
     <ul class="nav nav-sidebar">
-      <li class="{{ pd_active }}"><a href="/clinica/detail/{{ paciente.id }}/"><i class="fa fa-user fa-fw"></i> Datos Personales</a></li>
-      <li class="{{ expediente }}"><a href="/clinica/interrogatorio/{{ paciente.id }}/"><i class="fa fa-folder fa-fw"></i> Expediente Medico/Dental</a></li>
+      <li class="{{ pd_active }}"><a href="{% url clinica:paciente_detail paciente.id %}"><i class="fa fa-user fa-fw"></i> Datos Personales</a></li>
+      <li class="{{ expediente }}"><a href="{% url clinica:interrogatorio paciente.id %}"><i class="fa fa-folder fa-fw"></i> Expediente Medico/Dental</a></li>
       <li class="sidebar-header text-center">Actividades Clinicas</li>
-      <li class="{{ p_active }}"><a href="/clinica/procedimientos/{{ paciente.id }}/"><i class="fa fa-th-list fa-fw"></i> Plan de Tratamiento</a></li>
-      <li class="{{ o_active }}"><a href="/clinica/odontograma/{{ paciente.id }}/"><i class="fa fa-puzzle-piece fa-fw"></i> Odontograma</a></li>
-      <li class="{{ h_active }}"><a href="/clinica/historial/{{ paciente.id }}/"><i class="fa fa-clipboard fa-fw"></i> Historial de Procedimientos</a></li>
+      <li class="{{ p_active }}"><a href="{% url clinica:procedimientos paciente.id %}"><i class="fa fa-th-list fa-fw"></i> Plan de Tratamiento</a></li>
+      <li class="{{ o_active }}"><a href="{% url clinica:odontograma paciente.id %}"><i class="fa fa-puzzle-piece fa-fw"></i> Odontograma</a></li>
+      <li class="{{ h_active }}"><a href="{% url clinica:historial paciente.id %}"><i class="fa fa-clipboard fa-fw"></i> Historial de Procedimientos</a></li>
     </ul>
 
   </div><!-- end .sidebar -->

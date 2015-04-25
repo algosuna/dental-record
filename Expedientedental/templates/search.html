@@ -10,7 +10,7 @@
 
         <div class="navbar-header">
 
-          <a class="navbar-brand" href="/clinica/">Sistema Administrativo Dental MediExcel</a>
+          <a class="navbar-brand" href="{% url clinica:paciente_search %}">Sistema Administrativo Dental MediExcel</a>
 
         </div><!-- end .navbar-header -->
 
@@ -24,7 +24,7 @@
 
               <li><a href="#"><i class="fa fa-wrench fa-fw"></i> Settings</a></li>
               <li class="divider"></li>
-              <li><a href="{% logout %}"><i class="fa fa-sign-out fa-fw"></i> Log Out</a></li>
+              <li><a href="{% url accounts:logout %}"><i class="fa fa-sign-out fa-fw"></i> Log Out</a></li>
 
             </ul>
 
