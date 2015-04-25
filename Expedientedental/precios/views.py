@@ -8,6 +8,7 @@ from altas.models import Tratamiento, Grupo
 
 
 def precios_grupos_view(request):
+    ''' List available Grupo objects. '''
     grupos = Grupo.objects.all()
 
     return render(request, 'precios-grupos.html',
@@ -15,6 +16,10 @@ def precios_grupos_view(request):
 
 
 def precios_view(request, grupo_id):
+    '''
+    Displays a table for a groupwith available Tratamiento objects and \
+    includes a field to add precio.
+    '''
     grupo = get_object_or_404(Grupo, pk=grupo_id)
     precios = grupo.preciotratamiento_set.all()
     precios_tratamientos_pks = [p.tratamiento.pk for p in precios]
@@ -41,7 +46,7 @@ def precios_view(request, grupo_id):
             if form.is_valid():
                 form.save()
 
-        return redirect('precios_grupos')
+        return redirect('precios:precios_grupos')
 
     else:
         formset = PreciosFormSet(initial=initial, queryset=precios)
