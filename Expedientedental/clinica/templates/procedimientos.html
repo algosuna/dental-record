@@ -35,7 +35,7 @@
           <td>{{ procedimiento.get_cara_display }}</td>
           <td>{{ procedimiento.tratamiento }}</td>
           <td class="padded"><span class="label">{{ procedimiento.get_status_display }}</span></td>
-          <td><a href="/clinica/procedimiento/{{ procedimiento.id }}/" class="btn btn-default">Actualizar</a></td>
+          <td><a href="{% url clinica:bitacora_create procedimiento.id %}" class="btn btn-default">Actualizar</a></td>
         </tr>
         {% endfor %}
 

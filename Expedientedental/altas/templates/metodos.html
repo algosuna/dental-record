@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<h2 class="page-header">Lista: {{title}}</h2>
+<h2 class="page-header">Lista: {{ title }}</h2>
 
 {% if object_list %}
 <table class="table table-hover">
@@ -18,14 +18,14 @@
     <tr>
       <td>{{ object.codigo }}</td>
       <td>{{ object.nombre }}</td>
-      <td class="text-right"><a href="/altas/{{name}}/edit/{{ object.id }}/" title="Editar"><span class="glyphicon glyphicon-pencil"></span></a></td>
+      <td class="text-right"><a href="/altas/{{ name }}/edit/{{ object.id }}/" title="Editar"><span class="glyphicon glyphicon-pencil"></span></a></td>
     </tr>
     {% endfor %}
   </tbody>
 </table>
-<a href="/altas/{{name}}/new/" class="btn btn-primary pull-right"><span class="glyphicon glyphicon-plus"></span> Agregar {{title}}</a>
+<a href="/altas/{{ name }}/new/" class="btn btn-primary pull-right"><span class="glyphicon glyphicon-plus"></span> Agregar {{ title }}</a>
 {% else %}
 <p class="lead text-center text-muted">No hay registros en la base de datos.<br><br>
-<a href="/altas/{{name}}/new/" class="btn btn-primary">Agregar {{title}} <span class="glyphicon glyphicon-chevron-right"></span></a></p>
+<a href="/altas/{{ name }}/new/" class="btn btn-primary">Agregar {{ title }} <span class="glyphicon glyphicon-chevron-right"></span></a></p>
 {% endif %}
 {% endblock content %}

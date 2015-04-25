@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<h2 class="page-header">Ordenes Pendientes</h2>
+<h2 class="page-header">Presupuestos Pendientes</h2>
 
 {% if orders %}
 	<table class="table table-hover">
@@ -20,13 +20,13 @@
 			<td>{{ order.paciente }}</td>
 			<td>{{ order.created_at }}</td>
 			<td class="text-right">
-				<a href="{{ order.id }}/" title="Ver Cotizaci&oacute;n" class="btn btn-primary">Ver Cotizaci&oacute;n</a>
+				<a href="{% url cotizacion:cotizacion_detail order.id %}" title="Ver Cotizaci&oacute;n" class="btn btn-primary">Ver Cotizaci&oacute;n</a>
 			</td>
 		</tr>
 		{% endfor %}
 	</table>
 {% else %}
-	<p class="lead text-muted text-center">No hay ordenes pendientes.</p>
+	<p class="lead text-muted text-center">No hay presupuestos pendientes.</p>
 {% endif %}
 
 {% endblock %}

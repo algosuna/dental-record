@@ -23,7 +23,7 @@
     {% endfor %}
   </tbody>
 </table>
-<a href="/pagos/{{ paquete.id }}/" class="btn btn-primary pull-right">Pagar Servicios <span class="glyphicon glyphicon-chevron-right"></span></a>
+<a href="{% url pagos:pagar paquete.id %}" class="btn btn-primary pull-right">Pagar Servicios <span class="glyphicon glyphicon-chevron-right"></span></a>
 {% endblock %}
 
 {% block javascript %}

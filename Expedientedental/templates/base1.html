@@ -41,17 +41,17 @@
 
         <ul class="nav navbar-nav">
 
-          <li><a href="/clinica/">Actividades Clinicas</a></li>
+          <li><a href="{% url clinica:paciente_search %}">Actividades Clinicas</a></li>
           <li>
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Altas <span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a href="/altas/medicos/">Médicos</a></li>
-              <li><a href="/altas/pacientes/">Pacientes</a></li>
-              <li><a href="/altas/grupos/">Grupos</a></li>
-              <li><a href="/altas/precios/">Precios</a></li>
-              <li><a href="/altas/tratamiento/">Tratamientos</a></li>
-              <li><a href="/altas/preventivo/">Tratamientos Preventivos</a></li>
-              <li><a href="/altas/evaluacion/">Evaluaciones</a></li>
+              <li><a href="{% url altas:medicos %}">Médicos</a></li>
+              <li><a href="{% url altas:pacientes %}">Pacientes</a></li>
+              <li><a href="{% url altas:grupos %}">Grupos</a></li>
+              <li><a href="{% url precios:precios_grupos %}">Precios</a></li>
+              <li><a href="{% url altas:tratamiento %}">Tratamientos</a></li>
+              <li><a href="{% url altas:preventivo %}">Tratamientos Preventivos</a></li>
+              <li><a href="{% url altas:evaluacion %}">Evaluaciones</a></li>
             </ul><!-- end .dropdown-menu -->
           </li>
 
@@ -66,13 +66,13 @@
             </ul><!-- end .dropdown-menu -->
           </li>
 
-          <li><a href="/cotizacion/">Cotizaciones</a></li>
+          <li><a href="{% url cotizacion:cotizacion_list %}">Cotizaciones</a></li>
 
           <li>
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Pagos<span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a href="/pagos/list/">Lista de Pagos</a></li>
-              <li><a href="/pagos/">B&uacute;squeda de Paciente</a></li>
+              <li><a href="{% url pagos:pagos_list %}">Lista de Pagos</a></li>
+              <li><a href="{% url pagos:paciente_search %}">B&uacute;squeda de Paciente</a></li>
             </ul>
           </li>
 
@@ -84,7 +84,7 @@
 
   <div class="page-header container clearfix">
 
-    <img src="{% static 'img/logo.png'%}" alt="Logo" height="125" width="170" class="pull-left">
+    <img src="{% static 'img/logo.png' %}" alt="Logo" height="125" width="170" class="pull-left">
 
     <h2 class="pull-left">Sistema Administrativo Dental</h2>
 

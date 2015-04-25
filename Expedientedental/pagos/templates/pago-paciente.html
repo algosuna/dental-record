@@ -26,7 +26,7 @@
 
       <td class="padded">{{ pago.updated_at }}</td>
       <td class="padded">{{ pago.monto_aplicado }}</td>
-      <td><a href="/pagos/detalle/{{ pago.id }}/" class="btn btn-primary pull-right">Ver Pago</a><!-- boton para ir a pago --></td>
+      <td><a href="{% url pagos:pagos_detail pago.id %}" class="btn btn-primary pull-right">Ver Pago</a><!-- boton para ir a pago --></td>
 
     </tr>
     {% endfor %}
