@@ -5,7 +5,8 @@ urlpatterns = patterns(
     'cotizacion.views',
 
     # review the items in cotizacion, select approved items
-    url(r'^(?P<odontograma_id>\d+)/$', 'cotizacion_detail'),
+    url(r'^(?P<odontograma_id>\d+)/$',
+        'cotizacion_detail', name='cotizacion_detail'),
 
 )
 urlpatterns += patterns(
@@ -15,6 +16,6 @@ urlpatterns += patterns(
 
 
     # reporte de cotizacion
-    url(r'^cotizacion/(?P<cotizacion_id>\d+)/pdf/$',
-        CotizacionPDF.as_view()),
+    url(r'^(?P<cotizacion_id>\d+)/pdf/$',
+        CotizacionPDF.as_view(), name='pdf'),
 )
