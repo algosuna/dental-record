@@ -1,0 +1,13 @@
+// Helper class reference. May be used throughout the site.
+
+// This is used when the button doesn't match up to a form's edge.
+.normalized-btn { margin: 20px; }
+
+// This is kind of a page-header but not quite :)
+.section-header {
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+}
+
+// adds padding to whatever. Usually used with tables with buttons.
+.padded { padding: 14px!important; }
