@@ -19,7 +19,7 @@
       <div class="panel-body">
         {% block content %}
         <p>Gracias por usar el Sistema Administrativo Dental MediExcel Health Plan.</p>
-        <a href="/login/" class="btn btn-primary btn-block">Iniciar Sesi&oacute;n</a>
+        <a href="{% url accounts:login %}" class="btn btn-primary btn-block">Iniciar Sesi&oacute;n</a>
         {% endblock content %}
       </div>
     </div>

@@ -60,7 +60,7 @@ def pagos(request, paquete_id):
             pago.aplicamonto(monto_aplicado)
             pago.save()
 
-            return redirect(reverse('pagos_detail', args=[pago.id]))
+            return redirect(reverse('pagos:pagos_detail', args=[pago.id]))
 
     else:
         modelform = PagoForm(initial={

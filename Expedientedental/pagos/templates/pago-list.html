@@ -7,7 +7,7 @@
 
 {% if search_string %}
 <div class="well">
-  <a href="/pagos/list/" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></a>
+  <a href="{% url pagos:pagos_list %}" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></a>
 
   <p class="text-center">Usted ingres&oacute; "{{ search_string }}":</p>
 
@@ -36,7 +36,7 @@
           <td>{{ pago.updated_at }}</td>
           <td>{{ paciente.nombre }} {{ paciente.apellidoPaterno }} {{ paciente.apellidoMaterno }}</td>
           <td>{{ pago.monto_aplicado }}</td>
-          <td><a href="/pagos/detalle/{{ pago.id }}/" class="btn btn-primary pull-right">Ver Pago</a><!-- boton para ir a pago --></td>
+          <td><a href="{% url pagos:pagos_detail pago.id %}" class="btn btn-primary pull-right">Ver Pago</a><!-- boton para ir a pago --></td>
 
         </tr>
         {% endfor %}
@@ -78,7 +78,7 @@
         <td>{{ pago.updated_at }}</td>
         <td>{{ pago.paciente.nombre }} {{ pago.paciente.apellidoPaterno }} {{ pago.paciente.apellidoMaterno }}</td>
         <td>{{ pago.monto_aplicado }}</td>
-        <td><a href="/pagos/detalle/{{ pago.id }}/" class="btn btn-primary pull-right">Ver Pago</a><!-- boton para ir a pago --></td>
+        <td><a href="{% url pagos:pagos_detail pago.id %}" class="btn btn-primary pull-right">Ver Pago</a><!-- boton para ir a pago --></td>
 
       </tr>
       {% endfor %}

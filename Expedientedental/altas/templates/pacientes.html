@@ -25,13 +25,13 @@
       <td>{{ paciente.apellidoPaterno }}</td>
       <td>{{ paciente.apellidoMaterno }}</td>
       <td>{{ paciente.nombre }}</td>
-      <td><a href="/altas/paciente/edit/{{ paciente.id }}/"><span class="glyphicon glyphicon-pencil"></span></a></td>
+      <td><a href="{% url altas:paciente_edit paciente.id %}/"><span class="glyphicon glyphicon-pencil"></span></a></td>
     </tr>
     {% endfor %}
   </tbody>
 </table>
-<a href="/altas/paciente/new/" class="btn btn-primary pull-right">Registrar Nuevo Paciente <span class="glyphicon glyphicon-plus"></span></a>
+<a href="{% url altas:paciente_new %}" class="btn btn-primary pull-right">Registrar Nuevo Paciente <span class="glyphicon glyphicon-plus"></span></a>
 {% else %}
-<p class="lead text-center text-muted">No hay pacientes registrados en la base de datos.<br><br><a href="/altas/paciente/new/" class="btn btn-primary">Registrar Paciente <span class="glyphicon glyphicon-chevron-right"></span></a></p>
+<p class="lead text-center text-muted">No hay pacientes registrados en la base de datos.<br><br><a href="{% url altas:paciente_new %}" class="btn btn-primary">Registrar Paciente <span class="glyphicon glyphicon-chevron-right"></span></a></p>
 {% endif %}
 {% endblock content %}

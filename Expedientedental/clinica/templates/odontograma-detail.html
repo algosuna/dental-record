@@ -38,7 +38,7 @@
         <td>{{ procedimiento.get_cara_display }}</td>
         <td>{{ procedimiento.tratamiento }}</td>
         <td><span class="label">{{ procedimiento.get_status_display }}</span></td>
-        <td><a href="/clinica/historial/procedimiento/{{ procedimiento.id }}/" class="btn btn-default">Ver</a></td>
+        <td><a href="{% url clinica:historial_detail procedimiento.id %}" class="btn btn-default">Ver</a></td>
 
       </tr>
       {% endfor %}

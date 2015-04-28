@@ -51,7 +51,7 @@ class GrupoNewView(CreateView):
     template_name = 'grupo.html'
 
     def get_success_url(self):
-        return reverse('precios', args=[self.object.id])
+        return reverse('precios:precios', args=[self.object.id])
 
 
 class GruposView(ListView):

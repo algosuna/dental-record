@@ -31,7 +31,7 @@
         <td class="padded">{{ paciente.credencialPaciente }}</td>
         <td class="padded">{{ paciente.nombre }} {{ paciente.apellidoPaterno }} {{ paciente.apellidoMaterno }}</td>
         <td class="padded">{{ paciente.grupo }}</td>
-        <td><div class="btn-group pull-right"><a href="/pagos/pending/{{ paciente.id }}/" class="btn btn-success">Ver Pendientes</a><a href="/pagos/list/{{ paciente.id }}/" class="btn btn-default">Ver Pagos</a></div></td>
+        <td><div class="btn-group pull-right"><a href="{% url pagos:pagos_pending paciente.id %}" class="btn btn-success">Ver Pendientes</a><a href="{% url pagos:pagos_paciente paciente.id %}" class="btn btn-default">Ver Pagos</a></div></td>
       </tr>
       {% endfor %}
 
@@ -42,7 +42,7 @@
   <p class="lead text-center text-muted">No se han encontrado pacientes con ese nombre.</p>
   {% endif %}
   <p class="text-center">
-    <a href="/pagos/" class="btn btn-primary">Nueva Búsqueda <span class="glyphicon glyphicon-arrow-right"></span></a>
+    <a href="{% url pagos:paciente_search %}" class="btn btn-primary">Nueva Búsqueda <span class="glyphicon glyphicon-arrow-right"></span></a>
   </p>
 
 {% else %}
