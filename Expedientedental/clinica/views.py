@@ -43,6 +43,7 @@ def paciente_search(request):
                               })
 
 
+@login_required
 def paciente_detail(request, paciente_id):
     paciente = get_object_or_404(Paciente, pk=paciente_id)
     odontogramas = paciente.odontograma_set.order_by('-created_at')[:10]
@@ -58,6 +59,7 @@ def paciente_detail(request, paciente_id):
                    'pd_active': pd_active})
 
 
+@login_required
 def odontograma(request, paciente_id):
     paciente = get_object_or_404(Paciente, pk=paciente_id)
     tratamientos = Tratamiento.objects.all()
@@ -91,6 +93,7 @@ def odontograma(request, paciente_id):
                   })
 
 
+@login_required
 def odontograma_detail(request, odontograma_id):
     odontograma = get_object_or_404(Odontograma, pk=odontograma_id)
     procedimientos = odontograma.procedimiento_set.all()
@@ -106,6 +109,7 @@ def odontograma_detail(request, odontograma_id):
                   })
 
 
+@login_required
 def procedimientos(request, paciente_id):
     '''
     Vista para los procedimientos autorizados (pagados).
@@ -134,6 +138,7 @@ def procedimientos(request, paciente_id):
                   })
 
 
+@login_required
 def bitacora_create(request, procedimiento_id):
     '''
     Agregar una entrada de bitacora a un procedimiento en particular y \
@@ -164,6 +169,7 @@ def bitacora_create(request, procedimiento_id):
                   })
 
 
+@login_required
 def historial(request, paciente_id):
     '''
     Aqui se presentan todos los procedimientos con status completado.
@@ -182,6 +188,7 @@ def historial(request, paciente_id):
                   })
 
 
+@login_required
 def historial_detail(request, procedimiento_id):
     '''
     Procedimiento con entradas a bitacora asociadas a este.
@@ -200,6 +207,7 @@ def historial_detail(request, procedimiento_id):
                   })
 
 
+@login_required
 def interrogatorio(request, paciente_id):
     paciente = get_object_or_404(Paciente, pk=paciente_id)
     expediente = 'active'
@@ -220,6 +228,7 @@ def interrogatorio(request, paciente_id):
                   })
 
 
+@login_required
 class interrogatorioUpdateView(UpdateView):
     model = Interrogatorio
     form_class = InterrogatorioForm

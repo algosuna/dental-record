@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>{%block title%}{%endblock%} - Sistema Administrativo Dental</title>
+  <title>{% block title %}{{ title|default:"Untitled" }}{% endblock %} - Sistema Administrativo Dental</title>
 
   {%load static from staticfiles %}
 
@@ -22,28 +22,30 @@
   <![endif]-->
 
 </head>
+
 <body {% block bodyclass %}{% endblock %}>
 
-  {% block nav %}
-  {% endblock %}
+  {% if user.is_authenticated %}
+  {% include "nav.html" %}
+  {% endif %}
 
   <div class="container-fluid">
 
     <div class="row">
 
-      {% block dash %}
-      {% endblock %}
-      {% block login %}
+      {% block body %}
       {% endblock %}
 
     </div>
 
   </div>
-  <div class="container-fluid">
+  <div class="container-fluid footer">
+    <footer class="row">
 
     {% block footer %}
     {% endblock %}
 
+    </footer>
   </div>
 
   <script src="{% static 'js/jquery-1.11.2.min.js' %}"></script>

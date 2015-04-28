@@ -1,0 +1,31 @@
+{% load static from staticfiles %}
+{% load groupfilter %}
+<div class="col-sm-3 col-md-2 sidebar">
+
+  {% if paciente %}
+  <div class="client-info clearfix">
+    <img src="{% static paciente.imagen %}" alt="Cliente" width="50" height="50" class="pull-left">
+    <p>{{ paciente.nombre }} {{ paciente.apellidoPaterno }} {{ paciente.apellidoMaterno }}</p>
+  </div><!-- TODO: remove and turn into a block -->
+  {% endif %}
+
+  <ul class="nav nav-sidebar">
+    {% ifusergroup Medico %}
+    {% if paciente %}
+    <li class="{{ pd_active }}"><a href="{% url clinica:paciente_detail paciente.id %}"><i class="fa fa-user fa-fw"></i> Datos Personales</a></li>
+    <li class="{{ e_active }}"><a href="{% url clinica:interrogatorio paciente.id %}"><i class="fa fa-folder fa-fw"></i> Expediente Medico/Dental</a></li>
+    <li class="sidebar-header text-center">Actividades Clinicas</li>
+    <li class="{{ p_active }}"><a href="{% url clinica:procedimientos paciente.id %}"><i class="fa fa-th-list fa-fw"></i> Plan de Tratamiento</a></li>
+    <li class="{{ o_active }}"><a href="{% url clinica:odontograma paciente.id %}"><i class="fa fa-puzzle-piece fa-fw"></i> Odontograma</a></li>
+    <li class="{{ h_active }}"><a href="{% url clinica:historial paciente.id %}"><i class="fa fa-clipboard fa-fw"></i> Historial de Procedimientos</a></li>
+    {% endif %}
+    {% endifusergroup %}
+    {% ifusergroup Administracion %}
+    <li class="sidebar-header text-center">Administraci&oacute;n</li>
+    <li class="{{ c_active }}"><a href="{% url cotizacion:cotizacion_list %}"><i class="fa fa-puzzle-piece fa-fw"></i> Presupuestos</a></li>
+    <li class="{{ p_active }}"><a href="{% url pagos:paciente_search %}"><i class="fa fa-puzzle-piece fa-fw"></i> Realizar Pago</a></li>
+    <li class="{{ r_active }}"><a href="{% url pagos:pagos_list %}"><i class="fa fa-puzzle-piece fa-fw"></i> Pagos Realizados</a></li>
+    {% endifusergroup %}
+  </ul>
+
+</div><!-- end .sidebar -->

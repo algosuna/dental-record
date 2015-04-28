@@ -3,4 +3,6 @@ dentaldb.sqlite3
 migrations
 media
 *.sublime-*
-
+sass
+.sass-cache
+*.css.map
