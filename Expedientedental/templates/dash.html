@@ -1,62 +1,13 @@
 {% extends "base.html" %}
 
-{%load static from staticfiles %}
-
 {% block bodyclass %}class="dash"{% endblock %}
 
-{% block nav %}
-  <nav class="navbar navbar-inverse navbar-fixed-top">
+{% block navitems %}
+<li><a href="{% url clinica:paciente_search %}"><i class="fa fa-plus fa-fw"></i> B&uacute;squeda de Paciente</a></li>
+{% endblock %}
 
-      <div class="container-fluid">
-
-        <div class="navbar-header">
-
-          <a class="navbar-brand" href="{% url clinica:paciente_search %}">Sistema Administrativo Dental MediExcel</a>
-
-        </div><!-- end .navbar-header -->
-
-        <ul class="nav navbar-nav navbar-right">
-
-          <li>
-
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user fa-fw"></i> {{ user.get_full_name }} <span class="caret"></span></a>
-
-            <ul class="dropdown-menu">
-
-              <li><a href="#"><i class="fa fa-wrench fa-fw"></i> Configuraci&oacute;n</a></li>
-              <li class="divider"></li>
-              <li><a href="{% url accounts:logout %}"><i class="fa fa-sign-out fa-fw"></i> Cerrar Sesi&oacute;n</a></li>
-
-            </ul>
-
-          </li>
-          <li><a href="{% url clinica:paciente_search %}"><i class="fa fa-plus fa-fw"></i> B&uacute;squeda de Paciente</a></li>
-
-        </ul>
-
-    </div>
-
-  </nav><!-- end .navbar -->
-{% endblock nav %}
-
-{% block dash %}
-  <div class="col-sm-3 col-md-2 sidebar">
-
-    <div class="client-info clearfix">
-      <img src="{% static paciente.imagen %}" alt="Cliente" width="50" height="50" class="pull-left">
-      <p>{{ paciente.nombre }} {{ paciente.apellidoPaterno }} {{ paciente.apellidoMaterno }}</p>
-    </div><!-- TODO: remove and turn into a block -->
-
-    <ul class="nav nav-sidebar">
-      <li class="{{ pd_active }}"><a href="{% url clinica:paciente_detail paciente.id %}"><i class="fa fa-user fa-fw"></i> Datos Personales</a></li>
-      <li class="{{ expediente }}"><a href="{% url clinica:interrogatorio paciente.id %}"><i class="fa fa-folder fa-fw"></i> Expediente Medico/Dental</a></li>
-      <li class="sidebar-header text-center">Actividades Clinicas</li>
-      <li class="{{ p_active }}"><a href="{% url clinica:procedimientos paciente.id %}"><i class="fa fa-th-list fa-fw"></i> Plan de Tratamiento</a></li>
-      <li class="{{ o_active }}"><a href="{% url clinica:odontograma paciente.id %}"><i class="fa fa-puzzle-piece fa-fw"></i> Odontograma</a></li>
-      <li class="{{ h_active }}"><a href="{% url clinica:historial paciente.id %}"><i class="fa fa-clipboard fa-fw"></i> Historial de Procedimientos</a></li>
-    </ul>
-
-  </div><!-- end .sidebar -->
+{% block body %}
+  {% include "sidebar.html" %}
 
   <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 
@@ -64,17 +15,10 @@
     {% endblock %}
 
   </div>
-{% endblock dash %}
+{% endblock %}
 
 {% block footer %}
-  <footer class="row">
-
-    <div class=" col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
-
-      <p class="alert alert-danger">Derivado del contrato de prestación de Servicios Profesionales celebrado entre Usted y MediExcel Health Plan, le manifestamos que en términos de la Ley Federal de Protección de Datos Personales en Posesión de los Particulares, deberá apegarse al Aviso de Privacidad que MediExcel HealthPlan comprometió a los titulares respecto de su información Personal, mismo que anexamos para su conocimiento y observación. Aviso De Confidencialidad de Datos Personales MediExcel Health Plan, con domicilio Fiscal en Av. Paseo de los Héroes No. 2507 Zona Río Tijuana, B.C. 22320, establece que, conforme lo marca la Ley Federal de Protección de Datos Personales en Posesión de los Particulares, todos aquellos datos entregados y obtenidos con motivo del contrato de servicios realizado con la empresa, serán utilizados unicamente para la operación y administración de su Plan de Salud, garantizando que sus datos personales no serán utilizados para fines distintos a lo indicado previamente, ni serán transferidos a terceros, obligandose MediExcel Health Plan a salva guardar la privacidad de los mismos. Usted tiene derecho a limitar el uso de divulgación de sus datos personales, rectificarlos y cancelarlos mediante solicitud por escrito a nuestro departamento de atención a asegurados o con el Registro Único de Usuarios (REUS). Todo cambio al presente aviso por MediExcel Health Plan será notificado en nuestro portal www.mediexcelHP.com</p>
-      <p class="text-muted">Gracias por usar el Sistema Administrativo Dental MediExcel Health Plan.</p>
-
-    </div>
-
-  </footer>
+  <div class=" col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
+    {% include "footer.html" %}
+  </div>
 {% endblock %}
