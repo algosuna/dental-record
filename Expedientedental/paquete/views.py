@@ -4,6 +4,8 @@ from django.forms.models import modelformset_factory
 from django.http import Http404, HttpResponse
 from django.shortcuts import (render_to_response, render, redirect,
                               get_object_or_404)
+from django.utils.datastructures import MultiValueDictKeyError
+
 
 from .forms import (PaqueteForm, PaqueteConsumidoForm, PCItemForm)
 from paquete.models import (Paquete, PaqueteItem, PaqueteConsumido,

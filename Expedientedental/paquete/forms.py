@@ -111,7 +111,7 @@ class PaqueteConsumidoForm(forms.ModelForm):
 class PCItemForm(forms.ModelForm):
     class Meta:
         model = PaqueteConsumidoItem
-        exclude = ('precio', 'paquete_consumido')
+        exclude = ('precio', 'paquete_consumido', )
 
     def __init__(self, *args, **kwargs):
         super(PCItemForm, self).__init__(*args, **kwargs)

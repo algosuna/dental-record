@@ -1,0 +1,57 @@
+{% extends "base1.html" %}
+{%load static from staticfiles %}
+
+{% block content %}
+<h2 class="page-header">Productos Registrados</h2>
+
+
+{% if productos %}
+<table class="table table-condensed" id="producto">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Descripcion</th>
+      <th>unidad(s)</th>
+      <th>precio</th>
+      <th>C.Unidad</th>
+      <th>existencia</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for producto in productos %}
+    <tr>
+      <td>{{ producto.producto }}</td>
+      <td>{{ producto.descripcion }}</td>
+      <td>{{ producto.unidad_medida }}</td>
+      <td>{{ producto.precio }}</td>
+      <td>{{ producto.precioUnidad }}</td>
+      <td>{{ producto.porciones }}</td>
+      <td><a href="edit/{{producto.id}}"><span class="glyphicon glyphicon-pencil"></span></a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<a href="/altas/medico/new/" class="btn btn-primary pull-right">Registrar Nuevo Producto <span class="glyphicon glyphicon-plus"></span></a>
+{% else %}
+<p class="lead text-center text-muted">No hay productos registrados en la base de datos.<br><br><a href="/altas/medico/new/" class="btn btn-primary">Registrar M&eacute;dico <span class="glyphicon glyphicon-chevron-right"></span></a></p>
+{% endif %}
+{% endblock content %}
+{% block javascript%}
+<script src={% static 'js/jquery-datatable.js' %}></script>
+<script type="text/javascript">
+
+        //para buscar en las tablas
+        $(document).ready(function() {
+            $('#producto').dataTable( {
+                "bPaginate": true,
+                "bLengthChange": true,
+                "bFilter": true,
+                "bSort": true,
+                "bInfo": true,
+                "bAutoWidth": true
+            } );
+        } );  
+      </script> 
+
+{% endblock javascript%}

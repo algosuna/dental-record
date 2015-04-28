@@ -30,24 +30,25 @@
   		{% for producto in objects %}
   			<tr>
   				<td>{{ producto.producto }}</td>
-  				<td>{{ producto.porciones}}</td>
+  				<td class= 'text-center'>{{ producto.porciones}}</td>
   				
 
   		
 
   				
-  				<td class="text-center"><a href="/producto/edit/{{ producto.id }}" class="btn btn-info">Editar</a></td>
-  				<td class="text-center"><a href="/detalles_producto/{{ producto.id }}" class="btn btn-default">Ver Detalles</a></td>
+  	<td class="text-center"><a href="/inventario/producto/ingresar/{{ producto.id }}" 
+    class="btn btn-info">ingreso de insumos</a></td>
+  				
   				
   			</tr>
   		{% endfor %}
   			</tbody>
 			</table>
 			<p class="lead text-center">
-			<a href="/entradas/" class="btn btn-primary">Nueva Búsqueda <span class="glyphicon glyphicon-chevron-right"></span></a href="/"></p>
+			<a href="/inventario/buscar_producto/" class="btn btn-primary">Nueva Búsqueda <span class="glyphicon glyphicon-chevron-right"></span></a href="/"></p>
 		{% else %}
 			<p class="lead text-center text-muted">No se han encontrado productos con ese nombre.
-			<a href="/entradas/" class="btn btn-primary">Nueva Búsqueda <span class="glyphicon glyphicon-chevron-right"></span></a href="/"></p>
+			<a href="/inventario/buscar_producto/" class="btn btn-primary">Nueva Búsqueda <span class="glyphicon glyphicon-chevron-right"></span></a href="/"></p>
 		{% endif %}
 
 		{% else %}
