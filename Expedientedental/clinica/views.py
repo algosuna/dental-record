@@ -3,18 +3,18 @@ from datetime import datetime
 
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
-from django.shortcuts import render, redirect, render_to_response,\
-    get_object_or_404
+from django.shortcuts import redirect, render_to_response, get_object_or_404,\
+    render
 from django.views.generic import UpdateView
 
 from wkhtmltopdf.views import PDFTemplateView
+from core.views import LoginRequiredMixin
+from core.utils import generic_search
 
 from clinica.models import Interrogatorio, Odontograma, Procedimiento, Bitacora
 from clinica.forms import OdontogramaForm, InterrogatorioForm, BitacoraForm,\
     ProcedimientoFormSet
 from altas.models import Paciente, Tratamiento
-
-from core.utils import generic_search
 
 
 @login_required
@@ -210,7 +210,7 @@ def historial_detail(request, procedimiento_id):
 @login_required
 def interrogatorio(request, paciente_id):
     paciente = get_object_or_404(Paciente, pk=paciente_id)
-    expediente = 'active'
+    e_active = 'active'
 
     if request.method == 'POST':
         modelform = InterrogatorioForm(request.POST)
@@ -224,12 +224,11 @@ def interrogatorio(request, paciente_id):
     return render(request, 'interrogatorio.html', {
                   'form': modelform,
                   'paciente': paciente,
-                  'expediente': expediente
+                  'e_active': e_active
                   })
 
 
-@login_required
-class interrogatorioUpdateView(UpdateView):
+class interrogatorioUpdateView(LoginRequiredMixin, UpdateView):
     model = Interrogatorio
     form_class = InterrogatorioForm
     template_name = 'interrogatorio.html'

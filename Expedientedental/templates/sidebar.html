@@ -22,9 +22,9 @@
     {% endifusergroup %}
     {% ifusergroup Administracion %}
     <li class="sidebar-header text-center">Administraci&oacute;n</li>
-    <li class="{{ c_active }}"><a href="{% url cotizacion:cotizacion_list %}"><i class="fa fa-puzzle-piece fa-fw"></i> Presupuestos</a></li>
-    <li class="{{ p_active }}"><a href="{% url pagos:paciente_search %}"><i class="fa fa-puzzle-piece fa-fw"></i> Realizar Pago</a></li>
-    <li class="{{ r_active }}"><a href="{% url pagos:pagos_list %}"><i class="fa fa-puzzle-piece fa-fw"></i> Pagos Realizados</a></li>
+    <li class="{{ c_active }}"><a href="{% url cotizacion:cotizacion_list %}"><i class="fa fa-calculator fa-fw"></i> Presupuestos</a></li>
+    <li class="{{ rp_active }}"><a href="{% url pagos:paciente_search %}"><i class="fa fa-usd fa-fw"></i> Realizar Pago</a></li>
+    <li class="{{ r_active }}"><a href="{% url pagos:pagos_list %}"><i class="fa fa-table fa-fw"></i> Pagos Realizados</a></li>
     {% endifusergroup %}
   </ul>
 

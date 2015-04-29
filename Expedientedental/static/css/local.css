@@ -11,6 +11,17 @@ body {
   padding-top: 50px;
   margin-bottom: 137px; }
 
+/* helper classes */
+.normalized-btn {
+  margin: 20px; }
+
+.section-header {
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px; }
+
+.padded {
+  padding: 14px !important; }
+
 nav.navbar + .page-header {
   margin-top: 10px; }
 
@@ -20,7 +31,7 @@ nav.navbar + .page-header {
 footer {
   position: absolute;
   bottom: 0px;
-  height: 137px;
+  height: 148px;
   max-width: 1280px; }
   footer .alert {
     text-align: justify;
@@ -58,11 +69,22 @@ footer {
       left: 0;
       z-index: 1000;
       display: block;
-      padding: 20px;
+      padding: 0px 20px 20px;
       overflow-x: hidden;
       overflow-y: auto;
       background-color: #f5f5f5;
       border-right: 1px solid #e7e7e7; } }
+  .sidebar .client-info {
+    background-color: #cbefff;
+    margin: 0px -20px; }
+    .sidebar .client-info img {
+      border: 1px solid #a8e1fa;
+      margin: 10px; }
+    .sidebar .client-info p {
+      font-weight: bold;
+      color: #555;
+      margin-top: 15px;
+      margin-right: 10px; }
 
 .nav-sidebar {
   margin-right: -21px;
@@ -82,18 +104,8 @@ footer {
     margin-top: 15px;
     color: #555;
     font-size: 18px; }
-
-.client-info {
-  background-color: #cbefff;
-  margin: -20px -20px 0px -20px; }
-  .client-info img {
-    border: 1px solid #a8e1fa;
-    margin: 10px; }
-  .client-info p {
-    font-weight: bold;
-    color: #555;
-    margin-top: 15px;
-    margin-right: 10px; }
+  .nav-sidebar > .sidebar-header:first-of-type {
+    margin-top: 0px; }
 
 .main {
   padding: 20px; }
@@ -122,13 +134,6 @@ legend {
   padding: 10px 0px 10px 20px;
   background-color: #cbefff; }
 
-.section-header {
-  border-bottom: 1px solid #ccc;
-  padding-bottom: 10px; }
-
-.normalized-btn {
-  margin: 20px; }
-
 /*
 
 login
@@ -156,9 +161,6 @@ tables
 */
 .table thead ~ thead tr th {
   padding-top: 25px; }
-
-.padded {
-  padding: 14px !important; }
 
 /*
 
