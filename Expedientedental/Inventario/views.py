@@ -6,7 +6,8 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import (render, redirect, render_to_response,
                               get_object_or_404)
 from wkhtmltopdf.views import PDFTemplateView
-from Inventario.forms import ProductoForm, UnidadMedidaForm, EntradasForm, DevolucionesForm
+from Inventario.forms import (ProductoForm, UnidadMedidaForm, EntradasForm,
+                              DevolucionesForm)
 from Inventario.models import UnidadMedida, Producto, Entradas
 from Inventario.utils import generic_search
 from django.contrib import messages
@@ -96,15 +97,17 @@ def ingresarCantidad(request, entrada_id):
         if modelform.is_valid():
             # modelform.save()
             producto = modelform.cleaned_data.get('producto')
-            cantidad = int(modelform.cleaned_data.get('agregar'))
+            print modelform.cleaned_data
+            cantidad = int(modelform.cleaned_data.get('porciones'))
             entrada = Entradas.objects.get(producto=producto)
             entrada.agregar(cantidad)
             entrada.save()
             print entrada
             producto = entrada.producto
+            producto.agregar(cantidad)
             producto.save()
             print producto
-            return redirect("/productos/ingresar/")
+            return redirect('/inventario/productos/')
     else:
         modelform = EntradasForm()
     return render(request, "ingresar.html", {"form": modelform,

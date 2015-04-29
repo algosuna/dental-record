@@ -47,7 +47,7 @@ class UnidadMedidaForm(forms.ModelForm):
         class Meta:
             model = UnidadMedida
 
-            def __init__(self, *args, **kwargs):
+        def __init__(self, *args, **kwargs):
                 super(UnidadMedidaForm, self).__init__(*args, **kwargs)
                 self.helper = FormHelper()
                 self.helper = FormHelper()
@@ -74,29 +74,28 @@ class UnidadMedidaForm(forms.ModelForm):
 
 
 class EntradasForm(forms.ModelForm):
-    class Meta:
-        model = Entradas
-        exclude = ('cantidad', 'cambioPrecio',)
+        class Meta:
+            model = Entradas
 
         def __init__(self, *args, **kwargs):
-            super(EntradasForm, self).__init__(*args, **kwargs)
-            self.helper = FormHelper()
-            self.helper.layout = Layout(
-                HTML(
-                    """
-                     <p class="parrafo">Todos Los campos con ( * ) son Requeridos.</p>
-                     """),
-                Fieldset(
-                    'Informacion de Producto',
-                    Field('producto', wrapper_class='col-md-6'),
-                    Field('agregar_cantidad', wrapper_class='col-md-4'),
-                    ),
-                ButtonHolder(
-                    Submit('save', 'Guardar')
+                super(EntradasForm, self).__init__(*args, **kwargs)
+                self.helper = FormHelper()
+                self.helper.layout = Layout(
+                    HTML(
+                        """
+                         <p class="parrafo">Todos Los campos con ( * ) son Requeridos.</p>
+                         """),
+                    Fieldset(
+                        'Informacion de Producto',
+                        Field('producto', wrapper_class='col-md-6'),
+                        Field('porciones', wrapper_class='col-md-4'),
+                        ),
+                    ButtonHolder(
+                        Submit('save', 'Guardar')
+                        )
                     )
-                )
-            self.fields['producto'].label = 'Nombre del Producto'
-            self.fields['agregar_cantidad'].label = ' Agregar Cantidad'
+                self.fields['producto'].label = 'Nombre del Producto'
+                self.fields['porciones'].label = ' Agregar Cantidad'
 
 
 class DevolucionesForm(forms.ModelForm):

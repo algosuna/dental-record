@@ -41,6 +41,9 @@ class Producto(models.Model):
                         self.porciones -= cantidad_a_agregar
                         return True
                 return False
+                
+        def agregar(self, cantidad_a_agregar):
+                self.porciones += cantidad_a_agregar
 
         def total(self):
                 precioUnidad = self.precio/self.porciones
