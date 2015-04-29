@@ -9,7 +9,7 @@ from core.utils import generic_search
 from wkhtmltopdf.views import PDFTemplateView
 
 from servicios.models import Paquete
-from pagos.models import Pago, PagoAplicado
+from pagos.models import Pago
 from pagos.forms import PagoForm, PagoAplicadoFormset
 
 
@@ -76,7 +76,8 @@ def pagos(request, paquete_id):
                   'pa_formset': pa_formset,
                   'servicios': servicios,
                   'total': total,
-                  'paquete': paquete
+                  'paquete': paquete,
+                  'r_active': 'active'
                   })
 
 
@@ -101,7 +102,8 @@ def pagos_list(request):
     return render(request, 'pago-list.html', {
                   'pagos': pagos,
                   'objects': objects,
-                  'search_string': request.GET.get(query, '')
+                  'search_string': request.GET.get(query, ''),
+                  'r_active': 'active'
                   })
 
 
@@ -127,7 +129,8 @@ def paciente_search(request):
 
     return render(request, 'pago-paciente-search.html', {
                   'objects': objects,
-                  'search_string': request.GET.get(query, '')
+                  'search_string': request.GET.get(query, ''),
+                  'rp_active': 'active'
                   })
 
 
@@ -140,7 +143,8 @@ def pagos_paciente(request, paciente_id):
 
     return render(request, 'pago-paciente.html', {
                   'paciente': paciente,
-                  'pagos': pagos
+                  'pagos': pagos,
+                  'r_active': 'active'
                   })
 
 
@@ -158,6 +162,7 @@ def pagos_pending(request, paciente_id):
     return render(request, 'pago-pending.html', {
                   'paciente': paciente,
                   'paquetes': paquetes,
+                  'rp_active': 'active'
                   })
 
 
@@ -166,8 +171,13 @@ def pagos_detail(request, pago_id):
     Resumen de pago.
     '''
     pago = get_object_or_404(Pago, pk=pago_id)
+    paciente = pago.paciente
 
-    return render(request, 'pago-detail.html', {'pago': pago})
+    return render(request, 'pago-detail.html', {
+                  'pago': pago,
+                  'paciente': paciente,
+                  'r_active': 'active'
+                  })
 
 
 class RecibodePagoPDF(PDFTemplateView):
