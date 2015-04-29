@@ -1,10 +1,18 @@
-{% extends "dash.html" %}
-
-{% load static from staticfiles %}
+{% extends "base.html" %}
 
 {% block title %}Home{% endblock %}
 
-{% block content %}
-Meh.
-{{ user.get_full_name }}
+{% block bodyclass %}class="home"{% endblock %}
+
+{% block body %}
+<h3>Meh. {{ user.get_full_name }}</h3>
+<a href="{% url clinica:paciente_search %}" class="btn btn-info btn-lg">Clinica</a>
+<a href="{% url cotizacion:cotizacion_list %}" class="btn btn-success btn-lg">Presupuestos</a>
+<a href="" class="btn btn-primary btn-lg">Inventario</a>
+{% endblock %}
+
+{% block footer %}
+  <div class=" col-md-12">
+    {% include "footer.html" %}
+  </div>
 {% endblock %}

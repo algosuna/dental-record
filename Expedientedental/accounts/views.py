@@ -1,10 +1,16 @@
 from django.contrib.auth import logout, login
-from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
-from django.views.generic import FormView
-# from django.http import HttpResponseRedirect
+from django.views.generic import FormView, TemplateView
+
+from core.views import LoginRequiredMixin
 
 from accounts.forms import LoginForm
+
+
+def logout_view(request):
+    logout(request)
+
+    return render(request, 'registration/logout.html')
 
 
 class LoginView(FormView):
@@ -13,9 +19,13 @@ class LoginView(FormView):
     success_url = '/'
 
     def form_valid(self, form):
+        '''
+        Logs user in if the form is valid.
+        Inherits user_cache from django.contrib.auth.forms.AuthenticationForm.
+        '''
         user = form.user_cache
-
         login(self.request, user)
+
         return super(LoginView, self).form_valid(form)
 
     def get_success_url(self):
@@ -26,17 +36,9 @@ class LoginView(FormView):
         url = self.request.GET.get('next', '')
         if not url:
             url = '/'
+
         return url
 
 
-@login_required
-def home_view(request):
-    print 'meh'
-
-    return render(request, 'home.html')
-
-
-def logout_view(request):
-    logout(request)
-
-    return render(request, 'registration/logout.html')
+class HomeView(LoginRequiredMixin, TemplateView):
+    template_name = 'home.html'
