@@ -8,7 +8,7 @@ from django.shortcuts import redirect, render_to_response, get_object_or_404,\
 from django.views.generic import UpdateView
 
 from wkhtmltopdf.views import PDFTemplateView
-from core.views import LoginRequiredMixin
+from core.mixins import LoginRequiredMixin
 from core.utils import generic_search
 
 from clinica.models import Interrogatorio, Odontograma, Procedimiento, Bitacora

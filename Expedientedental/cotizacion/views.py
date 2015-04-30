@@ -4,7 +4,7 @@ from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView
 
 from wkhtmltopdf.views import PDFTemplateView
-from core.views import LoginRequiredMixin
+from core.mixins import LoginRequiredMixin
 
 from cotizacion.models import Cotizacion, CotizacionItem
 from cotizacion.forms import ItemFormSet
