@@ -1,18 +1,22 @@
 # encoding:utf-8
 from datetime import datetime
+from django.contrib.auth.decorators import permission_required
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import DetailView
 
-from altas.models import Paciente
-from core.utils import generic_search
 from wkhtmltopdf.views import PDFTemplateView
 
+from core.utils import generic_search
+from core.mixins import PermissionRequiredMixin
+
+from altas.models import Paciente
 from servicios.models import Paquete
 from pagos.models import Pago
 from pagos.forms import PagoForm, PagoAplicadoFormset
 
 
+@permission_required('pagos.add_pagoaplicado')
 def pagos(request, paquete_id):
 
     paquete = get_object_or_404(Paquete, pk=paquete_id)
@@ -81,6 +85,7 @@ def pagos(request, paquete_id):
                   })
 
 
+@permission_required('pagos.add_pago')
 def pagos_list(request):
     pagos = Pago.objects.order_by('-fecha')
     query = 'q'
@@ -107,6 +112,7 @@ def pagos_list(request):
                   })
 
 
+@permission_required('pagos.add_pago')
 def paciente_search(request):
     '''
     Lista de pacientes con pagos pendientes.
@@ -134,10 +140,11 @@ def paciente_search(request):
                   })
 
 
-class PagosPacienteList(DetailView):
+class PagosPacienteList(PermissionRequiredMixin, DetailView):
     model = Paciente
     context_object_name = 'paciente'
     template_name = 'pago-paciente.html'
+    permission_required = 'pagos.add_pago'
 
     def get_context_data(self, **kwargs):
         context = super(PagosPacienteList, self).get_context_data(**kwargs)
@@ -146,13 +153,14 @@ class PagosPacienteList(DetailView):
         return context
 
 
-class PagosPending(DetailView):
+class PagosPending(PermissionRequiredMixin, DetailView):
     '''
     Lista de pagos pendientes agrupados por cotizacion.
     '''
     model = Paciente
     context_object_name = 'paciente'
     template_name = 'pago-pending.html'
+    permission_required = 'pagos.add_pagoaplicado'
 
     def get_context_data(self, **kwargs):
         context = super(PagosPending, self).get_context_data(**kwargs)
@@ -165,10 +173,11 @@ class PagosPending(DetailView):
         return context
 
 
-class PagosDetail(DetailView):
+class PagosDetail(PermissionRequiredMixin, DetailView):
     model = Pago
     context_object_name = 'pago'
     template_name = 'pago-detail.html'
+    permission_required = 'pagos.add_pago'
 
     def get_context_data(self, **kwargs):
         context = super(PagosDetail, self).get_context_data(**kwargs)

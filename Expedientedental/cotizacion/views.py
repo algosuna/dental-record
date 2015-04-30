@@ -1,28 +1,29 @@
 from datetime import datetime
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import permission_required
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView
 
 from wkhtmltopdf.views import PDFTemplateView
-from core.mixins import LoginRequiredMixin
+from core.mixins import PermissionRequiredMixin
 
 from cotizacion.models import Cotizacion, CotizacionItem
 from cotizacion.forms import ItemFormSet
 from clinica.models import Odontograma
 
 
-class CotizacionList(LoginRequiredMixin, ListView):
+class CotizacionList(PermissionRequiredMixin, ListView):
     model = Odontograma
     context_object_name = 'orders'
     template_name = 'cotizaciones.html'
+    permission_required = 'cotizacion.add_cotizacion'
 
     def get_context_data(self, **kwargs):
         context = super(CotizacionList, self).get_context_data(**kwargs)
-        context.update({'c_active': 'active', })
+        context.update({'c_active': 'active'})
         return context
 
 
-@login_required
+@permission_required('cotizacion.add_cotizacion')
 def cotizacion_detail(request, odontograma_id):
     odontograma = get_object_or_404(Odontograma, pk=odontograma_id)
     try:
