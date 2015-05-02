@@ -6,7 +6,7 @@ from crispy_forms.layout import Submit
 from crispy_forms.layout import(Layout, Fieldset, HTML, Field,
                                 ButtonHolder, Hidden)
 from Inventario.models import Producto
-from paquete.models import (Paquete, PaqueteItem, PaqueteConsumido,
+from consumidos.models import (Paquete, PaqueteItem, PaqueteConsumido,
                             PaqueteConsumidoItem)
 
 

@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404, render
 from django.views.generic import ListView, DetailView
 
 from cotizacion.models import Cotizacion
-from servicios.models import Paquete, Servicio
+from servicios.models import PaqueteServicios, Servicio
 
 
 def servicios_create(request, cotizacion_id):
@@ -11,8 +11,8 @@ def servicios_create(request, cotizacion_id):
 
     try:
         paquete = odontograma.paquete_set.get()
-    except Paquete.DoesNotExist:
-        paquete = Paquete.objects.create(odontograma=odontograma)
+    except PaqueteServicios.DoesNotExist:
+        paquete = PaqueteServicios.objects.create(odontograma=odontograma)
 
     Servicio.objects.create_servicios(paquete, cotizacion)
     servicios = paquete.servicio_set.all()
@@ -26,10 +26,10 @@ def servicios_create(request, cotizacion_id):
 
 
 class PaqueteList(ListView):
-    model = Paquete
+    model = PaqueteServicios
     template_name = 'paquetes-servicios.html'
 
 
 class PaqueteDetail(DetailView):
-    model = Paquete
+    model = PaqueteServicios
     template_name = 'paquete-servicios.html'

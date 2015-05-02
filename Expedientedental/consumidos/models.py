@@ -25,6 +25,7 @@ class PaqueteConsumido(models.Model):
     paquete = models.ForeignKey(Paquete)
     medico = models.ForeignKey(Medico)
     paciente = models.ForeignKey(Paciente)
+    #paquete_servicios = models.ForeignKey('servicios.PaqueteServicios')
     fecha = models.DateTimeField()
 
     def __unicode__(self):

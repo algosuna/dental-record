@@ -3,7 +3,7 @@ from django.forms.models import modelformset_factory
 from django.shortcuts import (render_to_response, render, redirect,
                               get_object_or_404)
 from .forms import (PaqueteForm, PaqueteConsumidoForm, PCItemForm)
-from paquete.models import (PaqueteItem, PaqueteConsumido,
+from consumidos.models import (PaqueteItem, PaqueteConsumido,
                             PaqueteConsumidoItem)
 from django.views.generic import UpdateView, ListView
 from core.utils import generic_search
@@ -88,6 +88,9 @@ class EditPaqueteView(UpdateView):
         context['action'] = reverse('paquete-edit',
                                     kwargs={'pk': self.object.id})
         return context
+
+
+
 
 
 def busqueda(request):

@@ -1,8 +1,8 @@
 from django.conf.urls import patterns, url
-from calculos.views import dolar
+from calculos.views import dolarCreate
 
 urlpatterns = patterns(
     'calculos.views',
 
-    url(r'^divisas/$', dolar),
+    url(r'^divisas/$', dolarCreate.as_view()),
     )

@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from servicios.models import Paquete, Servicio
+from servicios.models import PaqueteServicios, Servicio
 
 
 class PaqueteAdmin(admin.ModelAdmin):
@@ -11,5 +11,5 @@ class ServicioAdmin(admin.ModelAdmin):
     pass
 
 
-admin.site.register(Paquete, PaqueteAdmin)
+admin.site.register(PaqueteServicios, PaqueteAdmin)
 admin.site.register(Servicio, ServicioAdmin)

@@ -2,7 +2,7 @@ from django import forms
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import(Layout, Fieldset, HTML, Field, ButtonHolder,
                                 Submit)
-from calculo.models import Dolar, Utilidad
+from calculos.models import Dolar
 
 
 class DolarForm(forms.ModelForm):
@@ -11,7 +11,6 @@ class DolarForm(forms.ModelForm):
 
         def __init__(self, *args, **kwargs):
                 super(DolarForm, self).__init__(*args, **kwargs)
-                self.helper = FormHelper()
                 self.helper = FormHelper()
                 self.helper.layout = Layout(
                     HTML("""

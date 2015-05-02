@@ -1,5 +1,5 @@
 from django.contrib import admin
-from paquete.models import Paquete,PaqueteItem,PaqueteConsumido,PaqueteConsumidoItem
+from consumidos.models import Paquete,PaqueteItem,PaqueteConsumido,PaqueteConsumidoItem
 
 
 

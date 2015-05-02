@@ -1,8 +1,8 @@
 from django.conf.urls import patterns, url
-from paquete.views import (EditPaqueteView, PaqueteC,
+from consumidos.views import (EditPaqueteView, PaqueteC,
                            Pending, manage_paquetes)
 
-urlpatterns = patterns('paquete.views',
+urlpatterns = patterns('consumidos.views',
 
     url(r'^pendientes/$', Pending.as_view()),
     url(r'^tipoPaquete/$', 'PaqueteItem'),
