@@ -1,14 +1,14 @@
 # encoding:utf-8
 from datetime import datetime
 
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import permission_required
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect, render_to_response, get_object_or_404,\
     render
-from django.views.generic import UpdateView
+from django.views.generic import UpdateView, DetailView
 
 from wkhtmltopdf.views import PDFTemplateView
-from core.views import LoginRequiredMixin
+from core.mixins import PermissionRequiredMixin
 from core.utils import generic_search
 
 from clinica.models import Interrogatorio, Odontograma, Procedimiento, Bitacora
@@ -17,7 +17,7 @@ from clinica.forms import OdontogramaForm, InterrogatorioForm, BitacoraForm,\
 from altas.models import Paciente, Tratamiento
 
 
-@login_required
+@permission_required('clinica.add_odontograma')
 def paciente_search(request):
     '''
     Aqui empieza el flujo de clinica. Busqueda de paciente por nombre o DNI.
@@ -43,23 +43,25 @@ def paciente_search(request):
                               })
 
 
-@login_required
-def paciente_detail(request, paciente_id):
-    paciente = get_object_or_404(Paciente, pk=paciente_id)
-    odontogramas = paciente.odontograma_set.order_by('-created_at')[:10]
-    procedimientos = Procedimiento.objects.filter(
-        odontograma__paciente=paciente
-        ).exclude(status='completado').order_by('id')
-    pd_active = 'active'
+class PacienteDetail(PermissionRequiredMixin, DetailView):
+    model = Paciente
+    context_object_name = 'paciente'
+    template_name = 'paciente-detail.html'
+    permission_required = 'clinica.add_odontograma'
 
-    return render(request, 'paciente-detail.html',
-                  {'paciente': paciente,
-                   'odontogramas': odontogramas,
-                   'procedimientos': procedimientos,
-                   'pd_active': pd_active})
+    def get_context_data(self, **kwargs):
+        context = super(PacienteDetail, self).get_context_data(**kwargs)
+        odontogramas = self.object.odontograma_set.order_by('-created_at')[:10]
+        procedimientos = Procedimiento.objects.filter(
+            odontograma__paciente=self.object
+            ).exclude(status='completado').order_by('id')
+        context.update({'odontogramas': odontogramas,
+                        'procedimientos': procedimientos,
+                        'pd_active': 'active'})
+        return context
 
 
-@login_required
+@permission_required('clinica.add_odontograma')
 def odontograma(request, paciente_id):
     paciente = get_object_or_404(Paciente, pk=paciente_id)
     tratamientos = Tratamiento.objects.all()
@@ -93,7 +95,7 @@ def odontograma(request, paciente_id):
                   })
 
 
-@login_required
+@permission_required('clinica.add_odontograma')
 def odontograma_detail(request, odontograma_id):
     odontograma = get_object_or_404(Odontograma, pk=odontograma_id)
     procedimientos = odontograma.procedimiento_set.all()
@@ -109,7 +111,7 @@ def odontograma_detail(request, odontograma_id):
                   })
 
 
-@login_required
+@permission_required('clinica.add_odontograma')
 def procedimientos(request, paciente_id):
     '''
     Vista para los procedimientos autorizados (pagados).
@@ -138,7 +140,7 @@ def procedimientos(request, paciente_id):
                   })
 
 
-@login_required
+@permission_required('clinica.add_odontograma')
 def bitacora_create(request, procedimiento_id):
     '''
     Agregar una entrada de bitacora a un procedimiento en particular y \
@@ -169,7 +171,7 @@ def bitacora_create(request, procedimiento_id):
                   })
 
 
-@login_required
+@permission_required('clinica.add_odontograma')
 def historial(request, paciente_id):
     '''
     Aqui se presentan todos los procedimientos con status completado.
@@ -188,51 +190,50 @@ def historial(request, paciente_id):
                   })
 
 
-@login_required
-def historial_detail(request, procedimiento_id):
+class HistorialDetail(PermissionRequiredMixin, DetailView):
     '''
     Procedimiento con entradas a bitacora asociadas a este.
     '''
-    procedimiento = get_object_or_404(Procedimiento, pk=procedimiento_id)
-    paciente = procedimiento.odontograma.paciente
-    bitacoras = procedimiento.bitacora_set.all().order_by('-created_at')
+    model = Procedimiento
+    template_name = 'historial-detail.html'
+    context_object_name = 'procedimiento'
+    permission_required = 'clinica.add_odontograma'
 
-    h_active = 'active'
+    def get_context_data(self, **kwargs):
+        context = super(HistorialDetail, self).get_context_data(**kwargs)
+        paciente = self.object.odontograma.paciente
+        bitacoras = self.object.bitacora_set.all().order_by('-created_at')
 
-    return render(request, 'historial-detail.html', {
-                  'procedimiento': procedimiento,
-                  'paciente': paciente,
-                  'bitacoras': bitacoras,
-                  'h_active': h_active
-                  })
+        context.update({'h_active': 'active',
+                        'bitacoras': bitacoras,
+                        'paciente': paciente})
+        return context
 
 
-@login_required
+@permission_required('clinica.add_odontograma')
 def interrogatorio(request, paciente_id):
     paciente = get_object_or_404(Paciente, pk=paciente_id)
-    e_active = 'active'
 
     if request.method == 'POST':
         modelform = InterrogatorioForm(request.POST)
 
         if modelform.is_valid():
             modelform.save()
-
     else:
         modelform = InterrogatorioForm()
 
     return render(request, 'interrogatorio.html', {
                   'form': modelform,
                   'paciente': paciente,
-                  'e_active': e_active
+                  'e_active': 'active'
                   })
 
 
-class interrogatorioUpdateView(LoginRequiredMixin, UpdateView):
+class interrogatorioUpdateView(PermissionRequiredMixin, UpdateView):
     model = Interrogatorio
     form_class = InterrogatorioForm
     template_name = 'interrogatorio.html'
-    succes_url = '/clinica/interrogatorio/'
+    success_url = 'clinica:interrogatorio'
 
 
 class InterrogatorioPDF(PDFTemplateView):

@@ -2,7 +2,7 @@ from django.contrib.auth import logout, login
 from django.shortcuts import render
 from django.views.generic import FormView, TemplateView
 
-from core.views import LoginRequiredMixin
+from core.mixins import LoginRequiredMixin
 
 from accounts.forms import LoginForm
 

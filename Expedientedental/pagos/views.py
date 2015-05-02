@@ -1,18 +1,22 @@
 # encoding:utf-8
+from datetime import datetime
+from django.contrib.auth.decorators import permission_required
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, get_object_or_404, redirect
-from datetime import datetime
+from django.views.generic import DetailView
 
-
-from altas.models import Paciente
-from core.utils import generic_search
 from wkhtmltopdf.views import PDFTemplateView
 
+from core.utils import generic_search
+from core.mixins import PermissionRequiredMixin
+
+from altas.models import Paciente
 from servicios.models import Paquete
 from pagos.models import Pago
 from pagos.forms import PagoForm, PagoAplicadoFormset
 
 
+@permission_required('pagos.add_pagoaplicado')
 def pagos(request, paquete_id):
 
     paquete = get_object_or_404(Paquete, pk=paquete_id)
@@ -81,6 +85,7 @@ def pagos(request, paquete_id):
                   })
 
 
+@permission_required('pagos.add_pago')
 def pagos_list(request):
     pagos = Pago.objects.order_by('-fecha')
     query = 'q'
@@ -107,6 +112,7 @@ def pagos_list(request):
                   })
 
 
+@permission_required('pagos.add_pago')
 def paciente_search(request):
     '''
     Lista de pacientes con pagos pendientes.
@@ -134,50 +140,50 @@ def paciente_search(request):
                   })
 
 
-def pagos_paciente(request, paciente_id):
-    '''
-    Lista de pagos por paciente.
-    '''
-    paciente = get_object_or_404(Paciente, pk=paciente_id)
-    pagos = paciente.pago_set.all()
+class PagosPacienteList(PermissionRequiredMixin, DetailView):
+    model = Paciente
+    context_object_name = 'paciente'
+    template_name = 'pago-paciente.html'
+    permission_required = 'pagos.add_pago'
 
-    return render(request, 'pago-paciente.html', {
-                  'paciente': paciente,
-                  'pagos': pagos,
-                  'r_active': 'active'
-                  })
+    def get_context_data(self, **kwargs):
+        context = super(PagosPacienteList, self).get_context_data(**kwargs)
+        pagos = self.object.pago_set.all()
+        context.update({'r_active': 'active', 'pagos': pagos})
+        return context
 
 
-def pagos_pending(request, paciente_id):
+class PagosPending(PermissionRequiredMixin, DetailView):
     '''
     Lista de pagos pendientes agrupados por cotizacion.
     '''
-    paciente = get_object_or_404(Paciente, pk=paciente_id)
-    paquetes = Paquete.objects.filter(odontograma__paciente=paciente)
-    # Quitamos paquetes que no tengan items que cobrar (total = 0)
-    paquetes = [
-        p for p in paquetes if p.total() != 0 and p.total_adeudado() != 0
-    ]
+    model = Paciente
+    context_object_name = 'paciente'
+    template_name = 'pago-pending.html'
+    permission_required = 'pagos.add_pagoaplicado'
 
-    return render(request, 'pago-pending.html', {
-                  'paciente': paciente,
-                  'paquetes': paquetes,
-                  'rp_active': 'active'
-                  })
+    def get_context_data(self, **kwargs):
+        context = super(PagosPending, self).get_context_data(**kwargs)
+        paquetes = Paquete.objects.filter(odontograma__paciente=self.object)
+        # Quitamos paquetes que no tengan items que cobrar (total = 0)
+        paquetes = [
+            p for p in paquetes if p.total() != 0 and p.total_adeudado() != 0
+        ]
+        context.update({'rp_active': 'active', 'paquetes': paquetes})
+        return context
 
 
-def pagos_detail(request, pago_id):
-    '''
-    Resumen de pago.
-    '''
-    pago = get_object_or_404(Pago, pk=pago_id)
-    paciente = pago.paciente
+class PagosDetail(PermissionRequiredMixin, DetailView):
+    model = Pago
+    context_object_name = 'pago'
+    template_name = 'pago-detail.html'
+    permission_required = 'pagos.add_pago'
 
-    return render(request, 'pago-detail.html', {
-                  'pago': pago,
-                  'paciente': paciente,
-                  'r_active': 'active'
-                  })
+    def get_context_data(self, **kwargs):
+        context = super(PagosDetail, self).get_context_data(**kwargs)
+        paciente = self.object.paciente
+        context.update({'r_active': 'active', 'paciente': paciente})
+        return context
 
 
 class RecibodePagoPDF(PDFTemplateView):
