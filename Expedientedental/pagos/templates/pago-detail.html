@@ -1,4 +1,4 @@
-{% extends "base1.html" %}
+{% extends "dash.html" %}
 {% load static from staticfiles %}
 
 {% block css %}
@@ -26,7 +26,7 @@
       <tr>
 
         <th style="width:175px;">Nombre del Paciente: </th>
-        <td>{{ pago.paciente.nombre }} {{ pago.paciente.apellidoPaterno }} {{ pago.paciente.apellidoMaterno }}</td>
+        <td>{{ paciente.nombre }} {{ paciente.apellidoPaterno }} {{ paciente.apellidoMaterno }}</td>
 
         <th style="width: 60px;">Fecha:</th>
         <td>{{ pago.fecha }}</td>

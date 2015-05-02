@@ -8,7 +8,7 @@ from crispy_forms.layout import Submit
 
 class LoginForm(AuthenticationForm):
     '''
-    Forma para iniciar sesion de usuario.
+    Forma para iniciar sesion de usuario. Traduce los errores y etiquetas.
     '''
     error_messages = {
         'invalid_login': ('Usuario ó contraseña incorrectas. Note que ambos '

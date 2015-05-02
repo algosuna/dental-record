@@ -1,4 +1,4 @@
-# pulled as-is from: https://djangosnippets.org/snippets/2736/
+''' Pulled as-is from: https://djangosnippets.org/snippets/2566/ '''
 from django import template
 from django.template import resolve_variable, NodeList
 from django.contrib.auth.models import Group
@@ -8,19 +8,18 @@ register = template.Library()
 
 @register.tag()
 def ifusergroup(parser, token):
-    ''' Check to see if the currently logged in user belongs to one or more groups
-    Requires the Django authentication contrib app and middleware.
+    ''' Check to see if the currently logged in user belongs to a specific
+    group. Requires the Django authentication contrib app and middleware.
 
-    Usage: {% ifusergroup Admins %} ... {% endifusergroup %}, or
-           {% ifusergroup Admins Clients Programmers Managers %} ... {% else %} ... {% endifusergroup %}
+    Usage: {% ifusergroup Admins %} ... {% endifusergroup %},
+           {% ifusergroup Admins|Group1|"Group 2" %} ... {% endifusergroup %},
+           {% ifusergroup Admins %} ... {% else %} ... {% endifusergroup %}
 
     '''
     try:
-        tokensp = token.split_contents()
-        groups = []
-        groups += tokensp[1:]
+        tag, group = token.split_contents()
     except ValueError:
-        raise template.TemplateSyntaxError("Tag 'ifusergroup' requires at least 1 argument.")
+        raise template.TemplateSyntaxError("Tag 'ifusergroup' requires 1 argument.")
 
     nodelist_true = parser.parse(('else', 'endifusergroup'))
     token = parser.next_token()
@@ -31,12 +30,12 @@ def ifusergroup(parser, token):
     else:
         nodelist_false = NodeList()
 
-    return GroupCheckNode(groups, nodelist_true, nodelist_false)
+    return GroupCheckNode(group, nodelist_true, nodelist_false)
 
 
 class GroupCheckNode(template.Node):
-    def __init__(self, groups, nodelist_true, nodelist_false):
-        self.groups = groups
+    def __init__(self, group, nodelist_true, nodelist_false):
+        self.group = group
         self.nodelist_true = nodelist_true
         self.nodelist_false = nodelist_false
 
@@ -46,18 +45,12 @@ class GroupCheckNode(template.Node):
         if not user.is_authenticated():
             return self.nodelist_false.render(context)
 
-        allowed = False
-        for checkgroup in self.groups:
+        for group in self.group.split("|"):
+            group = group[1:-1] if group.startswith('"') and group.endswith('"') else group
             try:
-                group = Group.objects.get(name=checkgroup)
+                if Group.objects.get(name=group) in user.groups.all():
+                    return self.nodelist_true.render(context)
             except Group.DoesNotExist:
-                break
+                pass
 
-            if group in user.groups.all():
-                allowed = True
-                break
-
-        if allowed:
-            return self.nodelist_true.render(context)
-        else:
-            return self.nodelist_false.render(context)
+        return self.nodelist_false.render(context)

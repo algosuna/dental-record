@@ -1,8 +1,8 @@
-{% extends "base1.html" %}
+{% extends "dash.html" %}
 
 {% block content %}
 
-<h2 class="page-header">Presupuestos Pendientes</h2>
+<h2 class="page-header">Presupuestos</h2>
 
 {% if orders %}
 	<table class="table table-hover">
@@ -20,7 +20,7 @@
 			<td>{{ order.paciente }}</td>
 			<td>{{ order.created_at }}</td>
 			<td class="text-right">
-				<a href="{% url cotizacion:cotizacion_detail order.id %}" title="Ver Cotizaci&oacute;n" class="btn btn-primary">Ver Cotizaci&oacute;n</a>
+				<a href="{% url cotizacion:cotizacion_detail order.id %}" title="Ver Presupuesto" class="btn btn-primary">Ver Presupuesto</a>
 			</td>
 		</tr>
 		{% endfor %}

@@ -1,48 +1,40 @@
-{% extends "base1.html" %}
+{% extends "dash.html" %}
 
 {%load static from staticfiles %}
 {% load crispy_forms_tags %}
 
+{% block title %}Presupuesto{% endblock %}
+
 {% block content %}
 
-<div class="well odontograma clearfix">
-  <div class="col-xs-3">
-    <img src="{% static cotizacion.odontograma.paciente.imagen %}" alt="{{ cotizacion.odontograma.paciente.nombre }} {{ cotizacion.odontograma.paciente.apellidoPaterno }}" class="pull-left img-rounded">
-  </div>
-  <div class="col-xs-9">
+<div class="panel odontograma clearfix">
     <table class="table">
       <thead>
         <tr>
-          <th>Nombre</th>
+          <th>&nbsp;</th>
+          <th>Paciente</th>
+          <th>DNI</th>
           <th>Grupo</th>
-          <th># Presupuesto</th>
+          <th>Medico Tratante</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>{{ cotizacion.odontograma.paciente}}</td>
-          <td>{{ cotizacion.odontograma.paciente.grupo }}</td>
-          <td>{{ cotizacion.id}}</td>
+          <td>&nbsp;</td>
+          <td>{{ paciente }}</td>
+          <td>{{ paciente.credencialPaciente }}</td>
+          <td>{{ paciente.grupo }}</td>
+          <td>{{ cotizacion.odontograma.medico }}</td>
         </tr>
       </tbody>
-      <thead>
-        <tr>
-        	<th>Medico Tratante</th>
-        	<th>&nbsp;</th>
-        	<th>&nbsp;</th>
-        </tr>
-        <tr>
-        	<td>{{ cotizacion.odontograma.medico }}</td>
-        	<td>&nbsp;</td>
-        	<td>&nbsp;</td>
-        </tr>
-      </thead>
     </table>
-  </div>
 </div><!-- patient info section -->
 
 <h2 class="page-header">Presupuesto <small>#{{ cotizacion.id }}</small> <a href="{% url cotizacion:pdf cotizacion.id %}" class="btn button-second pull-right"> Imprimir Forma  <span class=" glyphicon glyphicon-print"></span></a></h2>
-
+{% if cotizacion.total == cotizacion.total_procesado %}
+<!-- TODO: make the landing page work. -->
+<div class="alert alert-warning"><strong>Nota:</strong> Esta cotizacion ya ha sido procesada. Para ver los pagos, haga click <a href="{% url pagos:pagos_paciente paciente.id %}?q={{ cotizacion.id }}">aqu&iacute;</a>.</div>
+{% endif %}
 <div class="row">
   <div class="col-md-8">
       <form method="post" action="" class="cotizacion clearfix">
@@ -79,17 +71,17 @@
   </div>
   <div class="col-md-4">
     <div class="panel panel-default">
-      <!-- <div class="panel-heading">Panel heading</div> -->
-
       <table class="table table-bordered">
         <tr>
           <th>Total</th>
           <td class="total"></td>
         </tr>
+        {% if not cotizacion.total == cotizacion.total_procesado %}
         <tr class="success">
           <th>Total Aceptado</th>
           <td>{{ cotizacion.total_aceptado }}</td>
         </tr>
+        {% endif %}
         {% if cotizacion.total_procesado %}
         <tr class="info">
           <th>Total Procesado</th>
@@ -98,8 +90,13 @@
         {% endif %}
       </table>
     </div>
+    {% if cotizacion.total == cotizacion.total_procesado %}
+    <a href="{% url pagos:pagos_paciente paciente.id %}?q={{ cotizacion.id }}" class="btn btn-primary pull-right">Ver Pagos <span class="glyphicon glyphicon-chevron-right"></span></a>
+    {% else %}
     <a href="{% url servicios:servicios_create cotizacion_id=cotizacion.id %}" class="btn btn-primary pull-right">Aceptar <span class="glyphicon glyphicon-chevron-right"></span></a>
+    {% endif %}
   </div>
+
 
 {% endblock content %}
 
