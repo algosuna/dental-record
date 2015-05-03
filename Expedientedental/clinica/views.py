@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import permission_required
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect, render_to_response, get_object_or_404,\
     render
-from django.views.generic import UpdateView, DetailView
+from django.views.generic import UpdateView, DetailView, FormView
 
 from wkhtmltopdf.views import PDFTemplateView
 from core.mixins import PermissionRequiredMixin
@@ -61,7 +61,7 @@ class PacienteDetail(PermissionRequiredMixin, DetailView):
         return context
 
 
-@permission_required('clinica.add_odontograma')
+@permission_required('clinica.add_procedimiento')
 def odontograma(request, paciente_id):
     paciente = get_object_or_404(Paciente, pk=paciente_id)
     tratamientos = Tratamiento.objects.all()
@@ -84,60 +84,54 @@ def odontograma(request, paciente_id):
         modelform = OdontogramaForm()
         formset = ProcedimientoFormSet()
 
-    o_active = 'active'
-
     return render(request, 'odontograma.html', {
                   'form': modelform,
                   'formset': formset,
                   'paciente': paciente,
                   'tratamientos': tratamientos,
-                  'o_active': o_active
+                  'o_active': 'active'
                   })
 
 
-@permission_required('clinica.add_odontograma')
-def odontograma_detail(request, odontograma_id):
-    odontograma = get_object_or_404(Odontograma, pk=odontograma_id)
-    procedimientos = odontograma.procedimiento_set.all()
-    paciente = odontograma.paciente
+class OdontogramaDetail(PermissionRequiredMixin, DetailView):
+    model = Odontograma
+    context_object_name = 'odontograma'
+    template_name = 'odontograma-detail.html'
+    permission_required = 'clinica.add_odontograma'
 
-    o_active = 'active'
+    def get_context_data(self, **kwargs):
+        context = super(OdontogramaDetail, self).get_context_data(**kwargs)
+        paciente = self.object.paciente
+        procedimientos = self.object.procedimiento_set.all()
+        context.update({'paciente': paciente,
+                        'procedimientos': procedimientos,
+                        'o_active': 'active'})
+        return context
 
-    return render(request, 'odontograma-detail.html', {
-                  'paciente': paciente,
-                  'procedimientos': procedimientos,
-                  'odontograma': odontograma,
-                  'o_active': o_active
-                  })
 
-
-@permission_required('clinica.add_odontograma')
-def procedimientos(request, paciente_id):
+class ProcedimientosView(PermissionRequiredMixin, DetailView):
     '''
     Vista para los procedimientos autorizados (pagados).
     Muestra una lista que va a detalle o 'procedimiento'.
     '''
-    paciente = get_object_or_404(Paciente, pk=paciente_id)
+    model = Paciente
+    context_object_name = 'paciente'
+    template_name = 'procedimientos.html'
+    permission_required = 'clinica.add_odontograma'
 
-    procedimientos = Procedimiento.objects.filter(
-        odontograma__paciente=paciente,
-        status__in=['autorizado', 'en_proceso']
-        )
-
-    bitacoras = Bitacora.objects\
-        .filter(
-            procedimiento__odontograma__paciente=paciente,
+    def get_context_data(self, **kwargs):
+        context = super(ProcedimientosView, self).get_context_data(**kwargs)
+        procedimientos = Procedimiento.objects.filter(
+            odontograma__paciente=self.object,
+            status__in=['autorizado', 'en_proceso'])
+        bitacoras = Bitacora.objects.filter(
+            procedimiento__odontograma__paciente=self.object,
             procedimiento__status__in=['autorizado', 'en_proceso']
             ).order_by('-created_at')[:10]
 
-    p_active = 'active'
-
-    return render(request, 'procedimientos.html', {
-                  'paciente': paciente,
-                  'procedimientos': procedimientos,
-                  'bitacoras': bitacoras,
-                  'p_active': p_active
-                  })
+        context.update({'procedimientos': procedimientos,
+                        'bitacoras': bitacoras,
+                        'p_active': 'active'})
 
 
 @permission_required('clinica.add_odontograma')
@@ -160,34 +154,27 @@ def bitacora_create(request, procedimiento_id):
     else:
         form = BitacoraForm(initial={'procedimiento': procedimiento})
 
-    p_active = 'active'
-
     return render(request, 'bitacora-create.html', {
                   'procedimiento': procedimiento,
                   'paciente': paciente,
                   'form': form,
                   'bitacoras': bitacoras,
-                  'p_active': p_active
+                  'p_active': 'active'
                   })
 
 
-@permission_required('clinica.add_odontograma')
-def historial(request, paciente_id):
-    '''
-    Aqui se presentan todos los procedimientos con status completado.
-    '''
-    paciente = get_object_or_404(Paciente, pk=paciente_id)
-    procedimientos = Procedimiento.objects.filter(
-        odontograma__paciente=paciente, status='completado'
-        )
+class HistorialView(PermissionRequiredMixin, DetailView):
+    model = Paciente
+    template_name = 'historial.html'
+    context_object_name = 'paciente'
+    permission_required = 'clinica.add_odontograma'
 
-    h_active = 'active'
-
-    return render(request, 'historial.html', {
-                  'paciente': paciente,
-                  'procedimientos': procedimientos,
-                  'h_active': h_active
-                  })
+    def get_context_data(self, **kwargs):
+        context = super(HistorialView, self).get_context_data(**kwargs)
+        procedimientos = Procedimiento.objects.filter(
+            odontograma__paciente=self.object, status='completado')
+        context.update({'procedimientos': procedimientos, 'h_active': 'active'})
+        return context
 
 
 class HistorialDetail(PermissionRequiredMixin, DetailView):
@@ -210,30 +197,32 @@ class HistorialDetail(PermissionRequiredMixin, DetailView):
         return context
 
 
-@permission_required('clinica.add_odontograma')
-def interrogatorio(request, paciente_id):
-    paciente = get_object_or_404(Paciente, pk=paciente_id)
-
-    if request.method == 'POST':
-        modelform = InterrogatorioForm(request.POST)
-
-        if modelform.is_valid():
-            modelform.save()
-    else:
-        modelform = InterrogatorioForm()
-
-    return render(request, 'interrogatorio.html', {
-                  'form': modelform,
-                  'paciente': paciente,
-                  'e_active': 'active'
-                  })
-
-
-class interrogatorioUpdateView(PermissionRequiredMixin, UpdateView):
-    model = Interrogatorio
-    form_class = InterrogatorioForm
+class InterrogatorioView(PermissionRequiredMixin, DetailView):
+    model = Paciente
+    context_object_name = 'paciente'
     template_name = 'interrogatorio.html'
     success_url = 'clinica:interrogatorio'
+    permission_required = 'clinica.add_interrogatorio'
+
+    def get_context_data(self, **kwargs):
+        context = super(InterrogatorioView, self).get_context_data(**kwargs)
+        form = InterrogatorioForm
+        context.update({'form': form, 'e_active': 'active'})
+        return context
+
+
+class InterrogatorioUpdate(PermissionRequiredMixin, UpdateView):
+    form_class = InterrogatorioForm
+    model = Interrogatorio
+    template_name = 'interrogatorio-edit.html'
+    success_url = 'clinica:interrogatorio'
+    permission_required = 'clinica.add_interrogatorio'
+
+    def get_context_data(self, **kwargs):
+        context = super(InterrogatorioUpdate, self).get_context_data(**kwargs)
+        paciente = self.object.paciente
+        context.update({'paciente': paciente, 'e_active': 'active'})
+        return context
 
 
 class InterrogatorioPDF(PDFTemplateView):
