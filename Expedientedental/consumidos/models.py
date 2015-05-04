@@ -1,6 +1,5 @@
 # -*- encoding: utf-8 -*-
 from django.db import models
-import datetime as dt
 from altas.models import Medico, Paciente
 
 
@@ -14,7 +13,7 @@ class Paquete(models.Model):
 
 class PaqueteItem(models.Model):
     paquete = models.ForeignKey(Paquete)
-    producto = models.ForeignKey('Inventario.Producto')
+    producto = models.ForeignKey('inventario.Producto')
     cantidad_producto = models.DecimalField(max_digits=8, decimal_places=2)
 
     def __unicode__(self):
@@ -25,7 +24,7 @@ class PaqueteConsumido(models.Model):
     paquete = models.ForeignKey(Paquete)
     medico = models.ForeignKey(Medico)
     paciente = models.ForeignKey(Paciente)
-    #paquete_servicios = models.ForeignKey('servicios.PaqueteServicios')
+    paquete_servicios = models.ForeignKey('servicios.PaqueteServicios')
     fecha = models.DateTimeField()
 
     def __unicode__(self):
@@ -48,7 +47,7 @@ class PaqueteConsumido(models.Model):
 
 class PaqueteConsumidoItem(models.Model):
     paquete_consumido = models.ForeignKey(PaqueteConsumido)
-    producto = models.ForeignKey('Inventario.Producto')
+    producto = models.ForeignKey('inventario.Producto')
     cantidad = models.DecimalField(max_digits=8, decimal_places=2)
     precio = models.DecimalField(max_digits=8, decimal_places=2)
 

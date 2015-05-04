@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, url
-from Inventario.views import (Unidad, ingresarCantidad, unidadView, busqueda,
-                              productoView, EditProductView, devoluciones,
-                              productos, productoUpdate)
+from inventario.views import Unidad, ingresarCantidad, unidadView, busqueda, \
+    productoView, EditProductView, devoluciones, productos, productoUpdate
+
 
 urlpatterns = patterns(
     '',
@@ -16,4 +16,5 @@ urlpatterns = patterns(
     url(r'^producto/ingresar/(?P<entrada_id>\d+)$', ingresarCantidad),
     url(r'^devolucion/$', devoluciones),
     url(r'^buscar_producto/$', busqueda),
-     )
+
+)

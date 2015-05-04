@@ -1,5 +1,5 @@
 from django.contrib import admin
-from Inventario.models import Producto, UnidadMedida, Entradas
+from inventario.models import Producto, UnidadMedida, Entradas
 
 
 class UnidadMedidaAdmin(admin.ModelAdmin):
@@ -12,6 +12,8 @@ class ProductoAdmin(admin.ModelAdmin):
                     'precio', 'descripcion', 'precioUnidad')
     fields = ('producto', 'unidad_medida', 'porciones', 'precio',
               'descripcion', 'precioUnidad')
+
+
 class EntradasAdmin(admin.ModelAdmin):
     pass
 

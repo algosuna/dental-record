@@ -1,16 +1,18 @@
 # encoding:utf-8
-from django.db.models import Q
 from datetime import datetime
-from django.views.generic import ListView, UpdateView, UpdateView
-from django.core.urlresolvers import reverse
-from django.shortcuts import (render, redirect, render_to_response,
-                              get_object_or_404)
-from wkhtmltopdf.views import PDFTemplateView
-from Inventario.forms import (ProductoForm, UnidadMedidaForm, EntradasForm,
-                              DevolucionesForm)
-from Inventario.models import UnidadMedida, Producto, Entradas
-from Inventario.utils import generic_search
+
 from django.contrib import messages
+from django.core.urlresolvers import reverse
+from django.shortcuts import render, redirect, render_to_response, \
+    get_object_or_404
+from django.views.generic import ListView, UpdateView
+
+from wkhtmltopdf.views import PDFTemplateView
+from core.utils import generic_search
+
+from inventario.models import UnidadMedida, Producto, Entradas
+from inventario.forms import ProductoForm, UnidadMedidaForm, EntradasForm, \
+    DevolucionesForm
 
 
 def busqueda(request):

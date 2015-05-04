@@ -170,7 +170,7 @@ INSTALLED_APPS = (
     'clinica',
     'core',
     'cotizacion',
-    'Inventario',
+    'inventario',
     'consumidos',
     'precios',
     'pagos',

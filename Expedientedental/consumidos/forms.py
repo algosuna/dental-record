@@ -5,7 +5,7 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from crispy_forms.layout import(Layout, Fieldset, HTML, Field,
                                 ButtonHolder, Hidden)
-from Inventario.models import Producto
+from inventario.models import Producto
 from consumidos.models import (Paquete, PaqueteItem, PaqueteConsumido,
                             PaqueteConsumidoItem)
 
@@ -132,7 +132,7 @@ class PCItemForm(forms.ModelForm):
             self.fields['producto'].widget = forms.TextInput()
             producto_field = Field('producto', type='hidden')
             # producto_field = Field('producto',
-            #                        readonly='readonly', 
+            #                        readonly='readonly',
             #                        wrapper_class='col-md-5')
         else:
             producto_field = Field('producto', wrapper_class='col-md-5')
