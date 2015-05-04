@@ -36,32 +36,38 @@ class Producto(models.Model):
             """
             return self.producto.get_stock()
 
-        def quitar(self, cantidad_a_quitar, cantidad_a_agregar):
+        def disminuir(self, cantidad_a_quitar, cantidad_a_agregar):
                 if self.porciones >= self.cantidad_a_quitar:
                         self.porciones -= cantidad_a_agregar
                         return True
                 return False
+                
+        def agregar(self, cantidad_a_agregar):
+                self.porciones += cantidad_a_agregar
+
+        def total(self):
+                precioUnidad = self.precio/self.porciones
+                return '%s' % precioUnidad
 
 
 class Entradas(models.Model):
         fecha = models.DateTimeField(auto_now=True)
         producto = models.ForeignKey(Producto)
-        cantidad = models.IntegerField(max_length=5, default=0)
+        porciones = models.IntegerField(max_length=5, default=0)
+
+        def get_stock(self):
+            return self.producto.get_stock()
 
         def agregar(self, cantidad_a_agregar):
-                self.cantidad += cantidad_a_agregar
-
-        def total(self):
-                total = self.cantidad
-                return '$%s' % total
+                self.porciones += cantidad_a_agregar
 
 
 class Devoluciones(models.Model):
         fecha = models.DateTimeField(auto_now=True)
         producto = models.ForeignKey(Producto)
-        cantidad = models.PositiveIntegerField(max_length=5, default=0)
+        cantidad = models.IntegerField(max_length=5, default=0)
         motivo = models.CharField(max_length=100)
 
         def __unicode__(self):
-                return '%s %s' % (self.producto.nombre, self.cantidad,
-                                  self.cantidad, self.fecha)
+                return '%s %s %s %s' % (self.producto.producto, self.cantidad,
+                                        self.cantidad, self.fecha)

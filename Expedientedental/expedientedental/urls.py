@@ -23,9 +23,10 @@ urlpatterns = patterns(
     url(r'^clinica/', include('clinica.urls', namespace='clinica')),
     url(r'^presupuesto/', include('cotizacion.urls', namespace='cotizacion')),
     url(r'^pagos/', include('pagos.urls', namespace='pagos')),
+    url(r'^calculos/', include('calculos.urls', namespace='calculos')),
     url(r'^', include('servicios.urls', namespace='servicios')),
     url(r'^', include('precios.urls', namespace='precios')),
-    url(r'^', include('paquete.urls', namespace='paquete')),
+    url(r'^', include('consumidos.urls', namespace='conusumidos')),
 
     url(r'^inventario/', include('Inventario.urls')),
 

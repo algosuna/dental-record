@@ -3,9 +3,9 @@
 
 {% block content %}
 
-<h2 class="page-header">Paquetes</h2>
+<h2 class="page-header">Unidades</h2>
 
-{% if paquetes %}
+{% if unidades %}
 <table class="table table-hover">
   <thead>
     <tr>
@@ -21,13 +21,13 @@
       <td>{{ unidad.prefix }}</td>
       
       
-      <td><a href="/paquetes/insumos/{{ paquete.id }}/"><span class="glyphicon glyphicon-pencil"></span></a></td>
+      <td><a href="///{{ .id }}/"><span class="glyphicon glyphicon-pencil"></span></a></td>
     </tr>
     {% endfor %}
   </tbody>
 </table>
-<a href="/paquetes/" class="btn btn-primary pull-right">Registrar Nuevo paquete <span class="glyphicon glyphicon-plus"></span></a>
+<a href="/inventario/producto/unidad/" class="btn btn-primary pull-right">Registrar Unidad <span class="glyphicon glyphicon-plus"></span></a>
 {% else %}
-<p class="lead text-center text-muted">No hay unidades en la base de datos.<br><br><a href="/altas/paciente/new/" class="btn btn-primary">Registrar Salida de Insumos <span class="glyphicon glyphicon-chevron-right"></span></a></p>
+<p class="lead text-center text-muted">No hay unidades en la base de datos.<br><br><a href="/inventario/producto/unidad/" class="btn btn-primary">Registrar Unidad <span class="glyphicon glyphicon-chevron-right"></span></a></p>
 {% endif %}
 {% endblock content %}

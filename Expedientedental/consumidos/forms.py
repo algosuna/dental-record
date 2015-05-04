@@ -6,7 +6,7 @@ from crispy_forms.layout import Submit
 from crispy_forms.layout import(Layout, Fieldset, HTML, Field,
                                 ButtonHolder, Hidden)
 from Inventario.models import Producto
-from paquete.models import (Paquete, PaqueteItem, PaqueteConsumido,
+from consumidos.models import (Paquete, PaqueteItem, PaqueteConsumido,
                             PaqueteConsumidoItem)
 
 
@@ -111,7 +111,7 @@ class PaqueteConsumidoForm(forms.ModelForm):
 class PCItemForm(forms.ModelForm):
     class Meta:
         model = PaqueteConsumidoItem
-        exclude = ('precio', 'paquete_consumido')
+        exclude = ('precio', 'paquete_consumido', )
 
     def __init__(self, *args, **kwargs):
         super(PCItemForm, self).__init__(*args, **kwargs)

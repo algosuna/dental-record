@@ -6,9 +6,11 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import (render, redirect, render_to_response,
                               get_object_or_404)
 from wkhtmltopdf.views import PDFTemplateView
-from Inventario.forms import ProductoForm, UnidadMedidaForm, EntradasForm, DevolucionesForm
+from Inventario.forms import (ProductoForm, UnidadMedidaForm, EntradasForm,
+                              DevolucionesForm)
 from Inventario.models import UnidadMedida, Producto, Entradas
 from Inventario.utils import generic_search
+from django.contrib import messages
 
 
 def busqueda(request):
@@ -50,10 +52,23 @@ def productoView(request):
             producto = modelform.save(commit=False)
             producto.precioUnidad = producto.total()
             producto.save()
-            return redirect('/producto/')
+            return redirect('/inventario/productos/')
     else:
         modelform = ProductoForm()
     return render(request, "producto.html", {"form": modelform})
+
+
+class productos(ListView):
+    model = Producto
+    context_object_name = 'productos'
+    template_name = 'productos.html'
+
+
+class productoUpdate(UpdateView):
+    model = Producto
+    form_class = ProductoForm
+    template_name = 'producto.html'
+    success_url = '/inventario/producto/'
 
 
 def unidadView(request):
@@ -61,7 +76,7 @@ def unidadView(request):
         modelform = UnidadMedidaForm(request.POST)
         if modelform.is_valid():
             modelform.save()
-            return redirect('/unidad/')
+            return redirect('/inventario/unidades/')
     else:
         modelform = UnidadMedidaForm()
     return render(request, "unidad.html", {"form": modelform})
@@ -71,6 +86,7 @@ class Unidad(ListView):
     model = UnidadMedida
     context_object_name = 'unidades'
     template_name = 'unidades.html'
+    success_message = "%(name)s was created successfully"
 
 
 def ingresarCantidad(request, entrada_id):
@@ -81,15 +97,17 @@ def ingresarCantidad(request, entrada_id):
         if modelform.is_valid():
             # modelform.save()
             producto = modelform.cleaned_data.get('producto')
-            cantidad = int(modelform.cleaned_data.get('agregar_cantidad'))
-            cambioPrecio = int(modelform.cleaned_data.get('agregar_precio'))
+            print modelform.cleaned_data
+            cantidad = int(modelform.cleaned_data.get('porciones'))
             entrada = Entradas.objects.get(producto=producto)
             entrada.agregar(cantidad)
             entrada.save()
+            print entrada
             producto = entrada.producto
-            producto.precio = cambioPrecio
+            producto.agregar(cantidad)
             producto.save()
-            return redirect("/entradas/")
+            print producto
+            return redirect('/inventario/productos/')
     else:
         modelform = EntradasForm()
     return render(request, "ingresar.html", {"form": modelform,
@@ -116,8 +134,10 @@ def devoluciones(request):
         modelform = DevolucionesForm(request.POST)
         if modelform.is_valid():
             modelform.save()
-            return redirect('/devolucion/')
+            return redirect('/inventario/devolucion/')
     else:
         modelform = DevolucionesForm()
     print modelform.helper
+    messages.add_message(request, messages.SUCCESS, 'Profile details updated.',
+                         fail_silently=True)
     return render(request, "devoluciones.html", {"form": modelform})

@@ -11,7 +11,7 @@ from core.utils import generic_search
 from core.mixins import PermissionRequiredMixin
 
 from altas.models import Paciente
-from servicios.models import Paquete
+from servicios.models import PaqueteServicios
 from pagos.models import Pago
 from pagos.forms import PagoForm, PagoAplicadoFormset
 
@@ -19,7 +19,7 @@ from pagos.forms import PagoForm, PagoAplicadoFormset
 @permission_required('pagos.add_pagoaplicado')
 def pagos(request, paquete_id):
 
-    paquete = get_object_or_404(Paquete, pk=paquete_id)
+    paquete = get_object_or_404(PaqueteServicios, pk=paquete_id)
     total = paquete.total()
     servicios = paquete.servicio_set.filter(status__in=['aceptado', 'parcial'])
     paciente = paquete.odontograma.paciente
@@ -164,7 +164,7 @@ class PagosPending(PermissionRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(PagosPending, self).get_context_data(**kwargs)
-        paquetes = Paquete.objects.filter(odontograma__paciente=self.object)
+        paquetes = PaqueteServicios.objects.filter(odontograma__paciente=self.object)
         # Quitamos paquetes que no tengan items que cobrar (total = 0)
         paquetes = [
             p for p in paquetes if p.total() != 0 and p.total_adeudado() != 0

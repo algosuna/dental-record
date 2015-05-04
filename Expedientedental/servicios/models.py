@@ -7,7 +7,7 @@ from clinica.models import Odontograma, Procedimiento
 from pagos.models import PagoAplicado
 
 
-class Paquete(TimeStampedModel):
+class PaqueteServicios(TimeStampedModel):
     odontograma = models.ForeignKey(Odontograma)
 
     def total(self):
@@ -106,7 +106,7 @@ class Servicio(TimeStampedModel):
     )
     status = models.CharField(
         max_length=10, choices=STATUS_CHOICES, default='aceptado')
-    paquete = models.ForeignKey(Paquete)
+    paquete = models.ForeignKey(PaqueteServicios)
     precio = models.DecimalField(max_digits=8, decimal_places=2)
     procedimiento = models.ForeignKey(Procedimiento)
 

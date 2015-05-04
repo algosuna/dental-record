@@ -171,10 +171,11 @@ INSTALLED_APPS = (
     'core',
     'cotizacion',
     'Inventario',
-    'paquete',
+    'consumidos',
     'precios',
     'pagos',
     'servicios',
+    'calculos'
 
 )
 

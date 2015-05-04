@@ -1,16 +1,12 @@
 from django.core.urlresolvers import reverse
-#from django.template import RequestContext
 from django.forms.models import modelformset_factory
-from django.http import Http404, HttpResponse
 from django.shortcuts import (render_to_response, render, redirect,
                               get_object_or_404)
-
 from .forms import (PaqueteForm, PaqueteConsumidoForm, PCItemForm)
-from paquete.models import (Paquete, PaqueteItem, PaqueteConsumido,
+from consumidos.models import (PaqueteItem, PaqueteConsumido,
                             PaqueteConsumidoItem)
 from django.views.generic import UpdateView, ListView
 from core.utils import generic_search
-
 
 def PaqueteItem(request):
     if request.method == "POST":
@@ -27,9 +23,8 @@ def PaqueteC(request):
     if request.method == "POST":
         modelform = PaqueteConsumidoForm(request.POST)
         if modelform.is_valid():
-            paquete_consumido = modelform.save()
-            succes_url = reverse('insumos', args=[paquete_consumido.pk])
-            return redirect(succes_url)
+            modelform.save()
+            return redirect('/pendientes/')
     else:
         modelform = PaqueteConsumidoForm()
     return render(request, "salida_pack.html", {"form": modelform})
@@ -95,6 +90,9 @@ class EditPaqueteView(UpdateView):
         return context
 
 
+
+
+
 def busqueda(request):
     query = 'q'
     MODEL_MAP = {
@@ -107,5 +105,4 @@ def busqueda(request):
         objects += generic_search(request, model, fields, query)
 
     return render_to_response('paqueteedit.html', {'objects': objects,
-                              'search_string': request.GET.get(query, ''), }   
-                               )
+                              'search_string': request.GET.get(query, ''), })

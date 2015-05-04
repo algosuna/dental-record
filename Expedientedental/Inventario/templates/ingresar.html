@@ -1,16 +1,21 @@
 {% extends "base1.html" %}
-{% load crispy_forms_tags %}
+{%load static from staticfiles %}
 
 {% block content %}
+
+<h2 class="page-header">entrada de insumo</h2>
+
+{% load crispy_forms_tags %}
+{% crispy form %}
+
 {% if messages %}
-<ul class="messages">
+
+<ul class ="messages">
     {% for message in messages %}
     <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
     {% endfor %}
 </ul>
 {% endif %}
-<h2 class="page-header">Registra un Grupo</h2>
-{% crispy form %}
 
 
 {% endblock content %}
