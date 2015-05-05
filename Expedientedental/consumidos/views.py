@@ -6,11 +6,11 @@ from django.views.generic import UpdateView, ListView
 
 from core.utils import generic_search
 
-from consumidos.models import PaqueteItem, PaqueteConsumido, PaqueteConsumidoItem
+from consumidos.models import PaqueteConsumido, PaqueteConsumidoItem
 from consumidos.forms import PaqueteForm, PaqueteConsumidoForm, PCItemForm
 
 
-def PaqueteItem(request):
+def paquete_item(request):
     if request.method == "POST":
         modelform = PaqueteForm(request.POST)
         if modelform.is_valid():
@@ -21,7 +21,7 @@ def PaqueteItem(request):
     return render(request, "tipoPaquete.html", {"form": modelform})
 
 
-def PaqueteC(request):
+def paquetec(request):
     if request.method == "POST":
         modelform = PaqueteConsumidoForm(request.POST)
         if modelform.is_valid():

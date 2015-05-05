@@ -12,7 +12,7 @@ from core.utils import generic_search
 
 from inventario.models import UnidadMedida, Producto, Entradas
 from inventario.forms import ProductoForm, UnidadMedidaForm, EntradasForm, \
-    DevolucionesForm
+    DevolucionesForm, EgresosForm
 
 
 def busqueda(request):
@@ -93,7 +93,7 @@ class Unidad(ListView):
 
 def ingresarCantidad(request, entrada_id):
     # id de la entrada de producto
-    entrada = get_object_or_404(Entradas, pk=entrada_id)
+
     if request.method == "POST":
         modelform = EntradasForm(request.POST)
         if modelform.is_valid():
@@ -112,8 +112,7 @@ def ingresarCantidad(request, entrada_id):
             return redirect('/inventario/productos/')
     else:
         modelform = EntradasForm()
-    return render(request, "ingresar.html", {"form": modelform,
-                                             'entrada': entrada, })
+    return render(request, "ingresar.html", {"form": modelform, })
 
 
 class ProductosPDF(PDFTemplateView):
@@ -143,3 +142,14 @@ def devoluciones(request):
     messages.add_message(request, messages.SUCCESS, 'Profile details updated.',
                          fail_silently=True)
     return render(request, "devoluciones.html", {"form": modelform})
+
+
+def egresos(request):
+    if request.method == 'POST':
+        modelform = EgresosForm(request.POST)
+        if modelform.is_valid:
+            modelform.save()
+            return redirect('inventario/productos/')
+    else:
+        modelform = EgresosForm(request.POST)
+    return render(request, "egresos.html", {"form": modelform})

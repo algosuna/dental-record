@@ -80,6 +80,7 @@ class PaqueteConsumidoForm(forms.ModelForm):
                 Field('medico', wrapper_class='col-md-3'),
                 Field('fecha', wrapper_class='col-md-3'),
                 Field('paciente', wrapper_class='col-md-3'),
+                Field('paquete_servicios', wrapper_class='col-md-2')
                 ),
             )
         # self.fields['paquete'].label = 'Paquete'
@@ -168,9 +169,9 @@ class PCItemForm(forms.ModelForm):
         instance.precio = instance.producto.precioUnidad
         if commit:
             # Quita la cantidad establecida de inventario
-            producto = instance.producto
-            producto.disminuir(instance.cantidad)
-            producto.save()
+           # producto = instance.producto
+            #producto.disminuir(instance.cantidad)
+            #producto.save()
             # Guarda consumido item.
             instance.save()
         return instance

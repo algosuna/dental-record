@@ -36,12 +36,6 @@ class Producto(models.Model):
             """
             return self.porciones
 
-        def disminuir(self, cantidad_a_quitar):
-            if self.porciones >= self.cantidad_a_quitar:
-                self.porciones -= cantidad_a_quitar
-                return True
-            return False
-
         def agregar(self, cantidad_a_agregar):
             self.porciones += cantidad_a_agregar
 
@@ -51,23 +45,47 @@ class Producto(models.Model):
 
 
 class Entradas(models.Model):
-        fecha = models.DateTimeField(auto_now=True)
-        producto = models.ForeignKey(Producto)
-        porciones = models.IntegerField(max_length=5, default=0)
+    '''
+    modelo de entrada de cantidad en producto(porciones)
+    '''
+    fecha = models.DateTimeField(auto_now=True)
+    producto = models.ForeignKey(Producto)
+    porciones = models.IntegerField(max_length=5, default=0)
 
-        def get_stock(self):
+    def get_stock(self):
             return self.producto.get_stock()
 
-        def agregar(self, cantidad_a_agregar):
-                self.porciones += cantidad_a_agregar
+    def agregar(self, cantidad_a_agregar):
+            self.porciones += cantidad_a_agregar
+
+
+class Egresos(models.Model):
+    '''
+modelo donde se puede corregir un error de captura pero , con un antecedente
+    '''
+    fecha = models.DateTimeField(auto_now=True)
+    producto = models.ForeignKey(Producto)
+    porciones = models.IntegerField(max_length=5, default=0)
+    motivo = models.TextField()
+
+    def __unicode__(self):
+        pass
+
+    def egreso_corregir(self):
+        existencia = self.producto.porciones - self.porciones
+        return existencia
 
 
 class Devoluciones(models.Model):
-        fecha = models.DateTimeField(auto_now=True)
-        producto = models.ForeignKey(Producto)
-        cantidad = models.IntegerField(max_length=5, default=0)
-        motivo = models.CharField(max_length=100)
+    '''
+    modelo que permite la devolucion de un insumo
+    si y solo si ya se surtio un paquete 
+    '''
+    fecha = models.DateTimeField(auto_now=True)
+    producto = models.ForeignKey(Producto)
+    cantidad = models.IntegerField(max_length=5, default=0)
+    motivo = models.CharField(max_length=100)
 
-        def __unicode__(self):
-                return '%s %s %s %s' % (self.producto.producto, self.cantidad,
-                                        self.cantidad, self.fecha)
+    def __unicode__(self):
+        return '%s %s %s %s' % (self.producto.producto, self.cantidad,
+                                self.cantidad, self.fecha)
