@@ -37,6 +37,13 @@ class ProductoForm(forms.ModelForm):
         self.fields['unidad_medida'].label = 'Unidad de Medida'
         self.fields['precioUnidad'].label = 'Precio x Unidad'
 
+    def save(self, commit=True):
+        producto = super(ProductoForm, self).save(commit=False)
+        producto.precioUnidad = producto.total()
+        if commit:
+            producto.save()
+        return producto
+
 
 class UnidadMedidaForm(forms.ModelForm):
     class Meta:

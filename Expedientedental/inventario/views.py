@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect, render_to_response, \
     get_object_or_404
-from django.views.generic import ListView, UpdateView
+from django.views.generic import ListView, UpdateView, CreateView
 
 from wkhtmltopdf.views import PDFTemplateView
 from core.utils import generic_search
@@ -13,6 +13,18 @@ from core.utils import generic_search
 from inventario.models import UnidadMedida, Producto, Entradas
 from inventario.forms import ProductoForm, UnidadMedidaForm, EntradasForm, \
     DevolucionesForm, EgresosForm
+
+
+class Productos(ListView):
+    model = Producto
+    context_object_name = 'productos'
+    template_name = 'productos.html'
+
+
+class ProductoCreate(CreateView):
+    form_class = ProductoForm
+    template_name = 'producto.html'
+    success_url = 'inventario:productos'
 
 
 def busqueda(request):
@@ -45,25 +57,6 @@ class EditProductView(UpdateView):
         context['action'] = reverse('producto-edit',
                                     kwargs={'pk': self.object.id})
         return context
-
-
-def productoView(request):
-    if request.method == 'POST':
-        modelform = ProductoForm(request.POST)
-        if modelform.is_valid():
-            producto = modelform.save(commit=False)
-            producto.precioUnidad = producto.total()
-            producto.save()
-            return redirect('/inventario/productos/')
-    else:
-        modelform = ProductoForm()
-    return render(request, "producto.html", {"form": modelform})
-
-
-class productos(ListView):
-    model = Producto
-    context_object_name = 'productos'
-    template_name = 'productos.html'
 
 
 class productoUpdate(UpdateView):
@@ -115,21 +108,6 @@ def ingresarCantidad(request, entrada_id):
     return render(request, "ingresar.html", {"form": modelform, })
 
 
-class ProductosPDF(PDFTemplateView):
-    filename = 'productos.pdf'
-    template_name = 'productos_pdf.html'
-    cmd_options = {
-        'margin-top': 13,
-    }
-
-    def get_context_data(self, **kargs):
-        context = super(ProductosPDF).get_context_data(**kargs)
-        context['productos'] = Producto.objects.order_by('producto__producto')
-        context['fecha'] = datetime.now().strftime("%d/%m/%Y")
-        context['hora'] = datetime.now().strftime("%I:%M %p")
-        return context
-
-
 def devoluciones(request):
     if request.method == 'POST':
         modelform = DevolucionesForm(request.POST)
@@ -153,3 +131,18 @@ def egresos(request):
     else:
         modelform = EgresosForm(request.POST)
     return render(request, "egresos.html", {"form": modelform})
+
+
+class ProductosPDF(PDFTemplateView):
+    filename = 'productos.pdf'
+    template_name = 'productos_pdf.html'
+    cmd_options = {
+        'margin-top': 13,
+    }
+
+    def get_context_data(self, **kargs):
+        context = super(ProductosPDF).get_context_data(**kargs)
+        context['productos'] = Producto.objects.order_by('producto__producto')
+        context['fecha'] = datetime.now().strftime("%d/%m/%Y")
+        context['hora'] = datetime.now().strftime("%I:%M %p")
+        return context

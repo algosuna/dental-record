@@ -1,15 +1,16 @@
 from django.conf.urls import patterns, url
 from inventario.views import Unidad, ingresarCantidad, unidadView, busqueda, \
-    productoView, EditProductView, devoluciones, productos, productoUpdate
+    productoView, EditProductView, devoluciones, Productos, productoUpdate, \
+    ProductoCreate
 
 
 urlpatterns = patterns(
     '',
 
     url(r'^unidades/$', Unidad.as_view()),
-    url(r'^productos/$', productos.as_view()),
+    url(r'^productos/$', Productos.as_view(), name='productos'),
     url(r'^productos/edit/(?P<pk>\d+)$', productoUpdate.as_view()),
-    url(r'^producto/$', productoView),
+    url(r'^producto/$', ProductoCreate.as_view(), name='producto_create'),
     url(r'^producto/unidad/$', unidadView),
     url(r'^producto/edit/(?P<pk>\d+)$', EditProductView.as_view(),
         name='producto-edit'),
