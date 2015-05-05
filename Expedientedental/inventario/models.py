@@ -8,7 +8,7 @@ class UnidadMedida(models.Model):
         prefix = models.CharField(max_length=4)
 
         def __unicode__(self):
-                return '%s %s' % (self.unidad, self.prefix)
+                return '%s ' % (self.prefix)
 
 
 class Producto(models.Model):
@@ -21,33 +21,33 @@ class Producto(models.Model):
                                            default=Decimal(u'0.00'))
 
         def __unicode__(self):
-                return u'%s %s %s %s ' % (self.producto, self.unidad_medida,
-                                          self.porciones, self.descripcion)
+            return u'%s %s %s %s ' % (self.producto, self.unidad_medida,
+                                      self.porciones, self.descripcion)
 
         def in_stock(self):
             """
             Regresa True si esta en stock
             """
-            return self.producto.in_stock()
+            return self.porciones > 0
 
         def get_stock(self):
             """
             Regresa cantidad disponible.
             """
-            return self.producto.get_stock()
+            return self.porciones
 
-        def disminuir(self, cantidad_a_quitar, cantidad_a_agregar):
-                if self.porciones >= self.cantidad_a_quitar:
-                        self.porciones -= cantidad_a_agregar
-                        return True
-                return False
+        def disminuir(self, cantidad_a_quitar):
+            if self.porciones >= self.cantidad_a_quitar:
+                self.porciones -= cantidad_a_quitar
+                return True
+            return False
 
         def agregar(self, cantidad_a_agregar):
-                self.porciones += cantidad_a_agregar
+            self.porciones += cantidad_a_agregar
 
         def total(self):
-                precioUnidad = self.precio/self.porciones
-                return '%s' % precioUnidad
+            precioUnidad = self.precio/self.porciones
+            return '%s' % precioUnidad
 
 
 class Entradas(models.Model):

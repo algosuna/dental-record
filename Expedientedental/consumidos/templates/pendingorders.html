@@ -9,8 +9,7 @@
 <table class="table table-hover">
   <thead>
     <tr>
-      <th>Paquete</th>
-      <th>Descripcion</th>
+     
       <th>Doctor</th>
       <th>Paciente</th>
       <th>Fecha</th>
@@ -19,14 +18,13 @@
   <tbody>
     {% for paquete in paquetes %}
     <tr>
-      <td>{{ servicio.paquete.nombre }}</td>
-      <td>{{ paquete.paquete.descripcion }}</td>
+           
       <td>{{ paquete.medico }}</td>
       <td>{{ paquete.paciente }}</td>
       <td>{{ paquete.fecha }}</td>
 
       
-      <td><a href="/paquetes/insumos/{{ paquete.id }}/"><span class="glyphicon glyphicon-pencil"></span></a></td>
+      <td><a href="/paquetes/insumos/{{ paquete.id }}/"><span class="glyphicon glyphicon-list-alt"></span></a></td>
     </tr>
     {% endfor %}
   </tbody>

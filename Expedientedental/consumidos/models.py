@@ -49,22 +49,7 @@ class PaqueteConsumidoItem(models.Model):
     paquete_consumido = models.ForeignKey(PaqueteConsumido)
     producto = models.ForeignKey('inventario.Producto')
     cantidad = models.DecimalField(max_digits=8, decimal_places=2)
-    precio = models.DecimalField(max_digits=8, decimal_places=2)
-
-    def in_stock(self):
-        return self.producto.in_stock()
-
-    def get_stock(self):
-        return self.producto.get_stock()
-
-    def disminuir_stock(self, cantidad=1):
-        self.producto.disminuir_stock(cantidad)
-
-    def disminuir(self, stock):
-                if self.cantidad >= self.in_stock():
-                        self.cantidad -= stock()
-                        return True
-                return False
+    precio = models.DecimalField(max_digits=8, decimal_places=2)   
 
     def __unicode__(self):
         return u'%s %s %s ' % (self.producto, self.cantidad, self.precio)

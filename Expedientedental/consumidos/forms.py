@@ -167,5 +167,10 @@ class PCItemForm(forms.ModelForm):
         instance.paquete_consumido = paquete_consumido
         instance.precio = instance.producto.precioUnidad
         if commit:
+            # Quita la cantidad establecida de inventario
+            producto = instance.producto
+            producto.disminuir(instance.cantidad)
+            producto.save()
+            # Guarda consumido item.
             instance.save()
         return instance

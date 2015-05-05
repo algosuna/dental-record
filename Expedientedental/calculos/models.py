@@ -1,6 +1,5 @@
 from django.db import models
-from servicios.models import Servicio
-from consumidos.models import PaqueteConsumidoItem
+
 
 # Create your models here.
 
@@ -11,5 +10,3 @@ class Dolar(models.Model):
     def __unicode__(self):
         cambio = "%s" % (self.costo)
         return cambio
-
-

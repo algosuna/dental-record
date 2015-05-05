@@ -10,7 +10,7 @@ def servicios_create(request, cotizacion_id):
     odontograma = cotizacion.odontograma
 
     try:
-        paquete = odontograma.paquete_set.get()
+        paquete = odontograma.paqueteservicios_set.get()
     except PaqueteServicios.DoesNotExist:
         paquete = PaqueteServicios.objects.create(odontograma=odontograma)
 

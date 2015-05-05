@@ -71,9 +71,16 @@ def manage_paquetes(request, pk):
 
 
 class Pending(ListView):
+
     model = PaqueteConsumido
     context_object_name = 'paquetes'
     template_name = 'pendingorders.html'
+
+
+class suplied(ListView):
+    model = PaqueteConsumidoItem
+    context_object_name = 'consumidos'
+    template_name = 'delivered_pacages.html'
 
 
 class EditPaqueteView(UpdateView):
