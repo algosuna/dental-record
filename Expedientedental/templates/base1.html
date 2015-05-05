@@ -41,7 +41,9 @@
 
         <ul class="nav navbar-nav">
 
-          <li><a href="{% url clinica:paciente_search %}">Actividades Clinicas</a></li>
+          <li><a href="{% url clinica:paciente_search %}">Clinica</a></li>
+          <li><a href="{% url cotizacion:cotizacion_list %}">Administracion</a></li>
+
           <li>
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Altas <span class="caret"></span></a>
             <ul class="dropdown-menu">
@@ -58,33 +60,22 @@
           <li>
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Almacen<span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-              
               <li><a href="/inventario/producto/">Alta de Productos</a></li>
               <li><a href="/inventario/buscar_producto/">Entrada de Productos</a></li>
               <li><a href="/inventario/producto/unidad/">Alta Unidades de Medida</a></li>
               <li><a href="/inventario/devolucion/">Devolucion</a></li>
             </ul><!-- end .dropdown-menu -->
           </li>
+
           <li>
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Paquete<span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-              
-             
               <li><a href="/tipoPaquete/">Agrupar Insumos en Paquete </a></li>
               <li><a href="/paquetes/">Generar Orden de Salida</a></li>
-            
             </ul><!-- end .dropdown-menu -->
           </li>
 
-          <li><a href="{% url cotizacion:cotizacion_list %}">Cotizaciones</a></li>
-
-          <li>
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Pagos<span class="caret"></span></a>
-            <ul class="dropdown-menu">
-              <li><a href="{% url pagos:pagos_list %}">Lista de Pagos</a></li>
-              <li><a href="{% url pagos:paciente_search %}">B&uacute;squeda de Paciente</a></li>
-            </ul>
-          </li>
+        </ul>
 
       </div><!-- end .navbar-collapse -->
 
@@ -121,9 +112,9 @@
 
   </div>
 
-  <footer>
+  <footer class="container">
 
-    <div class="container">
+    <div class="col-md-11 col-md-offset-1">
 
       <p class="alert alert-danger">Derivado del contrato de prestación de Servicios Profesionales celebrado entre Usted y MediExcel Health Plan, le manifestamos que en términos de la Ley Federal de Protección de Datos Personales en Posesión de los Particulares, deberá apegarse al Aviso de Privacidad que MediExcel HealthPlan comprometió a los titulares respecto de su información Personal, mismo que anexamos para su conocimiento y observación. Aviso De Confidencialidad de Datos Personales MediExcel Health Plan, con domicilio Fiscal en Av. Paseo de los Héroes No. 2507 Zona Río Tijuana, B.C. 22320, establece que, conforme lo marca la Ley Federal de Protección de Datos Personales en Posesión de los Particulares, todos aquellos datos entregados y obtenidos con motivo del contrato de servicios realizado con la empresa, serán utilizados unicamente para la operación y administración de su Plan de Salud, garantizando que sus datos personales no serán utilizados para fines distintos a lo indicado previamente, ni serán transferidos a terceros, obligandose MediExcel Health Plan a salva guardar la privacidad de los mismos. Usted tiene derecho a limitar el uso de divulgación de sus datos personales, rectificarlos y cancelarlos mediante solicitud por escrito a nuestro departamento de atención a asegurados o con el Registro Único de Usuarios (REUS). Todo cambio al presente aviso por MediExcel Health Plan será notificado en nuestro portal www.mediexcelHP.com</p>
 
