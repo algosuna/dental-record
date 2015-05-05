@@ -1,13 +1,14 @@
 import datetime as dt
 from django import forms
 from django.forms.models import BaseModelFormSet
+
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit
-from crispy_forms.layout import(Layout, Fieldset, HTML, Field,
-                                ButtonHolder, Hidden)
+from crispy_forms.layout import Layout, Fieldset, HTML, Field, ButtonHolder, \
+    Hidden, Submit
+
 from inventario.models import Producto
-from consumidos.models import (Paquete, PaqueteItem, PaqueteConsumido,
-                            PaqueteConsumidoItem)
+from consumidos.models import Paquete, PaqueteItem, PaqueteConsumido, \
+    PaqueteConsumidoItem
 
 
 class PaqueteForm(forms.ModelForm):

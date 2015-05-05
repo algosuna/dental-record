@@ -1,12 +1,14 @@
 from django.core.urlresolvers import reverse
 from django.forms.models import modelformset_factory
-from django.shortcuts import (render_to_response, render, redirect,
-                              get_object_or_404)
-from .forms import (PaqueteForm, PaqueteConsumidoForm, PCItemForm)
-from consumidos.models import (PaqueteItem, PaqueteConsumido,
-                            PaqueteConsumidoItem)
+from django.shortcuts import render_to_response, render, redirect, \
+    get_object_or_404
 from django.views.generic import UpdateView, ListView
+
 from core.utils import generic_search
+
+from consumidos.models import PaqueteItem, PaqueteConsumido, PaqueteConsumidoItem
+from consumidos.forms import PaqueteForm, PaqueteConsumidoForm, PCItemForm
+
 
 def PaqueteItem(request):
     if request.method == "POST":
@@ -88,9 +90,6 @@ class EditPaqueteView(UpdateView):
         context['action'] = reverse('paquete-edit',
                                     kwargs={'pk': self.object.id})
         return context
-
-
-
 
 
 def busqueda(request):
