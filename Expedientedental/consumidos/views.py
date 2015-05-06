@@ -1,13 +1,15 @@
 from django.core.urlresolvers import reverse
 from django.forms.models import modelformset_factory
-from django.shortcuts import render_to_response, render, redirect, \
-    get_object_or_404
-from django.views.generic import UpdateView, ListView
+from django.shortcuts import (
+    render_to_response, render, redirect, get_object_or_404)
+from django.views.generic import UpdateView, ListView, CreateView
 
 from core.utils import generic_search
 
+from servicios.models import Servicio
 from consumidos.models import PaqueteConsumido, PaqueteConsumidoItem
-from consumidos.forms import PaqueteForm, PaqueteConsumidoForm, PCItemForm
+from consumidos.forms import (
+    PaqueteForm, PaqueteConsumidoForm, PCItemForm, PeticionForm)
 
 
 def paquete_item(request):
@@ -96,7 +98,40 @@ class EditPaqueteView(UpdateView):
         context = super(EditPaqueteView, self).get_context_data(**kwargs)
         context['action'] = reverse('paquete-edit',
                                     kwargs={'pk': self.object.id})
+        return context       
+
+
+class PeticionView(CreateView):
+    form_class = PeticionForm
+    template_name = 'peticion.html'
+    servicio = None
+
+    def get_form_kwargs(self):
+        kwargs = super(PeticionView, self).get_form_kwargs()
+        servicio = self.get_servicio()
+        odontograma = servicio.paquete.odontograma
+        kwargs.update({
+            'medico': odontograma.medico,
+            'paciente': odontograma.paciente,
+            'paquete_servicios': servicio,  # TODO: cambiar a 'servicio'
+            })
+        return kwargs
+
+    def get_servicio(self):
+        if self.servicio:
+            return self.servicio
+        self.servicio = Servicio.objects.get(
+            pk=self.kwargs.get('pk'))
+        return self.servicio
+
+    def get_context_data(self, **kwargs):
+        context = super(PeticionView, self).get_context_data(**kwargs)
+        context.update({'servicio': self.get_servicio()})
         return context
+
+    def get_succes_url(self):
+        paciente = self.get_servicio().odontograma.paciente
+        return reverse('paciente_detail', args=[paciente])
 
 
 def busqueda(request):

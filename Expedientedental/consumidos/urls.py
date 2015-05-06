@@ -1,5 +1,6 @@
 from django.conf.urls import patterns, url
-from consumidos.views import EditPaqueteView, paquetec, Pending, manage_paquetes
+from consumidos.views import (
+    EditPaqueteView, paquetec, Pending, manage_paquetes, PeticionView)
 
 urlpatterns = patterns(
     'consumidos.views',
@@ -9,6 +10,8 @@ urlpatterns = patterns(
     url(r'^paquetes/$', paquetec),
     url(r'^paquetes/insumos/(?P<pk>\d+)/$', manage_paquetes, name='insumos'),
     url(r'^tipoPaquete/edit/(?P<pk>\d+)$', EditPaqueteView.as_view()),
+    url(r'^paquete/(?P<pk>\d+)/peticion/create/$',
+        PeticionView.as_view(), name='peticion'),
 
 )
 

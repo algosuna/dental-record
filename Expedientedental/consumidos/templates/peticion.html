@@ -1,0 +1,13 @@
+{% extends "base1.html" %}
+{%load static from staticfiles %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<h2 class="page-header">Peticion a inventario</h2>
+{{servicio}}
+{% crispy form %}
+
+{% endblock content %}
+

@@ -28,7 +28,7 @@ urlpatterns = patterns(
 
     url(r'^', include('servicios.urls', namespace='servicios')),
     url(r'^', include('precios.urls', namespace='precios')),
-    url(r'^', include('consumidos.urls', namespace='conusumidos')),
+    url(r'^', include('consumidos.urls', namespace='consumidos')),
 
     # Esto es necesario para tener un folder de media funcional.
     # Agregado para foto de paciente (imagenpaciente)

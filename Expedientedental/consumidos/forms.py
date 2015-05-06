@@ -65,6 +65,7 @@ class PaqueteForm(forms.ModelForm):
 class PaqueteConsumidoForm(forms.ModelForm):
     class Meta:
         model = PaqueteConsumido
+        exclude = ('nota',)
 
     def __init__(self, *args, **kwargs):
         super(PaqueteConsumidoForm, self).__init__(*args, **kwargs)
@@ -175,3 +176,31 @@ class PCItemForm(forms.ModelForm):
             # Guarda consumido item.
             instance.save()
         return instance
+
+
+class PeticionForm(forms.ModelForm):
+    class Meta:
+        model = PaqueteConsumido
+        fields = ('nota',)
+
+    def __init__(self, medico, paciente, paquete_servicios, *args, **kwargs):
+        super(PeticionForm, self).__init__(*args, **kwargs)
+        self.medico = medico
+        self.paciente = paciente
+        self.paquete_servicios = paquete_servicios
+
+    def save(self, commit=True):
+        instance = super(PeticionForm, self).save(commit=False)
+        instance.medico = self.medico
+        instance.paciente = self.paciente
+        instance.paquete_servicios = self.paquete_servicios
+        instance.fecha = dt.date.today()
+        instance.paquete = None
+        if commit:
+
+            instance.save()
+        return instance
+
+
+
+

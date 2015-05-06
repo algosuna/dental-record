@@ -21,11 +21,12 @@ class PaqueteItem(models.Model):
 
 
 class PaqueteConsumido(models.Model):
-    paquete = models.ForeignKey(Paquete)
+    paquete = models.ForeignKey(Paquete, null=True)
     medico = models.ForeignKey(Medico)
     paciente = models.ForeignKey(Paciente)
-    paquete_servicios = models.ForeignKey('servicios.PaqueteServicios')
+    paquete_servicios = models.ForeignKey('servicios.Servicio') # TODO: actualizar nombre de atributo a Servicio
     fecha = models.DateTimeField()
+    nota = models.TextField(blank=True)
 
     def __unicode__(self):
         return '%s %s' % (self.paquete, self.medico)
