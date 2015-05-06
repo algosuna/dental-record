@@ -73,46 +73,32 @@ class UnidadCreate(CreateView):
     success_url = reverse_lazy('inventario:unidades')
 
 
-def ingresarCantidad(request, entrada_id):
-    # id de la entrada de producto
-
-    if request.method == "POST":
-        modelform = EntradasForm(request.POST)
-        if modelform.is_valid():
-            producto = modelform.cleaned_data.get('producto')
-            cantidad = int(modelform.cleaned_data.get('porciones'))
-            entrada = Entradas.objects.get(producto=producto)
-            entrada.agregar(cantidad)
-            entrada.save()
-            producto = entrada.producto
-            producto.agregar(cantidad)
-            producto.save()
-            return redirect('/inventario/productos/')
-    else:
-        modelform = EntradasForm()
-    return render(request, "ingresar.html", {"form": modelform, })
-
-
 class EntradasProducto(CreateView):
     form_class = EntradasForm
     template_name = 'ingresar.html'
     success_url = reverse_lazy('inventario:productos')
 
+    def get_producto(self):
+        producto = Producto.objects.get(pk=self.kwargs.get('pk'))
+        return producto
+
     def get_context_data(self, **kwargs):
         context = super(EntradasProducto, self).get_context_data(**kwargs)
-        producto = Producto.objects.filter(pk=self.kwargs.get('pk'))
-        context.update({'producto': producto})
+        context.update({'producto': self.get_producto()})
         return context
 
     def get_initial(self):
         initial = super(EntradasProducto, self).get_initial()
         initial = initial.copy()
-        initial['producto'] = self.kwargs.get('pk')
+        initial['producto'] = self.get_producto()
         return initial
 
-    # def post(self, request, *args, **kwargs):
-    #     super(EntradasProducto, self).post(request, *args, **kwargs)
-    #     # TODO: Ask what those two saves were for!
+    def form_valid(self, form):
+        producto = self.get_producto()
+        porciones = int(form.cleaned_data.get('porciones'))
+        producto.agregar(porciones)
+        producto.save()
+        return super(EntradasProducto, self).form_valid(form)
 
 
 class EditProductView(UpdateView):
