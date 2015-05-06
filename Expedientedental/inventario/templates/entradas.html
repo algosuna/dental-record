@@ -1,66 +1,50 @@
 {% extends "base1.html" %}
 
-{%load static from staticfiles %}
-
 {% block content %}
 
-	<h2 class="page-header">Búsqueda</h2>
+  <h2 class="page-header">Búsqueda</h2>
 
+  {% if search_string %}
+  <p class="text-center">Usted ingresó "{{ search_string }}" :</p>
 
-	{% if search_string %}
-	<p class="text-center">Usted ingresó "{{ search_string }}" :</p>
-		{% if objects %}
-			<table class="table table-bordered">
-				<thead>
-					<tr>
-						<th>Producto</th>
+    {% if objects %}
+    <table class="table table-bordered">
 
-						<th class="text-center">Cantidad</th>
-					<!--  Campos de Precio y Total
-						<th class="text-center">Precio</th>
-						<th class="text-center">Total</th>
-					-->
-					
-						
-						<th>&nbsp;</th>
-						<th>&nbsp;</th>
-					</tr>
-				</thead>
-				<tbody>
-  		{% for producto in objects %}
-  			<tr>
-  				<td>{{ producto.producto }}</td>
-  				<td class= 'text-center'>{{ producto.porciones}}</td>
-  				
+      <thead>
 
-  		
+        <tr>
+          <th>Producto</th>
+          <th class="text-center">Cantidad</th>
+          <th>&nbsp;</th>
+        </tr>
 
-  				
-  	<td class="text-center"><a href="/inventario/producto/ingresar/{{ producto.id }}" 
-    class="btn btn-info">ingreso de insumos</a></td>
-  				
-  				
-  			</tr>
-  		{% endfor %}
-  			</tbody>
-			</table>
-			<p class="lead text-center">
-			<a href="/inventario/buscar_producto/" class="btn btn-primary">Nueva Búsqueda <span class="glyphicon glyphicon-chevron-right"></span></a href="/"></p>
-		{% else %}
-			<p class="lead text-center text-muted">No se han encontrado productos con ese nombre.
-			<a href="/inventario/buscar_producto/" class="btn btn-primary">Nueva Búsqueda <span class="glyphicon glyphicon-chevron-right"></span></a href="/"></p>
-		{% endif %}
+      </thead>
 
-		{% else %}
+      <tbody>
+        {% for producto in objects %}
+        <tr>
+          <td>{{ producto.producto }}</td>
+          <td class= 'text-center'>{{ producto.porciones}}</td>
+          <td class="text-center"><a href="{% url inventario:entradas_producto producto.id %}" class="btn btn-info">ingreso de insumos</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
 
-		<div class="text-center search clearfix">
-			<form action="" method="GET">
-				
-				<label for="q" class="lead">Ingrese el nombre del Producto:</label>
-				<input type="text" name="q" class="form-control" placeholder="Nombre del producto..." value="{{ query|escape }}">
-				<input type="submit" class="btn btn-primary" value="Buscar">
-				
-			</form>
-		</div>
+    <p class="lead text-center"><a href="{% url inventario:producto_search %}" class="btn btn-primary">Nueva Búsqueda <span class="glyphicon glyphicon-chevron-right"></span></a></p>
+
+    {% else %}
+
+    <p class="lead text-center text-muted">No se han encontrado productos con ese nombre.<a href="{% url inventario:producto_search %}" class="btn btn-primary">Nueva Búsqueda <span class="glyphicon glyphicon-chevron-right"></span></a></p>
+    {% endif %}
+
+  {% else %}
+  <div class="text-center search clearfix">
+    <form action="" method="GET">
+      <label for="q" class="lead">Ingrese el nombre del Producto:</label>
+      <input type="text" name="q" class="form-control" placeholder="Nombre del producto..." value="{{ query|escape }}">
+      <input type="submit" class="btn btn-primary" value="Buscar">
+    </form>
+  </div>
   {% endif %}
 {% endblock content %}
