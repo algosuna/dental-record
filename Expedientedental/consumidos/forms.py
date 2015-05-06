@@ -170,6 +170,7 @@ class PCItemForm(forms.ModelForm):
         instance.precio = instance.producto.precioUnidad
         if commit:
             # Quita la cantidad establecida de inventario
+<<<<<<< Updated upstream
            # producto = instance.producto
             #producto.disminuir(instance.cantidad)
             #producto.save()
@@ -198,6 +199,12 @@ class PeticionForm(forms.ModelForm):
         instance.paquete = None
         if commit:
 
+=======
+            producto = instance.producto
+            producto.disminuir(instance.cantidad)
+            producto.save()
+            # Guarda consumido item.
+>>>>>>> Stashed changes
             instance.save()
         return instance
 
