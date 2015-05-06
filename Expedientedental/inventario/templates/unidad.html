@@ -1,14 +1,11 @@
-{% extends "base1.html" %}
+{% extends "dash.html" %}
 {%load static from staticfiles %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 
 <h2 class="page-header">Registrar Producto-Unidades de Medida</h2>
 
-{% load crispy_forms_tags %}
 {% crispy form %}
-
-
-
 
 {% endblock content %}

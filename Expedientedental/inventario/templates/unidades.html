@@ -1,4 +1,4 @@
-{% extends "base1.html" %}
+{% extends "dash.html" %}
 {%load static from staticfiles %}
 
 {% block content %}
@@ -11,7 +11,6 @@
     <tr>
       <th>Unidad</th>
       <th>Prefijo</th>
-      
     </tr>
   </thead>
   <tbody>
@@ -19,15 +18,12 @@
     <tr>
       <td>{{ unidad.unidad }}</td>
       <td>{{ unidad.prefix }}</td>
-      
-      
-      <td><a href="///{{ .id }}/"><span class="glyphicon glyphicon-pencil"></span></a></td>
     </tr>
     {% endfor %}
   </tbody>
 </table>
-<a href="/inventario/producto/unidad/" class="btn btn-primary pull-right">Registrar Unidad <span class="glyphicon glyphicon-plus"></span></a>
+<a href="{% url inventario:unidad_create %}" class="btn btn-primary pull-right">Registrar Unidad <span class="glyphicon glyphicon-plus"></span></a>
 {% else %}
-<p class="lead text-center text-muted">No hay unidades en la base de datos.<br><br><a href="/inventario/producto/unidad/" class="btn btn-primary">Registrar Unidad <span class="glyphicon glyphicon-chevron-right"></span></a></p>
+<p class="lead text-center text-muted">No hay unidades en la base de datos.<br><br><a href="{% url inventario:unidad_create %}" class="btn btn-primary">Registrar Unidad <span class="glyphicon glyphicon-chevron-right"></span></a></p>
 {% endif %}
 {% endblock content %}

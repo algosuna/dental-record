@@ -1,20 +1,16 @@
-{% extends "base1.html" %}
+{% extends "dash.html" %}
 {%load static from staticfiles %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 
+  {% if producto.id %}
+  <h1>Editar Producto</h1>
+  {% else %}
+  <h1> agergar producto</h1>
+  {% endif %}
 
-{% load crispy_forms_tags %}
-{% crispy form %}
-
-{% if producto.id %}
-<h1>Editar Producto</h1>
-{% else %}
-<h1> agergar producto</h1>
-{% endif %}
-
-
-<form action="{{action}}" method="POST">
+  {% crispy form %}
 
 {% endblock content %}
 
