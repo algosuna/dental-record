@@ -23,7 +23,7 @@ def busqueda(request):
     for model, fields in MODEL_MAP.iteritems():
         objects += generic_search(request, model, fields, query)
 
-    return render_to_response('entradas.html', {'objects': objects,
+    return render_to_response('producto-search.html', {'objects': objects,
                               'search_string': request.GET.get(query, '')})
 
 
@@ -81,7 +81,7 @@ class BaseProductoUpdate(CreateView):
 
 class EntradasProducto(BaseProductoUpdate):
     form_class = EntradasForm
-    template_name = 'ingresar.html'
+    template_name = 'entrada.html'
     success_url = reverse_lazy('inventario:productos')
 
     def form_valid(self, form):
