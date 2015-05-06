@@ -1,18 +1,15 @@
 # encoding:utf-8
 from datetime import datetime
 
-from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy
-from django.shortcuts import render, redirect, render_to_response
+from django.shortcuts import render_to_response
 from django.views.generic import ListView, UpdateView, CreateView
 
 from wkhtmltopdf.views import PDFTemplateView
 from core.utils import generic_search
 
 from inventario.models import UnidadMedida, Producto
-from inventario.forms import (
-    ProductoForm, UnidadMedidaForm, EntradasForm, DevolucionesForm,
-    EgresosForm)
+from inventario.forms import ProductoForm, UnidadMedidaForm, EntradasForm
 
 
 def busqueda(request):
@@ -93,26 +90,6 @@ class EntradasProducto(BaseProductoUpdate):
         producto.agregar(porciones)
         producto.save()
         return super(EntradasProducto, self).form_valid(form)
-
-
-class EgresoCreate(BaseProductoUpdate):
-    form_class = EgresosForm
-    template_name = 'egresos.html'
-    success_url = reverse_lazy('inventario:productos')
-
-
-def devoluciones(request):
-    if request.method == 'POST':
-        modelform = DevolucionesForm(request.POST)
-        if modelform.is_valid():
-            modelform.save()
-            return redirect('/inventario/devolucion/')
-    else:
-        modelform = DevolucionesForm()
-    print modelform.helper
-    messages.add_message(request, messages.SUCCESS, 'Profile details updated.',
-                         fail_silently=True)
-    return render(request, "devoluciones.html", {"form": modelform})
 
 
 class ProductosPDF(PDFTemplateView):
