@@ -52,12 +52,6 @@ class Entradas(models.Model):
     producto = models.ForeignKey(Producto)
     porciones = models.IntegerField(max_length=5, default=0)
 
-    def get_stock(self):
-        return self.producto.get_stock()
-
-    def agregar(self, cantidad_a_agregar):
-        self.porciones += cantidad_a_agregar
-
 
 class Egresos(models.Model):
     '''

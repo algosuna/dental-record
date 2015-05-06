@@ -65,6 +65,7 @@ class UnidadMedidaForm(forms.ModelForm):
 class EntradasForm(forms.ModelForm):
     class Meta:
         model = Entradas
+        exclude = 'producto'
 
     def __init__(self, *args, **kwargs):
         super(EntradasForm, self).__init__(*args, **kwargs)
