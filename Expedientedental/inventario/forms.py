@@ -89,6 +89,34 @@ class EntradasForm(forms.ModelForm):
         return instance
 
 
+class EgresosForm(forms.ModelForm):
+    class Meta:
+        model = Egresos
+        exclude = 'producto'
+
+    def __init__(self, *args, **kwargs):
+        super(EgresosForm, self).__init__(*args, **kwargs)
+        self.producto = self.initial.get('producto')
+        self.helper = FormHelper()
+        self.Layout = Layout(
+            HTML(
+                """<p> Campos con (*) son Requeridos</p>"""),
+            Fieldset(
+                '',
+                Field('porciones', wrapper_class='col-md-3'),
+                Field('motivo', wrapper_class='col-md-3'),
+            ),
+            ButtonHolder(Submit('save', 'Guardar'))
+        )
+
+    def save(self, commit=True):
+        instance = super(EgresosForm, self).save(commit=False)
+        instance.producto = self.producto
+        if commit:
+            instance.save()
+        return instance
+
+
 class DevolucionesForm(forms.ModelForm):
     class Meta:
         model = Devoluciones
@@ -106,29 +134,6 @@ class DevolucionesForm(forms.ModelForm):
                 # Field('fecha', wrapper_class='col-md-3'),
                 Field('producto', wrapper_class='col-md-3'),
                 Field('cantidad', wrapper_class='col-md-3'),
-                Field('motivo', wrapper_class='col-md-3'),
-            ),
-            ButtonHolder(Submit('save', 'Guardar'))
-        )
-
-
-class EgresosForm(forms.ModelForm):
-    class Meta:
-        model = Egresos
-
-    def __init__(self, *args, **kwargs):
-        super(EgresosForm, self).__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.Layout = Layout(
-            HTML(
-                """
-                <p> Campos con (*) son Requeridos</p>
-                """),
-            Fieldset(
-                '',
-                # Field('fecha', wrapper_class='col-md-3'),
-                Field('producto', wrapper_class='col-md-3'),
-                Field('porciones', wrapper_class='col-md-3'),
                 Field('motivo', wrapper_class='col-md-3'),
             ),
             ButtonHolder(Submit('save', 'Guardar'))
