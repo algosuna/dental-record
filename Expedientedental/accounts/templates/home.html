@@ -5,7 +5,6 @@
 {% block bodyclass %}class="home"{% endblock %}
 
 {% block body %}
-<<<<<<< Updated upstream
 <h4 class="page-header">Welcome, {{ user.get_full_name }}</h4>
 {% if perms.clinica.add_odontograma %}
 <a href="{% url clinica:paciente_search %}" class="btn btn-info btn-lg">Ir a Clinica <i class="fa fa-chevron-right fa-fw"></i></a>
@@ -16,12 +15,6 @@
 {% if perms.inventario.add_producto %}
 <a href="{% url inventario:producto_list %}" class="btn btn-primary btn-lg">Inventario <i class="fa fa-chevron-right fa-fw"></i></a>
 {% endif %}
-=======
-<h3>Meh. {{ user.get_full_name }}</h3>
-<a href="{% url clinica:paciente_search %}" class="btn btn-info btn-lg">Clinica</a>
-<a href="{% url cotizacion:cotizacion_list %}" class="btn btn-success btn-lg">Presupuestos</a>
-<a href="{% url inventario:producto_list %}" class="btn btn-primary btn-lg">Inventario</a>
->>>>>>> Stashed changes
 {% endblock %}
 
 {% block footer %}
