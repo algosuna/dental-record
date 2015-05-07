@@ -71,7 +71,7 @@ footer {
 
   }
 
-  .navbar-right li:last-child { margin-right: 15px; }
+  .navbar-right > li:last-child { margin-right: 15px; }
 
 }
 
@@ -130,7 +130,7 @@ footer {
       color: #fff;
       background-color: #428bca;
     }
-     
+
   }
 
   .sidebar-header {
@@ -198,11 +198,11 @@ login
       padding: 20px 0px;
     }
 
-    .alert ul { 
+    .alert ul {
       padding-left: 0px;
 
       li { list-style: none; }
-    
+
     }
 
   }
