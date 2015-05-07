@@ -104,6 +104,7 @@ class EditPaqueteView(UpdateView):
 class PeticionView(CreateView):
     form_class = PeticionForm
     template_name = 'peticion.html'
+    succes_url = '/'
     servicio = None
 
     def get_form_kwargs(self):
