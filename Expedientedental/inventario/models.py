@@ -8,7 +8,7 @@ class UnidadMedida(models.Model):
     prefix = models.CharField(max_length=4)
 
     def __unicode__(self):
-        return '%s' % (self.prefix)
+        return '%s (%s)' % (self.unidad, self.prefix)
 
 
 class Producto(models.Model):

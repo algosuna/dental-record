@@ -9,6 +9,7 @@
   {% endif %}
 
   <ul class="nav nav-sidebar">
+
     {% if perms.clinica.add_odontograma %}
     {% if paciente %}
     <li class="{{ pd_active }}"><a href="{% url clinica:paciente_detail paciente.id %}"><i class="fa fa-user fa-fw"></i> Datos Personales</a></li>
@@ -19,12 +20,21 @@
     <li class="{{ h_active }}"><a href="{% url clinica:historial paciente.id %}"><i class="fa fa-clipboard fa-fw"></i> Historial de Procedimientos</a></li>
     {% endif %}
     {% endif %}
+
     {% if perms.cotizacion.add_cotizacion %}
     <li class="sidebar-header text-center">Administraci&oacute;n</li>
     <li class="{{ c_active }}"><a href="{% url cotizacion:cotizacion_list %}"><i class="fa fa-calculator fa-fw"></i> Presupuestos</a></li>
     <li class="{{ rp_active }}"><a href="{% url pagos:paciente_search %}"><i class="fa fa-usd fa-fw"></i> Realizar Pago</a></li>
     <li class="{{ r_active }}"><a href="{% url pagos:pagos_list %}"><i class="fa fa-table fa-fw"></i> Pagos Realizados</a></li>
     {% endif %}
+
+    {% if perms.inventario.add_producto %}
+    <li class="sidebar-header text-center">Inventario</li>
+    <li class="{{ i_active }}"><a href="{% url inventario:producto_list %}"><i class="fa fa-list fa-fw"></i> Ver Insumos</a></li>
+    <li class="{{ pc_active }}"><a href="{% url inventario:producto_create %}"><i class="fa fa-plus fa-fw"></i> Agregar Insumo</a></li>
+    <li class="{{ s_active }}"><a href="{% url inventario:producto_search %}"><i class="fa fa-search fa-fw"></i> Buscar Insumo</a></li>
+    {% endif %}
+
   </ul>
 
 </div><!-- end .sidebar -->

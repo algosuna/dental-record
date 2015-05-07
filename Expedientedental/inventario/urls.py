@@ -9,7 +9,7 @@ urlpatterns = patterns(
 
     url(r'^search/$', busqueda, name='producto_search'),
 
-    url(r'^productos/$', Productos.as_view(), name='productos'),
+    url(r'^productos/$', Productos.as_view(), name='producto_list'),
     url(r'^producto/new/$', ProductoCreate.as_view(), name='producto_create'),
     url(r'^producto/(?P<pk>\d+)/edit/$',
         ProductoUpdate.as_view(), name='producto_update'),

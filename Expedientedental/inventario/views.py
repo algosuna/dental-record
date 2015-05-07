@@ -1,17 +1,20 @@
 # encoding:utf-8
 from datetime import datetime
 
+from django.contrib.auth.decorators import permission_required
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render_to_response
 from django.views.generic import ListView, UpdateView, CreateView
 
 from wkhtmltopdf.views import PDFTemplateView
 from core.utils import generic_search
+from core.mixins import PermissionRequiredMixin
 
 from inventario.models import UnidadMedida, Producto
 from inventario.forms import ProductoForm, UnidadMedidaForm, EntradasForm
 
 
+@permission_required('inventario.add_producto')
 def busqueda(request):
     query = 'q'
     MODEL_MAP = {
@@ -23,40 +26,57 @@ def busqueda(request):
     for model, fields in MODEL_MAP.iteritems():
         objects += generic_search(request, model, fields, query)
 
-    return render_to_response('producto-search.html', {'objects': objects,
-                              'search_string': request.GET.get(query, '')})
+    return render_to_response('producto-search.html', {
+        'objects': objects,
+        'search_string': request.GET.get(query, ''),
+        's_active': 'active'})
 
 
-class Productos(ListView):
+class Productos(PermissionRequiredMixin, ListView):
     model = Producto
     context_object_name = 'productos'
     template_name = 'productos.html'
+    permission_required = 'inventario.add_producto'
+
+    def get_context_data(self, **kwargs):
+        context = super(Productos, self).get_context_data(**kwargs)
+        context.update({'i_active': 'active'})
+        return context
 
 
-class ProductoCreate(CreateView):
+class ProductoCreate(PermissionRequiredMixin, CreateView):
     form_class = ProductoForm
     template_name = 'producto.html'
     success_url = reverse_lazy('inventario:productos')
+    permission_required = 'inventario.add_producto'
+
+    def get_context_data(self, **kwargs):
+        context = super(ProductoCreate, self).get_context_data(**kwargs)
+        context.update({'pc_active': 'active'})
+        return context
 
 
-class ProductoUpdate(UpdateView):
+class ProductoUpdate(PermissionRequiredMixin, UpdateView):
     form_class = ProductoForm
     model = Producto
     template_name = 'producto.html'
     success_url = reverse_lazy('inventario:productos')
+    permission_required = 'inventario.change_producto'
 
 
-class Unidades(ListView):
+class Unidades(PermissionRequiredMixin, ListView):
     model = UnidadMedida
     context_object_name = 'unidades'
     template_name = 'unidades.html'
+    permission_required = 'inventario.add_unidadmedida'
 
 
-class UnidadCreate(CreateView):
+class UnidadCreate(PermissionRequiredMixin, CreateView):
     form_class = UnidadMedidaForm
     model = UnidadMedida
     template_name = 'unidad.html'
     success_url = reverse_lazy('inventario:unidades')
+    permission_required = 'inventario.add_unidadmedida'
 
 
 class BaseProductoUpdate(CreateView):
@@ -79,10 +99,11 @@ class BaseProductoUpdate(CreateView):
         return initial
 
 
-class EntradasProducto(BaseProductoUpdate):
+class EntradasProducto(PermissionRequiredMixin, BaseProductoUpdate):
     form_class = EntradasForm
     template_name = 'entrada.html'
     success_url = reverse_lazy('inventario:productos')
+    permission_required = 'inventario:change_producto'
 
     def form_valid(self, form):
         producto = self.get_producto()

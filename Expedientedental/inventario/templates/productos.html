@@ -3,7 +3,7 @@
 
 {% block content %}
 
-<h2 class="page-header">Productos Registrados</h2>
+<h2 class="page-header">Insumos Registrados</h2>
 
 {% if productos %}
 <table class="table table-condensed" id="producto">
@@ -11,10 +11,10 @@
     <tr>
       <th>Nombre</th>
       <th>Descripcion</th>
-      <th>unidad(s)</th>
-      <th>precio</th>
-      <th>C.Unidad</th>
-      <th>existencia</th>
+      <th>Unidad de medida</th>
+      <th>Precio</th>
+      <th>Precio/Unidad</th>
+      <th>Existencia</th>
       <th>&nbsp;</th>
     </tr>
   </thead>
@@ -42,16 +42,16 @@
 <script src="{% static 'js/jquery-datatable.js' %}"></script>
 <script type="text/javascript">
   //para buscar en las tablas
-  $(function(){
-    $('#producto').dataTable({
-      "bPaginate": true,
-      "bLengthChange": true,
-      "bFilter": true,
-      "bSort": true,
-      "bInfo": true,
-      "bAutoWidth": true
-    });
-  })
+  // $(function(){
+  //   $('#producto').dataTable({
+  //     "bPaginate": true,
+  //     "bLengthChange": true,
+  //     "bFilter": true,
+  //     "bSort": true,
+  //     "bInfo": true,
+  //     "bAutoWidth": true
+  //   });
+  // })
 </script>
 
 {% endblock javascript%}

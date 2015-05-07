@@ -13,7 +13,7 @@
 <a href="{% url cotizacion:cotizacion_list %}" class="btn btn-success btn-lg">Ver Presupuestos <i class="fa fa-chevron-right fa-fw"></i></a>
 {% endif %}
 {% if perms.inventario.add_producto %}
-<a href="" class="btn btn-primary btn-lg">Inventario</a>
+<a href="{% url inventario:producto_list %}" class="btn btn-primary btn-lg">Inventario <i class="fa fa-chevron-right fa-fw"></i></a>
 {% endif %}
 {% endblock %}
 
