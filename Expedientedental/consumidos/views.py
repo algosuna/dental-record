@@ -6,7 +6,6 @@ from django.views.generic import UpdateView, ListView, CreateView
 
 from core.utils import generic_search
 
-<<<<<<< Updated upstream
 from servicios.models import Servicio
 from consumidos.models import PaqueteConsumido, PaqueteConsumidoItem
 from consumidos.forms import (
@@ -14,10 +13,6 @@ from consumidos.forms import (
 
 
 def paquete_item(request):
-=======
-
-def PaqueteItem(request):
->>>>>>> Stashed changes
     if request.method == "POST":
         modelform = PaqueteForm(request.POST)
         if modelform.is_valid():
@@ -103,7 +98,7 @@ class EditPaqueteView(UpdateView):
         context = super(EditPaqueteView, self).get_context_data(**kwargs)
         context['action'] = reverse('paquete-edit',
                                     kwargs={'pk': self.object.id})
-        return context       
+        return context
 
 
 class PeticionView(CreateView):
@@ -129,7 +124,6 @@ class PeticionView(CreateView):
             pk=self.kwargs.get('pk'))
         return self.servicio
 
-<<<<<<< Updated upstream
     def get_context_data(self, **kwargs):
         context = super(PeticionView, self).get_context_data(**kwargs)
         context.update({'servicio': self.get_servicio()})
@@ -140,8 +134,6 @@ class PeticionView(CreateView):
         return reverse('paciente_detail', args=[paciente])
 
 
-=======
->>>>>>> Stashed changes
 def busqueda(request):
     query = 'q'
     MODEL_MAP = {
