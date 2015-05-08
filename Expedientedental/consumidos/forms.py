@@ -193,9 +193,16 @@ class PeticionForm(forms.ModelForm):
         instance.fecha = dt.date.today()
         instance.paquete = None
         if commit:
+<<<<<<< Updated upstream
             #producto = instance.producto
             #producto.disminuir(instance.cantidad)
             #producto.save()
+=======
+
+            producto = instance.producto
+            producto.disminuir(instance.cantidad)
+            producto.save()
+>>>>>>> Stashed changes
             # Guarda consumido item.
             instance.save()
         return instance

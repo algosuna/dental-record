@@ -73,7 +73,7 @@
         <td>{{ procedimiento.tratamiento }}</td>
         <td><span class="label">{{ procedimiento.get_status_display }}</span></td>
         <td><a href="{% url clinica:historial_detail procedimiento.id %}" class="btn btn-default">Ver</a></td>
-        <td><a href="{% url consumidos:peticion servicio.id %}" class="btn btn-default">solicitar materiales</a></td>        
+        <td><a href={% url 'consumidos:peticion' pk=servicio.id %} class="btn btn-default">solicitar materiales</a></td>        
       </tr>
       {% endwith %}
       {% endfor %}
