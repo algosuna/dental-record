@@ -39,8 +39,7 @@
 <div class="row">
   <div class="col-md-8">
       <form method="post" action="" class="cotizacion clearfix">
-      {{ formset.management_form }}
-
+    
       <div class="panel panel-default">
         <table class="table table-hover">
           <thead>
@@ -51,17 +50,26 @@
             </tr>
           </thead>
           <tbody>
-            {% for form in formset %}
-            {% with item=form.instance %}
+            {% for cotizacion  in items  %}
+            
             <tr>
-              <td>{{ item.procedimiento.tratamiento }}</td>
-              <td class="precio">{{ item.precio }}</td>
+              <td>{{ cotizacion.procedimiento.tratamiento }}</td>
+              <td class="precio">{{ cotizacion.precio }}</td>
              
             </tr>
-            {% endwith %}
             {% endfor %}
           </tbody>
         </table>
+          <tr>
+        
+        {% if cotizacion.total_procesado %}
+        <tr class="info">
+          <th>Total</th>
+          <td align="right">{{ cotizacion.total_procesado }}</td>
+        </tr>
+        {% endif %}
+      </table>
+    </div>
 
 
 

@@ -6,6 +6,7 @@ from django.views.generic import UpdateView, ListView, CreateView
 
 from core.utils import generic_search
 
+
 from servicios.models import Servicio
 from consumidos.models import PaqueteConsumido, PaqueteConsumidoItem
 from consumidos.forms import (
@@ -13,6 +14,7 @@ from consumidos.forms import (
 
 
 def paquete_item(request):
+
     if request.method == "POST":
         modelform = PaqueteForm(request.POST)
         if modelform.is_valid():
