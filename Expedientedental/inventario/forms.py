@@ -67,6 +67,7 @@ class EntradasForm(forms.ModelForm):
             Fieldset(
                 '',
                 Field('porciones', wrapper_class='col-md-2'),
+                Field('is_cancelled', wrapper_class='col-md-4'),
             ),
             ButtonHolder(Submit('save', 'Guardar'))
         )
