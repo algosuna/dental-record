@@ -57,7 +57,7 @@ class UnidadMedidaForm(forms.ModelForm):
 class EntradasForm(forms.ModelForm):
     class Meta:
         model = Entradas
-        exclude = 'producto'
+        exclude = ('producto', 'is_cancelled')
 
     def __init__(self, *args, **kwargs):
         super(EntradasForm, self).__init__(*args, **kwargs)
@@ -67,7 +67,6 @@ class EntradasForm(forms.ModelForm):
             Fieldset(
                 '',
                 Field('porciones', wrapper_class='col-md-2'),
-                Field('is_cancelled', wrapper_class='col-md-4'),
             ),
             ButtonHolder(Submit('save', 'Guardar'))
         )

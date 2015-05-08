@@ -4,13 +4,13 @@ from datetime import datetime
 from django.contrib.auth.decorators import permission_required
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render
-from django.views.generic import ListView, UpdateView, CreateView
+from django.views.generic import ListView, UpdateView, CreateView, DetailView
 
 from wkhtmltopdf.views import PDFTemplateView
 from core.utils import generic_search
 from core.mixins import PermissionRequiredMixin
 
-from inventario.models import UnidadMedida, Producto
+from inventario.models import UnidadMedida, Producto, Entradas
 from inventario.forms import ProductoForm, UnidadMedidaForm, EntradasForm
 
 
@@ -97,6 +97,20 @@ class BaseProductoUpdate(CreateView):
         initial = initial.copy()
         initial['producto'] = self.get_producto()
         return initial
+
+
+class EntradasList(PermissionRequiredMixin, ListView):
+    model = Entradas
+    context_object_name = 'entradas'
+    template_name = 'entradas.html'
+    permission_required = 'inventario.add_entradas'
+
+
+class EntradaDetail(PermissionRequiredMixin, DetailView):
+    model = Entradas
+    context_object_name = 'entrada'
+    template_name = 'entrada-detail.html'
+    permission_required = 'inventario.change_entradas'
 
 
 class EntradasProducto(PermissionRequiredMixin, BaseProductoUpdate):
