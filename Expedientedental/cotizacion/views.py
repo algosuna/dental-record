@@ -69,7 +69,10 @@ class CotizacionPDF(PDFTemplateView):
         context = super(CotizacionPDF, self).get_context_data(**kwargs)
         self.cotizacion_id = int(kwargs.get('cotizacion_id'))
         cotizacion = get_object_or_404(Cotizacion, pk=self.cotizacion_id)
+        items = cotizacion.cotizacionitem_set.all()
         context['cotizacion'] = cotizacion
+        context['items'] = items
         context['fecha'] = datetime.now().strftime("%d/%m/%Y")
         context['hora'] = datetime.now().strftime("%I:%M %p")
         return context
+  
