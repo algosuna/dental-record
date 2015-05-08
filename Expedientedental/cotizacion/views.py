@@ -75,3 +75,4 @@ class CotizacionPDF(PDFTemplateView):
         context['fecha'] = datetime.now().strftime("%d/%m/%Y")
         context['hora'] = datetime.now().strftime("%I:%M %p")
         return context
+  
