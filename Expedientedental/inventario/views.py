@@ -3,7 +3,7 @@ from datetime import datetime
 
 from django.contrib.auth.decorators import permission_required
 from django.core.urlresolvers import reverse_lazy
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 from django.views.generic import ListView, UpdateView, CreateView
 
 from wkhtmltopdf.views import PDFTemplateView
@@ -26,7 +26,7 @@ def busqueda(request):
     for model, fields in MODEL_MAP.iteritems():
         objects += generic_search(request, model, fields, query)
 
-    return render_to_response('producto-search.html', {
+    return render(request, 'producto-search.html', {
         'objects': objects,
         'search_string': request.GET.get(query, ''),
         's_active': 'active'})
@@ -102,7 +102,7 @@ class BaseProductoUpdate(CreateView):
 class EntradasProducto(PermissionRequiredMixin, BaseProductoUpdate):
     form_class = EntradasForm
     template_name = 'entrada.html'
-    success_url = reverse_lazy('inventario:productos')
+    success_url = reverse_lazy('inventario:producto_list')
     permission_required = 'inventario:change_producto'
 
     def form_valid(self, form):

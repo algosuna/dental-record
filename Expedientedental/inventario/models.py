@@ -51,3 +51,4 @@ class Entradas(models.Model):
     fecha = models.DateTimeField(auto_now=True)
     producto = models.ForeignKey(Producto)
     porciones = models.IntegerField(max_length=5, default=0)
+    is_cancelled = models.BooleanField(default=False)

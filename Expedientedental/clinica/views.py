@@ -3,8 +3,7 @@ from datetime import datetime
 
 from django.contrib.auth.decorators import permission_required
 from django.core.urlresolvers import reverse
-from django.shortcuts import redirect, render_to_response, get_object_or_404,\
-    render
+from django.shortcuts import redirect, get_object_or_404, render
 from django.views.generic import UpdateView, DetailView, FormView
 
 from wkhtmltopdf.views import PDFTemplateView
@@ -37,10 +36,9 @@ def paciente_search(request):
     for model, fields in MODEL_MAP.iteritems():
         objects += generic_search(request, model, fields, query)
 
-    return render_to_response('paciente-search.html', {
-                              'objects': objects,
-                              'search_string': request.GET.get(query, '')
-                              })
+    return render(request, 'paciente-search.html', {
+        'objects': objects,
+        'search_string': request.GET.get(query, '')})
 
 
 class PacienteDetail(PermissionRequiredMixin, DetailView):
