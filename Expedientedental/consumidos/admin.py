@@ -1,6 +1,6 @@
 from django.contrib import admin
 from consumidos.models import Paquete, PaqueteItem, PaqueteConsumido, \
-    PaqueteConsumidoItem
+    PaqueteConsumidoItem, ProductoConsumido
 
 
 class PaqueteConsumidoAdmin(admin.ModelAdmin):
@@ -15,6 +15,7 @@ class PaqueteConsumidoAdmin(admin.ModelAdmin):
         'paquete',
     ]
 
+admin.site.register(ProductoConsumido)
 admin.site.register(Paquete)
 admin.site.register(PaqueteItem)
 admin.site.register(PaqueteConsumido)  # ,PaqueteConsumidoAdmin)

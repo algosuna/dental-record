@@ -57,3 +57,13 @@ class PaqueteConsumidoItem(models.Model):
 
     # TODO: metodo save debe restar unidades de inventario (consumir)
     # TODO: metodo delete debe sumar unidades de inventario (devoluciones)
+
+
+class ProductoConsumido(models.Model):
+    producto = models.ForeignKey('inventario.Producto')
+    cantidad = models.DecimalField(max_digits=8, decimal_places=2)
+    fecha = models.DateTimeField()
+
+    def __unicode__(self):
+        return u'%s %s %s' % (
+            self.producto, self.cantidad, self.cantidad, self.precio)
