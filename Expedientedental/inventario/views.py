@@ -103,6 +103,7 @@ class BaseProductoUpdate(CreateView):
 
 class EntradasList(PermissionRequiredMixin, ListView):
     model = Entradas
+    queryset = model.objects.filter(is_cancelled=False)
     context_object_name = 'entradas'
     template_name = 'entradas.html'
     permission_required = 'inventario.add_entradas'
