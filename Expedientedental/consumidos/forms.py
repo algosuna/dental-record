@@ -81,7 +81,7 @@ class PaqueteConsumidoForm(forms.ModelForm):
                 Field('medico', wrapper_class='col-md-3'),
                 Field('fecha', wrapper_class='col-md-3'),
                 Field('paciente', wrapper_class='col-md-3'),
-                Field('paquete_servicios', wrapper_class='col-md-2')
+                Field('servicio', wrapper_class='col-md-2')
                 ),
             )
         # self.fields['paquete'].label = 'Paquete'
@@ -179,34 +179,32 @@ class PeticionForm(forms.ModelForm):
         model = PaqueteConsumido
         fields = ('nota',)
 
-    def __init__(self, medico, paciente, paquete_servicios, *args, **kwargs):
+    def __init__(self, medico, paciente, servicio, *args, **kwargs):
         super(PeticionForm, self).__init__(*args, **kwargs)
         self.medico = medico
         self.paciente = paciente
-        self.paquete_servicios = paquete_servicios
+        self.servicio = servicio
 
     def save(self, commit=True):
         instance = super(PeticionForm, self).save(commit=False)
         instance.medico = self.medico
         instance.paciente = self.paciente
-        instance.paquete_servicios = self.paquete_servicios
+        instance.servicio = self.servicio
         instance.fecha = dt.date.today()
         instance.paquete = None
-        producto = instance.producto
-        producto.disminuir(instance.cantidad)
-        producto.save()
+        
         # Guarda consumido item.
         instance.save()
         return instance
 
 
-class PrConsumidoForm(forms.ModelForm):
+class ProductoConsumidoForm(forms.ModelForm):
     class Meta:
         model = ProductoConsumido
         exclude = ('precio',)
 
     def __init__(self, *args, **kwargs):
-        super(PrConsumidoForm, self).__init__(*args, **kwargs)
+        super(ProductoConsumidoForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.layout = Layout(
             HTML("""
@@ -220,4 +218,4 @@ class PrConsumidoForm(forms.ModelForm):
 
                 ),
             ButtonHolder(Submit('save', 'Generar'))
-        )
+            )

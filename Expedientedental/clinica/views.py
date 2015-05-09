@@ -55,6 +55,9 @@ class PacienteDetail(PermissionRequiredMixin, DetailView):
         procedimientos = Procedimiento.objects.filter(
             odontograma__paciente=self.object
             ).exclude(status='completado').order_by('id')
+        for p in procedimientos:
+            print p.pk
+            print p.servicio_set.get()
         context.update({'odontogramas': odontogramas,
                         'procedimientos': procedimientos,
                         'pd_active': 'active'})

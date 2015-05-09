@@ -1,4 +1,4 @@
-{% extends "base1.html" %}
+{% extends "dash.html" %}
 {%load static from staticfiles %}
 
 {% load crispy_forms_tags %}
@@ -10,12 +10,26 @@
 
 {% block content %}
 
-<h2 class="page-header">Registrar </h2>
+  
 
-{% crispy form %}
-
-<a href="/pendientes/" class="btn btn-primary pull-right">Terminar orden<span class="glyphicon glyphicon-shopping-cart"></span></a>
-
+      <div class="panel panel-default">
+        <table class="table table-hover">
+          <thead>
+           
+          </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{ item.procedimiento.tratamiento }}</td>
+              <td class="precio">{{ item.precio }}</td>
+              <td><span class="label">{{ item.get_status_display }}</span></td>
+              
+            </tr>
+        
+            
+          </tbody>
+        </table>
+        {% crispy form %}
 
 
 

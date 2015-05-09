@@ -24,13 +24,25 @@ class PaqueteConsumido(models.Model):
     paquete = models.ForeignKey(Paquete, null=True)
     medico = models.ForeignKey(Medico)
     paciente = models.ForeignKey(Paciente)
-    paquete_servicios = models.ForeignKey('servicios.Servicio') # TODO: actualizar nombre de atributo a Servicio
+    servicio = models.ForeignKey('servicios.Servicio', null=True)
     fecha = models.DateTimeField()
     nota = models.TextField(blank=True)
 
     def __unicode__(self):
         return '%s %s' % (self.paquete, self.medico)
 
+
+class PaqueteConsumidoItem(models.Model):
+    paquete_consumido = models.ForeignKey(PaqueteConsumido)
+    producto = models.ForeignKey('inventario.Producto')
+    cantidad = models.DecimalField(max_digits=8, decimal_places=2)
+    precio = models.DecimalField(max_digits=8, decimal_places=2)
+
+    def __unicode__(self):
+        return u'%s %s %s ' % (self.producto, self.cantidad, self.precio)
+
+    # TODO: metodo save debe restar unidades de inventario (consumir)
+    # TODO: metodo delete debe sumar unidades de inventario (devoluciones)
     def get_item_initials(self):
         paquete = self.paquete
         paquete_items = paquete.paqueteitem_set.all()
@@ -44,19 +56,6 @@ class PaqueteConsumido(models.Model):
             }
             initial_list.append(initial)
         return initial_list
-
-
-class PaqueteConsumidoItem(models.Model):
-    paquete_consumido = models.ForeignKey(PaqueteConsumido)
-    producto = models.ForeignKey('inventario.Producto')
-    cantidad = models.DecimalField(max_digits=8, decimal_places=2)
-    precio = models.DecimalField(max_digits=8, decimal_places=2)   
-
-    def __unicode__(self):
-        return u'%s %s %s ' % (self.producto, self.cantidad, self.precio)
-
-    # TODO: metodo save debe restar unidades de inventario (consumir)
-    # TODO: metodo delete debe sumar unidades de inventario (devoluciones)
 
 
 class ProductoConsumido(models.Model):

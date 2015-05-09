@@ -10,8 +10,8 @@ from core.utils import generic_search
 from servicios.models import Servicio
 from consumidos.models import PaqueteConsumido, PaqueteConsumidoItem
 from consumidos.forms import (
-    PaqueteForm, PaqueteConsumidoForm, PCItemForm, PeticionForm, PrConsumidoForm 
-    )
+    PaqueteForm, PaqueteConsumidoForm, PCItemForm, PeticionForm,
+    ProductoConsumidoForm)
 
 
 def paquete_item(request):
@@ -26,15 +26,24 @@ def paquete_item(request):
     return render(request, "tipoPaquete.html", {"form": modelform})
 
 
-def paquetec(request):
-    if request.method == "POST":
-        modelform = PaqueteConsumidoForm(request.POST)
-        if modelform.is_valid():
-            modelform.save()
-            return redirect('/pendientes/')
-    else:
-        modelform = PaqueteConsumidoForm()
-    return render(request, "salida_pack.html", {"form": modelform})
+class paquetec(CreateView):
+    model = PaqueteConsumido
+    succes_url = '/'
+    template_name = 'salida_pack.html'
+    form_class = PaqueteConsumidoForm
+    context_object_name = 'pconsumido'
+
+    def get_peticion(self):
+        if self.peticion:
+            return self.peticion
+
+    def get_succes_url(self):
+        return '/'
+
+    def get_context_data(self, **kwargs):
+        context = super(paquetec, self).get_context_data(**kwargs)
+        context.update({'pconsumido': self.peticion()})
+        return context
 
 
 def manage_paquetes(request, pk):
@@ -75,13 +84,6 @@ def manage_paquetes(request, pk):
     return render(request, 'paquete_def.html', context)
 
 
-class Pending(ListView):
-
-    model = PaqueteConsumido
-    context_object_name = 'paquetes'
-    template_name = 'pendingorders.html'
-
-
 class suplied(ListView):
     model = PaqueteConsumidoItem
     context_object_name = 'consumidos'
@@ -104,10 +106,17 @@ class EditPaqueteView(UpdateView):
         return context
 
 
+class peticionesView(ListView):
+    model = PaqueteConsumido
+    form_class = PeticionForm
+    context_object_name = 'peticiones'
+    template_name = 'peticiones.html'
+
+
 class PeticionView(CreateView):
     form_class = PeticionForm
     template_name = 'peticion.html'
-    succes_url = '/'
+    success_url = '/peticiones/list/'
     servicio = None
 
     def get_form_kwargs(self):
@@ -117,7 +126,7 @@ class PeticionView(CreateView):
         kwargs.update({
             'medico': odontograma.medico,
             'paciente': odontograma.paciente,
-            'paquete_servicios': servicio,  # TODO: cambiar a 'servicio'
+            'servicio': servicio,  # TODO: cambiar a 'servicio'
             })
         return kwargs
 
@@ -139,7 +148,7 @@ class PeticionView(CreateView):
 
 
 class producto_consumido(CreateView):
-    form_class = PrConsumidoForm
+    form_class = ProductoConsumidoForm
     template_name = 'prconsumido.html'
     succes_url = '/'
 
