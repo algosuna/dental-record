@@ -2,8 +2,71 @@
 {% load static from staticfiles %}
 {% load crispy_forms_tags %}
 
+{% block title %}Entrada de Producto{% endblock %}
+
 {% block content %}
 <h2 class="page-header">Entrada de Producto <small class="pull-right"><a href=""><span class="glyphicon glyphicon-print"></span> Imprimir</a></small></h2>
 
+<div class="row">
 
+  <div class="col-md-6">
+
+    <div class="panel panel-primary">
+
+      <div class="panel-heading">
+
+        <h4 class="panel-title">{{ entrada }}</h4>
+
+      </div>
+
+      <div class="panel-body">
+
+        <table class="table">
+
+          <thead>
+
+            <tr>
+
+              <th>Fecha</th>
+              <th>Porciones</th>
+
+            </tr>
+
+          </thead>
+
+          <tbody>
+
+            <tr>
+
+              <td>{{ entrada.fecha }}</td>
+              <td>{{ entrada.porciones }}</td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div><!-- end .panel-body -->
+
+    </div><!-- end .panel -->
+
+    <button class="btn btn-danger pull-right" type="button" data-toggle="collapse" data-target="#cancelar">Cancelar</button>
+
+  </div><!-- end .col-md-6 -->
+
+  <div class="col-md-6">
+
+    <div class="collapse alert alert-danger clearfix" id="cancelar">
+
+      <p><strong>Seguro que desea cancelar este registro?</strong></p>
+      <p>Las porciones en esta entrada ({{ entrada.porciones }}) se le restar&aacute;n al total disponible en inventario ({{ entrada.producto.porciones }}).</p>
+
+      {% crispy form %}
+
+    </div>
+
+  </div><!-- end .col-md-6 -->
+
+</div><!-- end .row -->
 {% endblock content %}

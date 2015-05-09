@@ -2,6 +2,8 @@
 from django.db import models
 from decimal import Decimal
 
+from core.models import TimeStampedModel
+
 
 class UnidadMedida(models.Model):
     unidad = models.CharField(max_length=15, unique=True)
@@ -11,7 +13,7 @@ class UnidadMedida(models.Model):
         return '%s (%s)' % (self.unidad, self.prefix)
 
 
-class Producto(models.Model):
+class Producto(TimeStampedModel):
     producto = models.CharField(max_length=100, unique=True)
     descripcion = models.TextField(max_length=120)
     unidad_medida = models.ForeignKey(UnidadMedida)
@@ -21,8 +23,7 @@ class Producto(models.Model):
                                        default=Decimal(u'0.00'))
 
     def __unicode__(self):
-        return u'%s %s %s %s' % (self.producto, self.unidad_medida,
-                                 self.porciones, self.descripcion)
+        return u'%s %s' % (self.producto, self.unidad_medida)
 
     def get_stock(self):
         '''
@@ -43,8 +44,12 @@ class Producto(models.Model):
     def agregar(self, cantidad_a_agregar):
         self.porciones += cantidad_a_agregar
 
+    def quitar(self, cantidad):
+        porciones = self.porciones - cantidad
+        return porciones
 
-class Entradas(models.Model):
+
+class Entradas(TimeStampedModel):
     '''
     modelo de entrada de cantidad en producto(porciones)
     '''
@@ -52,3 +57,6 @@ class Entradas(models.Model):
     producto = models.ForeignKey(Producto)
     porciones = models.IntegerField(max_length=5, default=0)
     is_cancelled = models.BooleanField(default=False)
+
+    def __unicode__(self):
+        return '%s' % self.producto

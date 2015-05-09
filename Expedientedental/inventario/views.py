@@ -4,14 +4,16 @@ from datetime import datetime
 from django.contrib.auth.decorators import permission_required
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render
-from django.views.generic import ListView, UpdateView, CreateView, DetailView
+from django.views.generic import ListView, UpdateView, CreateView
 
 from wkhtmltopdf.views import PDFTemplateView
 from core.utils import generic_search
 from core.mixins import PermissionRequiredMixin
 
 from inventario.models import UnidadMedida, Producto, Entradas
-from inventario.forms import ProductoForm, UnidadMedidaForm, EntradasForm
+from inventario.forms import (
+    ProductoForm, UnidadMedidaForm, EntradasForm, EntradaCanceladaForm
+)
 
 
 @permission_required('inventario.add_producto')
@@ -106,10 +108,12 @@ class EntradasList(PermissionRequiredMixin, ListView):
     permission_required = 'inventario.add_entradas'
 
 
-class EntradaDetail(PermissionRequiredMixin, DetailView):
+class EntradaDetail(PermissionRequiredMixin, UpdateView):
+    form_class = EntradaCanceladaForm
     model = Entradas
     context_object_name = 'entrada'
     template_name = 'entrada-detail.html'
+    success_url = reverse_lazy('inventario:entradas')
     permission_required = 'inventario.change_entradas'
 
 

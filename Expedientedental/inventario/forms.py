@@ -78,3 +78,32 @@ class EntradasForm(forms.ModelForm):
         if commit:
             instance.save()
         return instance
+
+
+class EntradaCanceladaForm(forms.ModelForm):
+    class Meta:
+        model = Entradas
+        exclude = ('producto', 'porciones')
+
+    def __init__(self, *args, **kwargs):
+        super(EntradaCanceladaForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_class = 'form-inline pull-right'
+        self.helper.field_template = 'bootstrap3/layout/inline_field.html'
+        self.helper.layout = Layout(
+            'is_cancelled',
+            Submit('submit', 'Cancelar')
+        )
+        self.fields['is_cancelled'].label = 'Cancelar Entrada'
+
+    def save(self, commit=True):
+        instance = super(EntradaCanceladaForm, self).save(commit=False)
+        is_cancelled = self.cleaned_data.get('is_cancelled')
+        cantidad = instance.porciones
+        producto = instance.producto
+        if is_cancelled:
+            producto.porciones = producto.quitar(cantidad)
+        if commit:
+            producto.save()
+            instance.save()
+        return instance
