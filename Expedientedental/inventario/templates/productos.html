@@ -3,7 +3,7 @@
 
 {% block content %}
 
-<h2 class="page-header">Insumos Registrados</h2>
+<h2 class="page-header">Productos Registrados</h2>
 
 {% if productos %}
 <table class="table table-condensed" id="producto">
@@ -15,6 +15,7 @@
       <th>Precio</th>
       <th>Precio/Unidad</th>
       <th>Existencia</th>
+      <th>&nbsp;</th>
       <th>&nbsp;</th>
     </tr>
   </thead>
@@ -28,6 +29,7 @@
       <td>{{ producto.precioUnidad }}</td>
       <td>{{ producto.porciones }}</td>
       <td><a href="{% url inventario:producto_update producto.id %}"><span class="glyphicon glyphicon-pencil"></span></a></td>
+      <td><a href="{% url inventario:entradas_producto producto.id %}"><span class="glyphicon glyphicon-plus"></span></a></td>
     </tr>
     {% endfor %}
   </tbody>

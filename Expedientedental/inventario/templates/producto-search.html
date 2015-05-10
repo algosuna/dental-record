@@ -1,5 +1,5 @@
 {% extends "dash.html" %}
-{% block title %}Inventario - Agregar Insumo{% endblock %}
+{% block title %}Inventario - Productos{% endblock %}
 
 {% block content %}
 <h2 class="page-header">Prductos</h2>
@@ -29,7 +29,7 @@
       <tr>
         <td class="padded">{{ producto.producto }}</td>
         <td class="padded">{{ producto.porciones }}</td>
-        <td class="text-right"><a href="{% url inventario:entradas_producto producto.id %}" class="btn btn-info">Agregar Insumos</a></td>
+        <td class="text-right"><a href="{% url inventario:entradas_producto producto.id %}" class="btn btn-info">Registrar Entrada</a></td>
       </tr>
       {% endfor %}
 

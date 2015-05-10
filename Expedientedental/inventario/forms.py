@@ -4,7 +4,7 @@ from django import forms
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, Field, ButtonHolder, Submit
 
-from inventario.models import Producto, UnidadMedida, Entradas
+from inventario.models import Producto, UnidadMedida, Entrada, CancelEntrada
 
 
 class ProductoForm(forms.ModelForm):
@@ -54,13 +54,13 @@ class UnidadMedidaForm(forms.ModelForm):
         self.fields['prefix'].label = 'Prefijo'
 
 
-class EntradasForm(forms.ModelForm):
+class EntradaForm(forms.ModelForm):
     class Meta:
-        model = Entradas
-        exclude = 'producto'
+        model = Entrada
+        exclude = ('producto', 'is_cancelled')
 
     def __init__(self, *args, **kwargs):
-        super(EntradasForm, self).__init__(*args, **kwargs)
+        super(EntradaForm, self).__init__(*args, **kwargs)
         self.producto = self.initial.get('producto')
         self.helper = FormHelper()
         self.helper.layout = Layout(
@@ -73,8 +73,52 @@ class EntradasForm(forms.ModelForm):
         self.fields['porciones'].label = ' Agregar Cantidad'
 
     def save(self, commit=True):
-        instance = super(EntradasForm, self).save(commit=False)
+        instance = super(EntradaForm, self).save(commit=False)
         instance.producto = self.producto
         if commit:
+            instance.save()
+        return instance
+
+
+class EntradaCanceladaForm(forms.ModelForm):
+    class Meta:
+        model = Entrada
+        exclude = ('producto', 'porciones')
+
+    def __init__(self, *args, **kwargs):
+        super(EntradaCanceladaForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_class = 'form-inline'
+        self.helper.field_template = 'bootstrap3/layout/inline_field.html'
+        self.helper.layout = Layout(
+            'is_cancelled',
+            Submit('submit', 'Cancelar', css_class='pull-right')
+        )
+        self.fields['is_cancelled'].label = 'Cancelar Entrada'
+
+
+class CancelEntradaForm(forms.ModelForm):
+    ''' Agrega un motivo de cancelacion y resta la cantidad de la entrada
+    al inventario. '''
+
+    class Meta:
+        model = CancelEntrada
+        exclude = 'entrada'
+
+    def __init__(self, *args, **kwargs):
+        super(CancelEntradaForm, self).__init__(*args, **kwargs)
+        self.entrada = self.initial.get('entrada')
+        self.helper = FormHelper()
+        self.helper.add_input(Submit('submit', 'Guardar'))
+        self.fields['reason'].label = 'Motivo de Cancelaci&oacute;n'
+
+    def save(self, commit=True):
+        instance = super(CancelEntradaForm, self).save(commit=False)
+        instance.entrada = self.entrada
+        cantidad = instance.entrada.porciones
+        producto = instance.entrada.producto
+        producto.porciones = producto.quitar(cantidad)
+        if commit:
+            producto.save()
             instance.save()
         return instance
