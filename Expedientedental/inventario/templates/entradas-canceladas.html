@@ -27,7 +27,7 @@
       <td>{{ entrada.created_at }}</td>
       <td>{{ entrada.producto }}</td>
       <td>{{ entrada.porciones }}</td>
-      <td><a href="{% url inventario:entrada_detail entrada.id %}" class="btn btn-default">Ver Entrada</a></td>
+      <td><a href="{% url inventario:entradacancelada_detail entrada.cancelentrada_set.get.id %}" class="btn btn-default">Ver Entrada</a></td>
 
     </tr>
     {% endfor %}

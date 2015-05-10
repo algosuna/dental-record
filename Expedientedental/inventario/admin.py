@@ -1,5 +1,5 @@
 from django.contrib import admin
-from inventario.models import Producto, UnidadMedida, Entradas
+from inventario.models import Producto, UnidadMedida, Entrada
 
 
 class UnidadMedidaAdmin(admin.ModelAdmin):
@@ -10,9 +10,9 @@ class ProductoAdmin(admin.ModelAdmin):
     pass
 
 
-class EntradasAdmin(admin.ModelAdmin):
+class EntradaAdmin(admin.ModelAdmin):
     pass
 
 admin.site.register(UnidadMedida, UnidadMedidaAdmin)
 admin.site.register(Producto, ProductoAdmin)
-admin.site.register(Entradas, EntradasAdmin)
+admin.site.register(Entrada, EntradaAdmin)

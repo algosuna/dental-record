@@ -2,17 +2,19 @@
 from datetime import datetime
 
 from django.contrib.auth.decorators import permission_required
-from django.core.urlresolvers import reverse_lazy
+from django.core.urlresolvers import reverse_lazy, reverse
 from django.shortcuts import render
-from django.views.generic import ListView, UpdateView, CreateView
+from django.views.generic import ListView, UpdateView, CreateView, DetailView
 
 from wkhtmltopdf.views import PDFTemplateView
 from core.utils import generic_search
 from core.mixins import PermissionRequiredMixin
+from core.views import CreateObjFromContext
 
-from inventario.models import UnidadMedida, Producto, Entradas
+from inventario.models import UnidadMedida, Producto, Entrada, CancelEntrada
 from inventario.forms import (
-    ProductoForm, UnidadMedidaForm, EntradasForm, EntradaCanceladaForm
+    ProductoForm, UnidadMedidaForm, EntradaForm, EntradaCanceladaForm,
+    CancelEntradaForm
 )
 
 
@@ -81,6 +83,7 @@ class UnidadCreate(PermissionRequiredMixin, CreateView):
     permission_required = 'inventario.add_unidadmedida'
 
 
+# TODO: remove this.
 class BaseProductoUpdate(CreateView):
     '''
     Base class that contains methods in common for updating Producto class.
@@ -101,35 +104,76 @@ class BaseProductoUpdate(CreateView):
         return initial
 
 
-class EntradasList(PermissionRequiredMixin, ListView):
-    model = Entradas
+class EntradaList(PermissionRequiredMixin, ListView):
+    model = Entrada
     queryset = model.objects.filter(is_cancelled=False)
     context_object_name = 'entradas'
     template_name = 'entradas.html'
-    permission_required = 'inventario.add_entradas'
+    permission_required = 'inventario.add_entrada'
 
 
 class EntradaDetail(PermissionRequiredMixin, UpdateView):
     form_class = EntradaCanceladaForm
-    model = Entradas
+    model = Entrada
     context_object_name = 'entrada'
     template_name = 'entrada-detail.html'
-    success_url = reverse_lazy('inventario:entradas')
-    permission_required = 'inventario.change_entradas'
+    permission_required = 'inventario.change_entrada'
+
+    def get_success_url(self):
+        url = reverse('inventario:entrada_cancel', kwargs=self.kwargs)
+        return url
 
 
-class EntradasProducto(PermissionRequiredMixin, BaseProductoUpdate):
-    form_class = EntradasForm
+# TODO: update this.
+class EntradaProducto(PermissionRequiredMixin, BaseProductoUpdate):
+    form_class = EntradaForm
     template_name = 'entrada.html'
     success_url = reverse_lazy('inventario:producto_list')
-    permission_required = 'inventario:change_producto'
+    permission_required = 'inventario.change_producto'
 
     def form_valid(self, form):
         producto = self.get_producto()
         porciones = int(form.cleaned_data.get('porciones'))
         producto.agregar(porciones)
         producto.save()
-        return super(EntradasProducto, self).form_valid(form)
+        return super(EntradaProducto, self).form_valid(form)
+
+
+class EntradasCancelledList(PermissionRequiredMixin, ListView):
+    model = Entrada
+    queryset = model.objects.filter(is_cancelled=True)
+    context_object_name = 'entradas'
+    template_name = 'entradas-canceladas.html'
+    permission_required = 'inventario.add_cancelentrada'
+
+    def get_context_data(self, **kwargs):
+        context = super(EntradasCancelledList, self).get_context_data(**kwargs)
+        cancelled = CancelEntrada.objects.all()
+        context.update({'cancelentrada': cancelled})
+        return context
+
+
+class EntradaCancel(PermissionRequiredMixin, CreateObjFromContext):
+    form_class = CancelEntradaForm
+    ctx_model = Entrada
+    template_name = 'entrada-cancel.html'
+    success_url = reverse_lazy('inventario:entradas')
+    permission_required = 'inventario.add_cancelentrada'
+    initial_value = 'entrada'
+
+
+class EntradaCancelDetail(PermissionRequiredMixin, DetailView):
+    model = CancelEntrada
+    template_name = 'entradacancel-detail.html'
+    permission_required = 'inventario.add_cancelentrada'
+    context_object_name = 'cancelentrada'
+
+    def get_context_data(self, **kwargs):
+        context = super(EntradaCancelDetail, self).get_context_data(**kwargs)
+        entrada = self.object.entrada
+        print entrada
+        context.update({'entrada': entrada})
+        return context
 
 
 class ProductosPDF(PDFTemplateView):

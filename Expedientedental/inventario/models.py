@@ -2,7 +2,7 @@
 from django.db import models
 from decimal import Decimal
 
-from core.models import TimeStampedModel
+from core.models import TimeStampedModel, CancelledModel
 
 
 class UnidadMedida(models.Model):
@@ -26,15 +26,11 @@ class Producto(TimeStampedModel):
         return u'%s %s' % (self.producto, self.unidad_medida)
 
     def get_stock(self):
-        '''
-        Regresa cantidad disponible.
-        '''
+        ''' Regresa cantidad disponible. '''
         return self.porciones
 
     def in_stock(self):
-        '''
-        Regresa True si esta en stock
-        '''
+        ''' Regresa True si esta en stock. '''
         return self.get_stock() > 0
 
     def precio_unidad(self):
@@ -49,14 +45,22 @@ class Producto(TimeStampedModel):
         return porciones
 
 
-class Entradas(TimeStampedModel):
-    '''
-    modelo de entrada de cantidad en producto(porciones)
-    '''
-    fecha = models.DateTimeField(auto_now=True)
+class Entrada(TimeStampedModel):
+    ''' Entrada de cantidad en producto (porciones) '''
     producto = models.ForeignKey(Producto)
     porciones = models.IntegerField(max_length=5, default=0)
     is_cancelled = models.BooleanField(default=False)
 
     def __unicode__(self):
         return '%s' % self.producto
+
+
+class CancelEntrada(CancelledModel):
+    '''
+    Hereda del modelo abstracto CancelledModel.
+    Agrega relacion con la entrada a cancelar.
+    '''
+    entrada = models.ForeignKey(Entrada)
+
+    def __unicode__(self):
+        return '%s' % self.reason

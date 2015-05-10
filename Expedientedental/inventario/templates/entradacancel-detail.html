@@ -2,8 +2,6 @@
 {% load static from staticfiles %}
 {% load crispy_forms_tags %}
 
-{% block title %}Entrada de Producto{% endblock %}
-
 {% block content %}
 <h2 class="page-header">Entrada de Producto <small class="pull-right"><a href=""><span class="glyphicon glyphicon-print"></span> Imprimir</a></small></h2>
 
@@ -11,7 +9,7 @@
 
   <div class="col-md-6">
 
-    <div class="panel panel-primary">
+    <div class="panel panel-danger">
 
       <div class="panel-heading">
 
@@ -51,19 +49,13 @@
 
     </div><!-- end .panel -->
 
-    <button class="btn btn-danger pull-right" type="button" data-toggle="collapse" data-target="#cancelar">Cancelar</button>
-
   </div><!-- end .col-md-6 -->
 
   <div class="col-md-6">
 
-    <div class="collapse alert alert-danger clearfix" id="cancelar">
+    <h4>Motivo de cancelaci&oacute;n:</h4>
 
-      <p><strong>Seguro que desea cancelar este registro?</strong></p>
-
-      {% crispy form %}
-
-    </div>
+    <p>{{ cancelentrada }}</p>
 
   </div><!-- end .col-md-6 -->
 
