@@ -8,7 +8,7 @@ from crispy_forms.layout import Layout, Fieldset, HTML, Field, ButtonHolder, \
 
 from inventario.models import Producto
 from consumidos.models import Paquete, PaqueteItem, PaqueteConsumido, \
-    PaqueteConsumidoItem
+    PaqueteConsumidoItem, ProductoConsumido
 
 
 class PaqueteForm(forms.ModelForm):
@@ -169,11 +169,7 @@ class PCItemForm(forms.ModelForm):
         instance.paquete_consumido = paquete_consumido
         instance.precio = instance.producto.precioUnidad
         if commit:
-            # Quita la cantidad establecida de inventario
-           # producto = instance.producto
-            #producto.disminuir(instance.cantidad)
-            #producto.save()
-            # Guarda consumido item.
+
             instance.save()
         return instance
 
@@ -196,10 +192,32 @@ class PeticionForm(forms.ModelForm):
         instance.paquete_servicios = self.paquete_servicios
         instance.fecha = dt.date.today()
         instance.paquete = None
-        if commit:
-            instance.save()
+        producto = instance.producto
+        producto.disminuir(instance.cantidad)
+        producto.save()
+        # Guarda consumido item.
+        instance.save()
         return instance
 
 
+class PrConsumidoForm(forms.ModelForm):
+    class Meta:
+        model = ProductoConsumido
+        exclude = ('precio',)
 
+    def __init__(self, *args, **kwargs):
+        super(PrConsumidoForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            HTML("""
+                 <p class="parrafo"> Campos con ( * ) Son Requeridos.</p>
+                 """),
+            Fieldset(
+                '',
+                Field('producto', wrapper_class='col-md-9'),
+                Field('cantidad', wrapper_class='col-md-3'),
+                Field('fecha', wrapper_class='col-md-4'),
 
+                ),
+            ButtonHolder(Submit('save', 'Generar'))
+        )

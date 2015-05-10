@@ -6,13 +6,16 @@ from django.views.generic import UpdateView, ListView, CreateView
 
 from core.utils import generic_search
 
+
 from servicios.models import Servicio
 from consumidos.models import PaqueteConsumido, PaqueteConsumidoItem
 from consumidos.forms import (
-    PaqueteForm, PaqueteConsumidoForm, PCItemForm, PeticionForm)
+    PaqueteForm, PaqueteConsumidoForm, PCItemForm, PeticionForm, PrConsumidoForm 
+    )
 
 
 def paquete_item(request):
+
     if request.method == "POST":
         modelform = PaqueteForm(request.POST)
         if modelform.is_valid():
@@ -104,6 +107,7 @@ class EditPaqueteView(UpdateView):
 class PeticionView(CreateView):
     form_class = PeticionForm
     template_name = 'peticion.html'
+    succes_url = '/'
     servicio = None
 
     def get_form_kwargs(self):
@@ -132,6 +136,12 @@ class PeticionView(CreateView):
     def get_succes_url(self):
         paciente = self.get_servicio().odontograma.paciente
         return reverse('paciente_detail', args=[paciente])
+
+
+class producto_consumido(CreateView):
+    form_class = PrConsumidoForm
+    template_name = 'prconsumido.html'
+    succes_url = '/'
 
 
 def busqueda(request):

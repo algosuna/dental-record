@@ -73,8 +73,7 @@
         <td>{{ procedimiento.tratamiento }}</td>
         <td><span class="label">{{ procedimiento.get_status_display }}</span></td>
         <td><a href="{% url clinica:historial_detail procedimiento.id %}" class="btn btn-default">Ver</a></td>
-        <td><a href="" class="btn btn-default">solicitar materiales</a></td>        
-      </tr>
+
       {% endwith %}
       {% endfor %}
       <!-- TODO: quitar esto y correjir lo de arriba. es por mientras -->
