@@ -67,6 +67,11 @@ class ProductoUpdate(PermissionRequiredMixin, UpdateView):
     success_url = reverse_lazy('inventario:productos')
     permission_required = 'inventario.change_producto'
 
+    def get_context_data(self, **kwargs):
+        context = super(ProductoUpdate, self).get_context_data(**kwargs)
+        context.update({'i_active': 'active'})
+        return context
+
 
 class Unidades(PermissionRequiredMixin, ListView):
     model = UnidadMedida
@@ -83,33 +88,17 @@ class UnidadCreate(PermissionRequiredMixin, CreateView):
     permission_required = 'inventario.add_unidadmedida'
 
 
-# TODO: remove this.
-class BaseProductoUpdate(CreateView):
-    '''
-    Base class that contains methods in common for updating Producto class.
-    '''
-    def get_producto(self):
-        producto = Producto.objects.get(pk=self.kwargs.get('pk'))
-        return producto
-
-    def get_context_data(self, **kwargs):
-        context = super(BaseProductoUpdate, self).get_context_data(**kwargs)
-        context.update({'producto': self.get_producto()})
-        return context
-
-    def get_initial(self):
-        initial = super(BaseProductoUpdate, self).get_initial()
-        initial = initial.copy()
-        initial['producto'] = self.get_producto()
-        return initial
-
-
 class EntradaList(PermissionRequiredMixin, ListView):
     model = Entrada
     queryset = model.objects.filter(is_cancelled=False)
     context_object_name = 'entradas'
     template_name = 'entradas.html'
     permission_required = 'inventario.add_entrada'
+
+    def get_context_data(self, **kwargs):
+        context = super(EntradaList, self).get_context_data(**kwargs)
+        context.update({'e_active': 'active'})
+        return context
 
 
 class EntradaDetail(PermissionRequiredMixin, UpdateView):
@@ -119,20 +108,31 @@ class EntradaDetail(PermissionRequiredMixin, UpdateView):
     template_name = 'entrada-detail.html'
     permission_required = 'inventario.change_entrada'
 
+    def get_context_data(self, **kwargs):
+        context = super(EntradaDetail, self).get_context_data(**kwargs)
+        context.update({'e_active': 'active'})
+        return context
+
     def get_success_url(self):
         url = reverse('inventario:entrada_cancel', kwargs=self.kwargs)
         return url
 
 
-# TODO: update this.
-class EntradaProducto(PermissionRequiredMixin, BaseProductoUpdate):
+class EntradaProducto(PermissionRequiredMixin, CreateObjFromContext):
     form_class = EntradaForm
     template_name = 'entrada.html'
+    ctx_model = Producto
+    initial_value = 'producto'
     success_url = reverse_lazy('inventario:producto_list')
     permission_required = 'inventario.change_producto'
 
+    def get_context_data(self, **kwargs):
+        context = super(EntradaProducto, self).get_context_data(**kwargs)
+        context.update({'i_active': 'active'})
+        return context
+
     def form_valid(self, form):
-        producto = self.get_producto()
+        producto = self.get_obj()
         porciones = int(form.cleaned_data.get('porciones'))
         producto.agregar(porciones)
         producto.save()
@@ -149,7 +149,7 @@ class EntradasCancelledList(PermissionRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super(EntradasCancelledList, self).get_context_data(**kwargs)
         cancelled = CancelEntrada.objects.all()
-        context.update({'cancelentrada': cancelled})
+        context.update({'cancelentrada': cancelled, 'ec_active': 'active'})
         return context
 
 
@@ -157,9 +157,14 @@ class EntradaCancel(PermissionRequiredMixin, CreateObjFromContext):
     form_class = CancelEntradaForm
     ctx_model = Entrada
     template_name = 'entrada-cancel.html'
-    success_url = reverse_lazy('inventario:entradas')
+    success_url = reverse_lazy('inventario:entradas_canceladas')
     permission_required = 'inventario.add_cancelentrada'
     initial_value = 'entrada'
+
+    def get_context_data(self, **kwargs):
+        context = super(EntradaCancel, self).get_context_data(**kwargs)
+        context.update({'e_active': 'active'})
+        return context
 
 
 class EntradaCancelDetail(PermissionRequiredMixin, DetailView):

@@ -32,8 +32,8 @@
     <li class="sidebar-header text-center">Inventario</li>
     <li class="{{ s_active }}"><a href="{% url inventario:producto_search %}"><i class="fa fa-search fa-fw"></i> Buscar Producto</a></li>
     <li class="{{ pc_active }}"><a href="{% url inventario:producto_create %}"><i class="fa fa-plus fa-fw"></i> Agregar Producto</a></li>
-    <li class="{{ pc_active }}"><a href="{% url inventario:entradas %}"><i class="fa fa-list fa-fw"></i> Ver Entradas</a></li>
-    <li class="{{ pc_active }}"><a href="{% url inventario:entradas_canceladas %}"><i class="fa fa-list fa-fw"></i> Ver Entradas Canceladas</a></li>
+    <li class="{{ e_active }}"><a href="{% url inventario:entradas %}"><i class="fa fa-list fa-fw"></i> Ver Entradas</a></li>
+    <li class="{{ ec_active }}"><a href="{% url inventario:entradas_canceladas %}"><i class="fa fa-list fa-fw"></i> Ver Entradas Canceladas</a></li>
     <li class="{{ i_active }}"><a href="{% url inventario:producto_list %}"><i class="fa fa-list fa-fw"></i> Ver Productos</a></li>
     {% endif %}
 
