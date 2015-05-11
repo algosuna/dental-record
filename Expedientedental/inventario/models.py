@@ -14,16 +14,16 @@ class UnidadMedida(models.Model):
 
 
 class Producto(TimeStampedModel):
-    producto = models.CharField(max_length=100, unique=True)
+    nombre = models.CharField(max_length=100, unique=True)
     descripcion = models.TextField(max_length=120)
     unidad_medida = models.ForeignKey(UnidadMedida)
-    precio = models.DecimalField(max_digits=8, decimal_places=2)
-    porciones = models.DecimalField(max_digits=8, decimal_places=2)
-    precioUnidad = models.DecimalField(max_digits=8, decimal_places=2,
-                                       default=Decimal(u'0.00'))
+    porciones = models.IntegerField(max_length=5, default=0)
+    precio_porcion = models.DecimalField(max_digits=8, decimal_places=2,
+                                         default=Decimal(u'0.00'))
+    is_inactive = models.BooleanField(default=False)
 
     def __unicode__(self):
-        return u'%s %s' % (self.producto, self.unidad_medida)
+        return u'%s %s' % (self.nombre, self.unidad_medida)
 
     def get_stock(self):
         ''' Regresa cantidad disponible. '''
@@ -33,12 +33,8 @@ class Producto(TimeStampedModel):
         ''' Regresa True si esta en stock. '''
         return self.get_stock() > 0
 
-    def precio_unidad(self):
-        precioUnidad = self.precio/self.porciones
-        return '%s' % precioUnidad
-
-    def agregar(self, cantidad_a_agregar):
-        self.porciones += cantidad_a_agregar
+    def agregar(self, cantidad):
+        self.porciones += cantidad
 
     def quitar(self, cantidad):
         porciones = self.porciones - cantidad

@@ -1,5 +1,5 @@
 {% extends "dash.html" %}
-{%load static from staticfiles %}
+{% load static from staticfiles %}
 
 {% block content %}
 
@@ -22,8 +22,8 @@
     {% endfor %}
   </tbody>
 </table>
-<a href="{% url inventario:unidad_create %}" class="btn btn-primary pull-right">Registrar Unidad <span class="glyphicon glyphicon-plus"></span></a>
+<a href="{% url inventario:unidad_create %}" class="btn btn-primary pull-right">Registrar Unidad <i class="fa fa-plus fa-fw"></i></a>
 {% else %}
-<p class="lead text-center text-muted">No hay unidades en la base de datos.<br><br><a href="{% url inventario:unidad_create %}" class="btn btn-primary">Registrar Unidad <span class="glyphicon glyphicon-chevron-right"></span></a></p>
+<p class="lead text-center text-muted">No hay unidades en la base de datos.<br><br><a href="{% url inventario:unidad_create %}" class="btn btn-primary">Registrar Unidad <i class="fa fa-chevron-right fa-fw"></i></a></p>
 {% endif %}
 {% endblock content %}

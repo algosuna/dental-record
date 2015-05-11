@@ -14,7 +14,7 @@ from core.views import CreateObjFromContext
 from inventario.models import UnidadMedida, Producto, Entrada, CancelEntrada
 from inventario.forms import (
     ProductoForm, UnidadMedidaForm, EntradaForm, EntradaCanceladaForm,
-    CancelEntradaForm
+    CancelEntradaForm, ProductoUpdateForm
 )
 
 
@@ -51,7 +51,7 @@ class Productos(PermissionRequiredMixin, ListView):
 class ProductoCreate(PermissionRequiredMixin, CreateView):
     form_class = ProductoForm
     template_name = 'producto.html'
-    success_url = reverse_lazy('inventario:productos')
+    success_url = reverse_lazy('inventario:producto_list')
     permission_required = 'inventario.add_producto'
 
     def get_context_data(self, **kwargs):
@@ -61,10 +61,10 @@ class ProductoCreate(PermissionRequiredMixin, CreateView):
 
 
 class ProductoUpdate(PermissionRequiredMixin, UpdateView):
-    form_class = ProductoForm
+    form_class = ProductoUpdateForm
     model = Producto
     template_name = 'producto.html'
-    success_url = reverse_lazy('inventario:productos')
+    success_url = reverse_lazy('inventario:producto_list')
     permission_required = 'inventario.change_producto'
 
     def get_context_data(self, **kwargs):
@@ -79,6 +79,11 @@ class Unidades(PermissionRequiredMixin, ListView):
     template_name = 'unidades.html'
     permission_required = 'inventario.add_unidadmedida'
 
+    def get_context_data(self, **kwargs):
+        context = super(Unidades, self).get_context_data(**kwargs)
+        context.update({'u_active': 'active'})
+        return context
+
 
 class UnidadCreate(PermissionRequiredMixin, CreateView):
     form_class = UnidadMedidaForm
@@ -86,6 +91,11 @@ class UnidadCreate(PermissionRequiredMixin, CreateView):
     template_name = 'unidad.html'
     success_url = reverse_lazy('inventario:unidades')
     permission_required = 'inventario.add_unidadmedida'
+
+    def get_context_data(self, **kwargs):
+        context = super(UnidadCreate, self).get_context_data(**kwargs)
+        context.update({'u_active': 'active'})
+        return context
 
 
 class EntradaList(PermissionRequiredMixin, ListView):

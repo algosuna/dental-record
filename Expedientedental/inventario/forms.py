@@ -17,23 +17,30 @@ class ProductoForm(forms.ModelForm):
         self.helper.layout = Layout(
             Fieldset(
                 '',
-                Field('producto', wrapper_class='col-md-12'),
-                Field('descripcion', wrapper_class='col-md-4'),
-                Field('unidad_medida', wrapper_class='col-md-4'),
-                Field('precio', wrapper_class='col-md-3'),
-                Field('porciones', wrapper_class='col-md-4'),
+                Field('nombre', wrapper_class='col-md-12'),
+                Field('descripcion', wrapper_class='col-md-6'),
+                Field('unidad_medida', wrapper_class='col-md-6'),
+                Field('precio_porcion', wrapper_class='col-md-3'),
+                Field('porciones', wrapper_class='col-md-3'),
             ),
-            ButtonHolder(Submit('save', 'Guardar'))
+            ButtonHolder(
+                Submit('save', 'Guardar',
+                       css_class='normalized-btn pull-right')
+            )
         )
-        self.fields['producto'].label = 'Nombre'
         self.fields['unidad_medida'].label = 'Unidad de Medida'
+        self.fields['precio_porcion'].label = 'Precio por porci&oacute;n'
 
-    def save(self, commit=True):
-        instance = super(ProductoForm, self).save(commit=False)
-        instance.precioUnidad = instance.precio_unidad()
-        if commit:
-            instance.save()
-        return instance
+
+class ProductoUpdateForm(ProductoForm):
+    class Meta:
+        exclude = ('unidad_medida', 'porciones')
+
+    # def save(self, commit=True):
+    #     instance = super(ProductoUpdateForm, self).save(commit=False)
+    #     if commit:
+    #         print instance.producto, instance.unidad_medida, instance.porciones
+    #     return instance
 
 
 class UnidadMedidaForm(forms.ModelForm):
@@ -43,13 +50,18 @@ class UnidadMedidaForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(UnidadMedidaForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
+        self.helper.form_class = 'form-inline'
+        self.helper.field_template = 'bootstrap3/layout/inline_field.html'
         self.helper.layout = Layout(
-            Fieldset(
-                '',
-                Field('unidad', wrapper_class='col-md-4'),
-                Field('prefix', wrapper_class='col-md-4'),
-            ),
-            ButtonHolder(Submit('save', 'Guardar'))
+            'unidad',
+            'prefix',
+            Submit('submit', 'Guardar')
+            # Fieldset(
+            #     '',
+            #     Field('unidad', wrapper_class='col-md-4'),
+            #     Field('prefix', wrapper_class='col-md-4'),
+            # ),
+            # ButtonHolder(Submit('save', 'Guardar'))
         )
         self.fields['prefix'].label = 'Prefijo'
 

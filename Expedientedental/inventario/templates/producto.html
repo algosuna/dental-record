@@ -2,12 +2,23 @@
 {%load static from staticfiles %}
 {% load crispy_forms_tags %}
 
+{% block title %}Producto{% endblock %}
+
+{% block css %}
+<style>
+textarea.form-control {
+    max-width: 100%;
+    height: 105px;
+}
+</style>
+{% endblock %}
+
 {% block content %}
 
   {% if producto.id %}
   <h1>Editar Producto</h1>
   {% else %}
-  <h1> agergar producto</h1>
+  <h1>Agergar Producto</h1>
   {% endif %}
 
   {% crispy form %}
