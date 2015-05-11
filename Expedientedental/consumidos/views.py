@@ -1,4 +1,4 @@
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse, reverse_lazy
 from django.forms.models import modelformset_factory
 from django.shortcuts import (
     render_to_response, render, redirect, get_object_or_404)
@@ -10,52 +10,38 @@ from core.utils import generic_search
 from servicios.models import Servicio
 from consumidos.models import PaqueteConsumido, PaqueteConsumidoItem
 from consumidos.forms import (
-    PaqueteForm, PaqueteConsumidoForm, PCItemForm, PeticionForm,
+    PaqueteForm, AtenderPaqueteForm, PCItemForm, PeticionForm,
     ProductoConsumidoForm)
 
 
-def paquete_item(request):
-
-    if request.method == "POST":
-        modelform = PaqueteForm(request.POST)
-        if modelform.is_valid():
-            modelform.save()
-            return redirect("/tipoPaquete/")
-    else:
-        modelform = PaqueteForm()
-    return render(request, "tipoPaquete.html", {"form": modelform})
-
-
-class paquetec(CreateView):
-    model = PaqueteConsumido
+class PaqueteItem(CreateView):
+    form_class = PaqueteForm
+    template_name = 'armarpaquete.html'
     succes_url = '/'
-    template_name = 'salida_pack.html'
-    form_class = PaqueteConsumidoForm
+
+
+class AtencionPaquete(UpdateView):
+    model = PaqueteConsumido
+    template_name = 'atencion_paquete.html'
+    form_class = AtenderPaqueteForm
     context_object_name = 'pconsumido'
 
-    def get_peticion(self):
-        if self.peticion:
-            return self.peticion
-
-    def get_succes_url(self):
-        return '/'
-
-    def get_context_data(self, **kwargs):
-        context = super(paquetec, self).get_context_data(**kwargs)
-        context.update({'pconsumido': self.peticion()})
-        return context
+    def get_success_url(self):
+        return reverse('consumidos:insumos', kwargs=self.kwargs)
 
 
 def manage_paquetes(request, pk):
     paquete_consumido = get_object_or_404(PaqueteConsumido, pk=pk)
+    print paquete_consumido
     items = paquete_consumido.paqueteconsumidoitem_set.all()
     # initial list para items predeterminados
     initial_list = []
     if not items.exists():
-        initial_list = paquete_consumido.get_item_initials()
+        for item in items:
+            initial_list = item.get_item_initials()
     # agregamos initial para un formulario vacio
-    # initial_list.append({'paquete_consumido': paquete_consumido})
-    # Se usa empty form generada por formset
+            initial_list.append({'paquete_consumidoitem': paquete_consumido,
+                                 'items': items})
     if request.method == 'POST':
         ItemFormset = modelformset_factory(PaqueteConsumidoItem,
                                            form=PCItemForm,
@@ -116,7 +102,6 @@ class peticionesView(ListView):
 class PeticionView(CreateView):
     form_class = PeticionForm
     template_name = 'peticion.html'
-    success_url = '/peticiones/list/'
     servicio = None
 
     def get_form_kwargs(self):
@@ -150,6 +135,7 @@ class PeticionView(CreateView):
 class producto_consumido(CreateView):
     form_class = ProductoConsumidoForm
     template_name = 'prconsumido.html'
+    context_object_name = 'prconsumido'
     succes_url = '/'
 
 

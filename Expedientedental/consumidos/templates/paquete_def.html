@@ -1,4 +1,4 @@
-{% extends "base1.html" %}
+{% extends "dash.html" %}
 
 {% load static from staticfiles %}
 {% load crispy_forms_tags %}
@@ -48,12 +48,17 @@
   </div>
 </div><!-- patient info section -->
 
+{{ paquete }}
+{{paqueteconsumidoitem}}
+
+
+
 
 
 <h2>Lista de Productos </h2>
 <form action="" method="post">{% csrf_token %}
   {{ formset.management_form }}
-  {% for form in formset %}
+  {% for item in items %}
   <div class="formset row">
     {% crispy form %}
   </div>

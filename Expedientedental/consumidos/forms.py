@@ -62,13 +62,13 @@ class PaqueteForm(forms.ModelForm):
         return items
 
 
-class PaqueteConsumidoForm(forms.ModelForm):
+class AtenderPaqueteForm(forms.ModelForm):
     class Meta:
         model = PaqueteConsumido
-        exclude = ('nota',)
+        exclude = ('nota', 'medico', 'fecha', 'paciente', 'servicio',)
 
     def __init__(self, *args, **kwargs):
-        super(PaqueteConsumidoForm, self).__init__(*args, **kwargs)
+        super(AtenderPaqueteForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
 
         self.helper.layout = Layout(
@@ -77,38 +77,9 @@ class PaqueteConsumidoForm(forms.ModelForm):
                  """),
             Fieldset(
                 '',
-                Field('paquete', wrapper_class='col-md-3'),
-                Field('medico', wrapper_class='col-md-3'),
-                Field('fecha', wrapper_class='col-md-3'),
-                Field('paciente', wrapper_class='col-md-3'),
-                Field('servicio', wrapper_class='col-md-2')
+                Field('paquete', wrapper_class='col-md-12'),
                 ),
             )
-        # self.fields['paquete'].label = 'Paquete'
-        self.fields['medico'].label = 'M&eacute;dico'
-        # self.fields['paciente'].label = 'Paciente'
-        self.fields['fecha'].initial = dt.datetime.now()
-
-    def save(self, commit=True):
-        paquete_consumido = super(PaqueteConsumidoForm, self).save(commit)
-        # items = self.save_to_items(paquete_consumido, commit)
-        return paquete_consumido
-
-    # def save_to_items(self, paquete_consumido, commit=True):
-    #     items = []
-    #     paquete = paquete_consumido.paquete
-    #     paquete_items = paquete.paqueteitem_set.all()
-    #     for pitem in paquete_items:
-    #         item = PaqueteConsumidoItem(
-    #             paquete_consumido=paquete_consumido,
-    #             producto=pitem.producto,
-    #             cantidad=pitem.cantidad_producto,
-    #             precio=pitem.producto.precioUnidad
-    #         )
-    #         if commit:
-    #             item.save()
-    #         items.append(item)
-    #     return items
 
 
 class PCItemForm(forms.ModelForm):
