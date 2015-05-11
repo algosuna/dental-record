@@ -130,6 +130,7 @@ class ProcedimientosView(PermissionRequiredMixin, DetailView):
         context.update({'procedimientos': procedimientos,
                         'bitacoras': bitacoras,
                         'p_active': 'active'})
+        return context
 
 
 @permission_required('clinica.add_odontograma')
