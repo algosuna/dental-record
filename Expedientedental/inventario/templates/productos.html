@@ -12,7 +12,6 @@
       <th>Nombre</th>
       <th>Descripcion</th>
       <th>Unidad de medida</th>
-      <th>Precio</th>
       <th>Precio/Unidad</th>
       <th>Existencia</th>
       <th>&nbsp;</th>
@@ -22,11 +21,10 @@
   <tbody>
     {% for producto in productos %}
     <tr>
-      <td>{{ producto.producto }}</td>
+      <td>{{ producto.nombre }}</td>
       <td>{{ producto.descripcion }}</td>
       <td>{{ producto.unidad_medida }}</td>
-      <td>{{ producto.precio }}</td>
-      <td>{{ producto.precioUnidad }}</td>
+      <td>{{ producto.precio_porcion }}</td>
       <td>{{ producto.porciones }}</td>
       <td><a href="{% url inventario:producto_update producto.id %}"><span class="glyphicon glyphicon-pencil"></span></a></td>
       <td><a href="{% url inventario:entradas_producto producto.id %}"><span class="glyphicon glyphicon-plus"></span></a></td>

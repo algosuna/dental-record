@@ -48,6 +48,8 @@
   </div><!-- patient info section -->
 
   <h3 class="page-header">Procedimientos</h3>
+
+  {% if procedimientos %}
   <table class="table table-bordered table-hover">
 
     <thead>
@@ -80,6 +82,10 @@
     </tbody>
 
   </table>
+  {% else %}
+  <p class="lead text-muted text-center">Este paciente no tiene procedimientos.<br>
+  <a href="{% url clinica:odontograma paciente.id %}" class="btn btn-primary">Nuevo Odontograma <i class="fa fa-plus"></i></a></p>
+  {% endif %}
 
 </div>
 
@@ -92,7 +98,7 @@
     {% endfor %}
   {% else %}
   <p class="lead text-muted">No hay odontogramas.</p>
-  <a href="{% url clinica:odontograma paciente.id %}" class="btn btn-primary btn-block">Nuevo Odontograma <span class="glyphicon glyphicon-plus"></i></a>
+  <a href="{% url clinica:odontograma paciente.id %}" class="btn btn-primary btn-block">Nuevo Odontograma <i class="fa fa-plus"></i></a>
   {% endif %}
   </ul>
 </div>

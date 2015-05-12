@@ -4,6 +4,7 @@
 {% block content %}
 <h2 class="page-header">Entradas de Producto</h2>
 
+{% if entradas %}
 <table class="table table-hover">
 
   <thead>
@@ -35,4 +36,7 @@
   </tbody>
 
 </table>
+{% else %}
+<p class="lead text-muted text-center">No hay entradas de producto.</p>
+{% endif %}
 {% endblock content %}

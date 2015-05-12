@@ -2,7 +2,9 @@
 from django import forms
 
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Fieldset, Field, ButtonHolder, Submit
+from crispy_forms.layout import (
+    Layout, Fieldset, Field, ButtonHolder, Submit, HTML,
+)
 
 from inventario.models import Producto, UnidadMedida, Entrada, CancelEntrada
 
@@ -10,6 +12,7 @@ from inventario.models import Producto, UnidadMedida, Entrada, CancelEntrada
 class ProductoForm(forms.ModelForm):
     class Meta:
         model = Producto
+        exclude = 'porciones'
 
     def __init__(self, *args, **kwargs):
         super(ProductoForm, self).__init__(*args, **kwargs)
@@ -18,10 +21,14 @@ class ProductoForm(forms.ModelForm):
             Fieldset(
                 '',
                 Field('nombre', wrapper_class='col-md-12'),
-                Field('descripcion', wrapper_class='col-md-6'),
                 Field('unidad_medida', wrapper_class='col-md-6'),
-                Field('precio_porcion', wrapper_class='col-md-3'),
-                Field('porciones', wrapper_class='col-md-3'),
+                Field('precio_porcion', wrapper_class='col-md-6'),
+                css_class='col-md-6'
+            ),
+            Fieldset(
+                '',
+                'descripcion',
+                css_class='col-md-6'
             ),
             ButtonHolder(
                 Submit('save', 'Guardar',
@@ -32,15 +39,26 @@ class ProductoForm(forms.ModelForm):
         self.fields['precio_porcion'].label = 'Precio por porci&oacute;n'
 
 
-class ProductoUpdateForm(ProductoForm):
+class ProductoUpdateForm(forms.ModelForm):
     class Meta:
+        model = Producto
         exclude = ('unidad_medida', 'porciones')
 
-    # def save(self, commit=True):
-    #     instance = super(ProductoUpdateForm, self).save(commit=False)
-    #     if commit:
-    #         print instance.producto, instance.unidad_medida, instance.porciones
-    #     return instance
+    def __init__(self, *args, **kwargs):
+        super(ProductoUpdateForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            Fieldset(
+                '',
+                Field('nombre', wrapper_class='col-md-6'),
+                Field('precio_porcion', wrapper_class='col-md-6'),
+                Field('descripcion', wrapper_class='col-md-12'),
+                Submit('save', 'Guardar',
+                       css_class='normalized-btn pull-right'),
+                css_class='col-md-8 col-md-offset-2',
+            ),
+        )
+        self.fields['precio_porcion'].label = 'Precio por porci&oacute;n'
 
 
 class UnidadMedidaForm(forms.ModelForm):
@@ -56,12 +74,6 @@ class UnidadMedidaForm(forms.ModelForm):
             'unidad',
             'prefix',
             Submit('submit', 'Guardar')
-            # Fieldset(
-            #     '',
-            #     Field('unidad', wrapper_class='col-md-4'),
-            #     Field('prefix', wrapper_class='col-md-4'),
-            # ),
-            # ButtonHolder(Submit('save', 'Guardar'))
         )
         self.fields['prefix'].label = 'Prefijo'
 
@@ -75,12 +87,12 @@ class EntradaForm(forms.ModelForm):
         super(EntradaForm, self).__init__(*args, **kwargs)
         self.producto = self.initial.get('producto')
         self.helper = FormHelper()
+        self.helper.form_class = 'form-inline'
+        self.helper.field_template = 'bootstrap3/layout/inline_field.html'
         self.helper.layout = Layout(
-            Fieldset(
-                '',
-                Field('porciones', wrapper_class='col-md-2'),
-            ),
-            ButtonHolder(Submit('save', 'Guardar'))
+            HTML('''<p><strong>Ingrese cantidad en porciones.</strong></p>'''),
+            'porciones',
+            Submit('save', 'Guardar')
         )
         self.fields['porciones'].label = ' Agregar Cantidad'
 
