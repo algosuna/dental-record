@@ -10,6 +10,7 @@ from inventario.models import Producto, UnidadMedida, Entrada, CancelEntrada
 class ProductoForm(forms.ModelForm):
     class Meta:
         model = Producto
+        exclude = ['precioUnidad']
 
     def __init__(self, *args, **kwargs):
         super(ProductoForm, self).__init__(*args, **kwargs)

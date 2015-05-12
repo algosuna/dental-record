@@ -51,7 +51,7 @@ class Productos(PermissionRequiredMixin, ListView):
 class ProductoCreate(PermissionRequiredMixin, CreateView):
     form_class = ProductoForm
     template_name = 'producto.html'
-    success_url = reverse_lazy('inventario:productos')
+    success_url = reverse_lazy('inventario:producto_list')
     permission_required = 'inventario.add_producto'
 
     def get_context_data(self, **kwargs):
@@ -64,7 +64,7 @@ class ProductoUpdate(PermissionRequiredMixin, UpdateView):
     form_class = ProductoForm
     model = Producto
     template_name = 'producto.html'
-    success_url = reverse_lazy('inventario:productos')
+    success_url = reverse_lazy('inventario:producto_list')
     permission_required = 'inventario.change_producto'
 
     def get_context_data(self, **kwargs):
