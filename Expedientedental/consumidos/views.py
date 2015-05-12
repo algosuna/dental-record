@@ -111,7 +111,7 @@ class PeticionView(CreateView):
         kwargs.update({
             'medico': odontograma.medico,
             'paciente': odontograma.paciente,
-            'servicio': servicio,  # TODO: cambiar a 'servicio'
+            'servicio': servicio,
             })
         return kwargs
 
@@ -129,7 +129,7 @@ class PeticionView(CreateView):
 
     def get_succes_url(self):
         paciente = self.get_servicio().odontograma.paciente
-        return reverse('paciente_detail', args=[paciente])
+        return reverse('paciente_detail', kargs=[paciente])
 
 
 class producto_consumido(CreateView):
