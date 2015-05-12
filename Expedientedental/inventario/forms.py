@@ -96,6 +96,12 @@ class EntradaCanceladaForm(forms.ModelForm):
         )
         self.fields['is_cancelled'].label = 'Cancelar Entrada'
 
+    def save(self, commit=True):
+        instance = super(EntradaCanceladaForm, self).save(commit=False)
+        if commit:
+            pass
+        return instance
+
 
 class CancelEntradaForm(forms.ModelForm):
     ''' Agrega un motivo de cancelacion y resta la cantidad de la entrada
@@ -115,10 +121,13 @@ class CancelEntradaForm(forms.ModelForm):
     def save(self, commit=True):
         instance = super(CancelEntradaForm, self).save(commit=False)
         instance.entrada = self.entrada
-        cantidad = instance.entrada.porciones
-        producto = instance.entrada.producto
+        entrada = instance.entrada
+        entrada.is_cancelled = True
+        cantidad = entrada.porciones
+        producto = entrada.producto
         producto.porciones = producto.quitar(cantidad)
         if commit:
+            entrada.save()
             producto.save()
             instance.save()
         return instance
