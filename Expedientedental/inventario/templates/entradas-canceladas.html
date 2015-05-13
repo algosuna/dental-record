@@ -1,0 +1,38 @@
+{% extends "dash.html" %}
+{% block title %}Entradas Canceladas{% endblock %}
+
+{% block content %}
+<h2 class="page-header">Cancelaciones de Entradas</h2>
+
+<table class="table table-hover">
+
+  <thead>
+
+    <tr>
+
+      <th>Fecha</th>
+      <th>Producto</th>
+      <th>Cantidad</th>
+      <th>&nbsp;</th>
+
+    </tr>
+
+  </thead>
+
+  <tbody>
+
+    {% for entrada in entradas %}
+    <tr>
+
+      <td>{{ entrada.created_at }}</td>
+      <td>{{ entrada.producto }}</td>
+      <td>{{ entrada.porciones }}</td>
+      <td><a href="{% url inventario:entradacancelada_detail entrada.cancelentrada_set.get.id %}" class="btn btn-default">Ver Entrada</a></td>
+
+    </tr>
+    {% endfor %}
+
+  </tbody>
+
+</table>
+{% endblock content %}

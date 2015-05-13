@@ -1,17 +1,24 @@
 # encoding:utf-8
 from datetime import datetime
 
-from django.core.urlresolvers import reverse_lazy
-from django.shortcuts import render_to_response
-from django.views.generic import ListView, UpdateView, CreateView
+from django.contrib.auth.decorators import permission_required
+from django.core.urlresolvers import reverse_lazy, reverse
+from django.shortcuts import render
+from django.views.generic import ListView, UpdateView, CreateView, DetailView
 
 from wkhtmltopdf.views import PDFTemplateView
 from core.utils import generic_search
+from core.mixins import PermissionRequiredMixin
+from core.views import CreateObjFromContext
 
-from inventario.models import UnidadMedida, Producto
-from inventario.forms import ProductoForm, UnidadMedidaForm, EntradasForm
+from inventario.models import UnidadMedida, Producto, Entrada, CancelEntrada
+from inventario.forms import (
+    ProductoForm, UnidadMedidaForm, EntradaForm, EntradaCanceladaForm,
+    CancelEntradaForm
+)
 
 
+@permission_required('inventario.add_producto')
 def busqueda(request):
     query = 'q'
     MODEL_MAP = {
@@ -23,73 +30,155 @@ def busqueda(request):
     for model, fields in MODEL_MAP.iteritems():
         objects += generic_search(request, model, fields, query)
 
-    return render_to_response('producto-search.html', {'objects': objects,
-                              'search_string': request.GET.get(query, '')})
+    return render(request, 'producto-search.html', {
+        'objects': objects,
+        'search_string': request.GET.get(query, ''),
+        's_active': 'active'})
 
 
-class Productos(ListView):
+class Productos(PermissionRequiredMixin, ListView):
     model = Producto
     context_object_name = 'productos'
     template_name = 'productos.html'
+    permission_required = 'inventario.add_producto'
+
+    def get_context_data(self, **kwargs):
+        context = super(Productos, self).get_context_data(**kwargs)
+        context.update({'i_active': 'active'})
+        return context
 
 
-class ProductoCreate(CreateView):
+class ProductoCreate(PermissionRequiredMixin, CreateView):
     form_class = ProductoForm
     template_name = 'producto.html'
-    success_url = reverse_lazy('inventario:productos')
+    success_url = reverse_lazy('inventario:producto_list')
+    permission_required = 'inventario.add_producto'
+
+    def get_context_data(self, **kwargs):
+        context = super(ProductoCreate, self).get_context_data(**kwargs)
+        context.update({'pc_active': 'active'})
+        return context
 
 
-class ProductoUpdate(UpdateView):
+class ProductoUpdate(PermissionRequiredMixin, UpdateView):
     form_class = ProductoForm
     model = Producto
     template_name = 'producto.html'
-    success_url = reverse_lazy('inventario:productos')
+    success_url = reverse_lazy('inventario:producto_list')
+    permission_required = 'inventario.change_producto'
+
+    def get_context_data(self, **kwargs):
+        context = super(ProductoUpdate, self).get_context_data(**kwargs)
+        context.update({'i_active': 'active'})
+        return context
 
 
-class Unidades(ListView):
+class Unidades(PermissionRequiredMixin, ListView):
     model = UnidadMedida
     context_object_name = 'unidades'
     template_name = 'unidades.html'
+    permission_required = 'inventario.add_unidadmedida'
 
 
-class UnidadCreate(CreateView):
+class UnidadCreate(PermissionRequiredMixin, CreateView):
     form_class = UnidadMedidaForm
     model = UnidadMedida
     template_name = 'unidad.html'
     success_url = reverse_lazy('inventario:unidades')
+    permission_required = 'inventario.add_unidadmedida'
 
 
-class BaseProductoUpdate(CreateView):
-    '''
-    Base class that contains methods in common for updating Producto class.
-    '''
-    def get_producto(self):
-        producto = Producto.objects.get(pk=self.kwargs.get('pk'))
-        return producto
+class EntradaList(PermissionRequiredMixin, ListView):
+    model = Entrada
+    queryset = model.objects.filter(is_cancelled=False)
+    context_object_name = 'entradas'
+    template_name = 'entradas.html'
+    permission_required = 'inventario.add_entrada'
 
     def get_context_data(self, **kwargs):
-        context = super(BaseProductoUpdate, self).get_context_data(**kwargs)
-        context.update({'producto': self.get_producto()})
+        context = super(EntradaList, self).get_context_data(**kwargs)
+        context.update({'e_active': 'active'})
         return context
 
-    def get_initial(self):
-        initial = super(BaseProductoUpdate, self).get_initial()
-        initial = initial.copy()
-        initial['producto'] = self.get_producto()
-        return initial
+
+class EntradaDetail(PermissionRequiredMixin, UpdateView):
+    form_class = EntradaCanceladaForm
+    model = Entrada
+    context_object_name = 'entrada'
+    template_name = 'entrada-detail.html'
+    permission_required = 'inventario.change_entrada'
+
+    def get_context_data(self, **kwargs):
+        context = super(EntradaDetail, self).get_context_data(**kwargs)
+        context.update({'e_active': 'active'})
+        return context
+
+    def get_success_url(self):
+        url = reverse('inventario:entrada_cancel', kwargs=self.kwargs)
+        return url
 
 
-class EntradasProducto(BaseProductoUpdate):
-    form_class = EntradasForm
+class EntradaProducto(PermissionRequiredMixin, CreateObjFromContext):
+    form_class = EntradaForm
     template_name = 'entrada.html'
-    success_url = reverse_lazy('inventario:productos')
+    ctx_model = Producto
+    initial_value = 'producto'
+    success_url = reverse_lazy('inventario:producto_list')
+    permission_required = 'inventario.change_producto'
+
+    def get_context_data(self, **kwargs):
+        context = super(EntradaProducto, self).get_context_data(**kwargs)
+        context.update({'i_active': 'active'})
+        return context
 
     def form_valid(self, form):
-        producto = self.get_producto()
+        producto = self.get_obj()
         porciones = int(form.cleaned_data.get('porciones'))
         producto.agregar(porciones)
         producto.save()
-        return super(EntradasProducto, self).form_valid(form)
+        return super(EntradaProducto, self).form_valid(form)
+
+
+class EntradasCancelledList(PermissionRequiredMixin, ListView):
+    model = Entrada
+    queryset = model.objects.filter(is_cancelled=True)
+    context_object_name = 'entradas'
+    template_name = 'entradas-canceladas.html'
+    permission_required = 'inventario.add_cancelentrada'
+
+    def get_context_data(self, **kwargs):
+        context = super(EntradasCancelledList, self).get_context_data(**kwargs)
+        cancelled = CancelEntrada.objects.all()
+        context.update({'cancelentrada': cancelled, 'ec_active': 'active'})
+        return context
+
+
+class EntradaCancel(PermissionRequiredMixin, CreateObjFromContext):
+    form_class = CancelEntradaForm
+    ctx_model = Entrada
+    template_name = 'entrada-cancel.html'
+    success_url = reverse_lazy('inventario:entradas_canceladas')
+    permission_required = 'inventario.add_cancelentrada'
+    initial_value = 'entrada'
+
+    def get_context_data(self, **kwargs):
+        context = super(EntradaCancel, self).get_context_data(**kwargs)
+        context.update({'e_active': 'active'})
+        return context
+
+
+class EntradaCancelDetail(PermissionRequiredMixin, DetailView):
+    model = CancelEntrada
+    template_name = 'entradacancel-detail.html'
+    permission_required = 'inventario.add_cancelentrada'
+    context_object_name = 'cancelentrada'
+
+    def get_context_data(self, **kwargs):
+        context = super(EntradaCancelDetail, self).get_context_data(**kwargs)
+        entrada = self.object.entrada
+        print entrada
+        context.update({'entrada': entrada})
+        return context
 
 
 class ProductosPDF(PDFTemplateView):

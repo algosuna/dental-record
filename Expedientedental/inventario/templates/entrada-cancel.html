@@ -1,0 +1,46 @@
+{% extends "dash.html" %}
+{% load static from staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block title %}Entrada de Producto{% endblock %}
+
+{% block content %}
+<h2 class="page-header">Cancelar Entrada de Producto <small class="pull-right"><a href=""><span class="glyphicon glyphicon-print"></span> Imprimir</a></small></h2>
+
+  <h4>{{ entrada }}</h4>
+
+  <table class="table">
+
+    <thead>
+
+      <tr>
+
+        <th>Fecha</th>
+        <th>Porciones</th>
+
+      </tr>
+
+    </thead>
+
+    <tbody>
+
+      <tr>
+
+        <td>{{ entrada.created_at }}</td>
+        <td>{{ entrada.porciones }}</td>
+
+      </tr>
+
+    </tbody>
+
+  </table>
+
+  <div class="alert alert-info clearfix">
+
+    <p><strong>Por favor detalle el motivo de cancelacion para completar el proceso.</strong></p>
+    <p>Las porciones en esta entrada ({{ entrada.porciones }}) se le restar&aacute;n al total disponible en inventario ({{ entrada.producto.porciones }}).</p>
+
+    {% crispy form %}
+
+  </div>
+{% endblock content %}
