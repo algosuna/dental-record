@@ -1,0 +1,79 @@
+{% extends "dash.html" %}
+{%load static from staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block title %}Producto{% endblock %}
+
+{% block css %}
+<style>
+textarea.form-control {
+    max-width: 100%;
+    height: 105px;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+
+<h1>Producto</h1>
+
+<div class="panel panel-primary">
+
+  <div class="panel-heading">
+
+    <h4 class="panel-title">{{ producto.nombre }}</h4>
+
+  </div>
+
+  <div class="panel-body">
+
+    <table class="table">
+
+      <thead>
+
+        <tr>
+
+          <th>Fecha</th>
+          <th>Descripcion</th>
+          <th>Unidad de Medida</th>
+          <th>Porciones</th>
+          <th>Precio</th>
+
+        </tr>
+
+      </thead>
+
+      <tbody>
+
+        <tr>
+
+          <td>{{ producto.created_at }}</td>
+          <td>{{ producto.descripcion }}</td>
+          <td>{{ producto.unidad_medida }}</td>
+          <td>{{ producto.porciones }}</td>
+          <td>{{ producto.precio_porcion }}</td>
+
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div><!-- end .panel-body -->
+
+</div><!-- end .panel -->
+
+<div class="clearfix">
+    <button class="btn btn-danger pull-right" type="button" data-toggle="collapse" data-target="#desactivar">Desactivar</button>
+</div>
+
+<div class="collapse alert alert-danger clearfix col-md-8 col-md-offset-2" id="desactivar">
+
+  <p><strong>Seguro que desea desactivar este producto?</strong></p>
+
+  {% crispy form %}
+
+</div>
+
+{% endblock content %}
+

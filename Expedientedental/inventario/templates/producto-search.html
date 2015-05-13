@@ -27,7 +27,7 @@
 
       {% for producto in objects %}
       <tr>
-        <td class="padded">{{ producto.producto }}</td>
+        <td class="padded">{{ producto.nombre }}</td>
         <td class="padded">{{ producto.porciones }}</td>
         <td class="text-right"><a href="{% url inventario:entradas_producto producto.id %}" class="btn btn-info">Registrar Entrada</a></td>
       </tr>

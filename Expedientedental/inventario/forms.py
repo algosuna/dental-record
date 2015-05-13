@@ -6,7 +6,9 @@ from crispy_forms.layout import (
     Layout, Fieldset, Field, ButtonHolder, Submit, HTML,
 )
 
-from inventario.models import Producto, UnidadMedida, Entrada, CancelEntrada
+from inventario.models import (
+    Producto, UnidadMedida, Entrada, CancelEntrada, CancelProducto
+)
 
 
 class ProductoForm(forms.ModelForm):
@@ -59,6 +61,54 @@ class ProductoUpdateForm(forms.ModelForm):
             ),
         )
         self.fields['precio_porcion'].label = 'Precio por porci&oacute;n'
+
+
+class ProductoCancelForm(forms.ModelForm):
+    class Meta:
+        model = Producto
+        exclude = [
+            'unidad_medida', 'porciones', 'precio_porcion', 'descripcion',
+            'nombre'
+        ]
+
+    def __init__(self, *args, **kwargs):
+        super(ProductoCancelForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_class = 'form-inline'
+        self.helper.field_template = 'bootstrap3/layout/inline_field.html'
+        self.helper.layout = Layout(
+            'is_inactive',
+            Submit('submit', 'Desactivar', css_class='pull-right')
+        )
+        self.fields['is_inactive'].label = 'Desactivar Entrada'
+
+    def save(self, commit=True):
+        instance = super(ProductoCancelForm, self).save(commit=False)
+        if commit:
+            pass
+        return instance
+
+
+class CancelProductoForm(forms.ModelForm):
+    class Meta:
+        model = CancelProducto
+        exclude = 'producto'
+
+    def __init__(self, *args, **kwargs):
+        super(CancelProductoForm, self).__init__(*args, **kwargs)
+        self.producto = self.initial.get('producto')
+        self.helper = FormHelper()
+        self.helper.add_input(Submit('submit', 'Guardar'))
+        self.fields['reason'].label = 'Motivo de Desactivaci&oacute;n'
+
+    def save(self, commit=True):
+        instance = super(CancelProductoForm, self).save(commit=False)
+        instance.producto = self.producto
+        instance.producto.is_inactive = True
+        if commit:
+            instance.producto.save()
+            instance.save()
+        return instance
 
 
 class UnidadMedidaForm(forms.ModelForm):

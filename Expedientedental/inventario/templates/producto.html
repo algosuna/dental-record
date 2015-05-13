@@ -15,13 +15,13 @@ textarea.form-control {
 
 {% block content %}
 
-  {% if producto.id %}
-  <h1>Editar Producto</h1>
-  {% else %}
-  <h1>Agergar Producto</h1>
-  {% endif %}
+{% if producto.id %}
+<h1>Editar Producto</h1>
+{% else %}
+<h1>Agergar Producto</h1>
+{% endif %}
 
-  {% crispy form %}
+{% crispy form %}
 
 {% endblock content %}
 

@@ -11,10 +11,13 @@ from core.utils import generic_search
 from core.mixins import PermissionRequiredMixin
 from core.views import CreateObjFromContext
 
-from inventario.models import UnidadMedida, Producto, Entrada, CancelEntrada
+from inventario.models import (
+    UnidadMedida, Producto, Entrada, CancelEntrada, CancelProducto
+)
 from inventario.forms import (
     ProductoForm, UnidadMedidaForm, EntradaForm, EntradaCanceladaForm,
-    CancelEntradaForm, ProductoUpdateForm
+    CancelEntradaForm, ProductoUpdateForm, ProductoCancelForm,
+    CancelProductoForm
 )
 
 
@@ -22,7 +25,7 @@ from inventario.forms import (
 def busqueda(request):
     query = 'q'
     MODEL_MAP = {
-        Producto: ['producto', 'porciones'],
+        Producto: ['nombre', 'porciones'],
     }
 
     objects = []
@@ -38,6 +41,7 @@ def busqueda(request):
 
 class Productos(PermissionRequiredMixin, ListView):
     model = Producto
+    queryset = model.objects.filter(is_inactive=False)
     context_object_name = 'productos'
     template_name = 'productos.html'
     permission_required = 'inventario.add_producto'
@@ -70,6 +74,65 @@ class ProductoUpdate(PermissionRequiredMixin, UpdateView):
     def get_context_data(self, **kwargs):
         context = super(ProductoUpdate, self).get_context_data(**kwargs)
         context.update({'i_active': 'active'})
+        return context
+
+
+class ProductoDetail(PermissionRequiredMixin, UpdateView):
+    form_class = ProductoCancelForm
+    model = Producto
+    # context_object_name = 'producto'
+    template_name = 'producto-detail.html'
+    permission_required = 'inventario.add_producto'
+
+    def get_context_data(self, **kwargs):
+        context = super(ProductoDetail, self).get_context_data(**kwargs)
+        context.update({'i_active': 'active'})
+        return context
+
+    def get_success_url(self):
+        url = reverse('inventario:producto_cancel', kwargs=self.kwargs)
+        return url
+
+
+class ProductoCancel(PermissionRequiredMixin, CreateObjFromContext):
+    form_class = CancelProductoForm
+    ctx_model = Producto
+    template_name = 'producto-cancel.html'
+    success_url = reverse_lazy('inventario:productos_cancelados')
+    permission_required = 'inventario.add_cancelproducto'
+    initial_value = 'producto'
+
+    def get_context_data(self, **kwargs):
+        context = super(ProductoCancel, self).get_context_data(**kwargs)
+        context.update({'pde_active': 'active'})
+        return context
+
+
+class ProductosCancelled(PermissionRequiredMixin, ListView):
+    model = Producto
+    queryset = model.objects.filter(is_inactive=True)
+    context_object_name = 'productos'
+    template_name = 'productos-cancelados.html'
+    permission_required = 'inventario.add_cancelproducto'
+
+    def get_context_data(self, **kwargs):
+        context = super(ProductosCancelled, self).get_context_data(**kwargs)
+        context.update({'pde_active': 'active'})
+        return context
+
+
+class ProductoCancelDetail(PermissionRequiredMixin, DetailView):
+    model = CancelProducto
+    context_object_name = 'cancelproducto'
+    template_name = 'productocancel-detail.html'
+    permission_required = 'inventario.add_cancelproducto'
+
+    def get_context_data(self, **kwargs):
+        context = super(ProductoCancelDetail, self).get_context_data(**kwargs)
+        context.update({
+            'producto': self.object.producto,
+            'pde_active': 'active'
+            })
         return context
 
 
@@ -186,7 +249,6 @@ class EntradaCancelDetail(PermissionRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super(EntradaCancelDetail, self).get_context_data(**kwargs)
         entrada = self.object.entrada
-        print entrada
         context.update({'entrada': entrada})
         return context
 

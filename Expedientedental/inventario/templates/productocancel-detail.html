@@ -1,0 +1,77 @@
+{% extends "dash.html" %}
+{% load static from staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block title %}Producto{% endblock %}
+
+{% block content %}
+<h2 class="page-header">Producto <small class="pull-right"><a href=""><span class="glyphicon glyphicon-print"></span> Imprimir</a></small></h2>
+
+<div class="row">
+
+  <div class="col-md-9">
+
+    <div class="panel panel-danger">
+
+      <div class="panel-heading">
+
+        <h4 class="panel-title">{{ producto }}</h4>
+
+      </div>
+
+      <div class="panel-body">
+
+        <table class="table">
+
+          <thead>
+
+            <tr>
+
+              <th>Fecha</th>
+              <th>Descripcion</th>
+              <th>Unidad de Medida</th>
+              <th>Porciones*</th>
+              <th>Precio</th>
+
+            </tr>
+
+          </thead>
+
+          <tbody>
+
+            <tr>
+
+              <td>{{ producto.created_at }}</td>
+              <td>{{ producto.descripcion }}</td>
+              <td>{{ producto.unidad_medida }}</td>
+              <td>{{ producto.porciones }}</td>
+              <td>{{ producto.precio_porcion }}</td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div><!-- end .panel-body -->
+
+    </div><!-- end .panel -->
+
+    <p>* Porciones registradas en el sistema al momento de la desactivaci&oacute;n.</p>
+
+  </div><!-- end .col-md-6 -->
+
+  <div class="col-md-3">
+
+    <h4>Fecha de desactivaci&oacute;n:</h4>
+
+    <p>{{ cancelproducto.created_at }}</p>
+
+    <h4>Motivo:</h4>
+
+    <p>{{ cancelproducto }}</p>
+
+  </div><!-- end .col-md-6 -->
+
+</div><!-- end .row -->
+{% endblock content %}

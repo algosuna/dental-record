@@ -41,6 +41,17 @@ class Producto(TimeStampedModel):
         return porciones
 
 
+class CancelProducto(CancelledModel):
+    '''
+    Hereda del modelo abstracto CancelledModel.
+    Agrega relacion con el producto a cancelar.
+    '''
+    producto = models.ForeignKey(Producto)
+
+    def __unicode__(self):
+        return '%s' % self.reason
+
+
 class Entrada(TimeStampedModel):
     ''' Entrada de cantidad en producto (porciones) '''
     producto = models.ForeignKey(Producto)
