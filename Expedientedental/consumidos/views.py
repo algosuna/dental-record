@@ -8,7 +8,7 @@ from core.utils import generic_search
 
 
 from servicios.models import Servicio
-from consumidos.models import PaqueteConsumido, PaqueteConsumidoItem
+from consumidos.models import PaqueteConsumido, PaqueteConsumidoItem, Paquete
 from consumidos.forms import (
     PaqueteForm, AtenderPaqueteForm, PCItemForm, PeticionForm,
     ProductoConsumidoForm)
@@ -16,8 +16,14 @@ from consumidos.forms import (
 
 class PaqueteItem(CreateView):
     form_class = PaqueteForm
-    template_name = 'armarpaquete.html'
-    succes_url = '/'
+    template_name = 'crear_paquete.html'
+    succes_url = '/paquetes/list/'
+
+
+class Paquetes(ListView):
+    model = Paquete
+    context_object_name = 'paquetes'
+    template_name = 'paquetes.html'
 
 
 class AtencionPaquete(UpdateView):

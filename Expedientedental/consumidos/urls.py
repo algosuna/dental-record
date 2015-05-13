@@ -1,15 +1,17 @@
 from django.conf.urls import patterns, url
 from consumidos.views import (
     AtencionPaquete, manage_paquetes, PeticionView,
-    peticionesView, producto_consumido, PaqueteItem)
+    peticionesView, producto_consumido, PaqueteItem, Paquetes)
 
 urlpatterns = patterns(
     'consumidos.views',
 
     url(r'^paquete/(?P<pk>\d+)/peticion/create/$',
-        PeticionView.as_view(), name='peticion'),
+        PeticionView.as_view(), name='request'),
 
-    url(r'^tipoPaquete/$', PaqueteItem.as_view(), name='armar'),
+    url(r'^paquete/agroup/new/$', PaqueteItem.as_view(), name='armar'),
+
+    url(r'^paquetes/list/$', Paquetes.as_view(), name='paquetes_list'),
 
     url(r'^peticiones/list/$', peticionesView .as_view(),
         name='request_list'),

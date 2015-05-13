@@ -99,8 +99,10 @@ class PCItemForm(forms.ModelForm):
             # readonly no te desabilita select.
 
             # Cambiamos widget a readonly input (talvez?)
-            self.fields['producto_select'] = forms.ChoiceField() ### METER VALOR DEFAULT
-            producto_sel_field = Field('producto_select', wrapper_class='col-md-5')
+            self.fields['producto_select'] = forms.ChoiceField()
+            # METER VALOR DEFAULT
+            producto_sel_field = Field(
+                'producto_select', wrapper_class='col-md-5')
             producto_sel_field.attrs['disabled'] = 'disabled'
             # producto_field_hidden = Hidden('producto',self.get_producto())
             self.fields['producto'].widget = forms.TextInput()
@@ -163,7 +165,7 @@ class PeticionForm(forms.ModelForm):
         instance.servicio = self.servicio
         instance.fecha = dt.date.today()
         instance.paquete = None
-        
+
         # Guarda consumido item.
         instance.save()
         return instance
