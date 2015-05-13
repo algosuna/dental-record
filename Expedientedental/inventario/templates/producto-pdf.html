@@ -1,0 +1,64 @@
+{% extends "basePDF.html" %}
+
+{% block title %}Detalle de Producto{% endblock %}
+
+{% block content %}
+<p>Fecha: <strong>{{ fecha }}</strong> Hora: <strong>{{ hora }}</strong></p>
+
+<div class="panel panel-default">
+
+  <div class="panel-heading">
+
+    <h4 class="panel-title">{{ producto.nombre }}</h4>
+
+  </div>
+
+  <div class="panel-body">
+
+    <table class="table">
+
+        <tr>
+
+          <th>Fecha*</th>
+          <td>{{ producto.created_at }}</td>
+
+        </tr>
+
+        <tr>
+
+          <th>Descripcion</th>
+          <td>{{ producto.descripcion }}</td>
+
+        </tr>
+
+        <tr>
+
+          <th>Unidad de Medida</th>
+          <td>{{ producto.unidad_medida }}</td>
+
+        </tr>
+
+        <tr>
+
+          <th>Porciones</th>
+          <td>{{ producto.porciones }}</td>
+
+        </tr>
+
+        <tr>
+
+          <th>Precio</th>
+          <td>{{ producto.precio_porcion }}</td>
+
+        </tr>
+
+    </table>
+
+  </div><!-- end .panel-body -->
+
+  <div class="panel-footer">
+      <p>*Fecha en que fue dado de alta.</p>
+  </div>
+
+</div><!-- end .panel -->
+{% endblock content %}

@@ -30,7 +30,7 @@
     </table>
 </div><!-- patient info section -->
 
-<h2 class="page-header">Presupuesto <small>#{{ cotizacion.id }}</small> <a href="{% url cotizacion:pdf cotizacion.id %}" class="btn button-second pull-right"> Imprimir Forma  <span class=" glyphicon glyphicon-print"></span></a></h2>
+<h2 class="page-header">Presupuesto <small>#{{ cotizacion.id }}</small> <a href="{% url cotizacion:pdf cotizacion.id %}" class="btn button-second pull-right"> Imprimir<span class=" glyphicon glyphicon-print"></span></a></h2>
 {% if cotizacion.total == cotizacion.total_procesado %}
 <!-- TODO: make the landing page work. -->
 <div class="alert alert-warning"><strong>Nota:</strong> Esta cotizacion ya ha sido procesada. Para ver los pagos, haga click <a href="{% url pagos:pagos_paciente paciente.id %}?q={{ cotizacion.id }}">aqu&iacute;</a>.</div>

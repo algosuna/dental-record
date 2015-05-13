@@ -3,7 +3,7 @@ from datetime import datetime
 
 from django.contrib.auth.decorators import permission_required
 from django.core.urlresolvers import reverse_lazy, reverse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, UpdateView, CreateView, DetailView
 
 from wkhtmltopdf.views import PDFTemplateView
@@ -265,4 +265,25 @@ class ProductosPDF(PDFTemplateView):
         context['productos'] = Producto.objects.order_by('producto__producto')
         context['fecha'] = datetime.now().strftime("%d/%m/%Y")
         context['hora'] = datetime.now().strftime("%I:%M %p")
+        return context
+
+
+class ProductoPdf(PDFTemplateView):
+    filename = 'producto.pdf'
+    template_name = 'producto-pdf.html'
+    cmd_options = {
+        'margin-top': 13,
+    }
+    model = Producto
+
+    def get_obj(self):
+        obj = self.model.objects.get(pk=self.kwargs.get('pk'))
+        return obj
+
+    def get_context_data(self, **kwargs):
+        context = super(ProductoPdf, self).get_context_data(**kwargs)
+        producto = self.get_obj()
+        fecha = datetime.now().strftime("%d/%m/%Y")
+        hora = datetime.now().strftime("%I:%M %p")
+        context.update({'producto': producto, 'fecha': fecha, 'hora': hora})
         return context
