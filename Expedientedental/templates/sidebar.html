@@ -28,6 +28,16 @@
     <li class="{{ r_active }}"><a href="{% url pagos:pagos_list %}"><i class="fa fa-list fa-fw"></i> Pagos Realizados</a></li>
     {% endif %}
 
+    {% if perms.consumidos.add_consumidos %}
+    <li class="sidebar-header text-center">Inventario:Consumidos</li>
+    <li class="{{ cpl_active }}"><a href="{% url  consumidos:request_list %}"><i class="fa fa-inbox fa-fw"></i> Peticiones en Espera</a></li>
+    <li class="{{ cai_active }}"><a href="{% url  consumidos:armar %}"><i class="fa fa-tasks fa-fw"></i> Crear Paquete </a></li>
+    <li class="{{ cpli_active }}"><a href="{% url  consumidos:paquetes_list %}"><i class="fa fa-th-list fa-fw"></i> Paquetes </a></li>
+    <li class="{{ cprc_active }}"><a href="{% url consumidos:prconsumido %}"><i class="fa fa-asterisk fa-fw"></i>Mat.Extra</a></li>
+    
+
+   {% endif %}
+
     {% if perms.inventario.add_producto %}
     <li class="sidebar-header text-center">Inventario</li>
     <li class="{{ s_active }}"><a href="{% url inventario:producto_search %}"><i class="fa fa-search fa-fw"></i> Buscar Producto</a></li>
@@ -38,7 +48,6 @@
     <li class="{{ ec_active }}"><a href="{% url inventario:entradas_canceladas %}"><i class="fa fa-times fa-fw"></i> Entradas Canceladas</a></li>
     <li class="{{ u_active }}"><a href="{% url inventario:unidades %}"><i class="fa fa-dashboard fa-fw"></i> Unidades de Medida</a></li>
     {% endif %}
-
   </ul>
 
 </div><!-- end .sidebar -->

@@ -1,4 +1,4 @@
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse, reverse_lazy
 from django.forms.models import modelformset_factory
 from django.shortcuts import (
     render_to_response, render, redirect, get_object_or_404)
@@ -8,45 +8,46 @@ from core.utils import generic_search
 
 
 from servicios.models import Servicio
-from consumidos.models import PaqueteConsumido, PaqueteConsumidoItem
+from consumidos.models import PaqueteConsumido, PaqueteConsumidoItem, Paquete
 from consumidos.forms import (
-    PaqueteForm, PaqueteConsumidoForm, PCItemForm, PeticionForm, PrConsumidoForm 
-    )
+    PaqueteForm, AtenderPaqueteForm, PCItemForm, PeticionForm,
+    ProductoConsumidoForm)
 
 
-def paquete_item(request):
-
-    if request.method == "POST":
-        modelform = PaqueteForm(request.POST)
-        if modelform.is_valid():
-            modelform.save()
-            return redirect("/tipoPaquete/")
-    else:
-        modelform = PaqueteForm()
-    return render(request, "tipoPaquete.html", {"form": modelform})
+class PaqueteItem(CreateView):
+    form_class = PaqueteForm
+    template_name = 'crear_paquete.html'
+    succes_url = '/paquetes/list/'
 
 
-def paquetec(request):
-    if request.method == "POST":
-        modelform = PaqueteConsumidoForm(request.POST)
-        if modelform.is_valid():
-            modelform.save()
-            return redirect('/pendientes/')
-    else:
-        modelform = PaqueteConsumidoForm()
-    return render(request, "salida_pack.html", {"form": modelform})
+class Paquetes(ListView):
+    model = Paquete
+    context_object_name = 'paquetes'
+    template_name = 'paquetes.html'
+
+
+class AtencionPaquete(UpdateView):
+    model = PaqueteConsumido
+    template_name = 'atencion_paquete.html'
+    form_class = AtenderPaqueteForm
+    context_object_name = 'pconsumido'
+
+    def get_success_url(self):
+        return reverse('consumidos:insumos', kwargs=self.kwargs)
 
 
 def manage_paquetes(request, pk):
     paquete_consumido = get_object_or_404(PaqueteConsumido, pk=pk)
+    print paquete_consumido
     items = paquete_consumido.paqueteconsumidoitem_set.all()
     # initial list para items predeterminados
     initial_list = []
     if not items.exists():
-        initial_list = paquete_consumido.get_item_initials()
+        for item in items:
+            initial_list = item.get_item_initials()
     # agregamos initial para un formulario vacio
-    # initial_list.append({'paquete_consumido': paquete_consumido})
-    # Se usa empty form generada por formset
+            initial_list.append({'paquete_consumidoitem': paquete_consumido,
+                                 'items': items})
     if request.method == 'POST':
         ItemFormset = modelformset_factory(PaqueteConsumidoItem,
                                            form=PCItemForm,
@@ -75,13 +76,6 @@ def manage_paquetes(request, pk):
     return render(request, 'paquete_def.html', context)
 
 
-class Pending(ListView):
-
-    model = PaqueteConsumido
-    context_object_name = 'paquetes'
-    template_name = 'pendingorders.html'
-
-
 class suplied(ListView):
     model = PaqueteConsumidoItem
     context_object_name = 'consumidos'
@@ -104,10 +98,16 @@ class EditPaqueteView(UpdateView):
         return context
 
 
+class peticionesView(ListView):
+    model = PaqueteConsumido
+    form_class = PeticionForm
+    context_object_name = 'peticiones'
+    template_name = 'peticiones.html'
+
+
 class PeticionView(CreateView):
     form_class = PeticionForm
     template_name = 'peticion.html'
-    succes_url = '/'
     servicio = None
 
     def get_form_kwargs(self):
@@ -117,7 +117,7 @@ class PeticionView(CreateView):
         kwargs.update({
             'medico': odontograma.medico,
             'paciente': odontograma.paciente,
-            'paquete_servicios': servicio,  # TODO: cambiar a 'servicio'
+            'servicio': servicio,
             })
         return kwargs
 
@@ -135,12 +135,13 @@ class PeticionView(CreateView):
 
     def get_succes_url(self):
         paciente = self.get_servicio().odontograma.paciente
-        return reverse('paciente_detail', args=[paciente])
+        return reverse('paciente_detail', kargs=[paciente])
 
 
 class producto_consumido(CreateView):
-    form_class = PrConsumidoForm
+    form_class = ProductoConsumidoForm
     template_name = 'prconsumido.html'
+    context_object_name = 'prconsumido'
     succes_url = '/'
 
 
