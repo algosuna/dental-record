@@ -2,7 +2,7 @@
 {%load static from staticfiles %}
 
 {% block content %}
-<h2 class="page-header">Peticiones realizadas</h2>
+<h2 class="page-header">Peticiones </h2>
 
 {% if peticiones %}
 <table class="table table-hover">
@@ -24,7 +24,7 @@
       <td>{{ peticion.medico }}</td>
       <td>{{ peticion.paciente }}</td>
       <td>{{ peticion.fecha }}</td>
-      <td><a href="/paquetes/" class="btn btn-default">solicitar materiales</a></td>
+      <td><a href="/paquetes/{{peticion.id}}/" class="btn btn-default">Atender</a></td>
       
     </tr>
     {% endfor %}

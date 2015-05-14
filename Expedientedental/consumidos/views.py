@@ -40,6 +40,7 @@ def manage_paquetes(request, pk):
     paquete_consumido = get_object_or_404(PaqueteConsumido, pk=pk)
     print paquete_consumido
     items = paquete_consumido.paqueteconsumidoitem_set.all()
+    print items
     # initial list para items predeterminados
     initial_list = []
     if not items.exists():
@@ -135,7 +136,7 @@ class PeticionView(CreateView):
 
     def get_succes_url(self):
         paciente = self.get_servicio().odontograma.paciente
-        return reverse('paciente_detail', kargs=[paciente])
+        return reverse('consumidos:pconsumido', args=[paciente])
 
 
 class producto_consumido(CreateView):

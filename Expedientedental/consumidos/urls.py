@@ -7,7 +7,7 @@ urlpatterns = patterns(
     'consumidos.views',
 
     url(r'^paquete/(?P<pk>\d+)/peticion/create/$',
-        PeticionView.as_view(), name='request'),
+        PeticionView.as_view(), name='peticion'),
 
     url(r'^paquete/agroup/new/$', PaqueteItem.as_view(), name='armar'),
 
