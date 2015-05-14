@@ -288,3 +288,39 @@ class ProductoPdf(PDFTemplateView):
         hora = datetime.now().strftime("%I:%M %p")
         context.update({'producto': producto, 'fecha': fecha, 'hora': hora})
         return context
+
+
+class EntradasPDF(PDFTemplateView):
+    filename = 'entradas.pdf'
+    template_name = 'entradas-pdf.html'
+    cmd_options = {
+        'margin-top': 13,
+    }
+
+    def get_context_data(self, **kwargs):
+        context = super(EntradasPDF, self).get_context_data(**kwargs)
+        entradas = Entrada.objects.filter(
+            is_cancelled=False).order_by('-updated_at')
+        fecha = datetime.now().strftime("%d/%m/%Y")
+        hora = datetime.now().strftime("%I:%M %p")
+        context.update({'entradas': entradas, 'fecha': fecha, 'hora': hora})
+        return context
+
+
+class EntradasCanceladasPDF(PDFTemplateView):
+    filename = 'entradas-canceladas.pdf'
+    template_name = 'entradas-pdf.html'
+    cmd_options = {
+        'margin-top': 13,
+    }
+
+    def get_context_data(self, **kwargs):
+        context = super(EntradasCanceladasPDF, self).get_context_data(**kwargs)
+        entradas = Entrada.objects.filter(
+            is_cancelled=True).order_by('-updated_at')
+        fecha = datetime.now().strftime("%d/%m/%Y")
+        hora = datetime.now().strftime("%I:%M %p")
+        context.update({
+            'entradas': entradas, 'fecha': fecha, 'hora': hora, 'c': 'c'
+        })
+        return context

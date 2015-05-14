@@ -1,0 +1,41 @@
+{% extends "basePDF.html" %}
+{%load static from staticfiles %}
+
+{% block title %}Entradas de Productos a Inventario{% if c %} Canceladas{% endif %}{% endblock title %}
+
+{% block content %}
+
+<p>Fecha: <strong>{{ fecha }}</strong>  Hora: <strong>{{ hora }}</strong></p>
+
+<table class="table table-hover">
+
+  <thead>
+
+    <tr>
+
+      <th>Fecha</th>
+      <th>Producto</th>
+      <th>Cantidad</th>
+
+    </tr>
+
+  </thead>
+
+  <tbody>
+
+    {% for entrada in entradas %}
+    <tr>
+
+      <td>{{ entrada.created_at }}</td>
+      <td>{{ entrada.producto }}</td>
+      <td>{{ entrada.porciones }}</td>
+
+    </tr>
+    {% endfor %}
+
+  </tbody>
+
+</table>
+
+{% endblock content %}
+

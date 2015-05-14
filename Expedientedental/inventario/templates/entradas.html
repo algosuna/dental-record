@@ -2,7 +2,7 @@
 {% block title %}Entradas{% endblock %}
 
 {% block content %}
-<h2 class="page-header">Entradas de Producto</h2>
+<h2 class="page-header">Entradas de Producto <small class="pull-right"><a href="{% url inventario:entradas_pdf %}"><span class="glyphicon glyphicon-print"></span> Imprimir</a></small></h2>
 
 {% if entradas %}
 <table class="table table-hover">
