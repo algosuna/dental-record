@@ -3,7 +3,7 @@ from inventario.views import (
     Unidades, EntradaProducto, busqueda, Productos, UnidadCreate,
     ProductoUpdate, ProductoCreate, EntradaList, EntradaDetail, EntradaCancel,
     EntradasCancelledList, EntradaCancelDetail, ProductoDetail, ProductoCancel,
-    ProductosCancelled, ProductoCancelDetail, ProductoPdf
+    ProductosCancelled, ProductoCancelDetail, ProductoPdf, ProductosPDF
 )
 
 
@@ -41,6 +41,8 @@ urlpatterns = patterns(
     url(r'^unidades/$', Unidades.as_view(), name='unidades'),
     url(r'^unidad/new/$', UnidadCreate.as_view(), name='unidad_create'),
 
+    url(r'^productos/pdf/$',
+        ProductosPDF.as_view(), name='productos_pdf'),
     url(r'^producto/(?P<pk>\d+)/pdf/$',
         ProductoPdf.as_view(), name='producto_pdf'),
 

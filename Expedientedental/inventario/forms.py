@@ -80,7 +80,7 @@ class ProductoCancelForm(forms.ModelForm):
             'is_inactive',
             Submit('submit', 'Desactivar', css_class='pull-right')
         )
-        self.fields['is_inactive'].label = 'Desactivar Entrada'
+        self.fields['is_inactive'].label = 'Desactivar Producto'
 
     def save(self, commit=True):
         instance = super(ProductoCancelForm, self).save(commit=False)

@@ -255,16 +255,17 @@ class EntradaCancelDetail(PermissionRequiredMixin, DetailView):
 
 class ProductosPDF(PDFTemplateView):
     filename = 'productos.pdf'
-    template_name = 'productos_pdf.html'
+    template_name = 'productos-pdf.html'
     cmd_options = {
         'margin-top': 13,
     }
 
-    def get_context_data(self, **kargs):
-        context = super(ProductosPDF).get_context_data(**kargs)
-        context['productos'] = Producto.objects.order_by('producto__producto')
-        context['fecha'] = datetime.now().strftime("%d/%m/%Y")
-        context['hora'] = datetime.now().strftime("%I:%M %p")
+    def get_context_data(self, **kwargs):
+        context = super(ProductosPDF, self).get_context_data(**kwargs)
+        productos = Producto.objects.order_by('-updated_at')
+        fecha = datetime.now().strftime("%d/%m/%Y")
+        hora = datetime.now().strftime("%I:%M %p")
+        context.update({'productos': productos, 'fecha': fecha, 'hora': hora})
         return context
 
 

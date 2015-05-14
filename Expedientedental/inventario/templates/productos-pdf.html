@@ -1,0 +1,36 @@
+{% extends "basePDF.html" %}
+{%load static from staticfiles %}
+
+{% block title %}Lista de Productos en Inventario{% endblock title %}
+
+{% block content %}
+
+<p>Fecha: <strong>{{ fecha }}</strong>  Hora: <strong>{{ hora }}</strong></p>
+
+<table class="table table-condensed">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Fecha de modificaci&oacute;n</th>
+      <th>Unidad de medida</th>
+      <th>Precio/Unidad</th>
+      <th>Status</th>
+      <th>Existencia</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for producto in productos %}
+    <tr>
+      <td>{{ producto.nombre }}</td>
+      <td>{{ producto.updated_at }}</td>
+      <td>{{ producto.unidad_medida }}</td>
+      <td>{{ producto.precio_porcion }}</td>
+      <td><span class="label label-{% if producto.is_inactive %}danger">Inactivo{% else %}success">Activo{% endif %}</span></td>
+      <td>{{ producto.porciones }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock content %}
+
