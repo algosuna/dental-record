@@ -93,35 +93,45 @@ class PCItemForm(forms.ModelForm):
         self.helper.form_tag = False
         self.helper.disable_csrf = True
 
-        producto_sel_field = None
-        if self.get_producto() is not None:
-            # Usar disabled provoca que no se incluya en POST
-            # readonly no te desabilita select.
+        # producto_sel_field = None
+        # if self.get_producto() is not None:
+        #     # Usar disabled provoca que no se incluya en POST
+        #     # readonly no te desabilita select.
 
-            # Cambiamos widget a readonly input (talvez?)
-            self.fields['producto_select'] = forms.ChoiceField()
-            # METER VALOR DEFAULT
-            producto_sel_field = Field(
-                'producto_select', wrapper_class='col-md-5')
-            producto_sel_field.attrs['disabled'] = 'disabled'
-            # producto_field_hidden = Hidden('producto',self.get_producto())
-            self.fields['producto'].widget = forms.TextInput()
-            producto_field = Field('producto', type='hidden')
-            # producto_field = Field('producto',
-            #                        readonly='readonly',
-            #                        wrapper_class='col-md-5')
-        else:
-            producto_field = Field('producto', wrapper_class='col-md-5')
-        args = [producto_field]
+        #     # Cambiamos widget a readonly input (talvez?)
+        #     self.fields['producto_select'] = forms.ChoiceField()
+        #     # METER VALOR DEFAULT
+        #     producto_sel_field = Field(
+        #         'producto_select', wrapper_class='col-md-5')
+        #     producto_sel_field.attrs['disabled'] = 'disabled'
+        #     # producto_field_hidden = Hidden('producto',self.get_producto())
+        #     self.fields['producto'].widget = forms.TextInput()
+        #     producto_field = Field('producto', type='hidden')
+        #     # producto_field = Field('producto',
+        #     #                        readonly='readonly',
+        #     #                        wrapper_class='col-md-5')
+        # else:
+        #     producto_field = Field('producto', wrapper_class='col-md-5')
+        # args = [producto_field]
 
-        if producto_sel_field is not None:
-            args.append(producto_sel_field)
-        args.append(Field('cantidad', wrapper_class='col-md-5'))
+        # if producto_sel_field is not None:
+        #     args.append(producto_sel_field)
+        # args.append(Field('cantidad', wrapper_class='col-md-5'))
+
+        # self.helper.layout = Layout(
+        #     # Field('paquete_consumido'), type='hidden'), # NO ES NECESARIO
+        #     *args
+        # )
 
         self.helper.layout = Layout(
-            # Field('paquete_consumido'), type='hidden'), # NO ES NECESARIO
-            *args
+            Field('producto', wrapper_class='col-md-5'),
+            Field('cantidad', wrapper_class='col-md-5')
         )
+        producto = self.get_producto()
+        if producto:
+            self.fields['producto'] = forms.ModelChoiceField(
+                queryset=Producto.objects.filter(pk=producto.pk),
+                empty_label=None)
 
     # def get_paquete_consumido(self):
     #     return self.get_initial_or_instance('paquete_consumido')
@@ -134,7 +144,11 @@ class PCItemForm(forms.ModelForm):
         try:
             value = self.instance.get(key)
         except:
-            value = self.initial.get(key)
+            value_pk = self.initial.get(key)
+            try:
+                value = Producto.objects.get(pk=value_pk)
+            except Producto.DoesNotExist:
+                pass
         return value
 
     def save(self, paquete_consumido, commit=True):

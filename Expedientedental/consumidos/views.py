@@ -38,17 +38,19 @@ class AtencionPaquete(UpdateView):
 
 def manage_paquetes(request, pk):
     paquete_consumido = get_object_or_404(PaqueteConsumido, pk=pk)
-    print paquete_consumido
+    # print paquete_consumido
     items = paquete_consumido.paqueteconsumidoitem_set.all()
-    print items
+    # print items
+
     # initial list para items predeterminados
     initial_list = []
     if not items.exists():
-        for item in items:
-            initial_list = item.get_item_initials()
+        initial_list = paquete_consumido.get_item_initials()
+        # for item in items:
+            # initial_list = item.get_item_initials()
     # agregamos initial para un formulario vacio
-            initial_list.append({'paquete_consumidoitem': paquete_consumido,
-                                 'items': items})
+            # initial_list.append({'paquete_consumidoitem': paquete_consumido,
+            #                      'items': items})
     if request.method == 'POST':
         ItemFormset = modelformset_factory(PaqueteConsumidoItem,
                                            form=PCItemForm,
@@ -65,7 +67,7 @@ def manage_paquetes(request, pk):
             print formset.errors
 
     else:
-        print 'len', len(initial_list)
+        # print 'len', len(initial_list)
         ItemFormset = modelformset_factory(PaqueteConsumidoItem,
                                            form=PCItemForm,
                                            extra=len(initial_list))
@@ -74,6 +76,7 @@ def manage_paquetes(request, pk):
         'formset': formset,
         'paquete': paquete_consumido
     }
+    print formset.empty_form
     return render(request, 'paquete_def.html', context)
 
 

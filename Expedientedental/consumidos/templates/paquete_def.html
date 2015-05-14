@@ -48,17 +48,11 @@
   </div>
 </div><!-- patient info section -->
 
-{{ paquete }}
-{{paqueteconsumidoitem}}
-
-
-
-
 
 <h2>Lista de Productos </h2>
 <form action="" method="post">{% csrf_token %}
   {{ formset.management_form }}
-  {% for item in items %}
+  {% for form in formset %}
   <div class="formset row">
     {% crispy form %}
   </div>
