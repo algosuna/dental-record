@@ -3,7 +3,7 @@ from datetime import datetime
 
 from django.contrib.auth.decorators import permission_required
 from django.core.urlresolvers import reverse_lazy, reverse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 from django.views.generic import ListView, UpdateView, CreateView, DetailView
 
 from wkhtmltopdf.views import PDFTemplateView

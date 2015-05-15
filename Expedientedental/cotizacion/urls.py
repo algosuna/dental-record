@@ -16,6 +16,6 @@ urlpatterns += patterns(
 
 
     # reporte de cotizacion
-    url(r'^(?P<cotizacion_id>\d+)/pdf/$',
+    url(r'^(?P<pk>\d+)/pdf/$',
         CotizacionPDF.as_view(), name='pdf'),
 )

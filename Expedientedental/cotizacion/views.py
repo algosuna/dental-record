@@ -17,6 +17,16 @@ class CotizacionList(PermissionRequiredMixin, ListView):
     template_name = 'cotizaciones.html'
     permission_required = 'cotizacion.add_cotizacion'
 
+    def get_queryset(self):
+        cotizaciones = Cotizacion.objects.all()
+        odontogramas_procesados_pk = []
+        for c in cotizaciones:
+            if c.total() == c.total_procesado():
+                odontogramas_procesados_pk.append(c.odontograma.pk)
+        odontogramas = self.model.objects.exclude(
+            pk__in=odontogramas_procesados_pk)
+        return odontogramas
+
     def get_context_data(self, **kwargs):
         context = super(CotizacionList, self).get_context_data(**kwargs)
         context.update({'c_active': 'active'})
@@ -46,7 +56,6 @@ def cotizacion_detail(request, odontograma_id):
 
     total = cotizacion.total_aceptado()
     paciente = cotizacion.odontograma.paciente
-    c_active = 'active'
 
     return render(request, 'cotizacion.html', {
                   'cotizacion': cotizacion,
@@ -54,25 +63,21 @@ def cotizacion_detail(request, odontograma_id):
                   'items': items,
                   'formset': formset,
                   'total': total,
-                  'c_active': c_active
-                  })
+                  'c_active': 'active'})
 
 
 class CotizacionPDF(PDFTemplateView):
     filename = 'cotizacion.pdf'
     template_name = 'printit.html'
-    cmd_options = {
-        'margin-top': 13,
-    }
 
     def get_context_data(self, **kwargs):
         context = super(CotizacionPDF, self).get_context_data(**kwargs)
-        self.cotizacion_id = int(kwargs.get('cotizacion_id'))
-        cotizacion = get_object_or_404(Cotizacion, pk=self.cotizacion_id)
+        cotizacion = Cotizacion.objects.get(pk=self.kwargs.get('pk'))
         items = cotizacion.cotizacionitem_set.all()
-        context['cotizacion'] = cotizacion
-        context['items'] = items
-        context['fecha'] = datetime.now().strftime("%d/%m/%Y")
-        context['hora'] = datetime.now().strftime("%I:%M %p")
+        fecha = datetime.now().strftime("%d/%m/%Y")
+        hora = datetime.now().strftime("%I:%M %p")
+        context.update({
+            'cotizacion': cotizacion, 'items': items,
+            'fecha': fecha, 'hora': hora
+        })
         return context
-  
