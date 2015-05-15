@@ -1,0 +1,53 @@
+{% extends "basePDF.html" %}
+
+{% block title %}Detalle de Entrada{% if cancelentrada %} Cancelada {% endif %}{% endblock %}
+
+{% block content %}
+<p>Fecha: <strong>{{ fecha }}</strong> Hora: <strong>{{ hora }}</strong></p>
+
+<div class="panel panel-default">
+
+  <div class="panel-heading">
+
+    <h4 class="panel-title">{{ entrada }}</h4>
+
+  </div>
+
+  <div class="panel-body">
+
+    <table class="table">
+
+      <tr>
+
+        <th>Fecha{% if cancelentrada %}*{% endif %}</th>
+        <td>{{ entrada.updated_at }}</td>
+
+      </tr>
+
+      <tr>
+
+        <th>Porciones</th>
+        <td>{{ entrada.porciones }}</td>
+
+      </tr>
+
+      {% if cancelentrada %}
+      <tr>
+
+        <th>Motivo</th>
+        <td>{{ cancelentrada.reason }}</td>
+
+      </tr>
+      {% endif %}
+
+    </table>
+
+  </div><!-- end .panel-body -->
+  {% if cancelentrada %}
+  <div class="panel-footer">
+    <p>*Fecha en que la entrada fue cancelada.</p>
+  </div>
+  {% endif %}
+
+</div><!-- end .panel -->
+{% endblock content %}
