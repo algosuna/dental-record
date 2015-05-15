@@ -106,6 +106,7 @@ class EditPaqueteView(UpdateView):
 class peticionesView(ListView):
     model = PaqueteConsumido
     form_class = PeticionForm
+    queryset = PaqueteConsumido.objects.filter(status='E')
     context_object_name = 'peticiones'
     template_name = 'peticiones.html'
 

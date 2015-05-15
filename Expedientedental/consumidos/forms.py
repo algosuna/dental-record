@@ -67,6 +67,8 @@ class AtenderPaqueteForm(forms.ModelForm):
         model = PaqueteConsumido
         exclude = ('nota', 'medico', 'fecha', 'paciente', 'servicio',)
 
+    is_approved = forms.BooleanField(required=False)
+
     def __init__(self, *args, **kwargs):
         super(AtenderPaqueteForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
@@ -78,6 +80,7 @@ class AtenderPaqueteForm(forms.ModelForm):
             Fieldset(
                 '',
                 Field('paquete', wrapper_class='col-md-12'),
+                Field('status', wrapper_class='col-md-8')
                 ),
             )
 
@@ -125,7 +128,7 @@ class PCItemForm(forms.ModelForm):
 
         self.helper.layout = Layout(
             Field('producto', wrapper_class='col-md-5'),
-            Field('cantidad', wrapper_class='col-md-5'),
+            Field('cantidad', wrapper_class='col-md-2'),
             Field('status', wrapper_class='col-md-2'),
         )
         producto = self.get_producto()
@@ -200,10 +203,10 @@ class ProductoConsumidoForm(forms.ModelForm):
                  """),
             Fieldset(
                 '',
-                Field('producto', wrapper_class='col-md-9'),
-                Field('cantidad', wrapper_class='col-md-3'),
-                Field('fecha', wrapper_class='col-md-4'),
-
+                Field('medico', wrapper_class='col-md-5'),
+                Field('paciente', wrapper_class='col-md-5'),
+                Field('producto', wrapper_class='col-md-5'),
+                Field('cantidad', wrapper_class='col-md-1'),
                 ),
             ButtonHolder(Submit('save', 'Generar'))
-            )
+)

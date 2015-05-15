@@ -27,6 +27,8 @@ class PaqueteConsumido(models.Model):
     servicio = models.ForeignKey('servicios.Servicio', null=True)
     fecha = models.DateTimeField()
     nota = models.TextField(blank=True)
+    status = models.CharField(max_length=1, blank=True, default='En Espera',
+                              choices=(('En Espera', 'En Espera'), ('Completado', 'Entregado')))
 
     def __unicode__(self):
         return '%s %s' % (self.paquete, self.medico)
@@ -51,8 +53,6 @@ class PaqueteConsumidoItem(models.Model):
     producto = models.ForeignKey('inventario.Producto')
     cantidad = models.DecimalField(max_digits=8, decimal_places=2)
     precio = models.DecimalField(max_digits=8, decimal_places=2)
-    status = models.CharField(max_length=1, blank=True, default='E',
-                              choices=(('E', 'En Espera'), ('S', 'Entregado')))
 
     def __unicode__(self):
         return u'%s %s %s ' % (self.producto, self.cantidad, self.precio)
@@ -62,6 +62,8 @@ class PaqueteConsumidoItem(models.Model):
 
 
 class ProductoConsumido(models.Model):
+    medico = models.ForeignKey(Medico)
+    paciente = models.ForeignKey(Paciente)
     producto = models.ForeignKey('inventario.Producto')
     cantidad = models.DecimalField(max_digits=8, decimal_places=2)
     fecha = models.DateTimeField()
