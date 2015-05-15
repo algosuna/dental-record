@@ -3,6 +3,7 @@ from django.forms.models import modelformset_factory
 from django.shortcuts import (
     render_to_response, render, redirect, get_object_or_404)
 from django.views.generic import UpdateView, ListView, CreateView
+from wkhtmltopdf.views import PDFTemplateView
 
 from core.utils import generic_search
 
@@ -83,7 +84,7 @@ def manage_paquetes(request, pk):
 class suplied(ListView):
     model = PaqueteConsumidoItem
     context_object_name = 'consumidos'
-    template_name = 'delivered_pacages.html'
+    template_name = 'entregados.html'
 
 
 class EditPaqueteView(UpdateView):

@@ -51,6 +51,8 @@ class PaqueteConsumidoItem(models.Model):
     producto = models.ForeignKey('inventario.Producto')
     cantidad = models.DecimalField(max_digits=8, decimal_places=2)
     precio = models.DecimalField(max_digits=8, decimal_places=2)
+    status = models.CharField(max_length=1, blank=True, default='E',
+                              choices=(('E', 'En Espera'), ('S', 'Entregado')))
 
     def __unicode__(self):
         return u'%s %s %s ' % (self.producto, self.cantidad, self.precio)

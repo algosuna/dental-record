@@ -125,7 +125,8 @@ class PCItemForm(forms.ModelForm):
 
         self.helper.layout = Layout(
             Field('producto', wrapper_class='col-md-5'),
-            Field('cantidad', wrapper_class='col-md-5')
+            Field('cantidad', wrapper_class='col-md-5'),
+            Field('status', wrapper_class='col-md-2'),
         )
         producto = self.get_producto()
         if producto:
@@ -137,7 +138,7 @@ class PCItemForm(forms.ModelForm):
     #     return self.get_initial_or_instance('paquete_consumido')
 
     def get_producto(self):
-        return self.get_initial_or_instance('producto')
+        return self.get_initial_or_instance(Producto)
 
     def get_initial_or_instance(self, key):
         value = None

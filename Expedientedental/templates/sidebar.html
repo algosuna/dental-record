@@ -34,6 +34,8 @@
     <li class="{{ cai_active }}"><a href="{% url  consumidos:armar %}"><i class="fa fa-tasks fa-fw"></i> Crear Paquete </a></li>
     <li class="{{ cpli_active }}"><a href="{% url  consumidos:paquetes_list %}"><i class="fa fa-th-list fa-fw"></i> Paquetes </a></li>
     <li class="{{ cprc_active }}"><a href="{% url consumidos:prconsumido %}"><i class="fa fa-asterisk fa-fw"></i>Mat.Extra</a></li>
+    <li class="{{ clps_active }}"><a href="{% url consumidos:completados %}"><i class="fa fa-th-large fa-fw"></i>Peticiones Atendidas</a></li>
+   
     
 
    {% endif %}
