@@ -4,7 +4,8 @@ from inventario.views import (
     ProductoUpdate, ProductoCreate, EntradaList, EntradaDetail, EntradaCancel,
     EntradasCancelledList, EntradaCancelDetail, ProductoDetail, ProductoCancel,
     ProductosCancelled, ProductoCancelDetail, ProductoPdf, ProductosPDF,
-    EntradasPDF, EntradasCanceladasPDF
+    EntradasPDF, EntradasCanceladasPDF, EntradaCanceladaPDF, EntradaPDF,
+    ProductoCanceladoPDF
 )
 
 
@@ -47,10 +48,17 @@ urlpatterns = patterns(
     url(r'^producto/(?P<pk>\d+)/pdf/$',
         ProductoPdf.as_view(), name='producto_pdf'),
 
+    url(r'^producto/cancelled/(?P<pk>\d+)/pdf/$',
+        ProductoCanceladoPDF.as_view(), name='producto_cancelado_pdf'),
+
     url(r'^entradas/pdf/$',
         EntradasPDF.as_view(), name='entradas_pdf'),
+    url(r'^entrada/(?P<pk>\d+)/pdf/$',
+        EntradaPDF.as_view(), name='entrada_pdf'),
 
     url(r'^entradas/cancelled/pdf/$',
         EntradasCanceladasPDF.as_view(), name='entradas_canceladas_pdf'),
+    url(r'^entrada/cancelled/(?P<pk>\d+)/pdf/$',
+        EntradaCanceladaPDF.as_view(), name='entrada_cancelada_pdf'),
 
 )

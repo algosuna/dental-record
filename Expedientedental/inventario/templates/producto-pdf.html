@@ -17,40 +17,56 @@
 
     <table class="table">
 
-        <tr>
+      <tr>
 
-          <th>Fecha*</th>
-          <td>{{ producto.created_at }}</td>
+        <th>Fecha*</th>
+        <td>{{ producto.created_at }}</td>
 
-        </tr>
+      </tr>
 
-        <tr>
+      <tr>
 
-          <th>Descripcion</th>
-          <td>{{ producto.descripcion }}</td>
+        <th>Descripcion</th>
+        <td>{{ producto.descripcion }}</td>
 
-        </tr>
+      </tr>
 
-        <tr>
+      <tr>
 
-          <th>Unidad de Medida</th>
-          <td>{{ producto.unidad_medida }}</td>
+        <th>Unidad de Medida</th>
+        <td>{{ producto.unidad_medida }}</td>
 
-        </tr>
+      </tr>
 
-        <tr>
+      <tr>
 
-          <th>Porciones</th>
-          <td>{{ producto.porciones }}</td>
+        <th>Porciones{% if cancelproducto %}**{% endif %}</th>
+        <td>{{ producto.porciones }}</td>
 
-        </tr>
+      </tr>
 
-        <tr>
+      <tr>
 
-          <th>Precio</th>
-          <td>{{ producto.precio_porcion }}</td>
+        <th>Precio</th>
+        <td>{{ producto.precio_porcion }}</td>
 
-        </tr>
+      </tr>
+
+      {% if cancelproducto %}
+      <tr>
+
+        <th>Fecha desactivado</th>
+        <td>{{ cancelproducto.created_at }}</td>
+
+      </tr>
+
+      <tr>
+
+        <th>Motivo de desactivaci&oacute;n</th>
+        <td>{{ cancelproducto.reason }}</td>
+
+      </tr>
+      {% endif %}
 
     </table>
 
@@ -58,6 +74,7 @@
 
   <div class="panel-footer">
       <p>*Fecha en que fue dado de alta.</p>
+      <p>**Porciones en la base de datos al momento de la desactivaci&oacute;n.</p>
   </div>
 
 </div><!-- end .panel -->

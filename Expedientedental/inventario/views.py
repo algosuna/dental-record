@@ -249,16 +249,13 @@ class EntradaCancelDetail(PermissionRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super(EntradaCancelDetail, self).get_context_data(**kwargs)
         entrada = self.object.entrada
-        context.update({'entrada': entrada})
+        context.update({'entrada': entrada, 'ec_active': 'active'})
         return context
 
 
 class ProductosPDF(PDFTemplateView):
     filename = 'productos.pdf'
     template_name = 'productos-pdf.html'
-    cmd_options = {
-        'margin-top': 13,
-    }
 
     def get_context_data(self, **kwargs):
         context = super(ProductosPDF, self).get_context_data(**kwargs)
@@ -272,21 +269,29 @@ class ProductosPDF(PDFTemplateView):
 class ProductoPdf(PDFTemplateView):
     filename = 'producto.pdf'
     template_name = 'producto-pdf.html'
-    cmd_options = {
-        'margin-top': 13,
-    }
-    model = Producto
-
-    def get_obj(self):
-        obj = self.model.objects.get(pk=self.kwargs.get('pk'))
-        return obj
 
     def get_context_data(self, **kwargs):
         context = super(ProductoPdf, self).get_context_data(**kwargs)
-        producto = self.get_obj()
+        producto = Producto.objects.get(pk=self.kwargs.get('pk'))
         fecha = datetime.now().strftime("%d/%m/%Y")
         hora = datetime.now().strftime("%I:%M %p")
         context.update({'producto': producto, 'fecha': fecha, 'hora': hora})
+        return context
+
+
+class ProductoCanceladoPDF(PDFTemplateView):
+    filename = 'producto-cancelado.pdf'
+    template_name = 'producto-pdf.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ProductoCanceladoPDF, self).get_context_data(**kwargs)
+        producto = Producto.objects.get(pk=self.kwargs.get('pk'))
+        cancelproducto = producto.cancelproducto_set.get()
+        fecha = datetime.now().strftime("%d/%m/%Y")
+        hora = datetime.now().strftime("%I:%M %p")
+        context.update({
+            'producto': producto, 'cancelproducto': cancelproducto,
+            'fecha': fecha, 'hora': hora})
         return context
 
 
@@ -307,6 +312,19 @@ class EntradasPDF(PDFTemplateView):
         return context
 
 
+class EntradaPDF(PDFTemplateView):
+    filename = 'entrada.pdf'
+    template_name = 'entrada-pdf.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(EntradaPDF, self).get_context_data(**kwargs)
+        entrada = Entrada.objects.get(pk=self.kwargs.get('pk'))
+        fecha = datetime.now().strftime("%d/%m/%Y")
+        hora = datetime.now().strftime("%I:%M %p")
+        context.update({'entrada': entrada, 'fecha': fecha, 'hora': hora})
+        return context
+
+
 class EntradasCanceladasPDF(PDFTemplateView):
     filename = 'entradas-canceladas.pdf'
     template_name = 'entradas-pdf.html'
@@ -322,5 +340,22 @@ class EntradasCanceladasPDF(PDFTemplateView):
         hora = datetime.now().strftime("%I:%M %p")
         context.update({
             'entradas': entradas, 'fecha': fecha, 'hora': hora, 'c': 'c'
+        })
+        return context
+
+
+class EntradaCanceladaPDF(PDFTemplateView):
+    filename = 'entrada-cancelada.pdf'
+    template_name = 'entrada-pdf.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(EntradaCanceladaPDF, self).get_context_data(**kwargs)
+        cancelentrada = CancelEntrada.objects.get(pk=self.kwargs.get('pk'))
+        entrada = cancelentrada.entrada
+        fecha = datetime.now().strftime("%d/%m/%Y")
+        hora = datetime.now().strftime("%I:%M %p")
+        context.update({
+            'cancelentrada': cancelentrada, 'entrada': entrada,
+            'fecha': fecha, 'hora': hora
         })
         return context
