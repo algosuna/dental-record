@@ -1,42 +1,38 @@
 # encoding: utf-8
 from os.path import splitext
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Grupo(models.Model):
-    """The name and number which a patient belongs to."""
-
+    '''The name and number which a patient belongs to.'''
     nombre = models.CharField(max_length=50)
     numero = models.CharField(max_length=10)
 
     def __unicode__(self):
-        grupo = "%s - %s" % (self.numero, self.nombre)
+        grupo = '%s - %s' % (self.numero, self.nombre)
         return grupo
 
 
 class Medico(models.Model):
-
-    nombre = models.CharField(max_length=40)
-    apellidoPaterno = models.CharField(max_length=30)
-    apellidoMaterno = models.CharField(max_length=30)
-    nombreUsuario = models.CharField(max_length=30)
-    licenciaMedica = models.CharField(max_length=30)
-    universidadEgreso = models.CharField(max_length=70)
-    rfc = models.CharField(max_length=15)
-    licenciaDeEspecialidad = models.CharField(max_length=30)
-    cedulaEstatal = models.CharField(max_length=40)
+    user = models.ForeignKey(User, unique=True)
+    mothers_last_name = models.CharField(max_length=30, blank=True)
+    universidad_egreso = models.CharField(max_length=70)
+    licencia_medica = models.CharField(max_length=30)
     especialidad = models.CharField(max_length=40)
-    telefono = models.CharField(max_length=20)
-    correoElectronico = models.EmailField(max_length=50)
+    licencia_especialidad = models.CharField(max_length=30)
+    cedula_estatal = models.CharField(max_length=40)
+    rfc = models.CharField(max_length=15)
     direccion = models.CharField(max_length=70)
-    codigoPostal = models.IntegerField(max_length=5)
+    ciudad = models.CharField(max_length=30)
     estado = models.CharField(max_length=30)
-    Ciudad = models.CharField(max_length=30)
+    codigo_postal = models.IntegerField(max_length=5)
+    telefono = models.CharField(max_length=20)
 
     def __unicode__(self):
-        nombreCompleto = "%s %s %s" % (
-            self.nombre, self.apellidoPaterno, self.apellidoMaterno)
-        return nombreCompleto
+        nombre = '%s %s %s' % (
+            self.first_name, self.last_name, self.mothers_last_name)
+        return nombre
 
 
 class Paciente(models.Model):
@@ -71,12 +67,12 @@ class Paciente(models.Model):
     telefono = models.CharField(max_length=20)
 
     def nombre_completo(self):
-        nombreCompleto = "%s %s %s" % (
+        nombreCompleto = '%s %s %s' % (
             self.nombre, self.apellidoPaterno, self.apellidoMaterno)
         return nombreCompleto
 
     def imagen_nombre(self):
-        nombre = "%s-%s" % (self.apellidoPaterno, self.nombre)
+        nombre = '%s-%s' % (self.apellidoPaterno, self.nombre)
         return nombre
 
     def __unicode__(self):

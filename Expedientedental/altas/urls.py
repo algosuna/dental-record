@@ -1,10 +1,11 @@
 from django.conf.urls import patterns, url
-from altas.views import GrupoNewView, GruposView, GrupoUpdateView, Medicos,\
-    MedicoCreate, MedicoUpdate, TratamientoNewView, TratamientoUpdateView,\
-    TratamientosView, Pacientes, PacienteUpdate, PacienteCreate,\
-    EvaluacionNewView, EvaluacionUpdateView, EvaluacionesView,\
-    TratamientoPreventivoNewView, TratamientoPreventivoUpdateView,\
-    TratamientosPreventivosView
+from altas.views import (
+    GrupoNewView, GruposView, GrupoUpdateView, Medicos, MedicoCreate,
+    MedicoUpdate, TratamientoNewView, TratamientoUpdateView, TratamientosView,
+    Pacientes, PacienteUpdate, PacienteCreate, EvaluacionNewView,
+    EvaluacionUpdateView, EvaluacionesView, TratamientoPreventivoNewView,
+    TratamientoPreventivoUpdateView, TratamientosPreventivosView
+)
 
 urlpatterns = patterns(
     'altas.views',

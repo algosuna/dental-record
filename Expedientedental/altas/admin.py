@@ -1,20 +1,32 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.models import User
+
 from altas.models import Medico, Paciente, Grupo
 
 
-class medicoAdmin(admin.ModelAdmin):
-    list_display = ('nombre', 'apellidoPaterno',)
-    list_filter = ('nombre', 'apellidoPaterno',)
-    search_fields = ['nombre', 'apellidoPaterno']
-    fields = ()
+# class medicoAdmin(admin.ModelAdmin):
+#     pass
 
 
-class pacienteAdmin(admin.ModelAdmin):
-    list_display = ('id', 'nombre', 'apellidoPaterno',)
-    list_filter = ('id', 'nombre', 'apellidoPaterno',)
-    search_fields = ['id', 'nombre', 'apellidoPaterno']
-    fields = ()
+class PacienteAdmin(admin.ModelAdmin):
+    pass
 
-admin.site.register(Medico, medicoAdmin)
+
+# Define an inline admin descriptor for Medico model
+# which acts a bit like a singleton
+class UserProfileInline(admin.StackedInline):
+    model = Medico
+    can_delete = False
+    verbose_name_plural = 'profile'
+
+
+class UserAdmin(UserAdmin):
+    inlines = (UserProfileInline, )
+
+
+admin.site.unregister(User)
+admin.site.register(User, UserAdmin)
+# admin.site.register(Medico, medicoAdmin)
 admin.site.register(Grupo)
-admin.site.register(Paciente, pacienteAdmin)
+admin.site.register(Paciente, PacienteAdmin)

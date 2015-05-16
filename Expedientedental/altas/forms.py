@@ -68,7 +68,8 @@ class PacienteForm(forms.ModelForm):
                 Field('telefono', wrapper_class='col-md-5'),
             ),
             ButtonHolder(
-                Submit('save', 'Guardar', css_class='normalized-btn pull-right')
+                Submit(
+                    'save', 'Guardar', css_class='normalized-btn pull-right')
             )
         )
         self.fields['credencialPaciente'].label = 'DNI Paciente'
@@ -93,48 +94,47 @@ class MedicoForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(MedicoForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.layout = Layout(
-            HTML("""<p> Todos Los campos con ( * ) son Requeridos .</p>"""),
-            Fieldset(
-                '',
-                Field('nombreUsuario', wrapper_class='col-md-4'),
-                Field('nombre', wrapper_class='col-md-8'),
-                Field('apellidoPaterno', wrapper_class='col-md-6'),
-                Field('apellidoMaterno', wrapper_class='col-md-6'),
-                Field('licenciaMedica', wrapper_class='col-md-4'),
-                Field('universidadEgreso', wrapper_class='col-md-8'),
-                Field('rfc', wrapper_class='col-md-4'),
-                Field('licenciaDeEspecialidad', wrapper_class='col-md-4'),
-                Field('cedulaEstatal', wrapper_class='col-md-4'),
-                Field('especialidad', wrapper_class='col-md-4'),
-                Field('telefono', wrapper_class='col-md-4'),
-                Field('correoElectronico', wrapper_class='col-md-4'),
-                Field('direccion', wrapper_class='col-md-12'),
-                Field('Ciudad', wrapper_class='col-md-4'),
-                Field('estado', wrapper_class='col-md-6'),
-                Field('codigoPostal', wrapper_class='col-md-2'),
+        # self.helper.layout = Layout(
+        #     HTML('''<p>Todos Los campos con (*) son Requeridos.</p>'''),
+        #     Fieldset(
+        #         '',
+        #         Field('username', wrapper_class='col-md-4'),
+        #         Field('first_name', wrapper_class='col-md-8'),
+        #         Field('last_name', wrapper_class='col-md-6'),
+        #         Field('mothers_last_name', wrapper_class='col-md-6'),
+        #         Field('licencia_medica', wrapper_class='col-md-4'),
+        #         Field('universidad_egreso', wrapper_class='col-md-8'),
+        #         Field('rfc', wrapper_class='col-md-4'),
+        #         Field('licencia_especialidad', wrapper_class='col-md-4'),
+        #         Field('cedula_estatal', wrapper_class='col-md-4'),
+        #         Field('especialidad', wrapper_class='col-md-4'),
+        #         Field('telefono', wrapper_class='col-md-4'),
+        #         Field('email', wrapper_class='col-md-4'),
+        #         Field('direccion', wrapper_class='col-md-12'),
+        #         Field('ciudad', wrapper_class='col-md-4'),
+        #         Field('estado', wrapper_class='col-md-6'),
+        #         Field('codigo_postal', wrapper_class='col-md-2'),
 
-            ),
-            ButtonHolder(
-                Submit(
-                    'save', 'Guardar', css_class='normalized-btn pull-right')
+        #     ),
+        #     ButtonHolder(
+        #         Submit(
+        #             'save', 'Guardar', css_class='normalized-btn pull-right')
 
-            )
-        )
-        self.fields['nombreUsuario'].label = 'Usuario'
-        self.fields['nombre'].label = 'Nombre(s)'
-        self.fields['apellidoPaterno'].label = 'Apellido Paterno'
-        self.fields['apellidoMaterno'].label = 'Apellido Materno'
-        self.fields['licenciaMedica'].label = 'Licencia Medica'
-        self.fields['universidadEgreso'].label = 'Universidad de Egreso'
-        self.fields['rfc'].label = 'R.F.C.'
-        self.fields['licenciaDeEspecialidad'].label = 'Licencia de \
-        Especialidad'
-        self.fields['cedulaEstatal'].label = 'Cedula Estatal'
-        self.fields['especialidad'].label = 'Especialidad'
-        self.fields['telefono'].label = 'Numero de Seguro Social'
-        self.fields['correoElectronico'].label = 'Correo Electr&oacute;nico'
-        self.fields['direccion'].label = 'Direcci&oacute;n'
-        self.fields['codigoPostal'].label = 'C.P.'
-        self.fields['estado'].label = 'Estado'
-        self.fields['Ciudad'].label = 'Cuidad'
+        #     )
+        # )
+        # # self.fields['username'].label = 'Usuario'
+        # # self.fields['first_name'].label = 'Nombre(s)'
+        # # self.fields['last_name'].label = 'Apellido Paterno'
+        # self.fields['mothers_last_name'].label = 'Apellido Materno'
+        # self.fields['licencia_medica'].label = 'Licencia Medica'
+        # self.fields['universidad_egreso'].label = 'Universidad de Egreso'
+        # self.fields['rfc'].label = 'R.F.C.'
+        # self.fields['licencia_especialidad'].label = 'Licencia de Especialidad'
+        # self.fields['cedula_estatal'].label = 'Cedula Estatal'
+        # self.fields['especialidad'].label = 'Especialidad'
+        # self.fields['telefono'].label = 'Numero de Seguro Social'
+        # # self.fields['email'].label = 'Correo Electr&oacute;nico'
+        # self.fields['direccion'].label = 'Direcci&oacute;n'
+        # self.fields['codigo_postal'].label = 'C.P.'
+        # self.fields['estado'].label = 'Estado'
+        # self.fields['ciudad'].label = 'Cuidad'
