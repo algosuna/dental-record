@@ -1,11 +1,48 @@
 # encoding:utf-8
 from django.core.urlresolvers import reverse
+from django.shortcuts import render, redirect
 from django.views.generic import CreateView, ListView, UpdateView
+from django.forms.models import inlineformset_factory
+from django.contrib.auth.models import User
 
-from altas.models import Grupo, Tratamiento, TratamientoPreventivo,\
-    Evaluacion, Medico, Paciente
-from altas.forms import MedicoForm, PacienteForm, GrupoForm, TratamientoForm,\
-    TratamientoPreventivoForm, EvaluacionForm
+from altas.models import (
+    Grupo, Tratamiento, TratamientoPreventivo, Evaluacion, Medico, Paciente
+)
+from altas.forms import (
+    MedicoForm, PacienteForm, GrupoForm, TratamientoForm, EvaluacionForm,
+    TratamientoPreventivoForm, MedicoUserForm
+)
+
+
+def medico_create(request):
+    ''' TODO: Left off at - inline formsets or a way to associate the newly
+    created 'user' instance to 'Medico' model through it's foreignkey. '''
+    MedicoInlineFormset = inlineformset_factory(
+        User, Medico, form=MedicoUserForm)
+
+    if request.method == 'POST':
+        # form = MedicoInlineFormset(request.POST)
+        form = MedicoForm(request.POST)
+        # user_form = MedicoUserForm(request.POST)
+        # form = MedicoForm(request.POST)
+
+        if form.is_valid():
+            medico = form.save(commit=False)
+            # user = user_form.save(commit=False)
+            # form.user = user
+            # pass
+
+        else:
+            print form.errors
+
+    else:
+        # user_form = MedicoUserForm()
+        # form = MedicoForm()
+        form = MedicoInlineFormset()
+
+    return render(request, 'medico.html', {
+        # 'user_form': user_form,
+        'form': form})
 
 
 class MedicoCreate(CreateView):

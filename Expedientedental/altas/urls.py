@@ -11,7 +11,8 @@ urlpatterns = patterns(
     'altas.views',
 
     url(r'^medicos/$', Medicos.as_view(), name='medicos'),
-    url(r'^medico/new/$', MedicoCreate.as_view(), name='medico_new'),
+    # url(r'^medico/new/$', MedicoCreate.as_view(), name='medico_new'),
+    url(r'^medico/new/$', 'medico_create', name='medico_new'),
     url(r'^medico/edit/(?P<pk>\d+)/$',
         MedicoUpdate.as_view(), name='medico_edit'),
 

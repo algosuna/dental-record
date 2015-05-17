@@ -1,10 +1,13 @@
 {% extends "base1.html" %}
-{%load static from staticfiles %}
+{% load static from staticfiles %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 <h2 class="page-header">Registro de M&eacute;dico</h2>
 
-{% load crispy_forms_tags %}
-{% crispy form %}
-
+<form action="" method="post" class="clearfix">
+  {{ form.management_form }}
+  {% crispy form %}
+  <input type="submit" value="Guardar" class="btn btn-primary pull-right normalized-btn">
+</form>
 {% endblock content %}

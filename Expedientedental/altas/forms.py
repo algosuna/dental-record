@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth.models import User
 
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, HTML, Field, ButtonHolder,\
@@ -87,54 +88,80 @@ class PacienteForm(forms.ModelForm):
         self.fields['telefono'].label = 'Telefono'
 
 
+class MedicoUserForm(forms.ModelForm):
+    ''' TODO: remove the password field and auto-generate '''
+
+    class Meta:
+        model = User
+        exclude = [
+            'is_staff',
+            'is_active',
+            'is_superuser',
+            'last_login',
+            'date_joined',
+            'groups',
+            'user_permissions'
+        ]
+
+    password = forms.CharField(widget=forms.PasswordInput)
+
+    def __init__(self, *args, **kwargs):
+        super(MedicoUserForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_tag = False
+        self.helper.layout = Layout(
+            Fieldset(
+                '',
+                Field('first_name', wrapper_class='col-md-6'),
+                Field('last_name', wrapper_class='col-md-6'),
+                Field('username', wrapper_class='col-md-6'),
+                Field('email', wrapper_class='col-md-6'),
+                Field('password', wrapper_class='col-md-12'),
+            )
+        )
+        self.fields['username'].help_text = None
+        self.fields['username'].label = 'Usuario'
+        self.fields['first_name'].label = 'Nombre'
+        self.fields['last_name'].label = 'Apellido Paterno'
+        self.fields['email'].label = 'Coreo Electr&oacute;nico'
+        self.fields['password'].label = 'Contrase&ntilde;a'
+
+
 class MedicoForm(forms.ModelForm):
+    ''' TODO: validate rfc '''
     class Meta:
         model = Medico
+        exclude = ['mothers_last_name', 'user']
 
     def __init__(self, *args, **kwargs):
         super(MedicoForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        # self.helper.layout = Layout(
-        #     HTML('''<p>Todos Los campos con (*) son Requeridos.</p>'''),
-        #     Fieldset(
-        #         '',
-        #         Field('username', wrapper_class='col-md-4'),
-        #         Field('first_name', wrapper_class='col-md-8'),
-        #         Field('last_name', wrapper_class='col-md-6'),
-        #         Field('mothers_last_name', wrapper_class='col-md-6'),
-        #         Field('licencia_medica', wrapper_class='col-md-4'),
-        #         Field('universidad_egreso', wrapper_class='col-md-8'),
-        #         Field('rfc', wrapper_class='col-md-4'),
-        #         Field('licencia_especialidad', wrapper_class='col-md-4'),
-        #         Field('cedula_estatal', wrapper_class='col-md-4'),
-        #         Field('especialidad', wrapper_class='col-md-4'),
-        #         Field('telefono', wrapper_class='col-md-4'),
-        #         Field('email', wrapper_class='col-md-4'),
-        #         Field('direccion', wrapper_class='col-md-12'),
-        #         Field('ciudad', wrapper_class='col-md-4'),
-        #         Field('estado', wrapper_class='col-md-6'),
-        #         Field('codigo_postal', wrapper_class='col-md-2'),
+        self.helper.form_tag = False
+        self.helper.layout = Layout(
+            Fieldset(
+                '',
+                Field('universidad_egreso', wrapper_class='col-md-8'),
+                Field('licencia_medica', wrapper_class='col-md-4'),
+                Field('cedula_estatal', wrapper_class='col-md-4'),
+                Field('especialidad', wrapper_class='col-md-4'),
+                Field('licencia_especialidad', wrapper_class='col-md-4'),
+                Field('rfc', wrapper_class='col-md-6'),
+                Field('telefono', wrapper_class='col-md-6'),
+                Field('direccion', wrapper_class='col-md-12'),
+                Field('ciudad', wrapper_class='col-md-6'),
+                Field('estado', wrapper_class='col-md-4'),
+                Field('codigo_postal', wrapper_class='col-md-2'),
 
-        #     ),
-        #     ButtonHolder(
-        #         Submit(
-        #             'save', 'Guardar', css_class='normalized-btn pull-right')
-
-        #     )
-        # )
-        # # self.fields['username'].label = 'Usuario'
-        # # self.fields['first_name'].label = 'Nombre(s)'
-        # # self.fields['last_name'].label = 'Apellido Paterno'
-        # self.fields['mothers_last_name'].label = 'Apellido Materno'
-        # self.fields['licencia_medica'].label = 'Licencia Medica'
-        # self.fields['universidad_egreso'].label = 'Universidad de Egreso'
-        # self.fields['rfc'].label = 'R.F.C.'
-        # self.fields['licencia_especialidad'].label = 'Licencia de Especialidad'
-        # self.fields['cedula_estatal'].label = 'Cedula Estatal'
-        # self.fields['especialidad'].label = 'Especialidad'
-        # self.fields['telefono'].label = 'Numero de Seguro Social'
-        # # self.fields['email'].label = 'Correo Electr&oacute;nico'
-        # self.fields['direccion'].label = 'Direcci&oacute;n'
-        # self.fields['codigo_postal'].label = 'C.P.'
-        # self.fields['estado'].label = 'Estado'
-        # self.fields['ciudad'].label = 'Cuidad'
+            )
+        )
+        self.fields['licencia_medica'].label = 'Licencia Medica'
+        self.fields['universidad_egreso'].label = 'Universidad de Egreso'
+        self.fields['rfc'].label = 'R.F.C.'
+        self.fields['licencia_especialidad'].label = 'Licencia de Especialidad'
+        self.fields['cedula_estatal'].label = 'Cedula Estatal'
+        self.fields['especialidad'].label = 'Especialidad'
+        self.fields['telefono'].label = 'Numero de Seguro Social'
+        self.fields['direccion'].label = 'Direcci&oacute;n'
+        self.fields['codigo_postal'].label = 'C.P.'
+        self.fields['estado'].label = 'Estado'
+        self.fields['ciudad'].label = 'Cuidad'
