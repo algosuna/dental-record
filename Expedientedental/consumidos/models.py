@@ -1,7 +1,8 @@
 # -*- encoding: utf-8 -*-
 from django.db import models
 from altas.models import Medico, Paciente
-from inventario.models import Producto
+
+from core.models import CancelledModel
 
 
 class Paquete(models.Model):
@@ -69,3 +70,14 @@ class ProductoConsumido(models.Model):
     def __unicode__(self):
         return u'%s %s %s' % (
             self.producto, self.cantidad, self.cantidad)
+
+
+class CancelPC(CancelledModel):
+    '''
+    Herencia de modelo en core.
+    Agrego relacion del producto.
+    '''
+    pconsumido = models.ForeignKey(ProductoConsumido)
+
+    def __unicode__(self):
+        return '%s' % self.reason
