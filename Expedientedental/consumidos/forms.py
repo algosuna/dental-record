@@ -192,7 +192,7 @@ class PeticionForm(forms.ModelForm):
 class ProductoConsumidoForm(forms.ModelForm):
     class Meta:
         model = ProductoConsumido
-        exclude = ('precio',)
+        
 
     def __init__(self, *args, **kwargs):
         super(ProductoConsumidoForm, self).__init__(*args, **kwargs)
@@ -203,10 +203,12 @@ class ProductoConsumidoForm(forms.ModelForm):
                  """),
             Fieldset(
                 '',
-                Field('medico', wrapper_class='col-md-5'),
-                Field('paciente', wrapper_class='col-md-5'),
+                Field('medico', wrapper_class='col-md-4'),
+                Field('fecha', wrapper_class='col-md-4'),
+                Field('paciente', wrapper_class='col-md-4'),
                 Field('producto', wrapper_class='col-md-5'),
                 Field('cantidad', wrapper_class='col-md-1'),
+
                 ),
             ButtonHolder(Submit('save', 'Generar'))
 )

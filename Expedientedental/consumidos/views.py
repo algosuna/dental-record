@@ -141,14 +141,16 @@ class PeticionView(CreateView):
 
     def get_succes_url(self):
         paciente = self.get_servicio().odontograma.paciente
-        return reverse('consumidos:pconsumido', args=[paciente])
+        return reverse('consumidos:pconsumido', kwargs=[paciente])
 
 
 class producto_consumido(CreateView):
     form_class = ProductoConsumidoForm
     template_name = 'prconsumido.html'
     context_object_name = 'prconsumido'
-    succes_url = '/'
+
+    def get_succes_url(self):
+        return '/'
 
 
 def busqueda(request):

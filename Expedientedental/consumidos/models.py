@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 from django.db import models
 from altas.models import Medico, Paciente
+from inventario.models import Producto
 
 
 class Paquete(models.Model):
@@ -57,9 +58,6 @@ class PaqueteConsumidoItem(models.Model):
     def __unicode__(self):
         return u'%s %s %s ' % (self.producto, self.cantidad, self.precio)
 
-    # TODO: metodo save debe restar unidades de inventario (consumir)
-    # TODO: metodo delete debe sumar unidades de inventario (devoluciones)
-
 
 class ProductoConsumido(models.Model):
     medico = models.ForeignKey(Medico)
@@ -70,4 +68,4 @@ class ProductoConsumido(models.Model):
 
     def __unicode__(self):
         return u'%s %s %s' % (
-            self.producto, self.cantidad, self.cantidad, self.precio)
+            self.producto, self.cantidad, self.cantidad)
