@@ -5,8 +5,9 @@
 
   <h2 class="page-header">{{title}}</h2>
 
-  <div class="col-md-4 col-md-offset-4">
+  <!--<div class="col-md-4 col-md-offset-20"-->
     {% load crispy_forms_tags %}
+    <td>{{producto_consumido.fecha|date:"d-M-Y"}}</td>
     {% crispy form %}
   </div>
 {% endblock content %}

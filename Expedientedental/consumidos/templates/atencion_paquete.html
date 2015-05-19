@@ -17,6 +17,7 @@
           <th>Servicio:</th>
           <th>Medico:</th>
           <th>Fecha:</th>
+    
           
           
         </tr>
@@ -27,6 +28,7 @@
           <td>{{ pconsumido.servicio}}</td>
           <td>{{ pconsumido.medico}}</td>
           <td>{{pconsumido.fecha|date:"d-M-Y"}}</td>
+          
          <form action="" method="post">{% csrf_token %}
         </tr>
       </tbody>

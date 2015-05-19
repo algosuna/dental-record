@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 from django.db import models
 from altas.models import Medico, Paciente
+from inventario.models import Producto
 
 
 class Paquete(models.Model):
@@ -27,22 +28,11 @@ class PaqueteConsumido(models.Model):
     servicio = models.ForeignKey('servicios.Servicio', null=True)
     fecha = models.DateTimeField()
     nota = models.TextField(blank=True)
+    is_complete = models.BooleanField()
 
     def __unicode__(self):
         return '%s %s' % (self.paquete, self.medico)
 
-
-class PaqueteConsumidoItem(models.Model):
-    paquete_consumido = models.ForeignKey(PaqueteConsumido)
-    producto = models.ForeignKey('inventario.Producto')
-    cantidad = models.DecimalField(max_digits=8, decimal_places=2)
-    precio = models.DecimalField(max_digits=8, decimal_places=2)
-
-    def __unicode__(self):
-        return u'%s %s %s ' % (self.producto, self.cantidad, self.precio)
-
-    # TODO: metodo save debe restar unidades de inventario (consumir)
-    # TODO: metodo delete debe sumar unidades de inventario (devoluciones)
     def get_item_initials(self):
         paquete = self.paquete
         paquete_items = paquete.paqueteitem_set.all()
@@ -58,11 +48,23 @@ class PaqueteConsumidoItem(models.Model):
         return initial_list
 
 
+class PaqueteConsumidoItem(models.Model):
+    paquete_consumido = models.ForeignKey(PaqueteConsumido)
+    producto = models.ForeignKey('inventario.Producto')
+    cantidad = models.DecimalField(max_digits=8, decimal_places=2)
+    precio = models.DecimalField(max_digits=8, decimal_places=2)
+
+    def __unicode__(self):
+        return u'%s %s %s ' % (self.producto, self.cantidad, self.precio)
+
+
 class ProductoConsumido(models.Model):
+    medico = models.ForeignKey(Medico)
+    paciente = models.ForeignKey(Paciente)
     producto = models.ForeignKey('inventario.Producto')
     cantidad = models.DecimalField(max_digits=8, decimal_places=2)
     fecha = models.DateTimeField()
 
     def __unicode__(self):
         return u'%s %s %s' % (
-            self.producto, self.cantidad, self.cantidad, self.precio)
+            self.producto, self.cantidad, self.cantidad)

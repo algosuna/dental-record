@@ -1,0 +1,36 @@
+{% extends "dash.html" %}
+{%load static from staticfiles %}
+
+{% block content %}
+<h2 class="page-header">Registro de Paquetes</h2>
+
+{% if consumidos %}
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Paquete</th>
+      <th>Entrgado</th>
+      <th>Recibio</th>
+      <th>Servicio</th>
+      <th>Status</th>
+
+      
+    </tr>
+  </thead>
+  <tbody>
+    {% for consumido in consumidos %}
+    <tr>
+      <td>{{ consumido.paquete_consumido.paquete}}</td>
+      <td>{{ consumido.paquete_consumido.fecha }}</td>
+      <td>{{ consumido.paquete_consumido.medico }}</td>
+      <td>{{ consumido.paquete_consumido.servicio }}</td>
+      <td>{{ consumido.status }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<a href="{% url consumidos:armar %}" class="btn btn-primary pull-right">Reatender <span class="glyphicon glyphicon-plus"></span></a>
+{% else %}
+<p class="lead text-center text-muted">No hay paquetes registrados en la base de datos.<br><br><a href="{% url consumidos:armar %}" class="btn btn-primary">Registrar Paquete <span class="glyphicon glyphicon-chevron-right"></span></a></p>
+{% endif %}
+{% endblock content %}
