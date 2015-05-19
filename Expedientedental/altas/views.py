@@ -1,9 +1,7 @@
 # encoding:utf-8
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse, reverse_lazy
 from django.shortcuts import render, redirect
 from django.views.generic import CreateView, ListView, UpdateView
-from django.forms.models import inlineformset_factory
-from django.contrib.auth.models import User
 
 from altas.models import (
     Grupo, Tratamiento, TratamientoPreventivo, Evaluacion, Medico, Paciente
@@ -15,40 +13,25 @@ from altas.forms import (
 
 
 def medico_create(request):
-    ''' TODO: Left off at - inline formsets or a way to associate the newly
-    created 'user' instance to 'Medico' model through it's foreignkey. '''
-    MedicoInlineFormset = inlineformset_factory(
-        User, Medico, form=MedicoUserForm)
-
+    ''' Creates Medico and User. '''
     if request.method == 'POST':
-        # form = MedicoInlineFormset(request.POST)
-        form = MedicoForm(request.POST)
-        # user_form = MedicoUserForm(request.POST)
-        # form = MedicoForm(request.POST)
+        medico_user_form = MedicoUserForm(request.POST)
+        medico_form = MedicoForm(request.POST)
 
-        if form.is_valid():
-            medico = form.save(commit=False)
-            # user = user_form.save(commit=False)
-            # form.user = user
-            # pass
-
-        else:
-            print form.errors
+        if medico_user_form.is_valid() and medico_form.is_valid():
+            user = medico_user_form.save()
+            medico = medico_form.save(commit=False)
+            medico.user = user
+            medico.save()
+            return redirect('altas:medicos')
 
     else:
-        # user_form = MedicoUserForm()
-        # form = MedicoForm()
-        form = MedicoInlineFormset()
+        medico_user_form = MedicoUserForm()
+        medico_form = MedicoForm()
 
-    return render(request, 'medico.html', {
-        # 'user_form': user_form,
-        'form': form})
-
-
-class MedicoCreate(CreateView):
-    form_class = MedicoForm
-    template_name = 'medico.html'
-    success_url = '/altas/medicos/'
+    return render(request, 'medico.html',
+                  {'medico_user_form': medico_user_form,
+                   'medico_form': medico_form})
 
 
 class Medicos(ListView):
@@ -61,13 +44,13 @@ class MedicoUpdate(UpdateView):
     model = Medico
     form_class = MedicoForm
     template_name = 'medico.html'
-    success_url = '/altas/medicos/'
+    success_url = reverse_lazy('altas:medicos')
 
 
 class PacienteCreate(CreateView):
     form_class = PacienteForm
     template_name = 'paciente.html'
-    success_url = '/altas/pacientes/'
+    success_url = reverse_lazy('altas:pacientes')
 
 
 class Pacientes(ListView):
@@ -80,7 +63,7 @@ class PacienteUpdate(UpdateView):
     model = Paciente
     form_class = PacienteForm
     template_name = 'paciente.html'
-    success_url = '/altas/pacientes/'
+    success_url = reverse_lazy('altas:pacientes')
 
 
 class GrupoNewView(CreateView):
@@ -101,7 +84,7 @@ class GrupoUpdateView(UpdateView):
     model = Grupo
     form_class = GrupoForm
     template_name = 'grupo.html'
-    success_url = '/altas/grupos/'
+    success_url = reverse_lazy('altas:grupos')
 
 
 class MetodoMixin(object):
@@ -112,11 +95,11 @@ class MetodoMixin(object):
 
     def get_success_url(self):
         if self.slug:
-            path_name = self.slug
+            url = self.slug
         else:
-            path_name = self.name
+            url = self.name
 
-        return '/altas/%s/' % path_name
+        return 'altas:%s' % url
 
     def get_context_data(self, **kwargs):
         context = super(MetodoMixin, self).get_context_data(**kwargs)

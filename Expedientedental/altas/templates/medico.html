@@ -6,8 +6,12 @@
 <h2 class="page-header">Registro de M&eacute;dico</h2>
 
 <form action="" method="post" class="clearfix">
-  {{ form.management_form }}
-  {% crispy form %}
+  {% if medico_user_form %}
+    {% crispy medico_user_form %}
+    {% crispy medico_form %}
+  {% else %}
+    {% crispy form %}
+  {% endif %}
   <input type="submit" value="Guardar" class="btn btn-primary pull-right normalized-btn">
 </form>
 {% endblock content %}

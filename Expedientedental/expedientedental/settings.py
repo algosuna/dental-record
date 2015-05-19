@@ -142,9 +142,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 
 
-AUTH_PROFILE_MODULE = 'altas.Medico'
-
-
 INSTALLED_APPS = (
 
     'suit',

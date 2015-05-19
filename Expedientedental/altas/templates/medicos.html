@@ -8,9 +8,7 @@
 <table class="table table-hover">
   <thead>
     <tr>
-      <th>Apellido</th>
-      <th>Apellido Materno</th>
-      <th>Nombre(s)</th>
+      <th>Nombre</th>
       <th>Especialidad</th>
       <th>&nbsp;</th>
     </tr>
@@ -18,9 +16,7 @@
   <tbody>
     {% for medico in medicos %}
     <tr>
-      <td>{{ medico.apellidoPaterno }}</td>
-      <td>{{ medico.apellidoMaterno }}</td>
-      <td>{{ medico.nombre }}</td>
+      <td>{{ medico.user.get_full_name }}</td>
       <td>{{ medico.especialidad }}</td>
       <td><a href="{%  url altas:medico_edit medico.id %}"><span class="glyphicon glyphicon-pencil"></span></a></td>
     </tr>

@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, url
 from altas.views import (
-    GrupoNewView, GruposView, GrupoUpdateView, Medicos, MedicoCreate,
+    GrupoNewView, GruposView, GrupoUpdateView, Medicos,
     MedicoUpdate, TratamientoNewView, TratamientoUpdateView, TratamientosView,
     Pacientes, PacienteUpdate, PacienteCreate, EvaluacionNewView,
     EvaluacionUpdateView, EvaluacionesView, TratamientoPreventivoNewView,
@@ -11,7 +11,6 @@ urlpatterns = patterns(
     'altas.views',
 
     url(r'^medicos/$', Medicos.as_view(), name='medicos'),
-    # url(r'^medico/new/$', MedicoCreate.as_view(), name='medico_new'),
     url(r'^medico/new/$', 'medico_create', name='medico_new'),
     url(r'^medico/edit/(?P<pk>\d+)/$',
         MedicoUpdate.as_view(), name='medico_edit'),

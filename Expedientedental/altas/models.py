@@ -30,8 +30,7 @@ class Medico(models.Model):
     telefono = models.CharField(max_length=20)
 
     def __unicode__(self):
-        nombre = '%s %s %s' % (
-            self.first_name, self.last_name, self.mothers_last_name)
+        nombre = '%s' % (self.user)
         return nombre
 
 
