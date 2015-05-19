@@ -274,6 +274,7 @@ class InterrogatorioForm(forms.ModelForm):
 class OdontogramaForm(forms.ModelForm):
     class Meta:
         model = Odontograma
+        exclude = ['medico', 'paciente']
 
     def __init__(self, *args, **kwargs):
         super(OdontogramaForm, self).__init__(*args, **kwargs)
@@ -283,8 +284,6 @@ class OdontogramaForm(forms.ModelForm):
         self.helper.layout = Layout(
             Fieldset(
                 '',
-                Field('medico', wrapper_class='col-md-6'),
-                Field('paciente', wrapper_class='col-md-6'),
                 Field('evaluacion', wrapper_class='col-md-6'),
                 Field('tratamiento_preventivo', wrapper_class='col-md-6'),
                 Field('notas', wrapper_class='col-md-12'),

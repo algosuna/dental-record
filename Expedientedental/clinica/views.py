@@ -4,7 +4,7 @@ from datetime import datetime
 from django.contrib.auth.decorators import permission_required
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect, get_object_or_404, render
-from django.views.generic import UpdateView, DetailView, FormView
+from django.views.generic import UpdateView, DetailView
 
 from wkhtmltopdf.views import PDFTemplateView
 from core.mixins import PermissionRequiredMixin
@@ -63,13 +63,17 @@ class PacienteDetail(PermissionRequiredMixin, DetailView):
 def odontograma(request, paciente_id):
     paciente = get_object_or_404(Paciente, pk=paciente_id)
     tratamientos = Tratamiento.objects.all()
+    medico = request.user.medico_set.get()
 
     if request.method == 'POST':
         modelform = OdontogramaForm(request.POST)
         formset = ProcedimientoFormSet(request.POST, request.FILES)
 
         if modelform.is_valid():
-            odontograma = modelform.save()
+            odontograma = modelform.save(commit=False)
+            odontograma.paciente = paciente
+            odontograma.medico = medico
+            odontograma.save()
 
             if formset.is_valid():
                 for form in formset:
