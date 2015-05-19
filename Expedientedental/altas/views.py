@@ -10,6 +10,7 @@ from altas.forms import (
     MedicoForm, PacienteForm, GrupoForm, TratamientoForm, EvaluacionForm,
     TratamientoPreventivoForm, MedicoUserForm
 )
+from precios.models import PrecioTratamiento
 
 
 def medico_create(request):
@@ -143,7 +144,7 @@ class MetodoMixin(object):
         else:
             url = self.name
 
-        return 'altas:%s' % url
+        return reverse('altas:%s' % url)
 
     def get_context_data(self, **kwargs):
         context = super(MetodoMixin, self).get_context_data(**kwargs)
@@ -175,6 +176,19 @@ class TratamientoNewView(MetodoNewView):
     name = 'tratamiento'
     form_class = TratamientoForm
     active = 't_active'
+
+    def form_valid(self, form):
+        ''' Add PrecioTratamiento to existent Grupos as 0 based on Tratamiento
+        that was just created. '''
+        redirect = super(TratamientoNewView, self).form_valid(form)
+        tratamiento = self.object
+        grupos = Grupo.objects.all()
+        if grupos:
+            for grupo in grupos:
+                PrecioTratamiento.objects.create(
+                    grupo=grupo, tratamiento=tratamiento, precio=5)
+
+        return redirect
 
 
 class TratamientosView(MetodoListView):
