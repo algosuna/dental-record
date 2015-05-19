@@ -19,7 +19,9 @@ def medico_create(request):
         medico_form = MedicoForm(request.POST)
 
         if medico_user_form.is_valid() and medico_form.is_valid():
-            user = medico_user_form.save()
+            user = medico_user_form.save(commit=False)
+            user.set_password(user.password)
+            user.save()
             medico = medico_form.save(commit=False)
             medico.user = user
             medico.save()
