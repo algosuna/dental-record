@@ -1,9 +1,11 @@
-{% extends "base1.html" %}
+{% extends "dash.html" %}
 {%load static from staticfiles %}
+
+{% block title %}{{ title }}{% endblock %}
 
 {% block content %}
 
-  <h2 class="page-header">{{title}}</h2>
+  <h2 class="page-header">{{ title }}</h2>
 
   <div class="col-md-4 col-md-offset-4">
     {% load crispy_forms_tags %}

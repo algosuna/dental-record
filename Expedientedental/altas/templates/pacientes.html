@@ -1,5 +1,7 @@
-{% extends "base1.html" %}
+{% extends "dash.html" %}
 {%load static from staticfiles %}
+
+{% block title %}Pacientes Registrados{% endblock %}
 
 {% block content %}
 
@@ -25,7 +27,7 @@
       <td>{{ paciente.apellidoPaterno }}</td>
       <td>{{ paciente.apellidoMaterno }}</td>
       <td>{{ paciente.nombre }}</td>
-      <td><a href="{% url altas:paciente_edit paciente.id %}/"><span class="glyphicon glyphicon-pencil"></span></a></td>
+      <td><a href="{% url altas:paciente_edit paciente.id %}"><span class="glyphicon glyphicon-pencil"></span></a></td>
     </tr>
     {% endfor %}
   </tbody>
