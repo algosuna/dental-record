@@ -1,8 +1,7 @@
 # -*- encoding: utf-8 -*-
 from django.db import models
 from altas.models import Medico, Paciente
-
-from core.models import CancelledModel
+from inventario.models import Producto
 
 
 class Paquete(models.Model):
@@ -29,8 +28,7 @@ class PaqueteConsumido(models.Model):
     servicio = models.ForeignKey('servicios.Servicio', null=True)
     fecha = models.DateTimeField()
     nota = models.TextField(blank=True)
-    status = models.CharField(max_length=1, blank=True, default='En Espera',
-                              choices=(('En Espera', 'En Espera'), ('Completado', 'Entregado')))
+    is_complete = models.BooleanField()
 
     def __unicode__(self):
         return '%s %s' % (self.paquete, self.medico)
@@ -70,14 +68,3 @@ class ProductoConsumido(models.Model):
     def __unicode__(self):
         return u'%s %s %s' % (
             self.producto, self.cantidad, self.cantidad)
-
-
-class CancelPC(CancelledModel):
-    '''
-    Herencia de modelo en core.
-    Agrego relacion del producto.
-    '''
-    pconsumido = models.ForeignKey(ProductoConsumido)
-
-    def __unicode__(self):
-        return '%s' % self.reason

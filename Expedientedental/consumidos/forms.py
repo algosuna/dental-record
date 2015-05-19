@@ -80,7 +80,7 @@ class AtenderPaqueteForm(forms.ModelForm):
             Fieldset(
                 '',
                 Field('paquete', wrapper_class='col-md-12'),
-                Field('status', wrapper_class='col-md-8')
+                # Field('status', wrapper_class='col-md-8')
                 ),
             )
 
@@ -129,7 +129,7 @@ class PCItemForm(forms.ModelForm):
         self.helper.layout = Layout(
             Field('producto', wrapper_class='col-md-5'),
             Field('cantidad', wrapper_class='col-md-2'),
-            Field('status', wrapper_class='col-md-2'),
+        
         )
         producto = self.get_producto()
         if producto:
@@ -192,7 +192,6 @@ class PeticionForm(forms.ModelForm):
 class ProductoConsumidoForm(forms.ModelForm):
     class Meta:
         model = ProductoConsumido
-        
 
     def __init__(self, *args, **kwargs):
         super(ProductoConsumidoForm, self).__init__(*args, **kwargs)

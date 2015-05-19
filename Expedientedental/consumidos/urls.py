@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, url
 from consumidos.views import (
-    AtencionPaquete, manage_paquetes, PeticionView,
+    AtencionPaquete, manage_paquetes, PeticionView, Consumidos, ConsumidoDetail,
     peticionesView, producto_consumido, PaqueteItem, Paquetes, suplied)
 
 urlpatterns = patterns(
@@ -25,6 +25,12 @@ urlpatterns = patterns(
     url(r'^paquetes/insumos/(?P<pk>\d+)/$', manage_paquetes, name='insumos'),
 
     url(r'^paquetes/stat/list/$', suplied.as_view(), name='completados'),
+
+    url(r'^paquetes/pconsumido/list/$', Consumidos.as_view(), 
+        name='consumido'),
+
+    url(r'^paquetes/detail/(?P<pk>\d+)/$', ConsumidoDetail.as_view(), 
+        name='cons_detail')
 
 )
 

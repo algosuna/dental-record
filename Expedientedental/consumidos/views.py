@@ -2,14 +2,15 @@ from django.core.urlresolvers import reverse, reverse_lazy
 from django.forms.models import modelformset_factory
 from django.shortcuts import (
     render_to_response, render, redirect, get_object_or_404)
-from django.views.generic import UpdateView, ListView, CreateView
+from django.views.generic import UpdateView, ListView, CreateView, DetailView
 from wkhtmltopdf.views import PDFTemplateView
 
 from core.utils import generic_search
 
 
 from servicios.models import Servicio
-from consumidos.models import PaqueteConsumido, PaqueteConsumidoItem, Paquete
+from consumidos.models import (
+    PaqueteConsumido, PaqueteConsumidoItem, Paquete, ProductoConsumido)
 from consumidos.forms import (
     PaqueteForm, AtenderPaqueteForm, PCItemForm, PeticionForm,
     ProductoConsumidoForm)
@@ -106,7 +107,7 @@ class EditPaqueteView(UpdateView):
 class peticionesView(ListView):
     model = PaqueteConsumido
     form_class = PeticionForm
-    queryset = PaqueteConsumido.objects.filter(status='E')
+    queryset = PaqueteConsumido.objects.filter(is_complete=False)
     context_object_name = 'peticiones'
     template_name = 'peticiones.html'
 
@@ -115,6 +116,12 @@ class PeticionView(CreateView):
     form_class = PeticionForm
     template_name = 'peticion.html'
     servicio = None
+    paciente = None
+
+    def get_paciente(self):
+        if self.paciente is None:
+            self.paciente = self.get_servicio().paquete.odontograma.paciente
+        return self.paciente
 
     def get_form_kwargs(self):
         kwargs = super(PeticionView, self).get_form_kwargs()
@@ -139,9 +146,14 @@ class PeticionView(CreateView):
         context.update({'servicio': self.get_servicio()})
         return context
 
-    def get_succes_url(self):
-        paciente = self.get_servicio().odontograma.paciente
-        return reverse('consumidos:pconsumido', kwargs=[paciente])
+    # def get_succes_url(self):
+    #     paciente = self.get_servicio().odontograma.paciente
+    #     return reverse('consumidos:pconsumido', kwargs=[paciente])
+
+    def get_success_url(self):
+        url = reverse('clinica:paciente_detail',
+                      kwargs={'pk': self.get_paciente().pk})
+        return url
 
 
 class producto_consumido(CreateView):
@@ -151,6 +163,24 @@ class producto_consumido(CreateView):
 
     def get_succes_url(self):
         return '/'
+
+
+class Consumidos(ListView):
+    model = ProductoConsumido
+    context_object_name = 'consumidos'
+    template_name = 'pconsumido.html'
+
+
+class ConsumidoDetail(DetailView):
+    model = ProductoConsumido
+    context_object_name = 'consumido'
+    template_name = 'consumido-detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ConsumidoDetail, self).get_context_data(**kwargs)
+        producto = self.object.producto
+        context.update({'cd_active': 'active', 'producto': producto})
+        return context
 
 
 def busqueda(request):

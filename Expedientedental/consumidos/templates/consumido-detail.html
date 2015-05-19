@@ -1,0 +1,71 @@
+{% extends "dash.html" %}
+{% load static from staticfiles %}
+
+{% block css %}
+<style>
+  .custom-table th {
+    padding: 8px 15px !important;
+  }
+  .custom-table td {
+    background-color: #ddd;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<h2 class="page-header">Resumen de Pago <small class="pull-right">Pago #{{ pago.id }}</small></h2>
+
+<div class="row">
+
+  <div class="col-md-10 col-md-offset-1">
+    <!-- <p class="text-right"><strong>Fecha:</strong> {{ pago.fecha }}</p> -->
+
+    <table class="table table-bordered custom-table">
+
+      <tr>
+
+        <th style="width:175px;">Nombre del Paciente: </th>
+        <td>{{ consumido.paciente.nombre }} {{ consumido.paciente.apellidoPaterno }} {{ consumido.paciente.apellidoMaterno }}
+        </td><th style="width:175px;">Nombre del Medico: </th>
+        <td>{{ consumido.medico.nombre }} {{ consumido.medico.apellidoPaterno }} {{ consumido.medico.apellidoMaterno }}</td>
+
+        <th style="width: 60px;">Fecha:</th>
+        <td>{{ consumido.fecha }}</td>
+
+        
+
+      </tr>
+
+    </table>
+
+  </div><!-- end .col-md-10 -->
+
+</div>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Producto</th>
+      <th>Cantidad</th>
+     
+    </tr>
+  </thead>
+  <tbody>
+  
+    <tr>
+      <td>{{ consumido.producto }}</td>
+      <td>$ {{ consumido.cantidad}}</td>
+      
+      
+    
+  </tbody>
+</table>
+
+<a href="" class="pull-right">Imprimir Recibo 
+<span class="glyphicon glyphicon-print"></span></a>
+
+{% endblock content %}
+
+
+
