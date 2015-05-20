@@ -149,7 +149,7 @@ def bitacora_create(request, procedimiento_id):
         if form.is_valid():
             form.save()
 
-            return redirect(reverse('procedimientos', args=[paciente.id]))
+            return redirect(reverse('clinica:procedimientos', args=[paciente.id]))
     else:
         form = BitacoraForm(initial={'procedimiento': procedimiento})
 
