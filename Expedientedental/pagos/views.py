@@ -81,7 +81,7 @@ def pagos(request, paquete_id):
                   'servicios': servicios,
                   'total': total,
                   'paquete': paquete,
-                  'r_active': 'active'
+                  'rp_active': 'active'
                   })
 
 
