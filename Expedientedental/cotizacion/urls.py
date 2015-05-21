@@ -1,5 +1,5 @@
 from django.conf.urls.defaults import patterns, url
-from cotizacion.views import CotizacionPDF, CotizacionList
+from cotizacion.views import CotizacionPDF, CotizacionList, ProcesadoList
 
 urlpatterns = patterns(
     'cotizacion.views',
@@ -13,7 +13,7 @@ urlpatterns += patterns(
     '',
 
     url(r'^$', CotizacionList.as_view(), name='cotizacion_list'),
-
+    url(r'^procesados/$', ProcesadoList.as_view(), name='procesado_list'),
 
     # reporte de cotizacion
     url(r'^(?P<pk>\d+)/pdf/$',

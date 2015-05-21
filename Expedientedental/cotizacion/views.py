@@ -33,6 +33,28 @@ class CotizacionList(PermissionRequiredMixin, ListView):
         return context
 
 
+class ProcesadoList(PermissionRequiredMixin, ListView):
+    model = Cotizacion
+    context_object_name = 'orders'
+    template_name = 'cotizaciones-procesadas.html'
+    permission_required = 'cotizacion.add_cotizacion'
+
+    def get_queryset(self):
+        cotizaciones_pk = []
+        for c in self.model.objects.all():
+            if c.total() == c.total_procesado():
+                cotizaciones_pk.append(c.pk)
+        cotizaciones = self.model.objects.filter(pk__in=cotizaciones_pk)
+        return cotizaciones
+
+    def get_context_data(self, **kwargs):
+        ''' TODO: find a way to pass paciente and medico in
+        context from odontograma (?) '''
+        context = super(ProcesadoList, self).get_context_data(**kwargs)
+        context.update({'cp_active': 'active'})
+        return context
+
+
 @permission_required('cotizacion.add_cotizacion')
 def cotizacion_detail(request, odontograma_id):
     odontograma = get_object_or_404(Odontograma, pk=odontograma_id)

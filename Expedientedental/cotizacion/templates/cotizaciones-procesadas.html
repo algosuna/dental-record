@@ -16,8 +16,8 @@
 		{% for order in orders %}
 		<tr>
 			<td>{{ order.id }}</td>
-			<td>{{ order.medico }}</td>
-			<td>{{ order.paciente }}</td>
+			<td>{{ order.odontograma.medico }}</td>
+			<td>{{ order.odontograma.paciente }}</td>
 			<td>{{ order.created_at }}</td>
 			<td class="text-right">
 				<a href="{% url cotizacion:cotizacion_detail order.id %}" title="Ver Presupuesto" class="btn btn-primary">Ver Presupuesto</a>

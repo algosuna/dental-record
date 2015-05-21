@@ -11,8 +11,9 @@ from core.mixins import PermissionRequiredMixin
 from core.utils import generic_search
 
 from clinica.models import Interrogatorio, Odontograma, Procedimiento, Bitacora
-from clinica.forms import OdontogramaForm, InterrogatorioForm, BitacoraForm,\
-    ProcedimientoFormSet
+from clinica.forms import (
+    OdontogramaForm, InterrogatorioForm, BitacoraForm, ProcedimientoFormSet
+)
 from altas.models import Paciente, Tratamiento
 
 
@@ -176,7 +177,9 @@ class HistorialView(PermissionRequiredMixin, DetailView):
         context = super(HistorialView, self).get_context_data(**kwargs)
         procedimientos = Procedimiento.objects.filter(
             odontograma__paciente=self.object, status='completado')
-        context.update({'procedimientos': procedimientos, 'h_active': 'active'})
+        context.update({
+            'procedimientos': procedimientos,
+            'h_active': 'active'})
         return context
 
 
