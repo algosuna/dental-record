@@ -80,7 +80,7 @@ class AtenderPaqueteForm(forms.ModelForm):
             Fieldset(
                 '',
                 Field('paquete', wrapper_class='col-md-12'),
-                # Field('status', wrapper_class='col-md-8')
+                Field('status', wrapper_class='col-md-8')
                 ),
             )
 
@@ -129,7 +129,7 @@ class PCItemForm(forms.ModelForm):
         self.helper.layout = Layout(
             Field('producto', wrapper_class='col-md-5'),
             Field('cantidad', wrapper_class='col-md-2'),
-        
+
         )
         producto = self.get_producto()
         if producto:
@@ -158,7 +158,7 @@ class PCItemForm(forms.ModelForm):
     def save(self, paquete_consumido, commit=True):
         instance = super(PCItemForm, self).save(commit=False)
         instance.paquete_consumido = paquete_consumido
-        instance.precio = instance.producto.precioUnidad
+        instance.precio = instance.producto.precio_porcion
         if commit:
 
             instance.save()

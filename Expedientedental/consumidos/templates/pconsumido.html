@@ -39,3 +39,32 @@
 <p class="lead text-center text-muted">no existen peticiones pendientes<br><br>
 {% endif %}
 {% endblock content %}
+{% block javascript %}
+<script>
+$(function() {
+
+  $.each($('.label'), function(){
+    var status = $(this);
+
+    if(status.text() == 'En Espera') {
+
+      status.addClass(' label-warning');
+
+    } else if(status.text() == 'Surtido') {
+
+      status.addClass(' label-primary');
+
+    } else if(status.text() == 'Por Entegar') {
+
+      status.addClass(' label-info');
+
+    } else {
+
+      status.addClass(' label-default');
+
+    }
+
+  })
+})
+</script>
+{% endblock javascript %}

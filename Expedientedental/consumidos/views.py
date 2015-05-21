@@ -19,7 +19,9 @@ from consumidos.forms import (
 class PaqueteItem(CreateView):
     form_class = PaqueteForm
     template_name = 'crear_paquete.html'
-    succes_url = '/paquetes/list/'
+
+    def get_succes_url(self):
+        return reverse('consumidos:armar', kwargs=self.kwargs)
 
 
 class Paquetes(ListView):
@@ -104,14 +106,6 @@ class EditPaqueteView(UpdateView):
         return context
 
 
-class peticionesView(ListView):
-    model = PaqueteConsumido
-    form_class = PeticionForm
-    queryset = PaqueteConsumido.objects.filter(is_complete=False)
-    context_object_name = 'peticiones'
-    template_name = 'peticiones.html'
-
-
 class PeticionView(CreateView):
     form_class = PeticionForm
     template_name = 'peticion.html'
@@ -154,6 +148,13 @@ class PeticionView(CreateView):
         url = reverse('clinica:paciente_detail',
                       kwargs={'pk': self.get_paciente().pk})
         return url
+
+
+class peticionesView(ListView):
+    model = PaqueteConsumido
+    form_class = PeticionForm
+    context_object_name = 'peticiones'
+    template_name = 'peticiones.html'
 
 
 class producto_consumido(CreateView):
