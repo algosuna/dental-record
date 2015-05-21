@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import permission_required
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.forms.models import modelformset_factory
 from django.shortcuts import (
@@ -5,6 +6,7 @@ from django.shortcuts import (
 from django.views.generic import UpdateView, ListView, CreateView, DetailView
 from wkhtmltopdf.views import PDFTemplateView
 
+from core.mixins import PermissionRequiredMixin
 from core.utils import generic_search
 
 
@@ -16,25 +18,41 @@ from consumidos.forms import (
     ProductoConsumidoForm)
 
 
-class PaqueteItem(CreateView):
+class PaqueteItem(PermissionRequiredMixin, CreateView):
     form_class = PaqueteForm
     template_name = 'crear_paquete.html'
+    permission_required = 'consumidos.add_paquete'
+
+    def get_context_data(self, **kwargs):
+        context = super(PaqueteItem, self).get_context_data(**kwargs)
+        context.update({'pic': 'active'})
 
     def get_succes_url(self):
         return reverse('consumidos:armar', kwargs=self.kwargs)
 
 
-class Paquetes(ListView):
+class Paquetes(PermissionRequiredMixin, ListView):
     model = Paquete
     context_object_name = 'paquetes'
     template_name = 'paquetes.html'
+    permission_required = 'consumidos.add_paquete'
+
+    def get_context_date(self, **kwargs):
+        context = super(Paquetes, self).get_context_date(**kwargs)
+        context.update({'p_active': 'active'})
+        return context
 
 
-class AtencionPaquete(UpdateView):
+class AtencionPaquete(PermissionRequiredMixin, UpdateView):
     model = PaqueteConsumido
     template_name = 'atencion_paquete.html'
     form_class = AtenderPaqueteForm
     context_object_name = 'pconsumido'
+    permission_required = 'consumidos.add_paquete'
+
+    def get_context_data(self, **kwargs):
+        context = super(AtencionPaquete, self).get_context_data(**kwargs)
+        context.update({'ap_active': 'active'})
 
     def get_success_url(self):
         return reverse('consumidos:insumos', kwargs=self.kwargs)
@@ -84,10 +102,16 @@ def manage_paquetes(request, pk):
     return render(request, 'paquete_def.html', context)
 
 
-class suplied(ListView):
+class suplied(PermissionRequiredMixin, ListView):
     model = PaqueteConsumidoItem
     context_object_name = 'consumidos'
     template_name = 'entregados.html'
+    permission_required = 'consumidos.add_paquete'
+
+    def get_context_data(self, **kwargs):
+        context = super(suplied, self).get_context_data(**kwargs)
+        context.update({'ps_active', 'active'})
+        return context
 
 
 class EditPaqueteView(UpdateView):
@@ -184,6 +208,7 @@ class ConsumidoDetail(DetailView):
         return context
 
 
+@permission_required('consumidos.add_paquete')
 def busqueda(request):
     query = 'q'
     MODEL_MAP = {
