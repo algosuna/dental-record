@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import permission_required
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.forms.models import modelformset_factory
 from django.shortcuts import (
@@ -5,6 +6,7 @@ from django.shortcuts import (
 from django.views.generic import UpdateView, ListView, CreateView, DetailView
 from wkhtmltopdf.views import PDFTemplateView
 
+from core.mixins import PermissionRequiredMixin
 from core.utils import generic_search
 
 
@@ -19,7 +21,9 @@ from consumidos.forms import (
 class PaqueteItem(CreateView):
     form_class = PaqueteForm
     template_name = 'crear_paquete.html'
-    succes_url = '/paquetes/list/'
+
+    def get_succes_url(self):
+        return reverse('consumidos:armar', kwargs=self.kwargs)
 
 
 class Paquetes(ListView):
@@ -82,13 +86,14 @@ def manage_paquetes(request, pk):
     return render(request, 'paquete_def.html', context)
 
 
-class suplied(ListView):
-    model = PaqueteConsumidoItem
+class Suplied(ListView):
+    model = PaqueteConsumido
+    queryset = model.objects.filter(status="surtido")
     context_object_name = 'consumidos'
     template_name = 'entregados.html'
 
 
-class EditPaqueteView(UpdateView):
+class EditPaqueteView(PermissionRequiredMixin, UpdateView):
     model = PaqueteConsumidoItem
     succes_url = '/'
     template_name = 'packDetail.html'
@@ -96,20 +101,6 @@ class EditPaqueteView(UpdateView):
 
     def get_succes_url(self):
         return '/'
-
-    def get_context_data(self, **kwargs):
-        context = super(EditPaqueteView, self).get_context_data(**kwargs)
-        context['action'] = reverse('paquete-edit',
-                                    kwargs={'pk': self.object.id})
-        return context
-
-
-class peticionesView(ListView):
-    model = PaqueteConsumido
-    form_class = PeticionForm
-    queryset = PaqueteConsumido.objects.filter(is_complete=False)
-    context_object_name = 'peticiones'
-    template_name = 'peticiones.html'
 
 
 class PeticionView(CreateView):
@@ -156,7 +147,15 @@ class PeticionView(CreateView):
         return url
 
 
-class producto_consumido(CreateView):
+class peticionesView(ListView):
+    model = PaqueteConsumido
+    queryset = model.objects.filter(status="en_espera")
+    form_class = PeticionForm
+    context_object_name = 'peticiones'
+    template_name = 'peticiones.html'
+
+
+class producto_consumido(PermissionRequiredMixin, CreateView):
     form_class = ProductoConsumidoForm
     template_name = 'prconsumido.html'
     context_object_name = 'prconsumido'
@@ -183,6 +182,7 @@ class ConsumidoDetail(DetailView):
         return context
 
 
+@permission_required('consumidos.add_paquete')
 def busqueda(request):
     query = 'q'
     MODEL_MAP = {

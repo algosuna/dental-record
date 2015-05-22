@@ -8,23 +8,24 @@
 <table class="table table-hover">
   <thead>
     <tr>
-      <th>#</th>
+      
       <th>Servicio</th>
       <th>Medico</th>
       <th>Paciente</th>
       <th>Fecha</th>
       <th>Status</th>
+      <th>&nbsp;</th>
     </tr>
   </thead>
   <tbody>
     {% for peticion in peticiones %}
+
     <tr>
-      <td>{{ peticion.id }}</td>
       <td>{{ peticion.servicio }}</td>
       <td>{{ peticion.medico }}</td>
       <td>{{ peticion.paciente }}</td>
       <td>{{ peticion.fecha }}</td>
-      <td>{{ peticion.status }}</td>
+      <td><span class="label">{{ peticion.get_status_display }}</span></td>
       <td><a href="/paquetes/{{peticion.id}}/" class="btn btn-default">Atender</a></td>
       
     </tr>
@@ -35,3 +36,33 @@
 <p class="lead text-center text-muted">no existen peticiones pendientes<br><br>
 {% endif %}
 {% endblock content %}
+{% block javascript %}
+<script>
+$(function() {
+
+  $.each($('.label'), function(){
+    var status = $(this);
+
+    if(status.text() == 'En Espera') {
+
+      status.addClass(' label-warning');
+
+    } else if(status.text() == 'Surtido') {
+
+      status.addClass(' label-primary');
+
+    } else if(status.text() == 'Por Entegar') {
+
+      status.addClass(' label-info');
+
+    } else {
+
+      status.addClass(' label-default');
+
+    }
+
+  })
+})
+</script>
+
+{% endblock javascript %}

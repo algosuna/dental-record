@@ -22,16 +22,23 @@ class PaqueteItem(models.Model):
 
 
 class PaqueteConsumido(models.Model):
+    STATUS_CHOICES = (
+        ('en_espera', 'En Espera'),
+        ('por_entregar', 'Por Entregar'),
+        ('cancelado', 'Cancelado'),
+        ('surtido', 'Surtido'),
+    )
     paquete = models.ForeignKey(Paquete, null=True)
     medico = models.ForeignKey(Medico)
     paciente = models.ForeignKey(Paciente)
     servicio = models.ForeignKey('servicios.Servicio', null=True)
     fecha = models.DateTimeField()
     nota = models.TextField(blank=True)
-    is_complete = models.BooleanField()
+    status = models.CharField(
+        max_length=10, choices=STATUS_CHOICES, default='en_espera')
 
     def __unicode__(self):
-        return '%s %s' % (self.paquete, self.medico)
+        return '%s %s' % (self.paquete, self.medico, self.status)
 
     def get_item_initials(self):
         paquete = self.paquete
@@ -42,7 +49,7 @@ class PaqueteConsumido(models.Model):
                 'paquete_consumido': self,
                 'producto': pitem.producto,
                 'cantidad': pitem.cantidad_producto,
-                'precio': pitem.producto.precioUnidad
+                'precio': pitem.producto.precio_porcion
             }
             initial_list.append(initial)
         return initial_list
