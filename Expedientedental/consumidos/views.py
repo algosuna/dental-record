@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.contrib.auth.decorators import permission_required
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.forms.models import modelformset_factory
@@ -6,7 +7,7 @@ from django.shortcuts import (
 from django.views.generic import UpdateView, ListView, CreateView, DetailView
 from wkhtmltopdf.views import PDFTemplateView
 
-from core.mixins import PermissionRequiredMixin
+
 from core.utils import generic_search
 
 
@@ -93,7 +94,7 @@ class Suplied(ListView):
     template_name = 'entregados.html'
 
 
-class EditPaqueteView(PermissionRequiredMixin, UpdateView):
+class EditPaqueteView(UpdateView):
     model = PaqueteConsumidoItem
     succes_url = '/'
     template_name = 'packDetail.html'
@@ -155,7 +156,7 @@ class peticionesView(ListView):
     template_name = 'peticiones.html'
 
 
-class producto_consumido(PermissionRequiredMixin, CreateView):
+class producto_consumido(CreateView):
     form_class = ProductoConsumidoForm
     template_name = 'prconsumido.html'
     context_object_name = 'prconsumido'
@@ -182,7 +183,36 @@ class ConsumidoDetail(DetailView):
         return context
 
 
-@permission_required('consumidos.add_paquete')
+class SalidaPDF(PDFTemplateView):
+    filename = 'salida.pdf'
+    template_name = 'printit_salida.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(SalidaPDF, self).get_context_data(**kwargs)
+        producto = get_object_or_404(ProductoConsumido)
+        context['producto'] = producto
+        context['fecha'] = datetime.now().strftime("%d/%m/%Y")
+        context['hora'] = datetime.now().strftime("%I:%M %p")
+        return context
+
+
+class PaquetebillPDF(PDFTemplateView):
+    filename = 'recibo_de_entrega.pdf'
+    template_name = 'materiales_salida.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(PaquetebillPDF, self).get_context_data(**kwargs)
+        pc = PaqueteConsumido.objects.get(pk=self.kwargs.get('pk'))
+        items = pc.paqueteconsumidoitem_set.all()
+        fecha = datetime.now().strftime("%d/%m/%Y")
+        hora = datetime.now().strftime("%I:%M %p")
+        context.update({
+            'pc': pc, 'items': items,
+            'fecha': fecha, 'hora': hora
+        })
+        return context
+
+
 def busqueda(request):
     query = 'q'
     MODEL_MAP = {

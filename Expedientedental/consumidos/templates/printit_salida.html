@@ -1,1 +1,67 @@
+{% extends "basePDF.html" %}
+{% load static from staticfiles %}
 
+{% block css %}
+<style>
+  .custom-table th {
+    padding: 8px 15px !important;
+  }
+  .custom-table td {
+    background-color: #ddd;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<h2 class="page-header">Salida Producto <small class="pull-right"></small></h2>
+
+<div class="row">
+
+  <div class="col-md-10 col-md-offset-1">
+    
+
+    <table class="table table-bordered custom-table">
+
+      <tr>
+
+        <th style="width:175px;">Nombre del Paciente: </th>
+        <td>{{ producto.paciente.nombre }} {{ producto.paciente.apellidoPaterno }} {{ producto.paciente.apellidoMaterno }}
+        </td><th style="width:175px;">Nombre del Medico: </th>
+        <td>{{ producto.medico.nombre }} {{ producto.medico.apellidoPaterno }} {{ producto.medico.apellidoMaterno }}</td>
+
+        <th style="width: 60px;">Fecha:</th>
+        <td>{{ producto.fecha }}</td>
+
+        
+
+      </tr>
+
+    </table>
+
+  </div><!-- end .col-md-10 -->
+
+</div>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Producto</th>
+      <th>Cantidad</th>
+     
+    </tr>
+  </thead>
+  <tbody>
+  
+    <tr>
+      <td>{{ producto.producto }}</td>
+      <td>{{ producto.cantidad}}</td>
+      
+      
+    
+  </tbody>
+</table>
+
+
+
+{% endblock content %}

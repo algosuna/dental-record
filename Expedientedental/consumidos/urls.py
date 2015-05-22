@@ -1,7 +1,8 @@
 from django.conf.urls import patterns, url
 from consumidos.views import (
-    AtencionPaquete, manage_paquetes, PeticionView, Consumidos, ConsumidoDetail,
-    peticionesView, producto_consumido, PaqueteItem, Paquetes, Suplied)
+    AtencionPaquete, manage_paquetes, PeticionView, Consumidos,
+        ConsumidoDetail, peticionesView, producto_consumido, PaqueteItem, 
+    Paquetes, Suplied, SalidaPDF, PaquetebillPDF)
 
 urlpatterns = patterns(
     'consumidos.views',
@@ -30,12 +31,15 @@ urlpatterns = patterns(
         name='consumido'),
 
     url(r'^paquetes/detail/(?P<pk>\d+)/$', ConsumidoDetail.as_view(), 
-        name='cons_detail')
+            name='cons_detail')
 
 )
 
 urlpatterns += patterns(
     '',
-    # Reportes PDF
-    # url(r'^paquetes/pdf/$',PaquetesPDF.as_view()),
+
+    # reporte de cotizacion
+    url(r'^(?P<pk>\d+)/pdf/$', SalidaPDF.as_view(), name='pdf'),
+    url(r'^paquete/(?P<pk>\d+)/recibo/pdf/$',
+        PaquetebillPDF.as_view(), name='paquete_recibo'),
 )
