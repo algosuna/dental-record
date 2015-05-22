@@ -1,10 +1,11 @@
+from django.contrib.auth.decorators import permission_required
 from django.shortcuts import get_object_or_404, render
-from django.views.generic import ListView, DetailView
 
 from cotizacion.models import Cotizacion
 from servicios.models import PaqueteServicios, Servicio
 
 
+@permission_required('servicios.add_servicio')
 def servicios_create(request, cotizacion_id):
     cotizacion = get_object_or_404(Cotizacion, pk=cotizacion_id)
     odontograma = cotizacion.odontograma
@@ -21,15 +22,6 @@ def servicios_create(request, cotizacion_id):
     return render(request, 'paquete-servicios.html', {
                   'paquete': paquete,
                   'servicios': servicios,
-                  'total': total
+                  'total': total,
+                  'c_active': 'active'
                   })
-
-
-class PaqueteList(ListView):
-    model = PaqueteServicios
-    template_name = 'paquetes-servicios.html'
-
-
-class PaqueteDetail(DetailView):
-    model = PaqueteServicios
-    template_name = 'paquete-servicios.html'
