@@ -12,7 +12,7 @@ class Pago(TimeStampedModel):
     '''
 
     # TODO: cambiar el campo a date.
-    fecha = models.DateTimeField()  # fecha en que se da el pago
+    fecha = models.DateField()  # fecha en que se da el pago
     servicios = models.ManyToManyField(
         'servicios.Servicio', through='PagoAplicado')
     # lo que el cliente da / monto a aplicar
