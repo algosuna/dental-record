@@ -1,4 +1,4 @@
-{% extends "base1.html" %}
+{% extends "dash.html" %}
 
 {% block css %}
 <style>
@@ -11,7 +11,7 @@
 
 {% block content %}
 
-<h2 class="page-header">Precios <small class="pull-right">{{ grupo.numero }} - {{ grupo.nombre }}</small></h2>
+<h2 class="page-header">{% block title %}Precios{% endblock %} <small class="pull-right">{{ grupo.numero }} - {{ grupo.nombre }}</small></h2>
 
 <p class="lead">Ingrese precios para tratamientos.</p>
 

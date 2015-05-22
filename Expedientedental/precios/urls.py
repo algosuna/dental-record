@@ -1,9 +1,17 @@
 from django.conf.urls import patterns, url
 
+from precios.views import PreciosGrupos
+
 urlpatterns = patterns(
     'precios.views',
 
-    url(r'^altas/precios/$', 'precios_grupos_view', name='precios_grupos'),
     url(r'^altas/precios/(?P<grupo_id>\d+)/$', 'precios_view', name='precios'),
+
+)
+
+urlpatterns += patterns(
+    '',
+
+    url(r'^altas/precios/$', PreciosGrupos.as_view(), name='precios_grupos'),
 
 )

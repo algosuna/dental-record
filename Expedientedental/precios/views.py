@@ -1,23 +1,32 @@
 # encoding:utf-8
+from django.contrib.auth.decorators import permission_required
 from django.shortcuts import redirect, render, get_object_or_404
 from django.forms.models import modelformset_factory
+from django.views.generic import ListView
+
+from core.mixins import PermissionRequiredMixin
 
 from precios.forms import PreciosForm
 from precios.models import PrecioTratamiento
 from altas.models import Tratamiento, Grupo
 
 
-def precios_grupos_view(request):
-    ''' List available Grupo objects. '''
-    grupos = Grupo.objects.all()
+class PreciosGrupos(PermissionRequiredMixin, ListView):
+    model = Grupo
+    context_object_name = 'grupos'
+    template_name = 'precios-grupos.html'
+    permission_required = 'precios.change_preciotratamiento'
 
-    return render(request, 'precios-grupos.html',
-                  {'grupos': grupos})
+    def get_context_data(self, **kwargs):
+        context = super(PreciosGrupos, self).get_context_data(**kwargs)
+        context.update({'pg_active': 'active'})
+        return context
 
 
+@permission_required('precios.add_preciotratamiento')
 def precios_view(request, grupo_id):
     '''
-    Displays a table for a groupwith available Tratamiento objects and \
+    Displays a table for a group with available Tratamiento objects and
     includes a field to add precio.
     '''
     grupo = get_object_or_404(Grupo, pk=grupo_id)
@@ -56,4 +65,5 @@ def precios_view(request, grupo_id):
     return render(request, 'precios.html',
                   {'formset': formset,
                    'tratamientos': existen_tratamientos,
-                   'grupo': grupo})
+                   'grupo': grupo,
+                   'pg_active': 'active'})

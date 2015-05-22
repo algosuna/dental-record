@@ -1,8 +1,8 @@
-{% extends "base1.html" %}
+{% extends "dash.html" %}
 
 {% block content %}
 
-<h2 class="page-header">Precios</h2>
+<h2 class="page-header">{% block title %}Precios{% endblock %}</h2>
 
 {% if grupos %}
 <p class="lead">Seleccione Grupo</p>
