@@ -23,10 +23,10 @@ class PaqueteItem(models.Model):
 
 class PaqueteConsumido(models.Model):
     STATUS_CHOICES = (
-        ('En Espera', 'En Espera'),
-        ('Por Entregar', 'Por Entregar'),
-        ('Cancelado', 'Cancelado'),
-        ('Surtido', 'Surtido'),
+        ('en_espera', 'En Espera'),
+        ('por_entregar', 'Por Entregar'),
+        ('cancelado', 'Cancelado'),
+        ('surtido', 'Surtido'),
     )
     paquete = models.ForeignKey(Paquete, null=True)
     medico = models.ForeignKey(Medico)
@@ -35,7 +35,7 @@ class PaqueteConsumido(models.Model):
     fecha = models.DateTimeField()
     nota = models.TextField(blank=True)
     status = models.CharField(
-        max_length=10, choices=STATUS_CHOICES, default='En Espera')
+        max_length=10, choices=STATUS_CHOICES, default='en_espera')
 
     def __unicode__(self):
         return '%s %s' % (self.paquete, self.medico, self.status)

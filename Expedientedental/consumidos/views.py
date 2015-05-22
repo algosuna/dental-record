@@ -18,41 +18,25 @@ from consumidos.forms import (
     ProductoConsumidoForm)
 
 
-class PaqueteItem(PermissionRequiredMixin, CreateView):
+class PaqueteItem(CreateView):
     form_class = PaqueteForm
     template_name = 'crear_paquete.html'
-    permission_required = 'consumidos.add_paquete'
-
-    def get_context_data(self, **kwargs):
-        context = super(PaqueteItem, self).get_context_data(**kwargs)
-        context.update({'pic': 'active'})
 
     def get_succes_url(self):
         return reverse('consumidos:armar', kwargs=self.kwargs)
 
 
-class Paquetes(PermissionRequiredMixin, ListView):
+class Paquetes(ListView):
     model = Paquete
     context_object_name = 'paquetes'
     template_name = 'paquetes.html'
-    permission_required = 'consumidos.add_paquete'
-
-    def get_context_date(self, **kwargs):
-        context = super(Paquetes, self).get_context_date(**kwargs)
-        context.update({'p_active': 'active'})
-        return context
 
 
-class AtencionPaquete(PermissionRequiredMixin, UpdateView):
+class AtencionPaquete(UpdateView):
     model = PaqueteConsumido
     template_name = 'atencion_paquete.html'
     form_class = AtenderPaqueteForm
     context_object_name = 'pconsumido'
-    permission_required = 'consumidos.add_paquete'
-
-    def get_context_data(self, **kwargs):
-        context = super(AtencionPaquete, self).get_context_data(**kwargs)
-        context.update({'ap_active': 'active'})
 
     def get_success_url(self):
         return reverse('consumidos:insumos', kwargs=self.kwargs)
@@ -102,19 +86,14 @@ def manage_paquetes(request, pk):
     return render(request, 'paquete_def.html', context)
 
 
-class suplied(PermissionRequiredMixin, ListView):
-    model = PaqueteConsumidoItem
+class Suplied(ListView):
+    model = PaqueteConsumido
+    queryset = model.objects.filter(status="surtido")
     context_object_name = 'consumidos'
     template_name = 'entregados.html'
-    permission_required = 'consumidos.add_paquete'
-
-    def get_context_data(self, **kwargs):
-        context = super(suplied, self).get_context_data(**kwargs)
-        context.update({'ps_active', 'active'})
-        return context
 
 
-class EditPaqueteView(UpdateView):
+class EditPaqueteView(PermissionRequiredMixin, UpdateView):
     model = PaqueteConsumidoItem
     succes_url = '/'
     template_name = 'packDetail.html'
@@ -122,12 +101,6 @@ class EditPaqueteView(UpdateView):
 
     def get_succes_url(self):
         return '/'
-
-    def get_context_data(self, **kwargs):
-        context = super(EditPaqueteView, self).get_context_data(**kwargs)
-        context['action'] = reverse('paquete-edit',
-                                    kwargs={'pk': self.object.id})
-        return context
 
 
 class PeticionView(CreateView):
@@ -176,12 +149,13 @@ class PeticionView(CreateView):
 
 class peticionesView(ListView):
     model = PaqueteConsumido
+    queryset = model.objects.filter(status="en_espera")
     form_class = PeticionForm
     context_object_name = 'peticiones'
     template_name = 'peticiones.html'
 
 
-class producto_consumido(CreateView):
+class producto_consumido(PermissionRequiredMixin, CreateView):
     form_class = ProductoConsumidoForm
     template_name = 'prconsumido.html'
     context_object_name = 'prconsumido'

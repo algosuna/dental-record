@@ -207,6 +207,7 @@ class ProductoConsumidoForm(forms.ModelForm):
                 Field('paciente', wrapper_class='col-md-4'),
                 Field('producto', wrapper_class='col-md-5'),
                 Field('cantidad', wrapper_class='col-md-1'),
+                Field('status', wrapper_class='col-md-1'),
 
                 ),
             ButtonHolder(Submit('save', 'Generar'))

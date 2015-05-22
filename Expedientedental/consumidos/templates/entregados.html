@@ -20,11 +20,11 @@
   <tbody>
     {% for consumido in consumidos %}
     <tr>
-      <td>{{ consumido.paquete_consumido.paquete}}</td>
-      <td>{{ consumido.paquete_consumido.fecha }}</td>
-      <td>{{ consumido.paquete_consumido.medico }}</td>
-      <td>{{ consumido.paquete_consumido.servicio }}</td>
-      <td><span class="label">{{ consumido.paquete_consumido.get_status_display }}</span></td>
+      <td>{{ consumido.paquete}}</td>
+      <td>{{ consumido.fecha }}</td>
+      <td>{{ consumido.medico }}</td>
+      <td>{{ consumido.servicio }}</td>
+      <td><span class="label">{{ consumido.get_status_display }}</span></td>
     </tr>
     {% endfor %}
   </tbody>
