@@ -9,6 +9,7 @@ from wkhtmltopdf.views import PDFTemplateView
 
 
 from core.utils import generic_search
+from core.views import CreateObjFromContext
 
 
 from servicios.models import Servicio
@@ -16,7 +17,7 @@ from consumidos.models import (
     PaqueteConsumido, PaqueteConsumidoItem, Paquete, ProductoConsumido)
 from consumidos.forms import (
     PaqueteForm, AtenderPaqueteForm, PCItemForm, PeticionForm,
-    ProductoConsumidoForm)
+    ProductoConsumidoForm, SalidaCanceladaForm)
 
 
 class PaqueteItem(CreateView):
@@ -53,11 +54,6 @@ def manage_paquetes(request, pk):
     initial_list = []
     if not items.exists():
         initial_list = paquete_consumido.get_item_initials()
-        # for item in items:
-            # initial_list = item.get_item_initials()
-    # agregamos initial para un formulario vacio
-            # initial_list.append({'paquete_consumidoitem': paquete_consumido,
-            #                      'items': items})
     if request.method == 'POST':
         ItemFormset = modelformset_factory(PaqueteConsumidoItem,
                                            form=PCItemForm,
@@ -180,6 +176,21 @@ class ConsumidoDetail(DetailView):
         context = super(ConsumidoDetail, self).get_context_data(**kwargs)
         producto = self.object.producto
         context.update({'cd_active': 'active', 'producto': producto})
+        return context
+
+
+class SalidaCancel(CreateObjFromContext):
+    form_class = SalidaCanceladaForm
+    ctx_model = ProductoConsumido
+    template_name = 'salida-cancel.html'
+    success_url = reverse_lazy('consumidos:salidas_canceladas')
+    initial_value = 'salida'
+
+    def get_context_data(self, **kwargs):
+        context = super(SalidaCancel, self).get_context_data(**kwargs)
+        context['fecha'] = datetime.now().strftime("%d/%m/%Y")
+        context['hora'] = datetime.now().strftime("%I:%M %p")
+        context.update({'s_active': 'active'})
         return context
 
 

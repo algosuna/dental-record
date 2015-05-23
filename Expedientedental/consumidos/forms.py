@@ -211,4 +211,27 @@ class ProductoConsumidoForm(forms.ModelForm):
 
                 ),
             ButtonHolder(Submit('save', 'Generar'))
-)
+        )
+
+
+class SalidaCanceladaForm(forms.ModelForm):
+    class Meta:
+        model = ProductoConsumido
+        exclude = ('cantidad',)
+
+    def __init__(self, *args, **kwargs):
+        super(SalidaCanceladaForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_class = 'form-inline'
+        self.helper.field_template = 'bootstrap3/layout/inline_field.html'
+        self.helper.layout = Layout(
+            'cancelado',
+            Submit('submit', 'Cancelar', css_class='pull-right')
+        )
+        # self.fields['cancelado'].label = 'Cancelar Salida'
+
+    def save(self, commit=True):
+        instance = super(SalidaCanceladaForm, self).save(commit=False)
+        if commit:
+            pass
+        return instance
