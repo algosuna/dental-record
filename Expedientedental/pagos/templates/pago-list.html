@@ -78,7 +78,7 @@
         <td>{{ pago.updated_at }}</td>
         <td>{{ pago.paciente.nombre }} {{ pago.paciente.apellidoPaterno }} {{ pago.paciente.apellidoMaterno }}</td>
         <td>{{ pago.monto_aplicado }}</td>
-        <td><a href="{% url pagos:pagos_detail pago.id %}" class="btn btn-primary pull-right">Ver Pago</a><!-- boton para ir a pago --></td>
+        <td><div class="btn-group pull-right"><a href="{% url pagos:pagos_detail pago.id %}" class="btn btn-primary">Ver Pago</a><a href="{% url pagos:pagos_paciente pago.paciente.id %}" class="btn btn-default">Ver Todos los Pagos</a></div></td>
 
       </tr>
       {% endfor %}

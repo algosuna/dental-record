@@ -23,11 +23,11 @@
 
     {% if perms.cotizacion.add_cotizacion %}
     <li class="sidebar-header text-center">Administraci&oacute;n</li>
-    <li class="{{ pg_active }}"><a href="{% url precios:precios_grupos %}"><i class="fa fa-usd fa-fw"></i> Precios por Grupo</a></li>
+    <li class="{{ rp_active }}"><a href="{% url pagos:paciente_search %}"><i class="fa fa-search fa-fw"></i> Buscar Paciente</a></li>
     <li class="{{ c_active }}"><a href="{% url cotizacion:cotizacion_list %}"><i class="fa fa-calculator fa-fw"></i> Presupuestos</a></li>
     <li class="{{ cp_active }}"><a href="{% url cotizacion:procesado_list %}"><i class="fa fa-calculator fa-fw"></i> Presupuestos Procesados</a></li>
-    <li class="{{ rp_active }}"><a href="{% url pagos:paciente_search %}"><i class="fa fa-usd fa-fw"></i> Realizar Pago</a></li>
     <li class="{{ r_active }}"><a href="{% url pagos:pagos_list %}"><i class="fa fa-list fa-fw"></i> Pagos Realizados</a></li>
+    <li class="{{ pg_active }}"><a href="{% url precios:precios_grupos %}"><i class="fa fa-usd fa-fw"></i> Precios por Grupo</a></li>
     {% endif %}
 
     {% if perms.consumidos.add_consumidos %}

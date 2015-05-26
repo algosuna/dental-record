@@ -1,6 +1,8 @@
 from django.conf.urls import patterns, url
-from pagos.views import RecibodePagoPDF, PagosPacienteList, PagosDetail,\
-    PagosPending
+from pagos.views import (
+    RecibodePagoPDF, PagosPacienteList, PagosDetail, PagosPending,
+    PagosServicio, PagosServicios
+)
 
 urlpatterns = patterns(
     'pagos.views',
@@ -16,14 +18,19 @@ urlpatterns = patterns(
 urlpatterns += patterns(
     '',
 
-    url(r'^pending/(?P<pk>\d+)/$',
+    url(r'^(?P<pk>\d+)/pending/$',
         PagosPending.as_view(), name='pagos_pending'),
 
-    # patment detail
-    url(r'^detail/(?P<pk>\d+)/$', PagosDetail.as_view(), name='pagos_detail'),
+    # payment detail
+    url(r'^(?P<pk>\d+)/detail/$', PagosDetail.as_view(), name='pagos_detail'),
 
     url(r'^list/(?P<pk>\d+)/$',
         PagosPacienteList.as_view(), name='pagos_paciente'),
+
+    url(r'^servicios/(?P<pk>\d+)/$',
+        PagosServicios.as_view(), name='pagos_servicios'),
+    url(r'^servicio/(?P<pk>\d+)/$',
+        PagosServicio.as_view(), name='pagos_servicio'),
 
     url(r'^pago/(?P<pago_id>\d+)/pdf/$', RecibodePagoPDF.as_view()),
 )

@@ -1,0 +1,72 @@
+{% extends 'dash.html' %}
+
+{% block content %}
+<h2 class="page-header">{% block title %}Servicios con Pagos{% endblock %} <small class="pull-right">{{ paciente.nombre }} {{ paciente.apellidoPaterno }} {{ paciente.apellidoMaterno }} #{{ paciente.credencialPaciente }}</small></h2>
+
+<table class="table table-hover">
+
+  <thead>
+
+    <tr>
+
+      <th>Nombre</th>
+      <th>Costo</th>
+      <th>Status</th>
+      <th>&nbsp;</th>
+
+    </tr>
+
+  </thead>
+
+  <tbody>
+
+    {% for servicio in servicios %}
+    <tr>
+
+      <td class="padded">{{ servicio.procedimiento }}</td>
+      <td class="padded">$ {{ servicio.precio }}</td>
+      <td class="padded"><span class="label label-default">{{ servicio.get_status_display }}</span></td>
+      <td><a href="{% url pagos:pagos_servicio servicio.id %}" class="btn btn-default pull-right">Ver Pagos</a></td>
+
+    </tr>
+    {% endfor %}
+
+  </tbody>
+
+</table>
+{% endblock %}
+
+{% block javascript %}
+<script>
+
+$(function() {
+
+  var status = $('.label');
+
+  // for setting the label color
+  $.each(status, function(){
+    var status = $(this);
+
+    if(status.text() == 'Pagado'){
+
+      status.addClass(' label-primary');
+
+    } else if(status.text() == 'Pago Parcial'){
+
+      status.addClass(' label-info');
+
+    } else if(status.text() == 'Aceptado'){
+
+      status.addClass(' label-success');
+
+    } else {
+
+      status.addClass(' label-warning');
+
+    }
+
+  })
+
+});
+</script>
+{% endblock %}

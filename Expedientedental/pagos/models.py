@@ -10,8 +10,6 @@ class Pago(TimeStampedModel):
     Monto que da el cliente.
     Este modelo permite que el pago se asigne a mas de una cotizacion.
     '''
-
-    # TODO: cambiar el campo a date.
     fecha = models.DateField()  # fecha en que se da el pago
     servicios = models.ManyToManyField(
         'servicios.Servicio', through='PagoAplicado')

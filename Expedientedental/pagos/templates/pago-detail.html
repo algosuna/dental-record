@@ -14,7 +14,7 @@
 
 {% block content %}
 
-<h2 class="page-header">Resumen de Pago <small class="pull-right">Pago #{{ pago.id }}</small></h2>
+<h2 class="page-header">{% block title %}Resumen de Pago{% endblock %} <small class="pull-right">Pago #{{ pago.id }}</small></h2>
 
 <div class="row">
 
@@ -63,7 +63,7 @@
   </tbody>
 </table>
 
-<a href="/pagos/pago/{{pago.id}}/pdf/" class="pull-right">Imprimir Recibo 
+<a href="/pagos/pago/{{pago.id}}/pdf/" class="pull-right">Imprimir Recibo
 <span class="glyphicon glyphicon-print"></span></a>
 
 {% endblock content %}
