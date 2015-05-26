@@ -26,18 +26,21 @@ urlpatterns = patterns(
         GrupoUpdateView.as_view(), name='grupo_edit'),
 
     url(r'^tratamiento/$', TratamientosView.as_view(), name='tratamiento'),
-    url(r'^tratamiento/new/$', TratamientoNewView.as_view()),
+    url(r'^tratamiento/new/$',
+        TratamientoNewView.as_view(), name='tratamiento_new'),
     url(r'^tratamiento/edit/(?P<pk>\d+)/$',
-        TratamientoUpdateView.as_view()),
+        TratamientoUpdateView.as_view(), name='tratamiento_edit'),
 
     url(r'^evaluacion/$', EvaluacionesView.as_view(), name='evaluacion'),
-    url(r'^evaluacion/new/$', EvaluacionNewView.as_view()),
+    url(r'^evaluacion/new/$',
+        EvaluacionNewView.as_view(), name='evaluacion_new'),
     url(r'^evaluacion/edit/(?P<pk>\d+)/$',
-        EvaluacionUpdateView.as_view()),
+        EvaluacionUpdateView.as_view(), name='evaluacion_edit'),
 
     url(r'^preventivo/$',
         TratamientosPreventivosView.as_view(), name='preventivo'),
-    url(r'^preventivo/new/$', TratamientoPreventivoNewView.as_view()),
+    url(r'^preventivo/new/$',
+        TratamientoPreventivoNewView.as_view(), name='preventivo_new'),
     url(r'^preventivo/edit/(?P<pk>\d+)/$',
-        TratamientoPreventivoUpdateView.as_view()),
+        TratamientoPreventivoUpdateView.as_view(), name='preventivo_edit'),
 )

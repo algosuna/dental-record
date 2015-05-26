@@ -1,7 +1,10 @@
 # encoding:utf-8
+from django.contrib.auth.decorators import permission_required
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.shortcuts import render, redirect
 from django.views.generic import CreateView, ListView, UpdateView
+
+from core.mixins import PermissionRequiredMixin
 
 from altas.models import (
     Grupo, Tratamiento, TratamientoPreventivo, Evaluacion, Medico, Paciente
@@ -13,6 +16,7 @@ from altas.forms import (
 from precios.models import PrecioTratamiento
 
 
+@permission_required('altas.add_medico')
 def medico_create(request):
     ''' Creates Medico and User. '''
     if request.method == 'POST':
@@ -38,10 +42,11 @@ def medico_create(request):
                    'm_active': 'active'})
 
 
-class Medicos(ListView):
+class Medicos(PermissionRequiredMixin, ListView):
     model = Medico
     context_object_name = 'medicos'
     template_name = 'medicos.html'
+    permission_required = 'altas.add_medico'
 
     def get_context_data(self, **kwargs):
         context = super(Medicos, self).get_context_data(**kwargs)
@@ -49,11 +54,12 @@ class Medicos(ListView):
         return context
 
 
-class MedicoUpdate(UpdateView):
+class MedicoUpdate(PermissionRequiredMixin, UpdateView):
     model = Medico
     form_class = MedicoForm
     template_name = 'medico.html'
     success_url = reverse_lazy('altas:medicos')
+    permission_required = 'altas.change_medico'
 
     def get_context_data(self, **kwargs):
         context = super(MedicoUpdate, self).get_context_data(**kwargs)
@@ -61,10 +67,11 @@ class MedicoUpdate(UpdateView):
         return context
 
 
-class PacienteCreate(CreateView):
+class PacienteCreate(PermissionRequiredMixin, CreateView):
     form_class = PacienteForm
     template_name = 'paciente.html'
     success_url = reverse_lazy('altas:pacientes')
+    permission_required = 'altas.add_paciente'
 
     def get_context_data(self, **kwrags):
         context = super(PacienteCreate, self).get_context_data(**kwrags)
@@ -72,10 +79,11 @@ class PacienteCreate(CreateView):
         return context
 
 
-class Pacientes(ListView):
+class Pacientes(PermissionRequiredMixin, ListView):
     model = Paciente
     context_object_name = 'pacientes'
     template_name = 'pacientes.html'
+    permission_required = 'altas.add_paciente'
 
     def get_context_data(self, **kwrags):
         context = super(Pacientes, self).get_context_data(**kwrags)
@@ -83,11 +91,12 @@ class Pacientes(ListView):
         return context
 
 
-class PacienteUpdate(UpdateView):
+class PacienteUpdate(PermissionRequiredMixin, UpdateView):
     model = Paciente
     form_class = PacienteForm
     template_name = 'paciente.html'
     success_url = reverse_lazy('altas:pacientes')
+    permission_required = 'altas.change_paciente'
 
     def get_context_data(self, **kwrags):
         context = super(PacienteUpdate, self).get_context_data(**kwrags)
@@ -95,9 +104,10 @@ class PacienteUpdate(UpdateView):
         return context
 
 
-class GrupoNewView(CreateView):
+class GrupoNewView(PermissionRequiredMixin, CreateView):
     form_class = GrupoForm
     template_name = 'grupo.html'
+    permission_required = 'altas.add_grupo'
 
     def get_context_data(self, **kwargs):
         context = super(GrupoNewView, self).get_context_data(**kwargs)
@@ -108,10 +118,11 @@ class GrupoNewView(CreateView):
         return reverse('precios:precios', args=[self.object.id])
 
 
-class GruposView(ListView):
+class GruposView(PermissionRequiredMixin, ListView):
     model = Grupo
     context_object_name = 'grupos'
     template_name = 'grupos.html'
+    permission_required = 'altas.add_grupo'
 
     def get_context_data(self, **kwargs):
         context = super(GruposView, self).get_context_data(**kwargs)
@@ -119,11 +130,12 @@ class GruposView(ListView):
         return context
 
 
-class GrupoUpdateView(UpdateView):
+class GrupoUpdateView(PermissionRequiredMixin, UpdateView):
     model = Grupo
     form_class = GrupoForm
     template_name = 'grupo.html'
     success_url = reverse_lazy('altas:grupos')
+    permission_required = 'altas.change_grupo'
 
     def get_context_data(self, **kwargs):
         context = super(GrupoUpdateView, self).get_context_data(**kwargs)
@@ -131,12 +143,14 @@ class GrupoUpdateView(UpdateView):
         return context
 
 
-class MetodoMixin(object):
+class MetodoMixin(PermissionRequiredMixin, object):
     name = None
     slug = None
     # form_class = MetodoForm
     template_name = 'metodo.html'
     active = None
+    perms = None
+    permission_required = None
 
     def get_success_url(self):
         if self.slug:
@@ -158,6 +172,17 @@ class MetodoMixin(object):
             context['name'] = self.name
 
         return context
+
+    def get_permission_required(self, request=None):
+        perms = self.perms
+
+        if perms:
+            self.permission_required = 'add_%s' % perms
+
+        else:
+            self.permission_required = 'add_%s' % self.name
+
+        return self.permission_required
 
 
 class MetodoNewView(MetodoMixin, CreateView):
@@ -228,6 +253,7 @@ class TratamientoPreventivoNewView(MetodoNewView):
     slug = 'preventivo'
     form_class = TratamientoPreventivoForm
     active = 'tp_active'
+    perms = 'tratamientopreventivo'
 
 
 class TratamientosPreventivosView(MetodoListView):
@@ -235,6 +261,7 @@ class TratamientosPreventivosView(MetodoListView):
     model = TratamientoPreventivo
     slug = 'preventivo'
     active = 'tp_active'
+    perms = 'tratamientopreventivo'
 
 
 class TratamientoPreventivoUpdateView(MetodoUpdateView):
@@ -243,3 +270,4 @@ class TratamientoPreventivoUpdateView(MetodoUpdateView):
     slug = 'preventivo'
     form_class = TratamientoPreventivoForm
     active = 'tp_active'
+    perms = 'tratamientopreventivo'

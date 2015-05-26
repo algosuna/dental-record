@@ -17,7 +17,7 @@ class PagoForm(forms.ModelForm):
         self.helper.form_tag = False
         self.helper.form_class = 'inline-form'
         self.fields['fecha'].label = 'Fecha'
-        self.fields['fecha'].initial = dt.datetime.now()
+        self.fields['fecha'].initial = dt.date.now()
         self.fields['monto'].label = 'Monto a Pagar'
 
 
