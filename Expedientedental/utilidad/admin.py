@@ -1,5 +1,5 @@
 from django.contrib import admin
-from calculos.models import Dolar
+from utilidad.models import Dolar
 
 
 

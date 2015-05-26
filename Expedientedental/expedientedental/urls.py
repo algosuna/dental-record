@@ -23,7 +23,7 @@ urlpatterns = patterns(
     url(r'^clinica/', include('clinica.urls', namespace='clinica')),
     url(r'^presupuesto/', include('cotizacion.urls', namespace='cotizacion')),
     url(r'^pagos/', include('pagos.urls', namespace='pagos')),
-    url(r'^calculos/', include('calculos.urls', namespace='calculos')),
+    url(r'^utilidad/', include('utilidad.urls', namespace='calculos')),
     url(r'^inventario/', include('inventario.urls', namespace='inventario')),
 
     url(r'^', include('servicios.urls', namespace='servicios')),

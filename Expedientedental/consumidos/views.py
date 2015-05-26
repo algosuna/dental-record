@@ -10,11 +10,14 @@ from wkhtmltopdf.views import PDFTemplateView
 
 from core.utils import generic_search
 from core.views import CreateObjFromContext
+from core.mixins import PermissionRequiredMixin
 
 
 from servicios.models import Servicio
 from consumidos.models import (
-    PaqueteConsumido, PaqueteConsumidoItem, Paquete, ProductoConsumido)
+    PaqueteConsumido, PaqueteConsumidoItem, Paquete, ProductoConsumido,
+    CancelSalida)
+
 from consumidos.forms import (
     PaqueteForm, AtenderPaqueteForm, PCItemForm, PeticionForm,
     ProductoConsumidoForm, SalidaCanceladaForm)
@@ -179,18 +182,44 @@ class ConsumidoDetail(DetailView):
         return context
 
 
-class SalidaCancel(CreateObjFromContext):
-    form_class = SalidaCanceladaForm
-    ctx_model = ProductoConsumido
+class SalidaCancelledList(PermissionRequiredMixin, ListView):
+    model = CancelSalida
+    queryset = model.objects.filter()
+    context_object_name = 'salidas'
     template_name = 'salida-cancel.html'
-    success_url = reverse_lazy('consumidos:salidas_canceladas')
+    permission_required = 'consumidos.add_cancelsalida'
+
+    def get_context_data(self, **kwargs):
+        context = super(SalidaCancelledList, self).get_context_data(**kwargs)
+        cancelled = CancelSalida.objects.all()
+        context.update({'cancelsalida': cancelled, 'ec_active': 'active'})
+        return context
+
+
+class SalidaCancel(PermissionRequiredMixin, CreateObjFromContext):
+    form_class = SalidaCanceladaForm
+    ctx_model = CancelSalida
+    template_name = 'entrada-cancel.html'
+    success_url = reverse_lazy('consumidos:entradas_canceladas')
+    permission_required = 'consumidos.add_cancelsalida'
     initial_value = 'salida'
 
     def get_context_data(self, **kwargs):
         context = super(SalidaCancel, self).get_context_data(**kwargs)
-        context['fecha'] = datetime.now().strftime("%d/%m/%Y")
-        context['hora'] = datetime.now().strftime("%I:%M %p")
-        context.update({'s_active': 'active'})
+        context.update({'e_active': 'active'})
+        return context
+
+
+class EntradaCancelDetail(PermissionRequiredMixin, DetailView):
+    model = CancelSalida
+    template_name = 'entradacancel-detail.html'
+    permission_required = 'consumidos.add_cancelsalida'
+    context_object_name = 'cancelsalida'
+
+    def get_context_data(self, **kwargs):
+        context = super(EntradaCancelDetail, self).get_context_data(**kwargs)
+        entrada = self.object.entrada
+        context.update({'entrada': entrada, 'ec_active': 'active'})
         return context
 
 
