@@ -1,77 +1,47 @@
 {% extends "basePDF.html" %}
 {% load static from staticfiles %}
 
+{% block title %}Recibo de Pago de Servicios{% endblock %}
 
+{% block headercontent %}
+<div class="panel panel-default">
+  <div class="panel-heading">Pago #{{ pago.id }}</div>
+  <table class="table table-bordered table-condensed">
+    <tr>
+      <th>Nombre</th>
+      <td>{{ pago.paciente }}</td>
+    </tr>
+    <tr>
+      <th>Grupo</th>
+      <td>{{ pago.paciente.grupo }}</td>
+    </tr>
+    <tr>
+      <th>Medico Tratante</th>
+      <td>{{ pago.medico }}</td>
+    </tr>
+  </table>
+</div>
+{% endblock %}
 
 {% block content %}
-<div class="well odontograma clearfix">
- 
-    <alt="{{ pago.paciente.nombre }}
-     {{ pago.paciente.apellidoPaterno }}" 
-     class="pull-left img-rounded">
-  </div>
-  <div class="col-xs-9">
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Nombre</th>
-          <th>Grupo</th>
-          <th># Presupuesto</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>{{ pago.paciente}}</td>
-          <td>{{ pago.paciente.grupo }}</td>
-          <td class = "text-center">{{ pago.id}}</td>
-        </tr>
-      </tbody>
-      <thead>
-        <tr>
-          <th>Medico Tratante</th>
-          <th>&nbsp;</th>
-          <th>&nbsp;</th>
-        </tr>
-        <tr>
-          <td>{{ pago.medico }}</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-        </tr>
-      </thead>
-    </table>
-  </div>
-</div><!-- patient info section --> 
-<h1 class="page-header">Servicios</h1>
 
-
-    {% if  pago %}
-
-           <table class="table">
-      <thead>
-        <tr>
-              <th>Plan de Tratamiento</th>
-              <th>total</th>
-              
-        </tr>
-      </thead>
-           <tbody>
-  {% for pago in pago.pagoaplicado_set.all %}
+<table class="table">
+  <thead>
+    <tr>
+      <th>Plan de Tratamiento</th>
+      <th>Costo</th>
+      <th>Importe</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for pago in pago.pagoaplicado_set.all %}
     <tr>
       <td>{{ pago.servicio }}</td>
       <td>$ {{ pago.servicio.precio }}</td>
-      
-      
+      <td>$ {{ pago.importe }}</td>
+    </tr>
     {% endfor %}
   </tbody>
 </table>
-            
-    {% endif %}
-          </tbody>
-        </table>
-
-
-
-
-
 {% endblock content %}
 

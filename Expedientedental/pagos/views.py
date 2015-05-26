@@ -3,7 +3,7 @@ from datetime import datetime
 from django.contrib.auth.decorators import permission_required
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import DetailView
+from django.views.generic import DetailView, ListView
 
 from wkhtmltopdf.views import PDFTemplateView
 
@@ -11,7 +11,7 @@ from core.utils import generic_search
 from core.mixins import PermissionRequiredMixin
 
 from altas.models import Paciente
-from servicios.models import PaqueteServicios
+from servicios.models import PaqueteServicios, Servicio
 from pagos.models import Pago
 from pagos.forms import PagoForm, PagoAplicadoFormset
 
@@ -141,6 +141,7 @@ def paciente_search(request):
 
 
 class PagosPacienteList(PermissionRequiredMixin, DetailView):
+    ''' Pagos realizados por paciente. '''
     model = Paciente
     context_object_name = 'paciente'
     template_name = 'pago-paciente.html'
@@ -150,6 +151,36 @@ class PagosPacienteList(PermissionRequiredMixin, DetailView):
         context = super(PagosPacienteList, self).get_context_data(**kwargs)
         pagos = self.object.pago_set.all()
         context.update({'r_active': 'active', 'pagos': pagos})
+        return context
+
+
+class PagosServicio(PermissionRequiredMixin, DetailView):
+    model = Servicio
+    context_object_name = 'servicio'
+    template_name = 'pago-servicio.html'
+    permission_required = 'pagos.add_pago'
+
+    def get_context_data(self, **kwargs):
+        context = super(PagosServicio, self).get_context_data(**kwargs)
+        pagos = self.object.pagoaplicado_set.all()
+        paciente = self.object.pago_set.all()[0].paciente
+        context.update({
+            'pagos': pagos,
+            'paciente': paciente,
+            'r_active': 'active'})
+        return context
+
+
+class PagosServicios(PermissionRequiredMixin, DetailView):
+    model = Paciente
+    context_object_name = 'paciente'
+    template_name = 'pago-servicios.html'
+    permission_required = 'pagos.add_pago'
+
+    def get_context_data(self, **kwargs):
+        context = super(PagosServicios, self).get_context_data(**kwargs)
+        servicios = Servicio.objects.all()
+        context.update({'servicios': servicios, 'r_active': 'active'})
         return context
 
 
@@ -164,7 +195,8 @@ class PagosPending(PermissionRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(PagosPending, self).get_context_data(**kwargs)
-        paquetes = PaqueteServicios.objects.filter(odontograma__paciente=self.object)
+        paquetes = PaqueteServicios.objects.filter(
+            odontograma__paciente=self.object)
         # Quitamos paquetes que no tengan items que cobrar (total = 0)
         paquetes = [
             p for p in paquetes if p.total() != 0 and p.total_adeudado() != 0
@@ -189,15 +221,17 @@ class PagosDetail(PermissionRequiredMixin, DetailView):
 class RecibodePagoPDF(PDFTemplateView):
     filename = 'recibo.pdf'
     template_name = 'recibo_pago.html'
-    cmd_options = {
-        'margin-top': 13,
-    }
 
     def get_context_data(self, **kwargs):
         context = super(RecibodePagoPDF, self).get_context_data(**kwargs)
         self.pago_id = int(kwargs.get('pago_id'))
         pago = get_object_or_404(Pago, pk=self.pago_id)
-        context['pago'] = pago
-        context['fecha'] = datetime.now().strftime("%d/%m/%Y")
-        context['hora'] = datetime.now().strftime("%I:%M %p")
+        fecha = datetime.now().strftime("%d/%m/%Y")
+        hora = datetime.now().strftime("%I:%M %p")
+        context.update({
+            'pago': pago,
+            'fecha': fecha,
+            'hora': hora,
+            'low_margin': 'low-margin'
+            })
         return context

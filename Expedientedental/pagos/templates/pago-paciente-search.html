@@ -1,8 +1,7 @@
 {% extends 'dash.html' %}
-{% block title %}Pagos - Pendientes{% endblock %}
 
 {% block content %}
-<h2 class="page-header">Pagos</h2>
+<h2 class="page-header">{% block title %}Pagos{% endblock %}</h2>
 
 {% if search_string %}
 
@@ -31,7 +30,13 @@
         <td class="padded">{{ paciente.credencialPaciente }}</td>
         <td class="padded">{{ paciente.nombre }} {{ paciente.apellidoPaterno }} {{ paciente.apellidoMaterno }}</td>
         <td class="padded">{{ paciente.grupo }}</td>
-        <td><div class="btn-group pull-right"><a href="{% url pagos:pagos_pending paciente.id %}" class="btn btn-success">Ver Pendientes</a><a href="{% url pagos:pagos_paciente paciente.id %}" class="btn btn-default">Ver Pagos</a></div></td>
+        <td>
+          <div class="btn-group pull-right">
+            <a href="{% url pagos:pagos_pending paciente.id %}" class="btn btn-success">Ver Pendientes</a>
+            <a href="{% url pagos:pagos_paciente paciente.id %}" class="btn btn-default">Ver Pagos</a>
+            <a href="{% url pagos:pagos_servicios paciente.id %}" class="btn btn-default">Ver Servicios con Pagos</a>
+          </div>
+        </td>
       </tr>
       {% endfor %}
 
