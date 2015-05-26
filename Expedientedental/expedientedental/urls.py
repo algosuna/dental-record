@@ -21,10 +21,10 @@ urlpatterns = patterns(
     url(r'^', include('accounts.urls', namespace='accounts')),
     url(r'^altas/', include('altas.urls', namespace='altas')),
     url(r'^clinica/', include('clinica.urls', namespace='clinica')),
-    url(r'^presupuesto/', include('cotizacion.urls', namespace='cotizacion')),
-    url(r'^pagos/', include('pagos.urls', namespace='pagos')),
-    url(r'^utilidad/', include('utilidad.urls', namespace='calculos')),
     url(r'^inventario/', include('inventario.urls', namespace='inventario')),
+    url(r'^pagos/', include('pagos.urls', namespace='pagos')),
+    url(r'^presupuesto/', include('cotizacion.urls', namespace='cotizacion')),
+    url(r'^utilidad/', include('utilidad.urls', namespace='utilidad')),
 
     url(r'^', include('servicios.urls', namespace='servicios')),
     url(r'^', include('precios.urls', namespace='precios')),
