@@ -175,7 +175,7 @@ INSTALLED_APPS = (
     'precios',
     'pagos',
     'servicios',
-    'calculos'
+    'utilidad'
 
 )
 

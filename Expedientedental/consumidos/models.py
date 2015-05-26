@@ -84,7 +84,7 @@ class CancelSalida(CancelledModel):
     Hereda del modelo abstracto CancelledModel.
     Agrega relacion con la salida a cancelar.
     '''
-    entrada = models.ForeignKey(ProductoConsumido)
+    salida = models.ForeignKey(ProductoConsumido)
 
     def __unicode__(self):
         return '%s' % self.reason
