@@ -28,6 +28,7 @@
           <td>{{ pconsumido.servicio}}</td>
           <td>{{ pconsumido.medico}}</td>
           <td>{{pconsumido.fecha|date:"d-M-Y"}}</td>
+          <td><a href="#" class="glyphicon glyphicon-print">imprimir Acuse</a></td>
           
          <form action="" method="post">{% csrf_token %}
         </tr>

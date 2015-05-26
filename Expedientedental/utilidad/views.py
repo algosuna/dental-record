@@ -4,7 +4,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import CreateView, ListView, UpdateView
 #from datetime import datetime
 from wkhtmltopdf.views import PDFTemplateView
-from calculos.forms import DolarForm
+from utilidad.forms import DolarForm
 from pagos.models import PagoAplicado
 from altas.models import Paciente
 from servicios.models import PaqueteServicios

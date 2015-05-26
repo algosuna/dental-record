@@ -28,8 +28,8 @@
       <td>{{ consumido.fecha }}</td>
       
       <td><a href="{% url consumidos:cons_detail consumido.id %}" class="glyphicon glyphicon-eye-open">Detalles</a></td>
-      <td><a href="/paquetes/{{peticion.id}}/" class="glyphicon glyphicon-ban-circle">Cancelar</a></td>
-      <td><a href="/paquetes/{{peticion.id}}/" class="glyphicon glyphicon-print">imprimir Acuse</a></td>
+      <td><a href="#" class="glyphicon glyphicon-ban-circle">Cancelar</a></td>
+      <td><a href="{% url consumidos:pdf consumido.id %}" class="glyphicon glyphicon-print">imprimir Acuse</a></td>
       
     </tr>
     {% endfor %}

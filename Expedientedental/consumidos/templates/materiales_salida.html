@@ -1,0 +1,68 @@
+{% extends "basePDF.html" %}
+{% load static from staticfiles %}
+{% block content %}
+<div class="well odontograma clearfix">
+  <div class="col-xs-1">
+    <alt="{{ cotizacion.odontograma.paciente.nombre }} {{ cotizacion.odontograma.paciente.apellidoPaterno }}">
+  </div>
+  <div class="col-xs-9">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Grupo</th>
+          
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ pc.paciente}}</td>
+          <td>{{ pc.paciente.grupo }}</td>
+          
+        </tr>
+      </tbody>
+      <thead>
+        <tr>
+          <th>Medico Tratante</th>
+          <th>&nbsp;</th>
+          <th>&nbsp;</th>
+        </tr>
+        <tr>
+          <td>{{ pc.medico }}</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+      </thead>
+    </table>
+  </div>
+</div><!-- patient info section --> 
+<div class="row">
+  <div class="col-md-8">
+      <form method="post" action="" class="cotizacion clearfix">
+    
+      <div class="panel panel-default">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>productos entregados</th>
+              
+              
+              
+            </tr>
+          </thead>
+          <tbody>
+            {% for item  in items  %}
+            
+            <tr>
+              <td>{{ item.producto }}</td>
+              <td class="precio">{{ item.cantidad }}</td>
+             
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+          <tr>
+      </table>
+    </div>
+
+{% endblock content%}

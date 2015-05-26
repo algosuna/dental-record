@@ -25,6 +25,7 @@
       <td>{{ consumido.medico }}</td>
       <td>{{ consumido.servicio }}</td>
       <td><span class="label">{{ consumido.get_status_display }}</span></td>
+      <td><a href="{% url consumidos:paquete_recibo consumido.id %}" class="glyphicon glyphicon-print">imprimirAcuse</a></td>
     </tr>
     {% endfor %}
   </tbody>
