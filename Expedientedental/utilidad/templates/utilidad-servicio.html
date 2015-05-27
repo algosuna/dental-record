@@ -1,0 +1,101 @@
+{% extends 'dash.html' %}
+
+{% block content %}
+<h2 class="page-header">{% block title %}Utilidad de Servicio{% endblock %}</h2>
+
+<div class="col-md-6">
+
+  <table class="table">
+
+    <thead>
+
+      <tr>
+
+        <th>Producto</th>
+        <th>Costo</th>
+
+      </tr>
+
+    </thead>
+
+    <tbody>
+
+      {% for item in consumido_items %}
+      <tr>
+
+        <td>{{ item }}</td>
+        <td>{{ item.precio }}</td>
+
+      </tr>
+      {% endfor %}
+
+    </tbody>
+
+  </table>
+
+</div>
+
+<div class="col-md-6">
+
+  <div class="panel panel-default">
+
+    <table class="table table-condensed">
+
+      <tr>
+
+        <th>Servicio</th>
+        <td>{{ servicio }}</td>
+
+      </tr>
+
+      <tr>
+
+        <th>Fecha de Creaci&oacute;n</th>
+        <td>{{ servicio.created_at }}</td>
+
+      </tr>
+
+      <tr>
+
+        <th>&Uacute;ltima Modificaci&oacute;n</th>
+        <td>{{ servicio.updated_at }}</td>
+
+      </tr>
+
+    </table>
+
+  </div>
+
+  <div class="panel panel-info">
+
+    <div class="panel-heading">Costos</div>
+
+    <table class="table table-condensed">
+
+      <tr>
+
+        <th>Precio a Paciente:</th>
+        <td>$ {{ servicio.precio }}</td>
+
+      </tr>
+
+      <tr>
+
+        <th>Costo de Productos:</th>
+        <td>$ {{ costo_total }}</td>
+
+      </tr>
+
+      <tr>
+
+        <th>Diferencia:</th>
+        <td>$ {{ diff }}</td>
+
+      </tr>
+
+    </table>
+
+  </div>
+
+</div>
+{% endblock %}

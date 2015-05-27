@@ -1,0 +1,39 @@
+{% extends 'dash.html' %}
+
+{% block content %}
+<h2 class="page-header">{% block title %}Servicios de Paciente{% endblock %}</h2>
+
+<table class="table">
+
+  <thead>
+
+    <tr>
+
+      <th>Servicio</th>
+      <th>Precio</th>
+      <th>Fecha de Creaci&oacute;n</th>
+      <th>&Uacute;ltima Modificaci&oacute;n</th>
+      <th>&nbsp;</th>
+
+    </tr>
+
+  </thead>
+
+  <tbody>
+
+    {% for servicio in servicios %}
+    <tr>
+
+      <td>{{ servicio }}</td>
+      <td>$ {{ servicio.precio }}</td>
+      <td>{{ servicio.created_at }}</td>
+      <td>{{ servicio.updated_at }}</td>
+      <td><a href="{% url utilidad:utilidad_servicio servicio.id %}"><i class="fa fa-search fa-fw"></i></a></td>
+
+    </tr>
+    {% endfor %}
+
+  </tbody>
+
+</table>
+{% endblock %}

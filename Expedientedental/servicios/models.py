@@ -11,26 +11,28 @@ class PaqueteServicios(TimeStampedModel):
     odontograma = models.ForeignKey(Odontograma)
 
     def total(self):
-        '''
-        suma aceptado, parcial, pagado
-        '''
+        ''' Suma aceptado, parcial, pagado. '''
         r = self.servicio_set.total()
         return r
 
     def total_adeudado(self):
+        ''' Adeudo de todos los servicios. '''
         r = self.servicio_set.total_adeudado()
         return r
 
     def total_pagado(self):
+        ''' Total pagado de todos los servicios. '''
         r = self.servicio_set.total_pagado()
         return r
 
     def total_adeudo(self):
+        ''' Adeudo de los servicios con status parcial y aceptado. '''
         s = self.servicio_set.filter(status__in=['parcial', 'aceptado'])
         r = s.total_adeudado()
         return r
 
     def total_pago(self):
+        ''' Total pagado de servicios con status parcial y pagado. '''
         s = self.servicio_set.filter(status__in=['parcial', 'pagado'])
         r = s.total_pagado()
         return r
@@ -43,6 +45,7 @@ class PaqueteServicios(TimeStampedModel):
 class ServicioQuerySet(QuerySet):
 
     def total(self):
+        ''' Suma el precio de todos los servicios. '''
         r = self.aggregate(Sum('precio'))
 
         if r['precio__sum'] is None:
@@ -51,6 +54,7 @@ class ServicioQuerySet(QuerySet):
         return r['precio__sum']
 
     def total_pagado(self):
+        ''' Suma todos los pagos aplicados a los servicios. Default a 0. '''
         pa_qs = PagoAplicado.objects.filter(servicio__in=self)
 
         if not pa_qs.exists():
@@ -61,6 +65,7 @@ class ServicioQuerySet(QuerySet):
         return total_pagado['importe__sum']
 
     def total_adeudado(self):
+
         return max(0, self.total() - self.total_pagado())
 
 
