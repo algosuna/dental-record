@@ -33,7 +33,7 @@ urlpatterns = patterns(
     url(r'^paquetes/detail/(?P<pk>\d+)/$', ConsumidoDetail.as_view(),
         name='cons_detail'),
 
-    url(r'^paquetes//cancel/$', SalidaCancel.as_view(),
+    url(r'^paquetes/salida/cancel/$', SalidaCancel.as_view(),
         name='cancel_list'),
     )
 
