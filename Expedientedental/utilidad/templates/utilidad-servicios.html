@@ -3,6 +3,7 @@
 {% block content %}
 <h2 class="page-header">{% block title %}Servicios de Paciente{% endblock %}</h2>
 
+{% if servicios %}
 <table class="table">
 
   <thead>
@@ -11,6 +12,8 @@
 
       <th>Servicio</th>
       <th>Precio</th>
+      <th>Pago</th>
+      <th>Status</th>
       <th>Fecha de Creaci&oacute;n</th>
       <th>&Uacute;ltima Modificaci&oacute;n</th>
       <th>&nbsp;</th>
@@ -26,6 +29,8 @@
 
       <td>{{ servicio }}</td>
       <td>$ {{ servicio.precio }}</td>
+      <td>$ {{ servicio.total_pagado }}</td>
+      <td><span class="label label-default">{{ servicio.get_status_display }}</span></td>
       <td>{{ servicio.created_at }}</td>
       <td>{{ servicio.updated_at }}</td>
       <td><a href="{% url utilidad:utilidad_servicio servicio.id %}"><i class="fa fa-search fa-fw"></i></a></td>
@@ -36,4 +41,43 @@
   </tbody>
 
 </table>
+{% else %}
+<p class="lead text-muted">Este paciente no tiene servicios con pagos.</p>
+{% endif %}
 {% endblock %}
+
+{% block javascript %}
+<script>
+
+$(function() {
+
+  var status = $('.label');
+
+  // for setting the label color
+  $.each(status, function(){
+    var status = $(this);
+
+    if(status.text() == 'Pagado'){
+
+      status.addClass(' label-primary');
+
+    } else if(status.text() == 'Pago Parcial'){
+
+      status.addClass(' label-info');
+
+    } else if(status.text() == 'Aceptado'){
+
+      status.addClass(' label-success');
+
+    } else {
+
+      status.addClass(' label-warning');
+
+    }
+
+  })
+
+});
+</script>
+{% endblock %}
+

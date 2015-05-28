@@ -119,3 +119,14 @@ class Servicio(TimeStampedModel):
 
     def __unicode__(self):
         return "Servicio %s" % (self.procedimiento)
+
+    def total_pagado(self):
+        ''' Suma todos los pagos aplicados al servicio. Default a 0. '''
+        pa = PagoAplicado.objects.filter(servicio=self)
+
+        if not pa.exists():
+            return 0
+
+        total_pagado = pa.aggregate(Sum('importe'))
+
+        return total_pagado['importe__sum']

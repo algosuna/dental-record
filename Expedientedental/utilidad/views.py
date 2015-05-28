@@ -44,12 +44,7 @@ class ServiciosPaciente(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(ServiciosPaciente, self).get_context_data(**kwargs)
-        consumidos = PaqueteConsumido.objects.filter(paciente=self.object)
-        servicios = set()
-        for c in consumidos:
-            servicio = c.servicio
-            servicios.add(servicio)
-
+        servicios = Servicio.objects.filter(status__in=['parcial', 'pagado'])
         context.update({'servicios': servicios})
         return context
 
@@ -63,8 +58,9 @@ class UtilidadServicio(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(UtilidadServicio, self).get_context_data(**kwargs)
-        consumidos = PaqueteConsumido.objects.filter(servicio=self.object)
-        paciente = consumidos[0].paciente
+        paciente = self.object.paquete.odontograma.paciente
+        consumidos = PaqueteConsumido.objects.filter(
+            servicio=self.object, status='surtido')
         consumido_items = []
         costo_total = 0
 
