@@ -27,7 +27,7 @@ class PaqueteItem(CreateView):
     form_class = PaqueteForm
     template_name = 'crear_paquete.html'
 
-    def get_succes_url(self):
+    def get_success_url(self):
         return reverse('consumidos:armar', kwargs=self.kwargs)
 
 
@@ -134,6 +134,7 @@ class PeticionView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(PeticionView, self).get_context_data(**kwargs)
+        context.update({'paciente': self.get_paciente()})
         context.update({'servicio': self.get_servicio()})
         return context
 
@@ -192,34 +193,34 @@ class SalidaCancelledList(PermissionRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super(SalidaCancelledList, self).get_context_data(**kwargs)
         cancelled = CancelSalida.objects.all()
-        context.update({'cancelsalida': cancelled, 'ec_active': 'active'})
+        context.update({'cancelsalida': cancelled, 'cs_active': 'active'})
         return context
 
 
 class SalidaCancel(PermissionRequiredMixin, CreateObjFromContext):
     form_class = SalidaCanceladaForm
     ctx_model = CancelSalida
-    template_name = 'entrada-cancel.html'
+    template_name = 'salida-cancel.html'
     success_url = reverse_lazy('consumidos:entradas_canceladas')
     permission_required = 'consumidos.add_cancelsalida'
     initial_value = 'salida'
 
     def get_context_data(self, **kwargs):
         context = super(SalidaCancel, self).get_context_data(**kwargs)
-        context.update({'e_active': 'active'})
+        context.update({'s_active': 'active'})
         return context
 
 
 class EntradaCancelDetail(PermissionRequiredMixin, DetailView):
     model = CancelSalida
-    template_name = 'entradacancel-detail.html'
+    template_name = 'salidacancel-detail.html'
     permission_required = 'consumidos.add_cancelsalida'
     context_object_name = 'cancelsalida'
 
     def get_context_data(self, **kwargs):
         context = super(EntradaCancelDetail, self).get_context_data(**kwargs)
-        entrada = self.object.entrada
-        context.update({'entrada': entrada, 'ec_active': 'active'})
+        salida = self.object.salida
+        context.update({'salida': salida, 'sc_active': 'active'})
         return context
 
 
