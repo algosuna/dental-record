@@ -1,5 +1,5 @@
-{% extends 'dash.html' %}
-{% block title %}Pagos - Pendientes{% endblock %}
+{% extends 'basePDF.html' %}
+{% block title %}Pagos - Realizados{% endblock %}
 
 {% block content %}
 <h2 class="page-header">Pagos <small class="pull-right">{{ paciente.nombre }} {{ paciente.apellidoPaterno }} {{ paciente.apellidoMaterno }} #{{ paciente.credencialPaciente }}</small></h2>
@@ -26,13 +26,10 @@
 
       <td class="padded">{{ pago.updated_at }}</td>
       <td class="padded">$ {{ pago.monto_aplicado }}</td>
-      <td><a href="{% url pagos:pagos_detail pago.id %}" class="btn btn-primary pull-right">Ver Pago</a></td>
       
 
     </tr>
     {% endfor %}
-
-    <td><a href="{% url pagos:historial %}" class="btn btn-primary pull-right">imprimir historial</a></td>
 
   </tbody>
 

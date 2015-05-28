@@ -12,7 +12,7 @@ from core.mixins import PermissionRequiredMixin
 
 from altas.models import Paciente
 from servicios.models import PaqueteServicios, Servicio
-from pagos.models import Pago
+from pagos.models import Pago, PagoAplicado
 from pagos.forms import PagoForm, PagoAplicadoFormset
 
 
@@ -221,17 +221,43 @@ class PagosDetail(PermissionRequiredMixin, DetailView):
 class RecibodePagoPDF(PDFTemplateView):
     filename = 'recibo.pdf'
     template_name = 'recibo_pago.html'
+    medico = None
+
+    def get_medico(self):
+        if self.medico is None:
+            servicio = self.pago.servicios.all()[0]
+            self.medico = servicio.procedimiento.odontograma.medico
+        return self.medico
 
     def get_context_data(self, **kwargs):
         context = super(RecibodePagoPDF, self).get_context_data(**kwargs)
         self.pago_id = int(kwargs.get('pago_id'))
         pago = get_object_or_404(Pago, pk=self.pago_id)
+        self.pago = pago
+        medico = self.get_medico()
         fecha = datetime.now().strftime("%d/%m/%Y")
         hora = datetime.now().strftime("%I:%M %p")
         context.update({
+            'medico': medico,
             'pago': pago,
             'fecha': fecha,
             'hora': hora,
             'low_margin': 'low-margin'
             })
+        return context
+
+
+class HistorialPagosPDF(PDFTemplateView):
+    filename = 'recibo_de_entrega.pdf'
+    template_name = 'historial_pagos.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(HistorialPagosPDF, self).get_context_data(**kwargs)
+        pagos = Pago.objects.all()
+        fecha = datetime.now().strftime("%d/%m/%Y")
+        hora = datetime.now().strftime("%I:%M %p")
+        context.update({
+            'pagos': pagos,
+            'fecha': fecha, 'hora': hora
+        })
         return context
