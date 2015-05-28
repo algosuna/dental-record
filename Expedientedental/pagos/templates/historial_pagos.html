@@ -2,7 +2,7 @@
 {% block title %}Pagos - Realizados{% endblock %}
 
 {% block content %}
-<h2 class="page-header">Pagos <small class="pull-right">{{ paciente.nombre }} {{ paciente.apellidoPaterno }} {{ paciente.apellidoMaterno }} #{{ paciente.credencialPaciente }}</small></h2>
+<h2 class="page-header">Pagos <small class="pull-right">{{ pagos.paciente.nombre }} {{ pagos.paciente.apellidoPaterno }} {{ pagos.paciente.apellidoMaterno }} #{{ paciente.credencialPaciente }}</small></h2>
 
 {% if pagos %}
 <table class="table table-hover">
