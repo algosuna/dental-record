@@ -32,7 +32,8 @@ def paciente_search(request):
 
     return render(request, 'utilidad-search.html', {
         'objects': objects,
-        'search_string': request.GET.get(query, '')
+        'search_string': request.GET.get(query, ''),
+        'us_active': 'active'
         })
 
 
@@ -45,7 +46,7 @@ class ServiciosPaciente(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super(ServiciosPaciente, self).get_context_data(**kwargs)
         servicios = Servicio.objects.filter(status__in=['parcial', 'pagado'])
-        context.update({'servicios': servicios})
+        context.update({'servicios': servicios, 'us_active': 'active'})
         return context
 
 
@@ -80,6 +81,7 @@ class UtilidadServicio(LoginRequiredMixin, DetailView):
             'paciente': paciente,
             'consumido_items': consumido_items,
             'costo_total': costo_total,
-            'diff': diff
+            'diff': diff,
+            'us_active': 'active'
             })
         return context
