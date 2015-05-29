@@ -28,21 +28,21 @@
     <li class="{{ cp_active }}"><a href="{% url cotizacion:procesado_list %}"><i class="fa fa-calculator fa-fw"></i> Presupuestos Procesados</a></li>
     <li class="{{ r_active }}"><a href="{% url pagos:pagos_list %}"><i class="fa fa-list fa-fw"></i> Pagos Realizados</a></li>
     <li class="{{ pg_active }}"><a href="{% url precios:precios_grupos %}"><i class="fa fa-usd fa-fw"></i> Precios por Grupo</a></li>
-
-    <li class="sidebar-header text-center">Utilidades</li>
-    <li class="{{ us_active }}"><a href="{% url utilidad:utilidad_search %}"><i class="fa fa-search fa-fw"></i> Buscar Paciente</a></li>
+    <li class="{{ us_active }}"><a href="{% url utilidad:utilidad_search %}"><i class="fa fa-list fa-fw"></i> Utilidades</a></li>
     {% endif %}
 
-    {% if perms.consumidos.add_consumidos %}
-    <li class="sidebar-header text-center">Inventario:Consumidos</li>
-    <li class="{{ cpl_active }}"><a href="{% url consumidos:request_list %}"><i class="fa fa-inbox fa-fw"></i> Peticiones en Espera</a></li>
-    <li class="{{ cai_active }}"><a href="{% url consumidos:armar %}"><i class="fa fa-tasks fa-fw"></i> Crear Paquete </a></li>
-    <li class="{{ cpli_active }}"><a href="{% url consumidos:paquetes_list %}"><i class="fa fa-th-list fa-fw"></i> Paquetes </a></li>
+    {% if perms.consumidos.add_paquete %}
+    <li class="sidebar-header text-center">Paquetes</li>
+    <li class="{{ pn_active }}"><a href="{% url consumidos:paquete_new %}"><i class="fa fa-tasks fa-fw"></i> Crear Paquete</a></li>
+    <li class="{{ ps_active }}"><a href="{% url consumidos:paquete_list %}"><i class="fa fa-th-list fa-fw"></i> Paquetes</a></li>
+    {% endif %}
+
+    <li class="sidebar-header text-center">Salidas</li>
+    <li class="{{ pe_active }}"><a href="{% url consumidos:peticion_list %}"><i class="fa fa-inbox fa-fw"></i> Peticiones</a></li>
+    <li class="{{ psl_active }}"><a href="{% url consumidos:peticion_surtido_list %}"><i class="fa fa-th-large fa-fw"></i>Peticiones Atendidas</a></li>
     <li class="{{ cprc_active }}"><a href="{% url consumidos:prconsumido %}"><i class="fa fa-asterisk fa-fw"></i>Mat.Extra</a></li>
     <li class="{{ cprc_active }}"><a href="{% url consumidos:consumido %}"><i class="fa fa-asterisk fa-fw"></i>Materiales Entregados</a></li>
     <li class="{{ ccl_active }}"><a href="{% url consumidos:cancel_list %}"><i class="fa fa-asterisk fa-fw"></i>Salidas Canceladas</a></li>
-    <li class="{{ clps_active }}"><a href="{% url consumidos:completados %}"><i class="fa fa-th-large fa-fw"></i>Peticiones Atendidas</a></li>
-    {% endif %}
 
     {% if perms.inventario.add_producto %}
     <li class="sidebar-header text-center">Inventario</li>

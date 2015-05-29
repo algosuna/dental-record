@@ -1,14 +1,40 @@
 import datetime as dt
+
 from django import forms
-from django.forms.models import BaseModelFormSet
 
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Fieldset, HTML, Field, ButtonHolder, \
-    Hidden, Submit
+from crispy_forms.layout import (
+    Layout, Fieldset, HTML, Field, ButtonHolder, Submit
+)
 
 from inventario.models import Producto
-from consumidos.models import Paquete, PaqueteItem, PaqueteConsumido, \
-    PaqueteConsumidoItem, ProductoConsumido
+from consumidos.models import (
+    PaqueteConsumido, Paquete, PaqueteItem, PaqueteConsumidoItem,
+    ProductoConsumido
+)
+
+
+class PeticionForm(forms.ModelForm):
+    class Meta:
+        model = PaqueteConsumido
+        fields = ('nota',)
+
+    def __init__(self, medico, paciente, servicio, *args, **kwargs):
+        super(PeticionForm, self).__init__(*args, **kwargs)
+        self.medico = medico
+        self.paciente = paciente
+        self.servicio = servicio
+
+    def save(self, commit=True):
+        instance = super(PeticionForm, self).save(commit=False)
+        instance.medico = self.medico
+        instance.paciente = self.paciente
+        instance.servicio = self.servicio
+        instance.fecha = dt.date.today()
+        instance.paquete = None
+        if commit:
+            instance.save()
+        return instance
 
 
 class PaqueteForm(forms.ModelForm):
@@ -22,9 +48,7 @@ class PaqueteForm(forms.ModelForm):
         super(PaqueteForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.layout = Layout(
-            HTML("""
-                 <p class="parrafo"> Campos con ( * ) Son Requeridos.</p>
-                 """),
+            HTML('''<p>Campos con ( * ) Son Requeridos.</p>'''),
             Fieldset(
                 '',
 
@@ -74,9 +98,7 @@ class AtenderPaqueteForm(forms.ModelForm):
         self.helper = FormHelper()
 
         self.helper.layout = Layout(
-            HTML("""
-                    <p class="parrafo"> Campos con ( * ) Son Requeridos. </p>
-                 """),
+            HTML('''<p>Campos con ( * ) Son Requeridos.</p>'''),
             Fieldset(
                 '',
                 Field('paquete', wrapper_class='col-md-12'),
@@ -162,30 +184,6 @@ class PCItemForm(forms.ModelForm):
         if commit:
 
             instance.save()
-        return instance
-
-
-class PeticionForm(forms.ModelForm):
-    class Meta:
-        model = PaqueteConsumido
-        fields = ('nota',)
-
-    def __init__(self, medico, paciente, servicio, *args, **kwargs):
-        super(PeticionForm, self).__init__(*args, **kwargs)
-        self.medico = medico
-        self.paciente = paciente
-        self.servicio = servicio
-
-    def save(self, commit=True):
-        instance = super(PeticionForm, self).save(commit=False)
-        instance.medico = self.medico
-        instance.paciente = self.paciente
-        instance.servicio = self.servicio
-        instance.fecha = dt.date.today()
-        instance.paquete = None
-
-        # Guarda consumido item.
-        instance.save()
         return instance
 
 

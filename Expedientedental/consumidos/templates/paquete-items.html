@@ -1,0 +1,43 @@
+{% extends 'dash.html' %}
+
+{% load static from staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="col-md-8 col-md-offset-2">
+
+  <h3 class="page-header">Editar Productos de {% block title %}Paquete{% endblock %}</h2>
+
+  <form action="" method="post">
+    {{ formset.management_form }}
+
+    {% for form in formset %}
+    <div class="formset row">
+      {% crispy form %}
+    </div>
+    {% endfor %}
+
+    <div id="empty-form" class="formset row" style="display:none;">
+      {% crispy formset.empty_form %}
+    </div>
+
+    <input type="submit" class="btn btn-primary pull-right" value="Guardar">
+
+  </form>
+
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'js/jquery.formset.js' %}"></script>
+<script>
+$('.formset').formset({
+  addText: 'Agregar Producto <span class="glyphicon glyphicon-plus"></span>',
+  deleteText: 'remove',
+  addCssClass: 'add-row btn btn-success',
+  deleteCssClass: 'delete-row btn btn-default normalized-btn',
+  formCssClass: 'dynamic-form',
+  formTemplate: '#empty-form',
+});
+</script>
+{% endblock %}

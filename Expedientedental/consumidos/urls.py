@@ -1,31 +1,37 @@
 from django.conf.urls import patterns, url
 from consumidos.views import (
-    AtencionPaquete, manage_paquetes, PeticionView, Consumidos,
-    ConsumidoDetail, peticionesView, producto_consumido, PaqueteItem,
-    Paquetes, Suplied, PaquetebillPDF, SalidaCancel, SalidaPDF)
+    PeticionCreate, Peticiones, PeticionUpdate, PeticionesAtendidas,
+    Consumidos, producto_consumido,
+    ConsumidoDetail, PaqueteCreate, Paquetes, PaquetebillPDF,
+    SalidaCancel, SalidaPDF
+)
 
 urlpatterns = patterns(
     'consumidos.views',
 
-    url(r'^paquete/(?P<pk>\d+)/peticion/create/$',
-        PeticionView.as_view(), name='peticion'),
+    url(r'^paquetes/$', Paquetes.as_view(), name='paquete_list'),
 
-    url(r'^paquete/agroup/new/$', PaqueteItem.as_view(), name='armar'),
+    url(r'^paquete/new/$', PaqueteCreate.as_view(), name='paquete_new'),
 
-    url(r'^paquetes/list/$', Paquetes.as_view(), name='paquetes_list'),
+    url(r'^peticiones/$', Peticiones.as_view(), name='peticion_list'),
 
-    url(r'^peticiones/list/$', peticionesView .as_view(),
-        name='request_list'),
+    url(r'^peticiones/surtido/$',
+        PeticionesAtendidas.as_view(), name='peticion_surtido_list'),
+
+    url(r'^peticion/new/servicio/(?P<pk>\d+)/$',
+        PeticionCreate.as_view(), name='peticion_new'),
+
+    url(r'^peticion/(?P<pk>\d+)/update/$',
+        PeticionUpdate.as_view(), name='peticion_update'),
+
+    url(r'^peticion/(?P<pk>\d+)/insumos/add/$',
+        'paquete_item_create', name='paquete_item_create'),
+
+
+
 
     url(r'^paquete/producto/$', producto_consumido.as_view(),
         name='prconsumido'),
-
-    url(r'^paquetes/(?P<pk>\d+)/$', AtencionPaquete.as_view(),
-        name='pconsumido'),
-
-    url(r'^paquetes/insumos/(?P<pk>\d+)/$', manage_paquetes, name='insumos'),
-
-    url(r'^paquetes/stat/list/$', Suplied.as_view(), name='completados'),
 
     url(r'^paquetes/pconsumido/list/$', Consumidos.as_view(),
         name='consumido'),
@@ -35,12 +41,8 @@ urlpatterns = patterns(
 
     url(r'^paquetes/salida/cancel/$', SalidaCancel.as_view(),
         name='cancel_list'),
-    )
 
-urlpatterns += patterns(
-    '',
 
-    # reporte de cotizacion
     url(r'^(?P<pk>\d+)/pdf/$', SalidaPDF.as_view(), name='pdf'),
     url(r'^paquete/(?P<pk>\d+)/recibo/pdf/$',
         PaquetebillPDF.as_view(), name='paquete_recibo'),

@@ -10,7 +10,7 @@
     <tr>
       <th>Paquete</th>
       <th>Descripcion</th>
-      
+
     </tr>
   </thead>
   <tbody>
@@ -22,8 +22,8 @@
     {% endfor %}
   </tbody>
 </table>
-<a href="{% url consumidos:armar %}" class="btn btn-primary pull-right">Registrar Nuevo Paquete <span class="glyphicon glyphicon-plus"></span></a>
+<a href="{% url consumidos:paquete_new %}" class="btn btn-primary pull-right">Registrar Nuevo Paquete <span class="glyphicon glyphicon-plus"></span></a>
 {% else %}
-<p class="lead text-center text-muted">No hay paquetes registrados en la base de datos.<br><br><a href="{% url consumidos:armar %}" class="btn btn-primary">Registrar Paquete <span class="glyphicon glyphicon-chevron-right"></span></a></p>
+<p class="lead text-center text-muted">No hay paquetes registrados en la base de datos.<br><br><a href="{% url consumidos:paquete_new %}" class="btn btn-primary">Registrar Paquete <span class="glyphicon glyphicon-chevron-right"></span></a></p>
 {% endif %}
 {% endblock content %}
