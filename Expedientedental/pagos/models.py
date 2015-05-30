@@ -32,11 +32,11 @@ class Pago(TimeStampedModel):
         Metodo setter para mantener un monto_aplicado valido.
         monto_aplicado debe ser menor o igual a monto.
         '''
-        if monto_a_aplicar <= self.montodisponible():
+        if monto_a_aplicar == self.montodisponible():
             aplica = self.monto_aplicado + monto_a_aplicar
             self.monto_aplicado = aplica
         else:
-            raise ValueError
+            raise ValueError('No se pudo aplicar monto')
 
     def __unicode__(self):
             pago = "%s %s %s" % (self.monto, self.monto_aplicado, self.fecha)

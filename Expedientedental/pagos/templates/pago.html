@@ -49,6 +49,9 @@
     <a class="btn btn-success aplicar pull-left">Aplicar</a>
 
   </div>
+  {% if pa_formset.non_form_errors %}
+  <div class="alert alert-danger">{{ pa_formset.non_form_errors }}</div>
+  {% endif %}
 <div class="panel panel-success">
   <table class="table table-bordered">
 

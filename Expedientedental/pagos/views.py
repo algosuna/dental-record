@@ -37,34 +37,39 @@ def pagos(request, paquete_id):
         modelform = PagoForm(request.POST)
         pa_formset = PagoAplicadoFormset(request.POST, initial=initial)
 
-        if modelform.is_valid() and pa_formset.is_valid():
-            pago = modelform.save()
+        if modelform.is_valid():
+            pago = modelform.save(commit=False)
+            if pa_formset.is_valid(pago.monto):
+                pago.save()
 
-            monto_aplicado = 0
-            for form in pa_formset:
-                form.instance.importe
-                pago_aplicado = form.save(pago)
-                monto_aplicado += pago_aplicado.importe
+                monto_aplicado = 0
+                for form in pa_formset:
+                    form.instance.importe
+                    pago_aplicado = form.save(pago)
+                    monto_aplicado += pago_aplicado.importe
 
-                if pago_aplicado.importe > 0:
-                    servicio = pago_aplicado.servicio
-                    total_aplicado = servicio.pagoaplicado_set.total_pagado()
+                    if pago_aplicado.importe > 0:
+                        servicio = pago_aplicado.servicio
+                        pagoaplicado_set = servicio.pagoaplicado_set
+                        total_aplicado = pagoaplicado_set.total_pagado()
 
-                    if total_aplicado == servicio.precio:
-                        servicio.status = 'pagado'
+                        if total_aplicado == servicio.precio:
+                            servicio.status = 'pagado'
 
-                        servicio.procedimiento.status = 'autorizado'
-                        servicio.procedimiento.save()
+                            servicio.procedimiento.status = 'autorizado'
+                            servicio.procedimiento.save()
 
-                    else:
-                        servicio.status = 'parcial'
+                        else:
+                            servicio.status = 'parcial'
 
-                    servicio.save()
+                        servicio.save()
 
-            pago.aplicamonto(monto_aplicado)
-            pago.save()
+                pago.aplicamonto(monto_aplicado)
+                pago.save()
 
-            return redirect(reverse('pagos:pagos_detail', args=[pago.id]))
+                return redirect(reverse('pagos:pagos_detail', args=[pago.id]))
+            else:
+                print pa_formset.non_form_errors()
 
     else:
         modelform = PagoForm(initial={
