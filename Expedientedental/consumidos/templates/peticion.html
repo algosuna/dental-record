@@ -1,16 +1,14 @@
 {% extends "dash.html" %}
-{%load static from staticfiles %}
+{% load static from staticfiles %}
 
 {% load crispy_forms_tags %}
 
 {% block content %}
+<h2 class="page-header">{% block title %}Peticion a Inventario{% endblock %}</h2>
 
-<h2 class="page-header">Peticion a inventario</h2>
-{{servicio}}
+<p>{{ servicio }}</p>
+
 {% crispy form %}
-
-<form action="" method="post">{% csrf_token %}
-<input type="submit" class="btn btn-primary pull-right" value="Aceptar">
 
 {% endblock content %}
 

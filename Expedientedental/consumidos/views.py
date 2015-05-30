@@ -57,59 +57,33 @@ class Peticiones(ListView):
         return context
 
 
-class PeticionesAtendidas(ListView):
-    model = PaqueteConsumido
-    queryset = model.objects.filter(status="surtido")
-    context_object_name = 'consumidos'
-    template_name = 'peticiones-atendidas.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(PeticionesAtendidas, self).get_context_data(**kwargs)
-        context.update({'psl_active': 'active'})
-        return context
-
-
-class PeticionCreate(CreateView):
+class PeticionCreate(CreateObjFromContext):
     form_class = PeticionForm
     template_name = 'peticion.html'
-    servicio = None
-    paciente = None
+    ctx_model = Servicio
+    initial_value = 'servicio'
 
-    def get_paciente(self):
-        if self.paciente is None:
-            self.paciente = self.get_servicio().paquete.odontograma.paciente
-        return self.paciente
-
-    def get_servicio(self):
-        if self.servicio:
-            return self.servicio
-        self.servicio = Servicio.objects.get(
-            pk=self.kwargs.get('pk'))
-        return self.servicio
-
-    def get_form_kwargs(self):
-        kwargs = super(PeticionCreate, self).get_form_kwargs()
-        servicio = self.get_servicio()
-        odontograma = servicio.paquete.odontograma
-        kwargs.update({
+    def get_initial(self):
+        initial = super(PeticionCreate, self).get_initial()
+        initial = initial.copy()
+        odontograma = self.get_obj().paquete.odontograma
+        initial.update({
             'medico': odontograma.medico,
-            'paciente': odontograma.paciente,
-            'servicio': servicio,
+            'paciente': odontograma.paciente
             })
-        return kwargs
+        return initial
 
     def get_context_data(self, **kwargs):
         context = super(PeticionCreate, self).get_context_data(**kwargs)
         context.update({
-            'paciente': self.get_paciente(),
-            'servicio': self.get_servicio(),
+            'paciente': self.get_initial()['paciente'],
             'p_active': 'active'
             })
         return context
 
     def get_success_url(self):
         url = reverse('clinica:paciente_detail',
-                      kwargs={'pk': self.get_paciente().pk})
+                      kwargs={'pk': self.get_initial()['paciente'].pk})
         return url
 
 
@@ -126,6 +100,18 @@ class PeticionUpdate(UpdateView):
 
     def get_success_url(self):
         return reverse('consumidos:paquete_item_create', kwargs=self.kwargs)
+
+
+class PeticionesAtendidas(ListView):
+    model = PaqueteConsumido
+    queryset = model.objects.filter(status="surtido")
+    context_object_name = 'consumidos'
+    template_name = 'peticiones-atendidas.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(PeticionesAtendidas, self).get_context_data(**kwargs)
+        context.update({'psl_active': 'active'})
+        return context
 
 
 def paquete_item_create(request, pk):

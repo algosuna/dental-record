@@ -14,29 +14,6 @@ from consumidos.models import (
 )
 
 
-class PeticionForm(forms.ModelForm):
-    class Meta:
-        model = PaqueteConsumido
-        fields = ('nota',)
-
-    def __init__(self, medico, paciente, servicio, *args, **kwargs):
-        super(PeticionForm, self).__init__(*args, **kwargs)
-        self.medico = medico
-        self.paciente = paciente
-        self.servicio = servicio
-
-    def save(self, commit=True):
-        instance = super(PeticionForm, self).save(commit=False)
-        instance.medico = self.medico
-        instance.paciente = self.paciente
-        instance.servicio = self.servicio
-        instance.fecha = dt.date.today()
-        instance.paquete = None
-        if commit:
-            instance.save()
-        return instance
-
-
 class PaqueteForm(forms.ModelForm):
     productos = forms.ModelMultipleChoiceField(queryset=Producto.objects.all())
     DEFAULT_PRODUCT_QUANTITY = 1
@@ -51,21 +28,15 @@ class PaqueteForm(forms.ModelForm):
             HTML('''<p>Campos con ( * ) Son Requeridos.</p>'''),
             Fieldset(
                 '',
-
-                # Field('paquete' , wrapper_class='col-md-2'),
                 Field('nombre', wrapper_class='col-md-4'),
                 Field('descripcion', wrapper_class='col-md-8'),
                 Field('productos', wrapper_class='col-md-12'),
-
-                # Field('cantidad_producto' , wrapper_class='col-md-2'),
-
-                ),
+            ),
             ButtonHolder(Submit('save', 'Generar'))
         )
         self.fields['nombre'].label = 'Nombre'
         self.fields['descripcion'].label = 'Descripion'
         self.fields['productos'].label = 'Productos'
-        # self.fields['cantidad_producto'].label='Cantidad'
 
     def save(self, commit=True):
         paquete = super(PaqueteForm, self).save(commit)
@@ -84,6 +55,30 @@ class PaqueteForm(forms.ModelForm):
                 item.save()
             items.append(item)
         return items
+
+
+class PeticionForm(forms.ModelForm):
+    class Meta:
+        model = PaqueteConsumido
+        fields = ('nota',)
+
+    def __init__(self, *args, **kwargs):
+        super(PeticionForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.add_input(
+            Submit('submit', 'Enviar', css_class='pull-right')
+            )
+
+    def save(self, commit=True):
+        instance = super(PeticionForm, self).save(commit=False)
+        instance.medico = self.initial.get('medico')
+        instance.paciente = self.initial.get('paciente')
+        instance.servicio = self.initial.get('servicio')
+        instance.fecha = dt.date.today()
+        instance.paquete = None
+        if commit:
+            instance.save()
+        return instance
 
 
 class AtenderPaqueteForm(forms.ModelForm):
