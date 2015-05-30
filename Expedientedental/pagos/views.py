@@ -250,14 +250,23 @@ class RecibodePagoPDF(PDFTemplateView):
 class HistorialPagosPDF(PDFTemplateView):
     filename = 'recibo_de_entrega.pdf'
     template_name = 'historial_pagos.html'
+    paciente = None
+
+    def get_paciente(self):
+        if self.paciente is None:
+            servicio = self.pagos[0].servicio
+            self.paciente = servicio.procedimiento.odontograma.paciente
+        return self.paciente
 
     def get_context_data(self, **kwargs):
         context = super(HistorialPagosPDF, self).get_context_data(**kwargs)
-        pagos = Pago.objects.all()
+        self.pagos = PagoAplicado.objects.all()
+        paciente = self.get_paciente
         fecha = datetime.now().strftime("%d/%m/%Y")
         hora = datetime.now().strftime("%I:%M %p")
         context.update({
-            'pagos': pagos,
+            'paciente': paciente,
+            'pagos': self.pagos,
             'fecha': fecha, 'hora': hora
         })
         return context
