@@ -14,7 +14,7 @@ from consumidos.models import (
     CancelSalida
 )
 from consumidos.forms import (
-    PaqueteForm, AtenderPaqueteForm, PCItemForm, PeticionForm,
+    PaqueteForm, AtenderPeticionForm, PCItemForm, PeticionForm,
     ProductoConsumidoForm, SalidaCanceladaForm
 )
 from servicios.models import Servicio
@@ -32,6 +32,7 @@ class Paquetes(ListView):
 
 
 class PaqueteCreate(CreateView):
+    ''' Creates Paquete object with PaqueteItems. The magic is in the form! '''
     form_class = PaqueteForm
     template_name = 'paquete.html'
 
@@ -47,7 +48,6 @@ class PaqueteCreate(CreateView):
 class Peticiones(ListView):
     model = PaqueteConsumido
     queryset = model.objects.filter(status="en_espera")
-    form_class = PeticionForm
     context_object_name = 'peticiones'
     template_name = 'peticiones.html'
 
@@ -58,6 +58,7 @@ class Peticiones(ListView):
 
 
 class PeticionCreate(CreateObjFromContext):
+    ''' Creates PaqueteConsumido with null Paquete from Servicio. '''
     form_class = PeticionForm
     template_name = 'peticion.html'
     ctx_model = Servicio
@@ -88,9 +89,10 @@ class PeticionCreate(CreateObjFromContext):
 
 
 class PeticionUpdate(UpdateView):
+    ''' Adds Paquete (and PaqueteItems) to PaqueteConsumido. '''
     model = PaqueteConsumido
     template_name = 'peticion-update.html'
-    form_class = AtenderPaqueteForm
+    form_class = AtenderPeticionForm
     context_object_name = 'pconsumido'
 
     def get_context_data(self, **kwargs):
@@ -115,6 +117,8 @@ class PeticionesAtendidas(ListView):
 
 
 def paquete_item_create(request, pk):
+    ''' Creates PaqueteConsumidoItems from PaqueteItems and adds or
+    removes extra items (products). '''
     paquete_consumido = get_object_or_404(PaqueteConsumido, pk=pk)
     items = paquete_consumido.paqueteconsumidoitem_set.all()
     initial_list = []
@@ -145,14 +149,14 @@ def paquete_item_create(request, pk):
         })
 
 
-class EditPaqueteView(UpdateView):
+class PaqueteUpdate(UpdateView):
     model = PaqueteConsumidoItem
     succes_url = '/'
     template_name = 'packDetail.html'
     form_class = PaqueteConsumidoItem
 
 
-class producto_consumido(CreateView):
+class ProductoConsumidoCreate(CreateView):
     form_class = ProductoConsumidoForm
     template_name = 'prconsumido.html'
     context_object_name = 'prconsumido'
