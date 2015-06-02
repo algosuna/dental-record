@@ -12,17 +12,17 @@ from clinica.models import Interrogatorio, Odontograma, Procedimiento, Bitacora
 class InterrogatorioForm(forms.ModelForm):
     class Meta:
         model = Interrogatorio
+        exclude = ('medico', 'paciente')
 
     def __init__(self, *args, **kwargs):
         super(InterrogatorioForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
+        self.helper.form_read_only = True
         self.helper.form_class = 'interrogatorio'
         self.helper.layout = Layout(
             HTML("""<p> Rellene todos los Campos Con *.</p>"""),
             Fieldset(
                 '',
-                Field('paciente', wrapper_class='col-md-4'),
-                Field('medico', wrapper_class='col-md-4'),
                 Field('credencial_paciente', wrapper_class='col-md-4'),
             ),
 
@@ -162,8 +162,6 @@ class InterrogatorioForm(forms.ModelForm):
             )
         )
 
-        self.fields['paciente'].label = 'Paciente'
-        self.fields['medico'].label = 'Medico'
         self.fields['credencial_paciente'].label = 'DNI Paciente'
         self.fields['herencia_madre'].label = 'Madre'
         self.fields['herencia_padre'].label = 'Padre'
@@ -269,6 +267,14 @@ class InterrogatorioForm(forms.ModelForm):
         gabinete'
         self.fields['interpretacion_estudios_laboratorio'].label = 'Interpretación \
         de los estudios de laboratorio y gabinete'
+
+    def save(self, commit=True):
+        instance = super(InterrogatorioForm, self).save(commit=False)
+        instance.medico = self.initial.get('medico')
+        instance.paciente = self.initial.get('paciente')
+        if commit:
+            instance.save()
+        return instance
 
 
 class OdontogramaForm(forms.ModelForm):

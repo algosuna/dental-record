@@ -213,13 +213,18 @@ class InterrogatorioView(PermissionRequiredMixin, CreateObjFromContext):
 
     def get_context_data(self, **kwargs):
         context = super(InterrogatorioView, self).get_context_data(**kwargs)
-        # form = self.get_form()
         context.update({'e_active': 'active'})
         return context
 
     def get_success_url(self):
         url = reverse('clinica:interrogatorio', kwargs={'pk': self.object.pk})
         return url
+
+    def get_initial(self):
+        initial = super(InterrogatorioView, self).get_initial()
+        medico = self.request.user.medico_set.get()
+        initial.update({'medico': medico})
+        return initial
 
 
 class InterrogatorioUpdate(PermissionRequiredMixin, UpdateView):

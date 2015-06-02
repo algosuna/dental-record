@@ -11,8 +11,11 @@
 {% dajaxice_js_import %}-->
 
 
-<h2 class="page-header">Expediente M&eacute;dico y Dental{% if paciente.interrogatorio_set.get %}<small><a href="{% url clinica:pdf paciente.id %}" class="pull-right"> &nbsp; <i class="fa fa-print fa-fw"></i>
+<h2 class="page-header">Expediente M&eacute;dico y Dental{% if paciente.interrogatorio_set.get %}
+<small><a href="{% url clinica:pdf paciente.id %}" class="pull-right"> &nbsp; <i class="fa fa-print fa-fw"></i>
  Imprimir</a> <a href="{% url clinica:interrogatorio_edit paciente.interrogatorio_set.get.id %}" class="pull-right"><i class="fa fa-pencil fa-fw"></i> Editar</a></small>{% endif %}</h2>
+
+
 
 {% if paciente.interrogatorio_set.get %}
 {% with interrogatorio=paciente.interrogatorio_set.get %}
