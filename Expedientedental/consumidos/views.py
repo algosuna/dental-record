@@ -37,10 +37,7 @@ class PaqueteCreate(CreateView):
     ''' Creates Paquete object with PaqueteItems. The magic is in the form! '''
     form_class = PaqueteForm
     template_name = 'paquete.html'
-
-    def get_success_url(self):
-        # TODO: update this url
-        return reverse('consumidos:paquetes', kwargs=self.kwargs)
+    success_url = reverse_lazy('consumidos:paquete_list')
 
     def get_context_data(self, **kwargs):
         context = super(PaqueteCreate, self).get_context_data(**kwargs)
@@ -53,13 +50,17 @@ class PaqueteCreate(CreateView):
 
 class Peticiones(ListView):
     model = PaqueteConsumido
-    queryset = model.objects.filter(status__in=['en_espera', 'por_entregar'])
-    context_object_name = 'paqueteconsumidos'
+    queryset = model.objects.filter(status='en_espera')
+    context_object_name = 'paqueteenespera'
     template_name = 'peticiones.html'
 
     def get_context_data(self, **kwargs):
         context = super(Peticiones, self).get_context_data(**kwargs)
-        context.update({'pe_active': 'active'})
+        por_entregar = self.model.objects.filter(status='por_entregar')
+        context.update({
+            'pe_active': 'active',
+            'paqueteporentregar': por_entregar
+            })
         return context
 
 
