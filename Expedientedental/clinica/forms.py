@@ -23,68 +23,68 @@ class InterrogatorioForm(forms.ModelForm):
                 '',
                 Field('paciente', wrapper_class='col-md-4'),
                 Field('medico', wrapper_class='col-md-4'),
-                Field('credencialPaciente', wrapper_class='col-md-4'),
+                Field('credencial_paciente', wrapper_class='col-md-4'),
             ),
 
             Fieldset(
 
                 'Antecedentes Patol&oacute;gicos Hereditarios',
-                Field('herenciaMadre', wrapper_class='col-md-4'),
-                Field('herenciaPadre', wrapper_class='col-md-4'),
-                Field('herenciaHermanos', wrapper_class='col-md-4'),
-                Field('herenciaHijos', wrapper_class='col-md-4'),
-                Field('herenciaEsposos', wrapper_class='col-md-4'),
-                Field('herenciaTios', wrapper_class='col-md-4'),
-                Field('herenciaAbuelos', wrapper_class='col-md-4'),
+                Field('herencia_madre', wrapper_class='col-md-4'),
+                Field('herencia_padre', wrapper_class='col-md-4'),
+                Field('herencia_hermanos', wrapper_class='col-md-4'),
+                Field('herencia_hijos', wrapper_class='col-md-4'),
+                Field('herencia_esposos', wrapper_class='col-md-4'),
+                Field('herencia_tios', wrapper_class='col-md-4'),
+                Field('herencia_abuelos', wrapper_class='col-md-4'),
                 ),
 
             Fieldset(
                 'Antecedentes personales Patol&oacute;gicos',
-                Field('eInflamatoriasnotopciones', wrapper_class='col-md-4'),
+                Field('e_inflamatorias_not_opciones', wrapper_class='col-md-4'),
                 Field('ets', wrapper_class='col-md-4'),
-                Field('eDegenerativas', wrapper_class='col-md-4'),
-                Field('eNeoplasticas', wrapper_class='col-md-4'),
-                Field('eCongenitas', wrapper_class='col-md-4'),
+                Field('e_degenerativas', wrapper_class='col-md-4'),
+                Field('e_neoplasticas', wrapper_class='col-md-4'),
+                Field('e_congenitas', wrapper_class='col-md-4'),
                 Field('otras', wrapper_class='col-md-4'),
             ),
 
             Fieldset(
                 'Antecedentes personales no Patol&oacute;gicos',
-                Field('habitosHigienicosVest', wrapper_class='col-md-4'),
-                Field('habitosHigienicosCorp', wrapper_class='col-md-4'),
-                Field('frecuenciaLavadoDental', wrapper_class='col-md-4'),
-                Field('factorRh', wrapper_class='col-md-4'),
-                Field('gruposanguineo', wrapper_class='col-md-4'),
+                Field('habitos_higienicosVest', wrapper_class='col-md-4'),
+                Field('habitos_higienicos_corp', wrapper_class='col-md-4'),
+                Field('frecuencia_lavado_dental', wrapper_class='col-md-4'),
+                Field('factor_rh', wrapper_class='col-md-4'),
+                Field('grupo_sanguineo', wrapper_class='col-md-4'),
                 Field('adicciones', wrapper_class='col-md-4'),
                 Field('alergias', wrapper_class='col-md-4'),
-                Field('fechaHospitalizaion', wrapper_class='col-md-4'),
+                Field('fecha_hospitalizaion', wrapper_class='col-md-4'),
                 Field('motivo', wrapper_class='col-md-4'),
-                Field('padecimientoActual', wrapper_class='col-md-4'),
+                Field('padecimiento_actual', wrapper_class='col-md-4'),
 
-                Field('uxiliaresBucales', wrapper_class='col-md-4'),
-                Field('consumodeGolosinas', wrapper_class='col-md-4'),
-                Field('cartilladeVacunacion', wrapper_class='col-md-4'),
-                Field('esquemaCompleto', wrapper_class='col-md-4'),
-                Field('esquemaFalta', wrapper_class='col-md-4'),
+                Field('auxiliares_bucales', wrapper_class='col-md-4'),
+                Field('consumo_de_golosinas', wrapper_class='col-md-4'),
+                Field('cartilla_de_vacunacion', wrapper_class='col-md-4'),
+                Field('esquema_completo', wrapper_class='col-md-4'),
+                Field('esquema_falta', wrapper_class='col-md-4'),
             ),
 
             Fieldset(
                 'Interrogatorio por aparatos y sistemas',
-                Field('aparatoDigestivo', wrapper_class='col-md-4'),
-                Field('aparatoRespiratorio', wrapper_class='col-md-4'),
-                Field('aparatoCardioBascular', wrapper_class='col-md-4'),
-                Field('apararoGenitourinario', wrapper_class='col-md-4'),
-                Field('sistemaEndocrina', wrapper_class='col-md-4'),
-                Field('sistemaHemopoyetico', wrapper_class='col-md-4'),
-                Field('sistemamusculoEsqueletico', wrapper_class='col-md-4'),
-                Field('aparatoTegumentario', wrapper_class='col-md-4'),
-                Field('habitusExterior', wrapper_class='col-md-4'),
+                Field('aparato_digestivo', wrapper_class='col-md-4'),
+                Field('aparato_respiratorio', wrapper_class='col-md-4'),
+                Field('aparato_cardioBascular', wrapper_class='col-md-4'),
+                Field('aparato_genitourinario', wrapper_class='col-md-4'),
+                Field('sistema_endocrina', wrapper_class='col-md-4'),
+                Field('sistema_hemopoyetico', wrapper_class='col-md-4'),
+                Field('sistema_musculoEsqueletico', wrapper_class='col-md-4'),
+                Field('aparato_tegumentario', wrapper_class='col-md-4'),
+                Field('habitus_exterior', wrapper_class='col-md-4'),
                 Field('peso', wrapper_class='col-md-4'),
                 Field('talla', wrapper_class='col-md-4'),
                 Field('complexion', wrapper_class='col-md-4'),
-                Field('frecuenciaCardiaca', wrapper_class='col-md-4'),
-                Field('tensionarterial', wrapper_class='col-md-4'),
-                Field('frecuenciaRespiratoria', wrapper_class='col-md-4'),
+                Field('frecuencia_cardiaca', wrapper_class='col-md-4'),
+                Field('tension_arterial', wrapper_class='col-md-4'),
+                Field('frecuencia_respiratoria', wrapper_class='col-md-4'),
                 Field('temperatura', wrapper_class='col-md-4'),
             ),
 
@@ -92,7 +92,7 @@ class InterrogatorioForm(forms.ModelForm):
                 'Exploraci&oacute;n de cabeza y cuello',
                 Field('cabeza', wrapper_class='col-md-4'),
                 Field('craneo', wrapper_class='col-md-4'),
-                Field('caraAsimetria', wrapper_class='col-md-4'),
+                Field('cara_asimetria', wrapper_class='col-md-4'),
                 Field('perfil', wrapper_class='col-md-4'),
                 Field('piel', wrapper_class='col-md-4'),
                 Field('musculos', wrapper_class='col-md-4'),
@@ -112,34 +112,34 @@ class InterrogatorioForm(forms.ModelForm):
                 'Articulaci&oacute;n temporomandibular',
                 Field('chasquidos', wrapper_class='col-md-4'),
                 Field('crepitacion', wrapper_class='col-md-4'),
-                Field('difparaAbrirlaboca', wrapper_class='col-md-4'),
-                Field('dolorabertura', wrapper_class='col-md-4'),
-                Field('fatigadolormuscular', wrapper_class='col-md-4'),
-                Field('disminuciondelaavertura', wrapper_class='col-md-4'),
-                Field('desviacionaverturadecierre', wrapper_class='col-md-4'),
+                Field('dif_para_abrir_la_boca', wrapper_class='col-md-4'),
+                Field('dolor_abertura', wrapper_class='col-md-4'),
+                Field('fatiga_dolor_muscular', wrapper_class='col-md-4'),
+                Field('disminucion_de_la_avertura', wrapper_class='col-md-4'),
+                Field('desviacion_avertura_de_cierre', wrapper_class='col-md-4'),
             ),
 
             Fieldset(
                 'Tejidos blandos',
                 Field('ganglios', wrapper_class='col-md-4'),
-                Field('glandulassalivales', wrapper_class='col-md-4'),
-                Field('labioExterno', wrapper_class='col-md-4'),
-                Field('bordebermellon', wrapper_class='col-md-4'),
-                Field('labiointerno', wrapper_class='col-md-4'),
-                Field('Comisuras', wrapper_class='col-md-4'),
+                Field('glandulas_salivales', wrapper_class='col-md-4'),
+                Field('labio_externo', wrapper_class='col-md-4'),
+                Field('borde_bermellon', wrapper_class='col-md-4'),
+                Field('labio_interno', wrapper_class='col-md-4'),
+                Field('comisuras', wrapper_class='col-md-4'),
                 Field('carrillos', wrapper_class='col-md-4'),
-                Field('fondodesaco', wrapper_class='col-md-4'),
+                Field('fondo_de_saco', wrapper_class='col-md-4'),
                 Field('frenillos', wrapper_class='col-md-4'),
-                Field('lenguaTerciomedio', wrapper_class='col-md-4'),
-                Field('paladarDuro', wrapper_class='col-md-4'),
-                Field('paladarBlando', wrapper_class='col-md-4'),
-                Field('istmoBucofaringe', wrapper_class='col-md-4'),
-                Field('lenguaDorso', wrapper_class='col-md-4'),
-                Field('lenguaBordes', wrapper_class='col-md-4'),
-                Field('lenguaVentral', wrapper_class='col-md-4'),
-                Field('pisodelaBoca', wrapper_class='col-md-4'),
+                Field('lengua_tercio_medio', wrapper_class='col-md-4'),
+                Field('paladar_duro', wrapper_class='col-md-4'),
+                Field('paladar_blando', wrapper_class='col-md-4'),
+                Field('istmo_bucofaringe', wrapper_class='col-md-4'),
+                Field('lengua_dorso', wrapper_class='col-md-4'),
+                Field('lengua_bordes', wrapper_class='col-md-4'),
+                Field('lengua_ventral', wrapper_class='col-md-4'),
+                Field('piso_de_la_boca', wrapper_class='col-md-4'),
                 Field('dientes', wrapper_class='col-md-4'),
-                Field('mucosadelBordealveolar', wrapper_class='col-md-4'),
+                Field('mucosa_del_borde_alveolar', wrapper_class='col-md-4'),
                 Field('encia', wrapper_class='col-md-4'),
             ),
 
@@ -147,13 +147,13 @@ class InterrogatorioForm(forms.ModelForm):
                 'Dental',
                 Field('gingivitis', wrapper_class='col-md-4'),
                 Field('periodontitis', wrapper_class='col-md-4'),
-                Field('receciongingival', wrapper_class='col-md-4'),
-                Field('bolsasperiodontales', wrapper_class='col-md-4'),
-                Field('movilidadDentario', wrapper_class='col-md-4'),
-                Field('indicedeplaca', wrapper_class='col-md-4'),
-                Field('interpretacionradiografica', wrapper_class='col-md-4'),
-                Field('estudiosdeLaboratorio', wrapper_class='col-md-4'),
-                Field('interpretacionEstudiosLaboratorio',
+                Field('rececion_gingival', wrapper_class='col-md-4'),
+                Field('bolsas_periodontales', wrapper_class='col-md-4'),
+                Field('movilidad_dentario', wrapper_class='col-md-4'),
+                Field('indice_de_placa', wrapper_class='col-md-4'),
+                Field('interpretacion_radiografica', wrapper_class='col-md-4'),
+                Field('estudios_de_laboratorio', wrapper_class='col-md-4'),
+                Field('interpretacion_estudios_laboratorio',
                       wrapper_class='col-md-4'),
             ),
 
@@ -164,61 +164,61 @@ class InterrogatorioForm(forms.ModelForm):
 
         self.fields['paciente'].label = 'Paciente'
         self.fields['medico'].label = 'Medico'
-        self.fields['credencialPaciente'].label = 'DNI Paciente'
-        self.fields['herenciaMadre'].label = 'Madre'
-        self.fields['herenciaPadre'].label = 'Padre'
-        self.fields['herenciaHermanos'].label = 'Hermanos'
-        self.fields['herenciaHijos'].label = 'Hijos'
-        self.fields['herenciaEsposos'].label = 'Esposo (a)'
-        self.fields['herenciaTios'].label = 'Tios'
-        self.fields['herenciaAbuelos'].label = 'Abuelos'
-        self.fields['eInflamatoriasnotopciones'].label = 'Enfermedades \
+        self.fields['credencial_paciente'].label = 'DNI Paciente'
+        self.fields['herencia_madre'].label = 'Madre'
+        self.fields['herencia_padre'].label = 'Padre'
+        self.fields['herencia_hermanos'].label = 'Hermanos'
+        self.fields['herencia_hijos'].label = 'Hijos'
+        self.fields['herencia_esposos'].label = 'Esposo (a)'
+        self.fields['herencia_tios'].label = 'Tios'
+        self.fields['herencia_abuelos'].label = 'Abuelos'
+        self.fields['e_inflamatorias_not_opciones'].label = 'Enfermedades \
         inflamatorias'
         self.fields['ets'].label = 'Enfermedades de trasmisión sexual'
-        self.fields['eDegenerativas'].label = 'Enfermedades degenerativas'
-        self.fields['eNeoplasticas'].label = 'Enfermedades neoplásicas'
-        self.fields['eCongenitas'].label = 'Enfermedades congénitas'
+        self.fields['e_degenerativas'].label = 'Enfermedades degenerativas'
+        self.fields['e_neoplasticas'].label = 'Enfermedades neoplásicas'
+        self.fields['e_congenitas'].label = 'Enfermedades congénitas'
         self.fields['otras'].label = 'Otras'
-        self.fields['habitosHigienicosVest'].label = 'Hábitos higiénicos: \
+        self.fields['habitos_higienicosVest'].label = 'Hábitos higiénicos: \
         En el vestuario'
-        self.fields['habitosHigienicosCorp'].label = 'Corporales'
-        self.fields['frecuenciaLavadoDental'].label = 'Con qué frecuencia se \
+        self.fields['habitos_higienicos_corp'].label = 'Corporales'
+        self.fields['frecuencia_lavado_dental'].label = 'Con qué frecuencia se \
         lava los dientes'
-        self.fields['uxiliaresBucales'].label = 'Utiliza auxiliares de higiene \
+        self.fields['auxiliares_bucales'].label = 'Utiliza auxiliares de higiene \
         bucal'
-        self.fields['consumodeGolosinas'].label = 'Consume golosinas u otro \
+        self.fields['consumo_de_golosinas'].label = 'Consume golosinas u otro \
         tipo de alimentos entre las comidas'
-        self.fields['gruposanguineo'].label = 'Grupo sanguíneo'
-        self.fields['factorRh'].label = 'Factor Rh'
-        self.fields['cartilladeVacunacion'].label = 'Cuenta con Cartilla de \
+        self.fields['grupo_sanguineo'].label = 'Grupo sanguíneo'
+        self.fields['factor_rh'].label = 'Factor Rh'
+        self.fields['cartilla_de_vacunacion'].label = 'Cuenta con Cartilla de \
         vacunación'
-        self.fields['esquemaCompleto'].label = 'Tiene el esquema completo'
-        self.fields['esquemaFalta'].label = 'Especifique cuál falta'
+        self.fields['esquema_completo'].label = 'Tiene el esquema completo'
+        self.fields['esquema_falta'].label = 'Especifique cuál falta'
         self.fields['adicciones'].label = 'Adicciones'
         self.fields['alergias'].label = 'Antecedentes alérgicos'
-        self.fields['fechaHospitalizaion'].label = 'Ha sido hospitalizado'
+        self.fields['fecha_hospitalizaion'].label = 'Ha sido hospitalizado'
         self.fields['motivo'].label = 'Motivo'
-        self.fields['padecimientoActual'].label = 'Padecimiento actual'
-        self.fields['aparatoDigestivo'].label = 'Aparato digestivo'
-        self.fields['aparatoRespiratorio'].label = 'Aparato respiratorio'
-        self.fields['aparatoCardioBascular'].label = 'Aparato cardiovascular'
-        self.fields['apararoGenitourinario'].label = 'Aparato genitourinario'
-        self.fields['sistemaEndocrina'].label = 'Sistema endocrino'
-        self.fields['sistemaHemopoyetico'].label = 'Sistema hemopoyético'
-        self.fields['sistemamusculoEsqueletico'].label = 'Sistema \
+        self.fields['padecimiento_actual'].label = 'Padecimiento actual'
+        self.fields['aparato_digestivo'].label = 'Aparato digestivo'
+        self.fields['aparato_respiratorio'].label = 'Aparato respiratorio'
+        self.fields['aparato_cardioBascular'].label = 'Aparato cardiovascular'
+        self.fields['aparato_genitourinario'].label = 'Aparato genitourinario'
+        self.fields['sistema_endocrina'].label = 'Sistema endocrino'
+        self.fields['sistema_hemopoyetico'].label = 'Sistema hemopoyético'
+        self.fields['sistema_musculoEsqueletico'].label = 'Sistema \
         musculoesquelético'
-        self.fields['aparatoTegumentario'].label = 'Aparato tegumentario'
-        self.fields['habitusExterior'].label = 'Habitus exterior'
+        self.fields['aparato_tegumentario'].label = 'Aparato tegumentario'
+        self.fields['habitus_exterior'].label = 'Habitus exterior'
         self.fields['peso'].label = 'Peso'
         self.fields['talla'].label = 'Talla'
         self.fields['complexion'].label = 'Complexión'
-        self.fields['frecuenciaCardiaca'].label = 'Frecuencia cardiaca'
-        self.fields['tensionarterial'].label = 'Tensión arterial'
-        self.fields['frecuenciaRespiratoria'].label = 'Frecuencia respiratoria'
+        self.fields['frecuencia_cardiaca'].label = 'Frecuencia cardiaca'
+        self.fields['tension_arterial'].label = 'Tensión arterial'
+        self.fields['frecuencia_respiratoria'].label = 'Frecuencia respiratoria'
         self.fields['temperatura'].label = 'Temperatura'
         self.fields['cabeza'].label = 'Cabeza:'
         self.fields['craneo'].label = 'Cráneo:'
-        self.fields['caraAsimetria'].label = 'Cara:'
+        self.fields['cara_asimetria'].label = 'Cara:'
         self.fields['perfil'].label = 'Perfil:'
         self.fields['piel'].label = 'Piel:'
         self.fields['musculos'].label = 'Músculos:'
@@ -227,47 +227,47 @@ class InterrogatorioForm(forms.ModelForm):
         self.fields['ruidos'].label = 'Ruidos'
         self.fields['chasquidos'].label = 'Chasquidos'
         self.fields['crepitacion'].label = 'Crepitación'
-        self.fields['difparaAbrirlaboca'].label = 'Dificultad para abrir la \
+        self.fields['dif_para_abrir_la_boca'].label = 'Dificultad para abrir la \
         boca'
-        self.fields['dolorabertura'].label = 'Dolor a la abertura o movimientos \
+        self.fields['dolor_abertura'].label = 'Dolor a la abertura o movimientos \
         de lateralidad'
-        self.fields['fatigadolormuscular'].label = 'Fatiga o dolor muscular'
-        self.fields['disminuciondelaavertura'].label = 'Disminución de la \
+        self.fields['fatiga_dolor_muscular'].label = 'Fatiga o dolor muscular'
+        self.fields['disminucion_de_la_avertura'].label = 'Disminución de la \
         abertura'
-        self.fields['desviacionaverturadecierre'].label = 'Desviación a la \
+        self.fields['desviacion_avertura_de_cierre'].label = 'Desviación a la \
         abertura cierre'
         self.fields['ganglios'].label = 'Ganglios'
-        self.fields['glandulassalivales'].label = 'Glándulas salivales'
-        self.fields['labioExterno'].label = 'Labio externo'
-        self.fields['bordebermellon'].label = 'Borde bermellón'
-        self.fields['labiointerno'].label = 'Labio interno'
-        self.fields['Comisuras'].label = 'Comisuras'
+        self.fields['glandulas_salivales'].label = 'Glándulas salivales'
+        self.fields['labio_externo'].label = 'Labio externo'
+        self.fields['borde_bermellon'].label = 'Borde bermellón'
+        self.fields['labio_interno'].label = 'Labio interno'
+        self.fields['comisuras'].label = 'Comisuras'
         self.fields['carrillos'].label = 'Carrillos'
-        self.fields['fondodesaco'].label = 'Fondo de saco'
+        self.fields['fondo_de_saco'].label = 'Fondo de saco'
         self.fields['frenillos'].label = 'Frenillos'
-        self.fields['lenguaTerciomedio'].label = 'Lengua tercio medio'
-        self.fields['paladarDuro'].label = 'Paladar duro'
-        self.fields['paladarBlando'].label = 'Paladar blando'
-        self.fields['istmoBucofaringe'].label = 'Istmo bucofaringe'
-        self.fields['lenguaDorso'].label = 'Lengua dorso'
-        self.fields['lenguaBordes'].label = 'Lengua bordes'
-        self.fields['lenguaVentral'].label = 'Lengua ventral'
-        self.fields['pisodelaBoca'].label = 'Piso de la boca'
+        self.fields['lengua_tercio_medio'].label = 'Lengua tercio medio'
+        self.fields['paladar_duro'].label = 'Paladar duro'
+        self.fields['paladar_blando'].label = 'Paladar blando'
+        self.fields['istmo_bucofaringe'].label = 'Istmo bucofaringe'
+        self.fields['lengua_dorso'].label = 'Lengua dorso'
+        self.fields['lengua_bordes'].label = 'Lengua bordes'
+        self.fields['lengua_ventral'].label = 'Lengua ventral'
+        self.fields['piso_de_la_boca'].label = 'Piso de la boca'
         self.fields['dientes'].label = 'Dientes'
-        self.fields['mucosadelBordealveolar'].label = 'Mucosa del borde \
+        self.fields['mucosa_del_borde_alveolar'].label = 'Mucosa del borde \
         alveolar'
         self.fields['encia'].label = 'Encía'
         self.fields['gingivitis'].label = 'Gingivitis'
         self.fields['periodontitis'].label = 'Periodontitis'
-        self.fields['receciongingival'].label = 'Recesión gingival'
-        self.fields['bolsasperiodontales'].label = 'Bolsas Periodontales'
-        self.fields['movilidadDentario'] .label = 'Movilidad Dentario'
-        self.fields['indicedeplaca'].label = 'Indice de Placa'
-        self.fields['interpretacionradiografica'].label = 'Interpretación \
+        self.fields['rececion_gingival'].label = 'Recesión gingival'
+        self.fields['bolsas_periodontales'].label = 'Bolsas Periodontales'
+        self.fields['movilidad_dentario'] .label = 'Movilidad Dentario'
+        self.fields['indice_de_placa'].label = 'Indice de Placa'
+        self.fields['interpretacion_radiografica'].label = 'Interpretación \
         radiográfica'
-        self.fields['estudiosdeLaboratorio'] .label = 'Estudios de laboratorio y \
+        self.fields['estudios_de_laboratorio'] .label = 'Estudios de laboratorio y \
         gabinete'
-        self.fields['interpretacionEstudiosLaboratorio'].label = 'Interpretación \
+        self.fields['interpretacion_estudios_laboratorio'].label = 'Interpretación \
         de los estudios de laboratorio y gabinete'
 
 

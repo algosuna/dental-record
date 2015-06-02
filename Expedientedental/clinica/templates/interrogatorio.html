@@ -4,12 +4,15 @@
 {% block title %}Expediente Medico y Dental{% endblock %}
 
 {% block content %}
+<!--
 {% load dajaxice_templatetags %}
-<!-- script necesario -->
+ script inecesario (activarlo hasta la segunda iteracion)
 <script src="{% static 'js/jquery.dajax.core.js'%}"></script>
-{% dajaxice_js_import %}
+{% dajaxice_js_import %}-->
 
-<h2 class="page-header">Expediente M&eacute;dico y Dental{% if paciente.interrogatorio_set.get %}<small><a href="{% url clinica:pdf paciente.id %}" class="pull-right"> &nbsp; <i class="fa fa-print fa-fw"></i> Imprimir</a> <a href="{% url clinica:interrogatorio_edit paciente.interrogatorio_set.get.id %}" class="pull-right"><i class="fa fa-pencil fa-fw"></i> Editar</a></small>{% endif %}</h2>
+
+<h2 class="page-header">Expediente M&eacute;dico y Dental{% if paciente.interrogatorio_set.get %}<small><a href="{% url clinica:pdf paciente.id %}" class="pull-right"> &nbsp; <i class="fa fa-print fa-fw"></i>
+ Imprimir</a> <a href="{% url clinica:interrogatorio_edit paciente.interrogatorio_set.get.id %}" class="pull-right"><i class="fa fa-pencil fa-fw"></i> Editar</a></small>{% endif %}</h2>
 
 {% if paciente.interrogatorio_set.get %}
 {% with interrogatorio=paciente.interrogatorio_set.get %}
@@ -18,31 +21,31 @@
   <tbody>
     <tr>
       <th>Madre: </th>
-      <td>{{ interrogatorio.herenciaMadre }}</td>
+      <td>{{ interrogatorio.herencia_madre }}</td>
     </tr>
     <tr>
       <th>Padre: </th>
-      <td>{{interrogatorio.herenciaPadre}}</td>
+      <td>{{interrogatorio.herencia_padre}}</td>
     </tr>
     <tr>
       <th>Hermanos: </th>
-      <td>{{interrogatorio.herenciaHermanos}}</td>
+      <td>{{interrogatorio.herencia_hermanos}}</td>
     </tr>
     <tr>
       <th>Hijos: </th>
-      <td>{{interrogatorio.herenciaHijos}}</td>
+      <td>{{interrogatorio.herencia_hijos}}</td>
     </tr>
     <tr>
       <th>Esposo (a): </th>
-      <td>{{interrogatorio.herenciaEsposos}}</td>
+      <td>{{interrogatorio.herencia_esposos}}</td>
     </tr>
     <tr>
       <th>Tios: </th>
-      <td>{{interrogatorio.herenciaTios}}</td>
+      <td>{{interrogatorio.herencia_tios}}</td>
     </tr>
     <tr>
       <th>Abuelos: </th>
-      <td>{{interrogatorio.herenciaAbuelos}}</td>
+      <td>{{interrogatorio.herencia_abuelos}}</td>
     </tr>
   </tbody>
 </table>
@@ -52,19 +55,19 @@
   <tbody>
     <tr>
       <th>Enfermedades inflamatorias: </th>
-      <td>{{interrogatorio.eInflamatoriasnotopciones}}</td>
+      <td>{{interrogatorio.e_inflamatorias_not_opciones}}</td>
       <th>Enfermedades de trans. sexual: </th>
       <td>{{interrogatorio.ets}}</td>
     </tr>
     <tr>
       <th>Enfermedades degenerativas: </th>
-      <td>{{interrogatorio.eDegenerativas}}</td>
+      <td>{{interrogatorio.e_degenerativas}}</td>
       <th>Enfermedades neoplásicas: </th>
-      <td>{{interrogatorio.eNeoplasticas}}</td>
+      <td>{{interrogatorio.e_neoplasticas}}</td>
     </tr>
     <tr>
       <th>Enfermedades congénitas: </th>
-      <td>{{interrogatorio.eCongenitas}}</td>
+      <td>{{interrogatorio.e_congenitas}}</td>
       <th>Otras: </th>
       <td>{{interrogatorio.otras}}</td>
     </tr>
@@ -78,13 +81,13 @@
       <th colspan="6">Hábitos higiénicos (En el vestuario) </th>
     </tr>
     <tr colspan="6">
-      <td>{{interrogatorio.habitosHigienicosVest}}</td>
+      <td>{{interrogatorio.habitos_higienicosVest}}</td>
     </tr>
     <tr>
       <th colspan="6">Hábitos higiénicos (Corporales) </th>
     </tr>
     <tr>
-      <td colspan="6">{{interrogatorio.habitosHigienicosCorp}}</td>
+      <td colspan="6">{{interrogatorio.habitos_higienicos_corp}}</td>
     </tr>
     <tr>
       <th>¿Con que Frecuencia se lava los dientes? </th>
@@ -92,15 +95,15 @@
       <th>¿Utiliza auxiliares de higiene bucal? </th>
       <td>{{interrogatorio.uxiliaresBucales}}</td>
       <th>Consumo de alimentos entre comidas (golosinas,otros) </th>
-      <td>{{interrogatorio.consumodeGolosinas}}</td>
+      <td>{{interrogatorio.consumo_de_golosinas}}</td>
     </tr>
     <tr>
       <th>Grupo sanguíneo </th>
-      <td>{{interrogatorio.gruposanguineo}}</td>
+      <td>{{interrogatorio.grupo_sanguineo}}</td>
       <th>Factor Rh </th>
-      <td>{{interrogatorio.factorRh}}</td>
+      <td>{{interrogatorio.factor_rh}}</td>
       <th>¿Cuenta con Cartilla de vacunación? </th>
-      <td>{{interrogatorio.cartilladeVacunacion}}</td>
+      <td>{{interrogatorio.cartilla_de_vacunacion}}</td>
     </tr>
     <tr>
       <th>Adicciones: </th>
@@ -108,21 +111,21 @@
       <th>Antecedentes alérgicos: </th>
       <td>{{interrogatorio.alergias}}</td>
       <th>¿Tiene el esquema completo? </th>
-      <td>{{interrogatorio.esquemaCompleto}}</td>
+      <td>{{interrogatorio.esquema_completo}}</td>
     </tr>
     <tr>
       <th>Especifique cuál falta: </th>
-      <td colspan="5">{{interrogatorio.esquemaFalta}}</td>
+      <td colspan="5">{{interrogatorio.esquema_falta}}</td>
     </tr>
     <tr>
       <th>¿Ha sido hospitalizado? </th>
-      <td>{{interrogatorio.fechaHospitalizaion}}</td>
+      <td>{{interrogatorio.fecha_hospitalizacion}}</td>
       <th>Motivo de su hospitalización </th>
       <td colspan="3">{{interrogatorio.motivo}}</td>
     </tr>
     <tr>
       <th>Padecimiento Actual </th>
-      <td colspan="5">{{interrogatorio.padecimientoActual}}</td>
+      <td colspan="5">{{interrogatorio.padedicmiento_actual}}</td>
     </tr>
   </tbody>
 </table>
@@ -136,7 +139,7 @@
       <th>Cráneo </th>
       <td style="width: 15%;">{{interrogatorio.craneo}}</td>
       <th>Cara </th>
-      <td>{{interrogatorio.caraAsimetria}}</td>
+      <td>{{interrogatorio.cara_asimetria}}</td>
     </tr>
     <tr>
       <th>Piel </th>
@@ -168,19 +171,19 @@
       <th>Crepitación </th>
       <td>{{interrogatorio.crepitacion}}</td>
       <th>Fatiga o dolor muscular </th>
-      <td>{{interrogatorio.fatigadolormuscular}}</td>
+      <td>{{interrogatorio.fatiga_dolor_muscular}}</td>
     </tr>
     <tr>
       <th>Dolor a la abertura o movimientos de lateralidad </th>
-      <td>{{interrogatorio.dolorabertura}}</td>
+      <td>{{interrogatorio.dolor_abertura}}</td>
       <th>Dificultad para abrir la boca </th>
-      <td>{{interrogatorio.difparaAbrirlaboca}}</td>
+      <td>{{interrogatorio.dif_para_abrir_la_boca}}</td>
       <th>Disminución de la abertura </th>
-      <td>{{interrogatorio.disminuciondelaavertura}}</td>
+      <td>{{interrogatorio.disminucion_de_la_avertura}}</td>
     </tr>
     <tr>
       <th>Desviación a la abertura cierre </th>
-      <td>{{interrogatorio.desviacionaverturadecierre}}</td>
+      <td>{{desviacion_avertura_de_cierre}}</td>
     </tr>
   </tbody>
 </table>
@@ -192,59 +195,59 @@
       <th>Ganglios </th>
       <td>{{interrogatorio.ganglios}}</td>
       <th>Glándulas Salivales </th>
-      <td>{{interrogatorio.glandulassalivales}}</td>
+      <td>{{interrogatorio.glandulas_salivales}}</td>
     </tr>
     <tr>
       <th>Labio externo </th>
-      <td>{{interrogatorio.labioExterno}}</td>
+      <td>{{interrogatorio.labio_Externo}}</td>
       <th>Borde bermellón </th>
-      <td>{{interrogatorio.bordebermellon}}</td>
+      <td>{{interrogatorio.borde_bermellon}}</td>
     </tr>
     <tr>
       <th>Labio interno </th>
-      <td>{{interrogatorio.labiointerno}}</td>
+      <td>{{interrogatorio.labio_interno}}</td>
       <th>Comisuras </th>
-      <td>{{interrogatorio.Comisuras}}</td>
+      <td>{{interrogatorio.comisuras}}</td>
     </tr>
     <tr>
       <th>Carrillos </th>
       <td>{{interrogatorio.carrillos}}</td>
       <th>Fondo de saco </th>
-      <td>{{interrogatorio.fondodesaco}}</td>
+      <td>{{interrogatorio.fondo_de_saco}}</td>
     </tr>
     <tr>
       <th>Frenillos </th>
       <td>{{interrogatorio.frenillos}}</td>
       <th>Lengua tercio medio </th>
-      <td>{{interrogatorio.lenguaTerciomedio}}</td>
+      <td>{{interrogatorio.lengua_tercio_medio}}</td>
     </tr>
     <tr>
       <th>Paladar duro </th>
-      <td>{{interrogatorio.paladarDuro}}</td>
+      <td>{{interrogatorio.paladar_duro}}</td>
       <th>Paladar blando </th>
-      <td>{{interrogatorio.paladarBlando}}</td>
+      <td>{{interrogatorio.paladar_blando}}</td>
     </tr>
     <tr>
       <th>Istmo bucofaringe </th>
-      <td>{{interrogatorio.istmoBucofaringe}}</td>
+      <td>{{interrogatorio.istmo_bucofaringe}}</td>
       <th>Lengua dorso </th>
-      <td>{{interrogatorio.lenguaDorso}}</td>
+      <td>{{interrogatorio.lengua_dorso}}</td>
     </tr>
     <tr>
       <th>Lengua bordes </th>
-      <td>{{interrogatorio.lenguaBordes}}</td>
+      <td>{{interrogatorio.lengua_bordes}}</td>
       <th>Lengua ventral </th>
-      <td>{{interrogatorio.lenguaVentral}}</td>
+      <td>{{interrogatorio.lengua_ventral}}</td>
     </tr>
     <tr>
       <th>Piso de la boca </th>
-      <td>{{interrogatorio.pisodelaBoca}}</td>
+      <td>{{interrogatorio.piso_de_la_boca}}</td>
       <th>Dientes </th>
       <td>{{interrogatorio.dientes}}</td>
     </tr>
     <tr>
       <th>Mucosa del borde alveolar </th>
-      <td>{{interrogatorio.mucosadelBordealveolar}}</td>
+      <td>{{interrogatorio.mucosa_del_borde_alveolar}}</td>
       <th>Encía </th>
       <td>{{interrogatorio.encia}}</td>
     </tr>
@@ -262,27 +265,27 @@
     </tr>
     <tr>
       <th>Recesión gingival </th>
-      <td>{{interrogatorio.receciongingival}}</td>
+      <td>{{interrogatorio.rececion_gingival}}</td>
       <th>Bolsas Periodontales </th>
-      <td>{{interrogatorio.bolsasperiodontales}}</td>
+      <td>{{interrogatorio.bolsas_peridontales}}</td>
     </tr>
     <tr>
       <th>Movilidad Dentario </th>
-      <td>{{interrogatorio.movilidadDentario}}</td>
+      <td>{{interrogatorio.movilidad_dentario}}</td>
       <th>Indice de Placa </th>
-      <td>{{interrogatorio.indicedeplaca}}</td>
+      <td>{{interrogatorio.indice_de_placa}}</td>
     </tr>
     <tr>
       <th>Interpretación radiográfica </th>
-      <td colspan="5">{{interrogatorio.interpretacionradiografica}}</td>
+      <td colspan="5">{{interrogatorio.interpretacion_radiografica}}</td>
     </tr>
     <tr>
       <th>Estudios de laboratorio y gabinete </th>
-      <td colspan="5">{{interrogatorio.estudiosdeLaboratorio}}</td>
+      <td colspan="5">{{interrogatorio.estudios_de_laboratorio}}</td>
     </tr>
     <tr>
       <th>Interpretación de los estudios de laboratorio y gabinete </th>
-      <td colspan="5">{{interrogatorio.interpretacionEstudiosLaboratorio}}</td>
+      <td colspan="5">{{interrogatorio.interpretacion_estudios_laboratorio}}</td>
     </tr>
   </tbody>
 </table>
