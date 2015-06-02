@@ -3,12 +3,21 @@
 {% load static from staticfiles %}
 {% load crispy_forms_tags %}
 
+{% block css %}
+<style>
+  .normalized-btn {
+    margin-top: 25px;
+  }
+</style>
+{% endblock %}
+
 {% block content %}
 <div class="col-md-8 col-md-offset-2">
 
   <h3 class="page-header">Editar Productos de {% block title %}Paquete{% endblock %}</h2>
 
   <form action="" method="post">
+    {% csrf_token %}
     {{ formset.management_form }}
 
     {% for form in formset %}
@@ -21,7 +30,7 @@
       {% crispy formset.empty_form %}
     </div>
 
-    <input type="submit" class="btn btn-primary pull-right" value="Guardar">
+    <input type="submit" class="btn btn-primary pull-right" value="Aceptar">
 
   </form>
 

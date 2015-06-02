@@ -40,7 +40,7 @@
     <li class="sidebar-header text-center">Salidas</li>
     <li class="{{ pe_active }}"><a href="{% url consumidos:peticion_list %}"><i class="fa fa-inbox fa-fw"></i> Peticiones</a></li>
     <li class="{{ psl_active }}"><a href="{% url consumidos:peticion_surtido_list %}"><i class="fa fa-th-large fa-fw"></i>Peticiones Atendidas</a></li>
-    <li class="{{ cprc_active }}"><a href="{% url consumidos:prconsumido %}"><i class="fa fa-asterisk fa-fw"></i>Mat.Extra</a></li>
+    <li class="{{ cprc_active }}"><a href="{% url consumidos:productoconsumido_new %}"><i class="fa fa-asterisk fa-fw"></i>Mat.Extra</a></li>
     <li class="{{ cprc_active }}"><a href="{% url consumidos:consumido %}"><i class="fa fa-asterisk fa-fw"></i>Materiales Entregados</a></li>
     <li class="{{ ccl_active }}"><a href="{% url consumidos:cancel_list %}"><i class="fa fa-asterisk fa-fw"></i>Salidas Canceladas</a></li>
 

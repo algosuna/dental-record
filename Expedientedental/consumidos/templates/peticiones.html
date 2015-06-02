@@ -1,12 +1,14 @@
-{% extends "dash.html" %}
-{%load static from staticfiles %}
+{% extends 'dash.html' %}
+{% load static from staticfiles %}
 
 {% block content %}
-<h2 class="page-header">Peticiones </h2>
+<h2 class="page-header">{% block title %}Peticiones{% endblock %}</h2>
 
-{% if peticiones %}
+{% if paqueteconsumidos %}
 <table class="table table-hover">
+
   <thead>
+
     <tr>
 
       <th>Servicio</th>
@@ -15,27 +17,45 @@
       <th>Fecha</th>
       <th>Status</th>
       <th>&nbsp;</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for peticion in peticiones %}
+      <th>&nbsp;</th>
 
+    </tr>
+
+  </thead>
+
+  <tbody>
+
+  <!-- TODO: Separate status surtidos and en espera into two groups somehow ((prolly pass it in the context separately)) -->
+
+    {% for paquete in paqueteconsumidos %}
     <tr>
-      <td>{{ peticion.servicio }}</td>
-      <td>{{ peticion.medico }}</td>
-      <td>{{ peticion.paciente }}</td>
-      <td>{{ peticion.fecha }}</td>
-      <td><span class="label">{{ peticion.get_status_display }}</span></td>
-      <td><a href="{% url consumidos:paquete_update peticion.id %}" class="btn btn-default">Atender</a></td>
+
+      <td class="padded">{{ paquete.servicio }}</td>
+      <td class="padded">{{ paquete.medico }}</td>
+      <td class="padded">{{ paquete.paciente }}</td>
+      <td class="padded">{{ paquete.fecha }}</td>
+      <td class="padded"><span class="label">{{ paquete.get_status_display }}</span></td>
+
+      {% if paquete.status == 'en_espera' %}
+      <td><a href="{% url consumidos:peticion_update paquete.id %}" class="btn btn-default">Atender</a></td>
+      {% elif paquete.status == 'surtido' %}
+      <td class="padded"><a href="{% url consumidos:paquete_recibo paquete.id %}"><i class="fa fa-print fa-fw"></i> Imprimir Acuse</a></td>
+      {% else %}
+      <td><a href="{% url consumidos:peticion_detail paquete.id %}" class="btn btn-default">Actualizar</a></td>
+      {% endif %}
+
 
     </tr>
     {% endfor %}
+
   </tbody>
+
 </table>
 {% else %}
-<p class="lead text-center text-muted">no existen peticiones pendientes<br><br>
+<p class="lead text-center text-muted">No hay peticiones.</p>
 {% endif %}
-{% endblock content %}
+{% endblock %}
+
 {% block javascript %}
 <script>
 $(function() {
@@ -51,7 +71,7 @@ $(function() {
 
       status.addClass(' label-primary');
 
-    } else if(status.text() == 'Por Entegar') {
+    } else if(status.text() == 'Por Entregar') {
 
       status.addClass(' label-info');
 
@@ -64,5 +84,4 @@ $(function() {
   })
 })
 </script>
-
 {% endblock javascript %}

@@ -1,9 +1,9 @@
 from django.conf.urls import patterns, url
 from consumidos.views import (
-    PeticionCreate, Peticiones, PeticionUpdate, PeticionesAtendidas,
-    Consumidos, producto_consumido,
-    ConsumidoDetail, PaqueteCreate, Paquetes, PaquetebillPDF,
-    SalidaCancel, SalidaPDF
+    Paquetes, PaqueteCreate, Peticiones, PeticionesAtendidas, PeticionCreate,
+    PeticionUpdate, ProductoConsumidoCreate, PeticionDetail,
+    ProductosConsumidos, ProductoConsumidoDetail,
+    SalidaCancel, SalidaPDF, PaquetebillPDF
 )
 
 urlpatterns = patterns(
@@ -24,26 +24,35 @@ urlpatterns = patterns(
     url(r'^peticion/(?P<pk>\d+)/update/$',
         PeticionUpdate.as_view(), name='peticion_update'),
 
+    url(r'^peticion/(?P<pk>\d+)/detail/$',
+        PeticionDetail.as_view(), name='peticion_detail'),
+
     url(r'^peticion/(?P<pk>\d+)/insumos/add/$',
         'paquete_item_create', name='paquete_item_create'),
 
+    url(r'^producto/new/$',
+        ProductoConsumidoCreate.as_view(), name='productoconsumido_new'),
 
 
 
-    url(r'^paquete/producto/$', producto_consumido.as_view(),
-        name='prconsumido'),
 
-    url(r'^paquetes/pconsumido/list/$', Consumidos.as_view(),
+
+    url(r'^paquetes/pconsumido/list/$', ProductosConsumidos.as_view(),
         name='consumido'),
 
-    url(r'^paquetes/detail/(?P<pk>\d+)/$', ConsumidoDetail.as_view(),
+    url(r'^paquetes/detail/(?P<pk>\d+)/$', ProductoConsumidoDetail.as_view(),
         name='cons_detail'),
+
+
+
+
 
     url(r'^paquetes/salida/cancel/$', SalidaCancel.as_view(),
         name='cancel_list'),
 
-
     url(r'^(?P<pk>\d+)/pdf/$', SalidaPDF.as_view(), name='pdf'),
+
     url(r'^paquete/(?P<pk>\d+)/recibo/pdf/$',
         PaquetebillPDF.as_view(), name='paquete_recibo'),
+
 )

@@ -1,7 +1,9 @@
 from datetime import datetime
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.forms.models import modelformset_factory
-from django.shortcuts import render_to_response, render, get_object_or_404
+from django.shortcuts import (
+    render_to_response, render, get_object_or_404, redirect
+)
 from django.views.generic import UpdateView, ListView, CreateView, DetailView
 
 from wkhtmltopdf.views import PDFTemplateView
@@ -14,7 +16,7 @@ from consumidos.models import (
     CancelSalida
 )
 from consumidos.forms import (
-    PaqueteForm, AtenderPeticionForm, PCItemForm, PeticionForm,
+    PaqueteForm, AtenderPeticionForm, PaqueteItemCreateForm, PeticionForm,
     ProductoConsumidoForm, SalidaCanceladaForm
 )
 from servicios.models import Servicio
@@ -37,7 +39,8 @@ class PaqueteCreate(CreateView):
     template_name = 'paquete.html'
 
     def get_success_url(self):
-        return reverse('consumidos:armar', kwargs=self.kwargs)
+        # TODO: update this url
+        return reverse('consumidos:paquetes', kwargs=self.kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(PaqueteCreate, self).get_context_data(**kwargs)
@@ -45,10 +48,13 @@ class PaqueteCreate(CreateView):
         return context
 
 
+# TODO: Create paquete detail.
+
+
 class Peticiones(ListView):
     model = PaqueteConsumido
-    queryset = model.objects.filter(status="en_espera")
-    context_object_name = 'peticiones'
+    queryset = model.objects.filter(status__in=['en_espera', 'por_entregar'])
+    context_object_name = 'paqueteconsumidos'
     template_name = 'peticiones.html'
 
     def get_context_data(self, **kwargs):
@@ -90,10 +96,10 @@ class PeticionCreate(CreateObjFromContext):
 
 class PeticionUpdate(UpdateView):
     ''' Adds Paquete (and PaqueteItems) to PaqueteConsumido. '''
-    model = PaqueteConsumido
-    template_name = 'peticion-update.html'
     form_class = AtenderPeticionForm
-    context_object_name = 'pconsumido'
+    model = PaqueteConsumido
+    context_object_name = 'paqueteconsumido'
+    template_name = 'peticion-update.html'
 
     def get_context_data(self, **kwargs):
         context = super(PeticionUpdate, self).get_context_data(**kwargs)
@@ -107,8 +113,8 @@ class PeticionUpdate(UpdateView):
 class PeticionesAtendidas(ListView):
     model = PaqueteConsumido
     queryset = model.objects.filter(status="surtido")
-    context_object_name = 'consumidos'
-    template_name = 'peticiones-atendidas.html'
+    context_object_name = 'paqueteconsumidos'
+    template_name = 'peticiones.html'
 
     def get_context_data(self, **kwargs):
         context = super(PeticionesAtendidas, self).get_context_data(**kwargs)
@@ -128,16 +134,19 @@ def paquete_item_create(request, pk):
 
     if request.method == 'POST':
         ItemFormset = modelformset_factory(PaqueteConsumidoItem,
-                                           form=PCItemForm,
+                                           form=PaqueteItemCreateForm,
                                            extra=0)
         formset = ItemFormset(request.POST)
 
         if formset.is_valid():
             for form in formset:
                 form.save(paquete_consumido)
+
+        return redirect(reverse(
+            'consumidos:peticion_detail', args=[paquete_consumido.id]))
     else:
         ItemFormset = modelformset_factory(PaqueteConsumidoItem,
-                                           form=PCItemForm,
+                                           form=PaqueteItemCreateForm,
                                            extra=len(initial_list))
         formset = ItemFormset(queryset=items, initial=initial_list)
 
@@ -149,11 +158,18 @@ def paquete_item_create(request, pk):
         })
 
 
-class PaqueteUpdate(UpdateView):
-    model = PaqueteConsumidoItem
-    succes_url = '/'
-    template_name = 'packDetail.html'
-    form_class = PaqueteConsumidoItem
+class PeticionDetail(DetailView):
+    ''' Detail of PaqueteConsumido with its items (PaqueteConsumidoItem) '''
+    model = PaqueteConsumido
+    template_name = 'peticion-detail.html'
+    context_object_name = 'paquete'
+
+    def get_context_data(self, **kwargs):
+        context = super(PeticionDetail, self).get_context_data(**kwargs)
+        items = PaqueteConsumidoItem.objects.filter(
+            paquete_consumido=self.object)
+        context.update({'pe_active': 'active', 'paqueteitems': items})
+        return context
 
 
 class ProductoConsumidoCreate(CreateView):
@@ -163,22 +179,22 @@ class ProductoConsumidoCreate(CreateView):
     success_url = '/'
 
 
-class Consumidos(ListView):
+class ProductosConsumidos(ListView):
     model = ProductoConsumido
     context_object_name = 'consumidos'
     template_name = 'pconsumido.html'
 
 
-class ConsumidoDetail(DetailView):
+class ProductoConsumidoDetail(DetailView):
     model = ProductoConsumido
     context_object_name = 'consumido'
     template_name = 'consumido-detail.html'
 
     def get_context_data(self, **kwargs):
-        context = super(ConsumidoDetail, self).get_context_data(**kwargs)
+        ctx = super(ProductoConsumidoDetail, self).get_context_data(**kwargs)
         producto = self.object.producto
-        context.update({'cd_active': 'active', 'producto': producto})
-        return context
+        ctx.update({'cd_active': 'active', 'producto': producto})
+        return ctx
 
 
 class SalidaCancelledList(PermissionRequiredMixin, ListView):

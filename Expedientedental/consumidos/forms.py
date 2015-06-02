@@ -9,7 +9,7 @@ from crispy_forms.layout import (
 
 from inventario.models import Producto
 from consumidos.models import (
-    PaqueteConsumido, Paquete, PaqueteItem, PaqueteConsumidoItem,
+    Paquete, PaqueteItem, PaqueteConsumido, PaqueteConsumidoItem,
     ProductoConsumido
 )
 
@@ -32,9 +32,11 @@ class PaqueteForm(forms.ModelForm):
                 Field('nombre', wrapper_class='col-md-4'),
                 Field('descripcion', wrapper_class='col-md-8'),
                 Field('productos', wrapper_class='col-md-12'),
-            ),
-            ButtonHolder(Submit('save', 'Generar'))
-        )
+                ),
+            ButtonHolder(Submit(
+                'save', 'Crear Paquete', css_class='pull-right normalized-btn'
+                ))
+            )
         self.fields['nombre'].label = 'Nombre'
         self.fields['descripcion'].label = 'Descripion'
         self.fields['productos'].label = 'Productos'
@@ -76,7 +78,7 @@ class PeticionForm(forms.ModelForm):
         instance.medico = self.initial.get('medico')
         instance.paciente = self.initial.get('paciente')
         instance.servicio = self.initial.get('servicio')
-        instance.fecha = dt.date.today()
+        instance.fecha = dt.datetime.now()
         instance.paquete = None
         if commit:
             instance.save()
@@ -87,22 +89,22 @@ class AtenderPeticionForm(forms.ModelForm):
     ''' Adds Paquete and to PaqueteConsumido. '''
     class Meta:
         model = PaqueteConsumido
-        exclude = ('nota', 'medico', 'fecha', 'paciente', 'servicio',)
-
-    is_approved = forms.BooleanField(required=False)
+        fields = ['paquete', ]
 
     def __init__(self, *args, **kwargs):
         super(AtenderPeticionForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.layout = Layout(
-            HTML('''<p>Campos con ( * ) Son Requeridos.</p>'''),
-            Fieldset(
-                '',
-                Field('paquete', wrapper_class='col-md-12'),
-                # TODO: Dynamically update status
-                Field('status', wrapper_class='col-md-8')
-                ),
+        self.helper.form_show_labels = False
+        self.helper.add_input(
+            Submit('submit', 'Elegir', css_class='pull-right')
             )
+
+    def save(self, commit=True):
+        instance = super(AtenderPeticionForm, self).save(commit=False)
+        instance.status = 'por_entregar'
+        if commit:
+            instance.save()
+        return instance
 
 
 class PaqueteItemCreateForm(forms.ModelForm):
@@ -119,7 +121,7 @@ class PaqueteItemCreateForm(forms.ModelForm):
         self.helper.disable_csrf = True
 
         self.helper.layout = Layout(
-            Field('producto', wrapper_class='col-md-5'),
+            Field('producto', wrapper_class='col-md-8'),
             Field('cantidad', wrapper_class='col-md-2'),
 
         )
@@ -147,9 +149,8 @@ class PaqueteItemCreateForm(forms.ModelForm):
     def save(self, paquete_consumido, commit=True):
         instance = super(PaqueteItemCreateForm, self).save(commit=False)
         instance.paquete_consumido = paquete_consumido
-        instance.precio = instance.producto.precio_porcion
+        instance.precio = instance.set_precio()
         if commit:
-
             instance.save()
         return instance
 
