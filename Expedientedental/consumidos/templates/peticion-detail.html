@@ -3,8 +3,20 @@
 
 {% load crispy_forms_tags %}
 
+{% block css %}
+<style>
+  .checkbox {
+    margin-top: 7px !important;
+    margin-left: 5px;
+  }
+  input[type=checkbox] {
+    margin: 0px !important;
+  }
+</style>
+{% endblock %}
+
 {% block content %}
-<h2 class="page-header">{% block title %}Peticion a Inventario{% endblock %}</h2>
+<h2 class="page-header">{% block title %}Peticion a Inventario{% endblock %} <small class="pull-right"><a href=""><i class="fa fa-print fa-fw"></i> Imprimir Recibo</a></small></h2>
 
 <div class="col-md-6">
 
@@ -54,6 +66,12 @@
   </div>
 
   <!-- TODO: add stuff to mark as delivered -->
+
+  <div class="well clearfix">
+
+    {% crispy form %}
+
+  </div>
 
 </div>
 

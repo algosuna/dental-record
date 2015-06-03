@@ -7,6 +7,7 @@ from django.shortcuts import (
     render_to_response, render, get_object_or_404, redirect
 )
 from django.views.generic import UpdateView, ListView, CreateView, DetailView
+from django.views.generic.edit import FormMixin
 
 from wkhtmltopdf.views import PDFTemplateView
 from core.mixins import PermissionRequiredMixin
@@ -19,7 +20,7 @@ from consumidos.models import (
 )
 from consumidos.forms import (
     PaqueteForm, AtenderPeticionForm, PaqueteItemCreateForm, PeticionForm,
-    ProductoConsumidoForm, SalidaCanceladaForm
+    ProductoConsumidoForm, SalidaCanceladaForm, PeticionSurtidoForm
 )
 from servicios.models import Servicio
 
@@ -191,12 +192,15 @@ def paquete_item_create(request, pk):
         })
 
 
-class PeticionDetail(PermissionRequiredMixin, DetailView):
-    ''' Detail of PaqueteConsumido with its items (PaqueteConsumidoItem) '''
+class PeticionDetail(PermissionRequiredMixin, UpdateView):
+    ''' Detail of PaqueteConsumido with its items (PaqueteConsumidoItem).
+    it has the possibility of marking PaqueteConsumido as 'surtido'.'''
     model = PaqueteConsumido
     template_name = 'peticion-detail.html'
     context_object_name = 'paquete'
     permission_required = 'consumidos.change_paqueteconsumido'
+    form_class = PeticionSurtidoForm
+    success_url = reverse_lazy('consumidos:peticion_surtido_list')
 
     def get_context_data(self, **kwargs):
         context = super(PeticionDetail, self).get_context_data(**kwargs)
@@ -204,6 +208,22 @@ class PeticionDetail(PermissionRequiredMixin, DetailView):
             paquete_consumido=self.object)
         context.update({'pe_active': 'active', 'paqueteitems': items})
         return context
+
+    def form_valid(self, form):
+        ''' TODO: Figure out why it won't return items to inventory. '''
+        redirect = super(PeticionDetail, self).form_valid(form)
+        is_delivered = form.cleaned_data.get('is_delivered')
+        consumidos = self.object.paqueteconsumidoitem_set.all()
+        for c in consumidos:
+            producto = c.producto
+            if is_delivered:
+                if producto.in_stock():
+                    producto.porciones = producto.quitar(c.cantidad)
+            else:
+                producto.porciones = producto.agregar(c.cantidad)
+
+            producto.save()
+        return redirect
 
 
 class ProductoConsumidoCreate(CreateView):

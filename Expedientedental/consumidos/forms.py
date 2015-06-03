@@ -16,7 +16,8 @@ from consumidos.models import (
 
 class PaqueteForm(forms.ModelForm):
     ''' Creates Paquete with PaqueteItems based on available Productos '''
-    productos = forms.ModelMultipleChoiceField(queryset=Producto.objects.all())
+    productos = forms.ModelMultipleChoiceField(
+        queryset=Producto.objects.filter(is_inactive=False))
     DEFAULT_PRODUCT_QUANTITY = 1
 
     class Meta:
@@ -150,6 +151,40 @@ class PaqueteItemCreateForm(forms.ModelForm):
         instance = super(PaqueteItemCreateForm, self).save(commit=False)
         instance.paquete_consumido = paquete_consumido
         instance.precio = instance.set_precio()
+        if commit:
+            instance.save()
+        return instance
+
+
+class PeticionSurtidoForm(forms.ModelForm):
+    class Meta:
+        model = PaqueteConsumido
+        fields = ''
+
+    is_delivered = forms.BooleanField(required=False)
+
+    def __init__(self, *args, **kwargs):
+        super(PeticionSurtidoForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_class = 'form-inline'
+        self.helper.field_template = 'bootstrap3/layout/inline_field.html'
+        self.helper.layout = Layout(
+            'is_delivered',
+            Submit('submit', 'Aceptar', css_class='btn btn-success pull-right')
+            )
+        status = self.instance.status
+        if status == 'surtido':
+            self.fields['is_delivered'].initial = True
+        else:
+            self.fields['is_delivered'].initial = False
+
+    def save(self, commit=True):
+        instance = super(PeticionSurtidoForm, self).save(commit=False)
+        is_delivered = self.cleaned_data.get('is_delivered')
+        if is_delivered:
+            instance.status = 'surtido'
+        else:
+            instance.status = 'por_entregar'
         if commit:
             instance.save()
         return instance
