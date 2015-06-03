@@ -9,35 +9,13 @@ from crispy_forms.layout import (
 
 from inventario.models import Producto
 from consumidos.models import (
-    PaqueteConsumido, Paquete, PaqueteItem, PaqueteConsumidoItem,
+    Paquete, PaqueteItem, PaqueteConsumido, PaqueteConsumidoItem,
     ProductoConsumido
 )
 
 
-class PeticionForm(forms.ModelForm):
-    class Meta:
-        model = PaqueteConsumido
-        fields = ('nota',)
-
-    def __init__(self, medico, paciente, servicio, *args, **kwargs):
-        super(PeticionForm, self).__init__(*args, **kwargs)
-        self.medico = medico
-        self.paciente = paciente
-        self.servicio = servicio
-
-    def save(self, commit=True):
-        instance = super(PeticionForm, self).save(commit=False)
-        instance.medico = self.medico
-        instance.paciente = self.paciente
-        instance.servicio = self.servicio
-        instance.fecha = dt.date.today()
-        instance.paquete = None
-        if commit:
-            instance.save()
-        return instance
-
-
 class PaqueteForm(forms.ModelForm):
+    ''' Creates Paquete with PaqueteItems based on available Productos '''
     productos = forms.ModelMultipleChoiceField(queryset=Producto.objects.all())
     DEFAULT_PRODUCT_QUANTITY = 1
 
@@ -51,21 +29,17 @@ class PaqueteForm(forms.ModelForm):
             HTML('''<p>Campos con ( * ) Son Requeridos.</p>'''),
             Fieldset(
                 '',
-
-                # Field('paquete' , wrapper_class='col-md-2'),
                 Field('nombre', wrapper_class='col-md-4'),
                 Field('descripcion', wrapper_class='col-md-8'),
                 Field('productos', wrapper_class='col-md-12'),
-
-                # Field('cantidad_producto' , wrapper_class='col-md-2'),
-
                 ),
-            ButtonHolder(Submit('save', 'Generar'))
-        )
+            ButtonHolder(Submit(
+                'save', 'Crear Paquete', css_class='pull-right normalized-btn'
+                ))
+            )
         self.fields['nombre'].label = 'Nombre'
         self.fields['descripcion'].label = 'Descripion'
         self.fields['productos'].label = 'Productos'
-        # self.fields['cantidad_producto'].label='Cantidad'
 
     def save(self, commit=True):
         paquete = super(PaqueteForm, self).save(commit)
@@ -86,70 +60,68 @@ class PaqueteForm(forms.ModelForm):
         return items
 
 
-class AtenderPaqueteForm(forms.ModelForm):
+class PeticionForm(forms.ModelForm):
+    ''' Creates PaqueteConsumido with null Paquete. '''
     class Meta:
         model = PaqueteConsumido
-        exclude = ('nota', 'medico', 'fecha', 'paciente', 'servicio',)
-
-    is_approved = forms.BooleanField(required=False)
+        fields = ('nota',)
 
     def __init__(self, *args, **kwargs):
-        super(AtenderPaqueteForm, self).__init__(*args, **kwargs)
+        super(PeticionForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-
-        self.helper.layout = Layout(
-            HTML('''<p>Campos con ( * ) Son Requeridos.</p>'''),
-            Fieldset(
-                '',
-                Field('paquete', wrapper_class='col-md-12'),
-                Field('status', wrapper_class='col-md-8')
-                ),
+        self.helper.add_input(
+            Submit('submit', 'Enviar', css_class='pull-right')
             )
 
+    def save(self, commit=True):
+        instance = super(PeticionForm, self).save(commit=False)
+        instance.medico = self.initial.get('medico')
+        instance.paciente = self.initial.get('paciente')
+        instance.servicio = self.initial.get('servicio')
+        instance.fecha = dt.datetime.now()
+        instance.paquete = None
+        if commit:
+            instance.save()
+        return instance
 
-class PCItemForm(forms.ModelForm):
+
+class AtenderPeticionForm(forms.ModelForm):
+    ''' Adds Paquete and to PaqueteConsumido. '''
+    class Meta:
+        model = PaqueteConsumido
+        fields = ['paquete', ]
+
+    def __init__(self, *args, **kwargs):
+        super(AtenderPeticionForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_show_labels = False
+        self.helper.add_input(
+            Submit('submit', 'Elegir', css_class='pull-right')
+            )
+
+    def save(self, commit=True):
+        instance = super(AtenderPeticionForm, self).save(commit=False)
+        instance.status = 'por_entregar'
+        if commit:
+            instance.save()
+        return instance
+
+
+class PaqueteItemCreateForm(forms.ModelForm):
+    ''' Creates PaqueteConsumidoItems from PaqueteItems in Paquete and adds or
+    removes extra items (products). '''
     class Meta:
         model = PaqueteConsumidoItem
         exclude = ('precio', 'paquete_consumido', )
 
     def __init__(self, *args, **kwargs):
-        super(PCItemForm, self).__init__(*args, **kwargs)
+        super(PaqueteItemCreateForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_tag = False
         self.helper.disable_csrf = True
 
-        # producto_sel_field = None
-        # if self.get_producto() is not None:
-        #     # Usar disabled provoca que no se incluya en POST
-        #     # readonly no te desabilita select.
-
-        #     # Cambiamos widget a readonly input (talvez?)
-        #     self.fields['producto_select'] = forms.ChoiceField()
-        #     # METER VALOR DEFAULT
-        #     producto_sel_field = Field(
-        #         'producto_select', wrapper_class='col-md-5')
-        #     producto_sel_field.attrs['disabled'] = 'disabled'
-        #     # producto_field_hidden = Hidden('producto',self.get_producto())
-        #     self.fields['producto'].widget = forms.TextInput()
-        #     producto_field = Field('producto', type='hidden')
-        #     # producto_field = Field('producto',
-        #     #                        readonly='readonly',
-        #     #                        wrapper_class='col-md-5')
-        # else:
-        #     producto_field = Field('producto', wrapper_class='col-md-5')
-        # args = [producto_field]
-
-        # if producto_sel_field is not None:
-        #     args.append(producto_sel_field)
-        # args.append(Field('cantidad', wrapper_class='col-md-5'))
-
-        # self.helper.layout = Layout(
-        #     # Field('paquete_consumido'), type='hidden'), # NO ES NECESARIO
-        #     *args
-        # )
-
         self.helper.layout = Layout(
-            Field('producto', wrapper_class='col-md-5'),
+            Field('producto', wrapper_class='col-md-7'),
             Field('cantidad', wrapper_class='col-md-2'),
 
         )
@@ -158,9 +130,6 @@ class PCItemForm(forms.ModelForm):
             self.fields['producto'] = forms.ModelChoiceField(
                 queryset=Producto.objects.filter(pk=producto.pk),
                 empty_label=None)
-
-    # def get_paquete_consumido(self):
-    #     return self.get_initial_or_instance('paquete_consumido')
 
     def get_producto(self):
         return self.get_initial_or_instance(Producto)
@@ -178,11 +147,10 @@ class PCItemForm(forms.ModelForm):
         return value
 
     def save(self, paquete_consumido, commit=True):
-        instance = super(PCItemForm, self).save(commit=False)
+        instance = super(PaqueteItemCreateForm, self).save(commit=False)
         instance.paquete_consumido = paquete_consumido
-        instance.precio = instance.producto.precio_porcion
+        instance.precio = instance.set_precio()
         if commit:
-
             instance.save()
         return instance
 

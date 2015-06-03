@@ -1,44 +1,54 @@
-{% extends "dash.html" %}
+{% extends 'dash.html' %}
+
 {%load static from staticfiles %}
 
 {% load crispy_forms_tags %}
 
 
-  {% block content %}
+{% block content %}
+<h2 class="page-header">{% block title %}Atencion de Paquete{% endblock %}</h2>
 
-  <h1>Atencion de Paquete</h1>
- 
+<div class="col-md-8">
+<h4>Detalle de Servicio</h4>
+<div class="panel panel-default">
 
-  <div class="col-xs-9">
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Paciente:</th>
-          <th>Servicio:</th>
-          <th>Medico:</th>
-          <th>Fecha:</th>
-    
-          
-          
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>{{ pconsumido.paciente}}</td>
-          <td>{{ pconsumido.servicio}}</td>
-          <td>{{ pconsumido.medico}}</td>
-          <td>{{pconsumido.fecha|date:"d-M-Y"}}</td>
-          <td><a href="#" class="glyphicon glyphicon-print">imprimir Acuse</a></td>
-          
-         <form action="" method="post">{% csrf_token %}
-        </tr>
-      </tbody>
-    </table>
-  </div>
-        <button type=submit>surtir</button>
+  <table class="table">
 
+    <thead>
 
-        {% crispy form %}
+      <tr>
+
+        <th>Paciente:</th>
+        <th>Medico:</th>
+        <th>Servicio:</th>
+        <th>Fecha:</th>
+
+      </tr>
+
+    </thead>
+
+    <tbody>
+
+      <tr>
+
+        <td>{{ paqueteconsumido.paciente}}</td>
+        <td>{{ paqueteconsumido.medico}}</td>
+        <td>{{ paqueteconsumido.servicio}}</td>
+        <td>{{ paqueteconsumido.fecha|date:"d-M-Y" }}</td>
+
+      </tr>
+
+    </tbody>
+
+  </table>
+
+</div><!-- end col-md-8 -->
+</div>
+
+<div class="col-md-4">
+<h4>Elegir Paquete</h4>
+{% crispy form %}
+</div>
 {% endblock content %}
 
 

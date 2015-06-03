@@ -1,20 +1,17 @@
-{% extends "dash.html" %}
-{%load static from staticfiles %}
+{% extends 'dash.html' %}
+{% load static from staticfiles %}
+{% load crispy_forms_tags %}
 
 {% block css %}
 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">
 <link rel="stylesheet" href="{% static 'css/bootstrap-duallistbox.css' %}">
-
 {% endblock css %}
 
 {% block content %}
+<h2 class="page-header">Seleccione items</h2>
 
-<h2 class="page-header"> Seleccione Items</h2>
-
-{% load crispy_forms_tags %}
 {% crispy form %}
 {% endblock content %}
-<input style="float:right; margin-right:20px;"  type="button" value="Paso 2" onclick="location.href='{{request.path}}create/'">
 
 {% block javascript %}
 <script src="{% static 'js/knockout-3.3.0.js'%}"></script>
@@ -22,7 +19,7 @@
 <script src="{% static 'js/jquery.bootstrap-duallistbox.js' %}"></script>
 <script>
 $('#id_productos').bootstrapDualListbox({
-	nonSelectedListLabel: 'A-seleccionar',
+	nonSelectedListLabel: 'A Seleccionar',
 	selectedListLabel: 'Seleccionados',
 	preserveSelectionOnMove: 'moved',
 	moveOnSelect: false,

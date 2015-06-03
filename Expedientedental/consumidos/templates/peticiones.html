@@ -1,12 +1,14 @@
-{% extends "dash.html" %}
-{%load static from staticfiles %}
+{% extends 'dash.html' %}
+{% load static from staticfiles %}
 
 {% block content %}
-<h2 class="page-header">Peticiones </h2>
+<h2 class="page-header">{% block title %}Peticiones{% endblock %}</h2>
 
-{% if peticiones %}
+{% if paqueteconsumidos %}
 <table class="table table-hover">
+
   <thead>
+
     <tr>
 
       <th>Servicio</th>
@@ -15,27 +17,113 @@
       <th>Fecha</th>
       <th>Status</th>
       <th>&nbsp;</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for peticion in peticiones %}
 
+    </tr>
+
+  </thead>
+
+  <tbody>
+
+    {% for paquete in paqueteconsumidos %}
     <tr>
-      <td>{{ peticion.servicio }}</td>
-      <td>{{ peticion.medico }}</td>
-      <td>{{ peticion.paciente }}</td>
-      <td>{{ peticion.fecha }}</td>
-      <td><span class="label">{{ peticion.get_status_display }}</span></td>
-      <td><a href="{% url consumidos:paquete_update peticion.id %}" class="btn btn-default">Atender</a></td>
+
+      <td class="padded">{{ paquete.servicio }}</td>
+      <td class="padded">{{ paquete.medico }}</td>
+      <td class="padded">{{ paquete.paciente }}</td>
+      <td class="padded">{{ paquete.updated_at }}</td>
+      <td class="padded"><span class="label">{{ paquete.get_status_display }}</span></td>
+      <td class="padded"><a href="{% url consumidos:paquete_recibo paquete.id %}"><i class="fa fa-print fa-fw"></i> Imprimir Acuse</a></td>
 
     </tr>
     {% endfor %}
+
   </tbody>
+
 </table>
+{% elif paqueteenespera or paqueteporentregar %}
+
+  {% if paqueteenespera %}
+  <h3>Peticiones Nuevas</h3>
+  <table class="table table-hover">
+
+    <thead>
+
+      <tr>
+
+        <th>Servicio</th>
+        <th>Medico</th>
+        <th>Paciente</th>
+        <th>Fecha</th>
+        <th>Status</th>
+        <th>&nbsp;</th>
+
+      </tr>
+
+    </thead>
+
+    <tbody>
+
+      {% for paquete in paqueteenespera %}
+      <tr>
+
+        <td class="padded">{{ paquete.servicio }}</td>
+        <td class="padded">{{ paquete.medico }}</td>
+        <td class="padded">{{ paquete.paciente }}</td>
+        <td class="padded">{{ paquete.updated_at }}</td>
+        <td class="padded"><span class="label">{{ paquete.get_status_display }}</span></td>
+        <td><a href="{% url consumidos:peticion_update paquete.id %}" class="btn btn-default">Atender</a></td>
+
+      </tr>
+      {% endfor %}
+
+    </tbody>
+
+  </table>
+  {% endif %}
+  {% if paqueteporentregar %}
+  <h3>Peticiones por Entregar</h3>
+  <table class="table table-hover">
+
+    <thead>
+
+      <tr>
+
+        <th>Servicio</th>
+        <th>Medico</th>
+        <th>Paciente</th>
+        <th>Fecha</th>
+        <th>Status</th>
+        <th>&nbsp;</th>
+
+      </tr>
+
+    </thead>
+
+    <tbody>
+
+      {% for paquete in paqueteporentregar %}
+      <tr>
+
+        <td class="padded">{{ paquete.servicio }}</td>
+        <td class="padded">{{ paquete.medico }}</td>
+        <td class="padded">{{ paquete.paciente }}</td>
+        <td class="padded">{{ paquete.updated_at }}</td>
+        <td class="padded"><span class="label">{{ paquete.get_status_display }}</span></td>
+        <td><a href="{% if paquete.paqueteconsumidoitem_set.all %}{% url consumidos:peticion_detail paquete.id %}" class="btn-default{% else %}{% url consumidos:paquete_item_create paquete.id %}" class="btn-warning{% endif %} btn">Actualizar</a></td>
+
+
+      </tr>
+      {% endfor %}
+
+    </tbody>
+
+  </table>
+  {% endif %}
 {% else %}
-<p class="lead text-center text-muted">no existen peticiones pendientes<br><br>
+<p class="lead text-center text-muted">No hay peticiones.</p>
 {% endif %}
-{% endblock content %}
+{% endblock %}
+
 {% block javascript %}
 <script>
 $(function() {
@@ -51,7 +139,7 @@ $(function() {
 
       status.addClass(' label-primary');
 
-    } else if(status.text() == 'Por Entegar') {
+    } else if(status.text() == 'Por Entregar') {
 
       status.addClass(' label-info');
 
@@ -64,5 +152,4 @@ $(function() {
   })
 })
 </script>
-
 {% endblock javascript %}

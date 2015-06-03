@@ -1,14 +1,15 @@
 # -*- encoding: utf-8 -*-
 from django.db import models
+from django.db.models import Sum
 from altas.models import Medico, Paciente
-from inventario.models import Producto
-from core.models import CancelledModel
-
+from core.models import CancelledModel, TimeStampedModel
 
 
 class Paquete(models.Model):
     nombre = models.CharField(max_length=50, unique=True)
-    descripcion = models.CharField(max_length=50)
+    descripcion = models.CharField(max_length=200)
+    productos = models.ManyToManyField('inventario.Producto',
+                                       through='PaqueteItem')
 
     def __unicode__(self):
         return'%s' % (self.nombre)
@@ -23,7 +24,7 @@ class PaqueteItem(models.Model):
         return '%s' % (self.paquete)
 
 
-class PaqueteConsumido(models.Model):
+class PaqueteConsumido(TimeStampedModel):
     STATUS_CHOICES = (
         ('en_espera', 'En Espera'),
         ('por_entregar', 'Por Entregar'),
@@ -34,10 +35,9 @@ class PaqueteConsumido(models.Model):
     medico = models.ForeignKey(Medico)
     paciente = models.ForeignKey(Paciente)
     servicio = models.ForeignKey('servicios.Servicio', null=True)
-    fecha = models.DateTimeField()
     nota = models.TextField(blank=True)
     status = models.CharField(
-        max_length=10, choices=STATUS_CHOICES, default='en_espera')
+        max_length=12, choices=STATUS_CHOICES, default='en_espera')
 
     def __unicode__(self):
         return '%s %s' % (self.paquete, self.medico, self.status)
@@ -56,6 +56,17 @@ class PaqueteConsumido(models.Model):
             initial_list.append(initial)
         return initial_list
 
+    def precio_total(self):
+        return self.paqueteconsumidoitem_set.get_precio_total()
+
+
+class PaqueteConsumidoItemManager(models.Manager):
+    def get_precio_total(self):
+        p = self.aggregate(Sum('precio'))['precio__sum']
+        if p is None:
+            p = 0
+        return p
+
 
 class PaqueteConsumidoItem(models.Model):
     paquete_consumido = models.ForeignKey(PaqueteConsumido)
@@ -63,8 +74,14 @@ class PaqueteConsumidoItem(models.Model):
     cantidad = models.DecimalField(max_digits=8, decimal_places=2)
     precio = models.DecimalField(max_digits=8, decimal_places=2)
 
+    objects = PaqueteConsumidoItemManager()
+
     def __unicode__(self):
         return u'%s %s %s ' % (self.producto, self.cantidad, self.precio)
+
+    def set_precio(self):
+        precio = self.producto.precio_porcion * self.cantidad
+        return precio
 
 
 class ProductoConsumido(models.Model):
