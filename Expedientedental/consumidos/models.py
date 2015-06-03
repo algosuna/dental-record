@@ -7,7 +7,9 @@ from core.models import CancelledModel, TimeStampedModel
 
 class Paquete(models.Model):
     nombre = models.CharField(max_length=50, unique=True)
-    descripcion = models.CharField(max_length=50)
+    descripcion = models.CharField(max_length=200)
+    productos = models.ManyToManyField('inventario.Producto',
+                                       through='PaqueteItem')
 
     def __unicode__(self):
         return'%s' % (self.nombre)

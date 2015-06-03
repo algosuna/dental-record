@@ -62,6 +62,7 @@ class PaqueteDetail(PermissionRequiredMixin, DetailView):
 
 
 class PaqueteUpdate(PermissionRequiredMixin, UpdateView):
+    ''' TODO: en la segunda iteracion. Requiere trabajo en la forma. '''
     form_class = PaqueteForm
     model = Paquete
     template_name = 'paquete.html'
@@ -71,6 +72,7 @@ class PaqueteUpdate(PermissionRequiredMixin, UpdateView):
     def get_context_data(self, **kwargs):
         context = super(PaqueteUpdate, self).get_context_data(**kwargs)
         context.update({'ps_active': 'active'})
+        return context
 
 
 class Peticiones(PermissionRequiredMixin, ListView):
