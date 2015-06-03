@@ -121,7 +121,7 @@ class PaqueteItemCreateForm(forms.ModelForm):
         self.helper.disable_csrf = True
 
         self.helper.layout = Layout(
-            Field('producto', wrapper_class='col-md-8'),
+            Field('producto', wrapper_class='col-md-7'),
             Field('cantidad', wrapper_class='col-md-2'),
 
         )

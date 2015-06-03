@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 from django.db import models
+from django.db.models import Sum
 from altas.models import Medico, Paciente
 from core.models import CancelledModel, TimeStampedModel
 
@@ -53,12 +54,25 @@ class PaqueteConsumido(TimeStampedModel):
             initial_list.append(initial)
         return initial_list
 
+    def precio_total(self):
+        return self.paqueteconsumidoitem_set.get_precio_total()
+
+
+class PaqueteConsumidoItemManager(models.Manager):
+    def get_precio_total(self):
+        p = self.aggregate(Sum('precio'))['precio__sum']
+        if p is None:
+            p = 0
+        return p
+
 
 class PaqueteConsumidoItem(models.Model):
     paquete_consumido = models.ForeignKey(PaqueteConsumido)
     producto = models.ForeignKey('inventario.Producto')
     cantidad = models.DecimalField(max_digits=8, decimal_places=2)
     precio = models.DecimalField(max_digits=8, decimal_places=2)
+
+    objects = PaqueteConsumidoItemManager()
 
     def __unicode__(self):
         return u'%s %s %s ' % (self.producto, self.cantidad, self.precio)

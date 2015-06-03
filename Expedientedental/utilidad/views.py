@@ -52,7 +52,6 @@ class ServiciosPaciente(LoginRequiredMixin, DetailView):
 
 class UtilidadServicio(LoginRequiredMixin, DetailView):
     ''' Detalle de precio de servicio y costo de productos. '''
-    ''' TODO: create manager for PaqueteConsumidoItem to sum the prices. '''
     model = Servicio
     context_object_name = 'servicio'
     template_name = 'utilidad-servicio.html'
@@ -68,10 +67,7 @@ class UtilidadServicio(LoginRequiredMixin, DetailView):
         for c in consumidos:
             ''' Gathers PaqueteConsumido's PaqueteConsumidoItems. '''
             items = c.paqueteconsumidoitem_set.all()
-            # TODO: Fix this (esta' a lo cholo) after creating manager
-            c_total = items.aggregate(Sum('precio'))['precio__sum']
-            if c_total is None:
-                c_total = 0
+            c_total = c.precio_total()
             costo_total += c_total
             consumido_items.extend(items)
 

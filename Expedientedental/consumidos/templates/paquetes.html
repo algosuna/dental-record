@@ -1,27 +1,46 @@
-{% extends "dash.html" %}
+{% extends 'dash.html' %}
 {%load static from staticfiles %}
 
 {% block content %}
-<h2 class="page-header">Paquetes Registrados</h2>
+<h2 class="page-header">{% block title %}Paquetes Registrados{% endblock %}</h2>
 
 {% if paquetes %}
 <table class="table table-hover">
+
   <thead>
+
     <tr>
+
       <th>Paquete</th>
       <th>Descripcion</th>
+      <th>&nbsp;</th>
 
     </tr>
+
   </thead>
+
   <tbody>
+
     {% for paquete in paquetes %}
     <tr>
+
       <td>{{ paquete.nombre }}</td>
       <td>{{ paquete.descripcion }}</td>
+
+      <td>
+
+        <a href="{% url consumidos:paquete_edit paquete.id %}" class="pull-right"><i class="fa fa-pencil fa-fw"></i></a>
+        <a href="{% url consumidos:paquete_detail paquete.id %}" class="pull-right"><i class="fa fa-search fa-fw"></i></a>
+
+      </td>
+
     </tr>
     {% endfor %}
+
   </tbody>
+
 </table>
+
 <a href="{% url consumidos:paquete_new %}" class="btn btn-primary pull-right">Registrar Nuevo Paquete <span class="glyphicon glyphicon-plus"></span></a>
 {% else %}
 <p class="lead text-center text-muted">No hay paquetes registrados en la base de datos.<br><br><a href="{% url consumidos:paquete_new %}" class="btn btn-primary">Registrar Paquete <span class="glyphicon glyphicon-chevron-right"></span></a></p>

@@ -1,0 +1,53 @@
+{% extends 'dash.html' %}
+
+{% block content %}
+<h2 class="page-header">{% block title %}Paquete {{ paquete.nombre }}{% endblock %}</h2>
+
+<div class="col-md-8">
+
+  <table class="table">
+
+    <thead>
+
+      <tr>
+
+        <th>Producto</th>
+        <th>Cantidad</th>
+
+      </tr>
+
+    </thead>
+
+    <tbody>
+
+      {% for item in paquete.paqueteitem_set.all %}
+      <tr>
+
+        <td>{{ item.producto }}</td>
+        <td>{{ item.cantidad_producto }}</td>
+
+      </tr>
+      {% endfor %}
+
+    </tbody>
+
+  </table>
+
+</div>
+
+<div class="col-md-4">
+  <div class="panel panel-default">
+    <table class="table">
+      <tr>
+        <th>Nombre:</th>
+        <td>{{ paquete.nombre }}</td>
+      </tr>
+      <tr>
+        <th>Descripcion:</th>
+        <td>{{ paquete.descripcion }}</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+{% endblock content %}

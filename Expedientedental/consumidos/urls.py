@@ -1,7 +1,9 @@
 from django.conf.urls import patterns, url
 from consumidos.views import (
-    Paquetes, PaqueteCreate, Peticiones, PeticionesAtendidas, PeticionCreate,
-    PeticionUpdate, ProductoConsumidoCreate, PeticionDetail,
+    Paquetes, PaqueteCreate, PaqueteDetail, PaqueteUpdate, Peticiones,
+    PeticionesAtendidas, PeticionCreate, PeticionUpdate,
+    ProductoConsumidoCreate, PeticionDetail,
+    # Sin limpiar!
     ProductosConsumidos, ProductoConsumidoDetail,
     SalidaCancel, SalidaPDF, PaquetebillPDF
 )
@@ -12,6 +14,12 @@ urlpatterns = patterns(
     url(r'^paquetes/$', Paquetes.as_view(), name='paquete_list'),
 
     url(r'^paquete/new/$', PaqueteCreate.as_view(), name='paquete_new'),
+
+    url(r'^paquete/(?P<pk>\d+)/detail/$',
+        PaqueteDetail.as_view(), name='paquete_detail'),
+
+    url(r'^paquete/(?P<pk>\d+)/update/$',
+        PaqueteUpdate.as_view(), name='paquete_edit'),
 
     url(r'^peticiones/$', Peticiones.as_view(), name='peticion_list'),
 
@@ -37,14 +45,14 @@ urlpatterns = patterns(
 
 
 
+
+    # Sin limpiar!
+
     url(r'^paquetes/pconsumido/list/$', ProductosConsumidos.as_view(),
         name='consumido'),
 
     url(r'^paquetes/detail/(?P<pk>\d+)/$', ProductoConsumidoDetail.as_view(),
         name='cons_detail'),
-
-
-
 
 
     url(r'^paquetes/salida/cancel/$', SalidaCancel.as_view(),
