@@ -45,15 +45,6 @@ class PaqueteCreate(PermissionRequiredMixin, CreateView):
         context.update({'pn_active': 'active'})
         return context
 
-    def form_invalid(self, form):
-        print form.errors
-        return super(PaqueteCreate, self).form_invalid(form)
-
-    def form_valid(self, form):
-        algo = super(PaqueteCreate, self).form_valid(form)
-        print self.object
-        return algo
-
 
 class PaqueteDetail(PermissionRequiredMixin, DetailView):
     model = Paquete
