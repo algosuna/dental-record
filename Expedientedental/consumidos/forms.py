@@ -16,12 +16,13 @@ from consumidos.models import (
 
 class PaqueteForm(forms.ModelForm):
     ''' Creates Paquete with PaqueteItems based on available Productos '''
-    productos = forms.ModelMultipleChoiceField(
+    choice_productos = forms.ModelMultipleChoiceField(
         queryset=Producto.objects.filter(is_inactive=False))
     DEFAULT_PRODUCT_QUANTITY = 1
 
     class Meta:
         model = Paquete
+        exclude = ('productos',)
 
     def __init__(self, *args, **kwargs):
         super(PaqueteForm, self).__init__(*args, **kwargs)
@@ -32,7 +33,7 @@ class PaqueteForm(forms.ModelForm):
                 '',
                 Field('nombre', wrapper_class='col-md-4'),
                 Field('descripcion', wrapper_class='col-md-8'),
-                Field('productos', wrapper_class='col-md-12'),
+                Field('choice_productos', wrapper_class='col-md-12'),
                 ),
             ButtonHolder(Submit(
                 'save', 'Crear Paquete', css_class='pull-right normalized-btn'
@@ -40,15 +41,15 @@ class PaqueteForm(forms.ModelForm):
             )
         self.fields['nombre'].label = 'Nombre'
         self.fields['descripcion'].label = 'Descripion'
-        self.fields['productos'].label = 'Productos'
+        self.fields['choice_productos'].label = 'Productos'
 
     def save(self, commit=True):
         paquete = super(PaqueteForm, self).save(commit)
-        items = self.save_to_items(paquete, commit)
-        return (paquete, items)
+        self.save_to_items(paquete, commit)
+        return paquete
 
     def save_to_items(self, paquete, commit=True):
-        productos = self.cleaned_data.get('productos')
+        productos = self.cleaned_data.get('choice_productos')
         items = []
         for producto in productos:
             item = PaqueteItem(paquete=paquete,
