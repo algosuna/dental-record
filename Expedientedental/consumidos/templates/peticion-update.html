@@ -22,6 +22,7 @@
         <th>Medico:</th>
         <th>Servicio:</th>
         <th>Fecha:</th>
+        <th>observaciones:</th>
 
       </tr>
 
@@ -34,7 +35,8 @@
         <td>{{ paqueteconsumido.paciente}}</td>
         <td>{{ paqueteconsumido.medico}}</td>
         <td>{{ paqueteconsumido.servicio}}</td>
-        <td>{{ paqueteconsumido.fecha|date:"d-M-Y" }}</td>
+        <td>{{ paqueteconsumido.fecha }}</td>
+        <td>{{ paqueteconsumido.nota}}</td>
 
       </tr>
 

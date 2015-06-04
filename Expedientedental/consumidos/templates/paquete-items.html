@@ -16,7 +16,7 @@
 
   <h3 class="page-header">Editar Productos de {% block title %}Paquete{% endblock %}</h2>
 
-  <form action="" method="post">
+  <form action="" method="post" class="clearfix">
     {% csrf_token %}
     {{ formset.management_form }}
 
@@ -33,6 +33,17 @@
     <input type="submit" class="btn btn-primary pull-right" value="Aceptar">
 
   </form>
+  <th>&nbsp;</th>
+  <th>&nbsp;</th>
+
+  <div class="panel panel-info">
+      <div class="panel-heading">
+        <h4 class="panel-title">Observaciones</h4>
+    </div>
+    <div class="panel-body">
+      <h5>{{paquete.nota}}</h5>
+    </div>
+  </div>
 
 </div>
 {% endblock %}
