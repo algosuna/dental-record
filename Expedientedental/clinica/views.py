@@ -8,6 +8,7 @@ from django.views.generic import UpdateView, DetailView
 
 from wkhtmltopdf.views import PDFTemplateView
 from core.mixins import PermissionRequiredMixin
+from core.views import CreateObjFromContext
 from core.utils import generic_search
 
 from clinica.models import Interrogatorio, Odontograma, Procedimiento, Bitacora
@@ -203,25 +204,33 @@ class HistorialDetail(PermissionRequiredMixin, DetailView):
         return context
 
 
-class InterrogatorioView(PermissionRequiredMixin, DetailView):
-    model = Paciente
-    context_object_name = 'paciente'
+class InterrogatorioView(PermissionRequiredMixin, CreateObjFromContext):
+    form_class = InterrogatorioForm
     template_name = 'interrogatorio.html'
-    success_url = 'clinica:interrogatorio'
     permission_required = 'clinica.add_interrogatorio'
+    ctx_model = Paciente
+    initial_value = 'paciente'
 
     def get_context_data(self, **kwargs):
         context = super(InterrogatorioView, self).get_context_data(**kwargs)
-        form = InterrogatorioForm
-        context.update({'form': form, 'e_active': 'active'})
+        context.update({'e_active': 'active'})
         return context
+
+    def get_success_url(self):
+        url = reverse('clinica:interrogatorio', kwargs={'pk': self.object.pk})
+        return url
+
+    def get_initial(self):
+        initial = super(InterrogatorioView, self).get_initial()
+        medico = self.request.user.medico_set.get()
+        initial.update({'medico': medico})
+        return initial
 
 
 class InterrogatorioUpdate(PermissionRequiredMixin, UpdateView):
     form_class = InterrogatorioForm
     model = Interrogatorio
     template_name = 'interrogatorio-edit.html'
-    success_url = 'clinica:interrogatorio'
     permission_required = 'clinica.add_interrogatorio'
 
     def get_context_data(self, **kwargs):
@@ -229,6 +238,10 @@ class InterrogatorioUpdate(PermissionRequiredMixin, UpdateView):
         paciente = self.object.paciente
         context.update({'paciente': paciente, 'e_active': 'active'})
         return context
+
+    def get_success_url(self):
+        url = reverse('clinica:interrogatorio', kwargs={'pk': self.object.pk})
+        return url
 
 
 class InterrogatorioPDF(PDFTemplateView):
