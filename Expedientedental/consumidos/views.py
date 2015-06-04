@@ -125,7 +125,7 @@ class PeticionCreate(PermissionRequiredMixin, CreateObjFromContext):
 
 
 class PeticionUpdate(PermissionRequiredMixin, UpdateView):
-    ''' Adds Paquete (and PaqueteItems) to PaqueteConsumido. '''
+    ''' Adds Paquete to PaqueteConsumido. '''
     form_class = AtenderPeticionForm
     model = PaqueteConsumido
     context_object_name = 'paqueteconsumido'
@@ -143,7 +143,7 @@ class PeticionUpdate(PermissionRequiredMixin, UpdateView):
 
 class PeticionesAtendidas(PermissionRequiredMixin, ListView):
     model = PaqueteConsumido
-    queryset = model.objects.filter(status="surtido")
+    queryset = model.objects.filter(status='surtido')
     context_object_name = 'paqueteconsumidos'
     template_name = 'peticiones.html'
     permission_required = 'consumidos.change_paqueteconsumido'
@@ -209,7 +209,8 @@ class PeticionDetail(PermissionRequiredMixin, UpdateView):
         return context
 
     def form_valid(self, form):
-        ''' TODO: Figure out why it won't return items to inventory. '''
+        ''' Takes from inventory if in stock and status wasn't 'surtido,
+        else, if the status was 'surtido' it adds quantities to inventory. '''
         is_delivered = form.cleaned_data.get('is_delivered')
         consumidos = self.object.paqueteconsumidoitem_set.all()
         for c in consumidos:
@@ -303,12 +304,12 @@ class SalidaPDF(PDFTemplateView):
         return context
 
 
-class PaquetebillPDF(PDFTemplateView):
+class ReciboPeticionPDF(PDFTemplateView):
     filename = 'recibo-entrega_de_peticion.pdf'
     template_name = 'peticion-pdf.html'
 
     def get_context_data(self, **kwargs):
-        context = super(PaquetebillPDF, self).get_context_data(**kwargs)
+        context = super(ReciboPeticionPDF, self).get_context_data(**kwargs)
         pc = PaqueteConsumido.objects.get(pk=self.kwargs.get('pk'))
         items = pc.paqueteconsumidoitem_set.all()
         fecha = datetime.now().strftime("%d/%m/%Y")
@@ -319,18 +320,3 @@ class PaquetebillPDF(PDFTemplateView):
             'low_margin': 'low-margin'
         })
         return context
-
-
-def busqueda(request):
-    query = 'q'
-    MODEL_MAP = {
-        PaqueteConsumido: ['paquete__nombre', 'paquete__descripcion']
-    }
-
-    objects = []
-
-    for model, fields in MODEL_MAP.items():
-        objects += generic_search(request, model, fields, query)
-
-    return render_to_response('paqueteedit.html', {'objects': objects,
-                              'search_string': request.GET.get(query, ''), })

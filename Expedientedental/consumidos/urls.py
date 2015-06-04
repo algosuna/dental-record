@@ -2,10 +2,10 @@ from django.conf.urls import patterns, url
 from consumidos.views import (
     Paquetes, PaqueteCreate, PaqueteDetail, PaqueteUpdate, Peticiones,
     PeticionesAtendidas, PeticionCreate, PeticionUpdate,
-    ProductoConsumidoCreate, PeticionDetail,
+    ProductoConsumidoCreate, PeticionDetail, ReciboPeticionPDF,
     # Sin limpiar!
     ProductosConsumidos, ProductoConsumidoDetail,
-    SalidaCancel, SalidaPDF, PaquetebillPDF
+    SalidaCancel, SalidaPDF
 )
 
 urlpatterns = patterns(
@@ -41,6 +41,9 @@ urlpatterns = patterns(
     url(r'^producto/new/$',
         ProductoConsumidoCreate.as_view(), name='productoconsumido_new'),
 
+    url(r'^paquete/(?P<pk>\d+)/recibo/pdf/$',
+        ReciboPeticionPDF.as_view(), name='recibo_paquete'),
+
 
 
 
@@ -59,8 +62,5 @@ urlpatterns = patterns(
         name='cancel_list'),
 
     url(r'^(?P<pk>\d+)/pdf/$', SalidaPDF.as_view(), name='salida_pdf'),
-
-    url(r'^paquete/(?P<pk>\d+)/recibo/pdf/$',
-        PaquetebillPDF.as_view(), name='recibo_paquete'),
 
 )

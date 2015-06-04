@@ -32,7 +32,7 @@
       <td class="padded">{{ paquete.paciente }}</td>
       <td class="padded">{{ paquete.updated_at }}</td>
       <td class="padded"><span class="label">{{ paquete.get_status_display }}</span></td>
-      <td class="padded"><a href="{% url consumidos:recibo_paquete paquete.id %}"><i class="fa fa-print fa-fw"></i> Imprimir Acuse</a></td>
+      <td><a href="{% url consumidos:peticion_detail paquete.id %}" class="btn btn-default">Detalle</a></td>
 
     </tr>
     {% endfor %}

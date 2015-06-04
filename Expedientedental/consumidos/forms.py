@@ -175,8 +175,10 @@ class PeticionSurtidoForm(forms.ModelForm):
         status = self.instance.status
         if status == 'surtido':
             self.fields['is_delivered'].initial = True
+            self.fields['is_delivered'].label = 'Marcar como "Por Entregar"'
         else:
             self.fields['is_delivered'].initial = False
+            self.fields['is_delivered'].label = 'Marcar como "Surtido"'
 
     def save(self, commit=True):
         instance = super(PeticionSurtidoForm, self).save(commit=False)
