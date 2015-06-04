@@ -37,8 +37,8 @@ class Producto(TimeStampedModel):
         self.porciones += cantidad
 
     def quitar(self, cantidad):
-        porciones = self.porciones - cantidad
-        return porciones
+        self.porciones -= cantidad
+        return self.porciones
 
 
 class CancelProducto(CancelledModel):

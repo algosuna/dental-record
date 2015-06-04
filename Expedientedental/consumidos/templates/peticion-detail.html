@@ -16,7 +16,7 @@
 {% endblock %}
 
 {% block content %}
-<h2 class="page-header">{% block title %}Peticion a Inventario{% endblock %} <small class="pull-right"><a href=""><i class="fa fa-print fa-fw"></i> Imprimir Recibo</a></small></h2>
+<h2 class="page-header">{% block title %}Peticion a Inventario{% endblock %} <small class="pull-right"><a href="{% url consumidos:recibo_paquete paquete.id %}"><i class="fa fa-print fa-fw"></i> Imprimir Recibo</a></small></h2>
 
 <div class="col-md-6">
 

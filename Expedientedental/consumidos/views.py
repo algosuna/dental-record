@@ -7,7 +7,6 @@ from django.shortcuts import (
     render_to_response, render, get_object_or_404, redirect
 )
 from django.views.generic import UpdateView, ListView, CreateView, DetailView
-from django.views.generic.edit import FormMixin
 
 from wkhtmltopdf.views import PDFTemplateView
 from core.mixins import PermissionRequiredMixin
@@ -211,19 +210,18 @@ class PeticionDetail(PermissionRequiredMixin, UpdateView):
 
     def form_valid(self, form):
         ''' TODO: Figure out why it won't return items to inventory. '''
-        redirect = super(PeticionDetail, self).form_valid(form)
         is_delivered = form.cleaned_data.get('is_delivered')
         consumidos = self.object.paqueteconsumidoitem_set.all()
         for c in consumidos:
             producto = c.producto
-            if is_delivered:
+            if is_delivered and self.object.status != 'surtido':
                 if producto.in_stock():
-                    producto.porciones = producto.quitar(c.cantidad)
-            else:
-                producto.porciones = producto.agregar(c.cantidad)
-
-            producto.save()
-        return redirect
+                    producto.quitar(c.cantidad)
+                    producto.save()
+            elif self.object.status == 'surtido':
+                producto.agregar(c.cantidad)
+                producto.save()
+        return super(PeticionDetail, self).form_valid(form)
 
 
 class ProductoConsumidoCreate(CreateView):
@@ -306,8 +304,8 @@ class SalidaPDF(PDFTemplateView):
 
 
 class PaquetebillPDF(PDFTemplateView):
-    filename = 'recibo_de_entrega.pdf'
-    template_name = 'materiales_salida.html'
+    filename = 'recibo-entrega_de_peticion.pdf'
+    template_name = 'peticion-pdf.html'
 
     def get_context_data(self, **kwargs):
         context = super(PaquetebillPDF, self).get_context_data(**kwargs)
@@ -317,7 +315,8 @@ class PaquetebillPDF(PDFTemplateView):
         hora = datetime.now().strftime("%I:%M %p")
         context.update({
             'pc': pc, 'items': items,
-            'fecha': fecha, 'hora': hora
+            'fecha': fecha, 'hora': hora,
+            'low_margin': 'low-margin'
         })
         return context
 

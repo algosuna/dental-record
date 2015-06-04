@@ -58,9 +58,9 @@ urlpatterns = patterns(
     url(r'^paquetes/salida/cancel/$', SalidaCancel.as_view(),
         name='cancel_list'),
 
-    url(r'^(?P<pk>\d+)/pdf/$', SalidaPDF.as_view(), name='pdf'),
+    url(r'^(?P<pk>\d+)/pdf/$', SalidaPDF.as_view(), name='salida_pdf'),
 
     url(r'^paquete/(?P<pk>\d+)/recibo/pdf/$',
-        PaquetebillPDF.as_view(), name='paquete_recibo'),
+        PaquetebillPDF.as_view(), name='recibo_paquete'),
 
 )

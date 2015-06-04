@@ -1,0 +1,84 @@
+{% extends 'basePDF.html' %}
+
+{% block css %}
+<style>
+  footer {
+    margin-top: 200px;
+  }
+  .siggy {
+    padding-top: 40px;
+  }
+</style>
+{% endblock %}
+
+{% block title %}Recibo de Entrega{% endblock %}
+
+{% block headercontent %}
+<div class="panel panel-info">
+  <div class="panel-heading">{{ pc.servicio }}</div>
+
+  <table class="table">
+
+      <tr>
+
+        <th>Paciente:</th>
+        <td>{{ pc.paciente}}</td>
+
+      </tr>
+
+      <tr>
+
+        <th>Grupo:</th>
+        <td>{{ pc.paciente.grupo }}</td>
+
+      </tr>
+
+      <tr>
+
+        <th>M&eacute;dico:</th>
+        <td>{{ pc.medico }}</td>
+
+      </tr>
+
+  </table>
+
+</div>
+{% endblock %}
+
+{% block content %}
+<h4>Productos:</h4>
+
+<table class="table table-hover">
+
+  <thead>
+
+    <tr>
+
+      <th>Producto</th>
+      <th>Cantidad</th>
+
+    </tr>
+
+  </thead>
+
+  <tbody>
+
+    {% for item  in items  %}
+    <tr>
+
+      <td>{{ item.producto }}</td>
+      <td class="precio">{{ item.cantidad }}</td>
+
+    </tr>
+    {% endfor %}
+
+  </tbody>
+
+</table>
+
+<div class="col-xs-4 col-xs-offset-4 clearfix">
+  <p class="text-center siggy">Firma del responsable:</p>
+  <br>
+  <hr>
+</div>
+{% endblock content %}

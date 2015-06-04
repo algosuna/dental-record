@@ -199,7 +199,7 @@ class CancelEntradaForm(forms.ModelForm):
         entrada.is_cancelled = True
         cantidad = entrada.porciones
         producto = entrada.producto
-        producto.porciones = producto.quitar(cantidad)
+        producto.quitar(cantidad)
         if commit:
             entrada.save()
             producto.save()
