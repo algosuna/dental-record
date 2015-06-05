@@ -3,14 +3,11 @@ from datetime import datetime
 from django.contrib.auth.decorators import permission_required
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.forms.models import modelformset_factory
-from django.shortcuts import (
-    render_to_response, render, get_object_or_404, redirect
-)
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import UpdateView, ListView, CreateView, DetailView
 
 from wkhtmltopdf.views import PDFTemplateView
 from core.mixins import PermissionRequiredMixin
-from core.utils import generic_search
 from core.views import CreateObjFromContext
 
 from consumidos.models import (
@@ -225,83 +222,63 @@ class PeticionDetail(PermissionRequiredMixin, UpdateView):
         return super(PeticionDetail, self).form_valid(form)
 
 
-class ProductoConsumidoCreate(CreateView):
-    form_class = ProductoConsumidoForm
-    template_name = 'prconsumido.html'
-    context_object_name = 'prconsumido'
-    success_url = '/'
-
-
-class ProductosConsumidos(ListView):
+class ProductosConsumidos(PermissionRequiredMixin, ListView):
+    ''' TODO: Fix and complete this feature post-deployment. '''
     model = ProductoConsumido
     context_object_name = 'consumidos'
-    template_name = 'pconsumido.html'
+    template_name = 'consumidos.html'
+    permission_required = 'consumidos.add_productoconsumido'
+
+    def get_context_data(self, **kwargs):
+        context = super(ProductosConsumidos, self).get_context_data(**kwargs)
+        context.update({'pcl_active': 'active'})
+        return context
 
 
-class ProductoConsumidoDetail(DetailView):
+class ProductoConsumidoCreate(PermissionRequiredMixin, CreateView):
+    ''' TODO: Fix and complete this feature post-deployment. '''
+    form_class = ProductoConsumidoForm
+    template_name = 'consumido.html'
+    context_object_name = 'prconsumido'
+    success_url = reverse_lazy('consumidos:consumido_list')
+    permission_required = 'consumidos.add_productoconsumido'
+
+    def get_context_data(self, **kwargs):
+        ctx = super(ProductoConsumidoCreate, self).get_context_data(**kwargs)
+        ctx.update({'pcd_active': 'active'})
+        return ctx
+
+
+class ProductoConsumidoDetail(PermissionRequiredMixin, DetailView):
+    ''' TODO: Fix and complete this feature post-deployment. '''
     model = ProductoConsumido
     context_object_name = 'consumido'
     template_name = 'consumido-detail.html'
+    permission_required = 'inventario.change_producto'
 
     def get_context_data(self, **kwargs):
         ctx = super(ProductoConsumidoDetail, self).get_context_data(**kwargs)
         producto = self.object.producto
-        ctx.update({'cd_active': 'active', 'producto': producto})
+        ctx.update({'pcd_active': 'active', 'producto': producto})
         return ctx
 
 
 class SalidaCancelledList(PermissionRequiredMixin, ListView):
+    ''' TODO: To the end. '''
     model = CancelSalida
-    queryset = model.objects.filter()
-    context_object_name = 'salidas'
+    context_object_name = 'cancelsalida'
     template_name = 'salida-cancel.html'
     permission_required = 'consumidos.add_cancelsalida'
-
-    def get_context_data(self, **kwargs):
-        context = super(SalidaCancelledList, self).get_context_data(**kwargs)
-        cancelled = CancelSalida.objects.all()
-        context.update({'cancelsalida': cancelled, 'cs_active': 'active'})
-        return context
 
 
 class SalidaCancel(PermissionRequiredMixin, CreateObjFromContext):
+    ''' TODO: To the end. '''
     form_class = SalidaCanceladaForm
     ctx_model = CancelSalida
+    initial_value = 'salida'
     template_name = 'salida-cancel.html'
     success_url = reverse_lazy('consumidos:entradas_canceladas')
     permission_required = 'consumidos.add_cancelsalida'
-    initial_value = 'salida'
-
-    def get_context_data(self, **kwargs):
-        context = super(SalidaCancel, self).get_context_data(**kwargs)
-        context.update({'s_active': 'active'})
-        return context
-
-
-class EntradaCancelDetail(PermissionRequiredMixin, DetailView):
-    model = CancelSalida
-    template_name = 'salidacancel-detail.html'
-    permission_required = 'consumidos.add_cancelsalida'
-    context_object_name = 'cancelsalida'
-
-    def get_context_data(self, **kwargs):
-        context = super(EntradaCancelDetail, self).get_context_data(**kwargs)
-        salida = self.object.salida
-        context.update({'salida': salida, 'sc_active': 'active'})
-        return context
-
-
-class SalidaPDF(PDFTemplateView):
-    filename = 'salida.pdf'
-    template_name = 'printit_salida.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(SalidaPDF, self).get_context_data(**kwargs)
-        producto = get_object_or_404(ProductoConsumido)
-        context['producto'] = producto
-        context['fecha'] = datetime.now().strftime("%d/%m/%Y")
-        context['hora'] = datetime.now().strftime("%I:%M %p")
-        return context
 
 
 class ReciboPeticionPDF(PDFTemplateView):

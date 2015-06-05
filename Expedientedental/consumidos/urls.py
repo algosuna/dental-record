@@ -3,9 +3,7 @@ from consumidos.views import (
     Paquetes, PaqueteCreate, PaqueteDetail, PaqueteUpdate, Peticiones,
     PeticionesAtendidas, PeticionCreate, PeticionUpdate,
     ProductoConsumidoCreate, PeticionDetail, ReciboPeticionPDF,
-    # Sin limpiar!
-    ProductosConsumidos, ProductoConsumidoDetail,
-    SalidaCancel, SalidaPDF
+    ProductosConsumidos, ProductoConsumidoDetail
 )
 
 urlpatterns = patterns(
@@ -21,46 +19,33 @@ urlpatterns = patterns(
     url(r'^paquete/(?P<pk>\d+)/update/$',
         PaqueteUpdate.as_view(), name='paquete_edit'),
 
-    url(r'^peticiones/$', Peticiones.as_view(), name='peticion_list'),
+    url(r'^salidas/peticiones/$', Peticiones.as_view(), name='peticion_list'),
 
-    url(r'^peticiones/surtido/$',
+    url(r'^salidas/peticiones/surtido/$',
         PeticionesAtendidas.as_view(), name='peticion_surtido_list'),
 
-    url(r'^peticion/new/servicio/(?P<pk>\d+)/$',
+    url(r'^clinica/peticion/servicio/(?P<pk>\d+)/new/$',
         PeticionCreate.as_view(), name='peticion_new'),
 
-    url(r'^peticion/(?P<pk>\d+)/update/$',
+    url(r'^salidas/peticion/(?P<pk>\d+)/update/$',
         PeticionUpdate.as_view(), name='peticion_update'),
 
-    url(r'^peticion/(?P<pk>\d+)/detail/$',
+    url(r'^salidas/peticion/(?P<pk>\d+)/detail/$',
         PeticionDetail.as_view(), name='peticion_detail'),
 
-    url(r'^peticion/(?P<pk>\d+)/insumos/add/$',
+    url(r'^salidas/peticion/(?P<pk>\d+)/insumos/add/$',
         'paquete_item_create', name='paquete_item_create'),
 
-    url(r'^producto/new/$',
-        ProductoConsumidoCreate.as_view(), name='productoconsumido_new'),
+    url(r'^salidas/producto/new/$',
+        ProductoConsumidoCreate.as_view(), name='consumido_new'),
 
-    url(r'^paquete/(?P<pk>\d+)/recibo/pdf/$',
+    url(r'^salidas/productos/$',
+        ProductosConsumidos.as_view(), name='consumido_list'),
+
+    url(r'^salidas/producto/detail/(?P<pk>\d+)/$',
+        ProductoConsumidoDetail.as_view(), name='consumido_detail'),
+
+    url(r'^salidas/paquete/(?P<pk>\d+)/recibo/pdf/$',
         ReciboPeticionPDF.as_view(), name='recibo_paquete'),
-
-
-
-
-
-
-    # Sin limpiar!
-
-    url(r'^paquetes/pconsumido/list/$', ProductosConsumidos.as_view(),
-        name='consumido'),
-
-    url(r'^paquetes/detail/(?P<pk>\d+)/$', ProductoConsumidoDetail.as_view(),
-        name='cons_detail'),
-
-
-    url(r'^paquetes/salida/cancel/$', SalidaCancel.as_view(),
-        name='cancel_list'),
-
-    url(r'^(?P<pk>\d+)/pdf/$', SalidaPDF.as_view(), name='salida_pdf'),
 
 )
