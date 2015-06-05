@@ -1,0 +1,48 @@
+{% extends "dash.html" %}
+{% load static from staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block title %}Producto{% endblock %}
+{{paqueteitem}}
+{% block content %}
+<h2 class="page-header">Desactivar Paquete</h2>
+
+  <h4>{{ paquete }}</h4>
+
+  <table class="table">
+
+    <thead>
+
+      <tr>
+
+        
+        <th>Descripcion</th>
+        <th>Paquete</th>
+        
+
+      </tr>
+
+    </thead>
+
+    <tbody>
+
+      <tr>
+        <td>{{ paquete.descripcion }}</td>
+        <td>{{ paquete.nombre }}</td>
+        
+
+      </tr>
+
+    </tbody>
+
+  </table>
+
+  <div class="alert alert-info clearfix">
+
+    <p><strong>Por favor detalle el motivo de desactivacion para completar el proceso.</strong></p>
+   
+
+    {% crispy form %}
+
+  </div>
+{% endblock content %}

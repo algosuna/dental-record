@@ -12,11 +12,12 @@ from core.views import CreateObjFromContext
 
 from consumidos.models import (
     PaqueteConsumido, PaqueteConsumidoItem, Paquete, ProductoConsumido,
-    CancelSalida
+    CancelSalida, PaqueteItem
 )
 from consumidos.forms import (
     PaqueteForm, AtenderPeticionForm, PaqueteItemCreateForm, PeticionForm,
-    ProductoConsumidoForm, SalidaCanceladaForm, PeticionSurtidoForm
+    ProductoConsumidoForm, SalidaCanceladaForm, PeticionSurtidoForm,
+    CancelPaqueteForm, PaqueteCancelForm
 )
 from servicios.models import Servicio
 
@@ -33,6 +34,20 @@ class Paquetes(PermissionRequiredMixin, ListView):
         return context
 
 
+class PaqueteDeactivate(PermissionRequiredMixin, CreateObjFromContext):
+    form_class = CancelPaqueteForm
+    ctx_model = Paquete
+    template_name = 'paquete-deactivate.html'
+    success_url = reverse_lazy('consumidos:paquete_list')
+    permission_required = 'consumidos.add_paquete'
+    initial_value = 'paquete'
+
+    def get_context_data(self, **kwargs):
+        context = super(PaqueteDeactivate, self).get_context_data(**kwargs)
+        context.update({'pda_active': 'active'})
+        return context
+
+
 class PaqueteCreate(PermissionRequiredMixin, CreateView):
     ''' Creates Paquete object with PaqueteItems. The magic is in the form! '''
     form_class = PaqueteForm
@@ -46,8 +61,9 @@ class PaqueteCreate(PermissionRequiredMixin, CreateView):
         return context
 
 
-class PaqueteDetail(PermissionRequiredMixin, DetailView):
+class PaqueteDetail(PermissionRequiredMixin, UpdateView):
     model = Paquete
+    form_class = PaqueteCancelForm
     context_object_name = 'paquete'
     template_name = 'paquete-detail.html'
     permission_required = 'consumidos.add_paquete'
@@ -56,6 +72,11 @@ class PaqueteDetail(PermissionRequiredMixin, DetailView):
         context = super(PaqueteDetail, self).get_context_data(**kwargs)
         context.update({'ps_active': 'active'})
         return context
+
+    def get_success_url(self):
+        url = reverse('consumidos:paquete_deactivated',
+                      kwargs={'pk': self.object.pk})
+        return url
 
 
 class PaqueteUpdate(PermissionRequiredMixin, UpdateView):

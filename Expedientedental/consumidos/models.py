@@ -11,6 +11,8 @@ class Paquete(models.Model):
     productos = models.ManyToManyField('inventario.Producto',
                                        through='PaqueteItem')
 
+    is_inactive = models.BooleanField(default=False)
+
     def __unicode__(self):
         return'%s' % (self.nombre)
 
@@ -40,7 +42,7 @@ class PaqueteConsumido(TimeStampedModel):
         max_length=12, choices=STATUS_CHOICES, default='en_espera')
 
     def __unicode__(self):
-        return '%s %s' % (self.paquete, self.medico, self.status)
+        return '%s %s %s' % (self.paquete, self.medico, self.status)
 
     def get_item_initials(self):
         paquete = self.paquete
@@ -94,6 +96,13 @@ class ProductoConsumido(models.Model):
     def __unicode__(self):
         return u'%s %s %s' % (
             self.producto, self.cantidad, self.cantidad)
+
+
+class CancelPaquete(CancelledModel):
+    paquete = models.ForeignKey(Paquete)
+
+    def __unicode__(self):
+        return '%s' % self.reason
 
 
 class CancelSalida(CancelledModel):
