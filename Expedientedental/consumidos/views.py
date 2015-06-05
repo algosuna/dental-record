@@ -174,8 +174,10 @@ class PeticionesAtendidas(PermissionRequiredMixin, ListView):
 
 @permission_required('consumidos.add_paqueteconsumidoitem')
 def paquete_item_create(request, pk):
-    ''' Creates PaqueteConsumidoItems from PaqueteItems and adds or
-    removes extra items (products). '''
+    '''
+    Creates PaqueteConsumidoItems from PaqueteItems and adds or
+    removes extra items (products).
+    '''
     paquete_consumido = get_object_or_404(PaqueteConsumido, pk=pk)
     items = paquete_consumido.paqueteconsumidoitem_set.all()
     initial_list = []
@@ -210,8 +212,10 @@ def paquete_item_create(request, pk):
 
 
 class PeticionDetail(PermissionRequiredMixin, UpdateView):
-    ''' Detail of PaqueteConsumido with its items (PaqueteConsumidoItem).
-    it has the possibility of marking PaqueteConsumido as 'surtido'.'''
+    '''
+    Detail of PaqueteConsumido with its items (PaqueteConsumidoItem).
+    it has the possibility of marking PaqueteConsumido as 'surtido'.
+    '''
     model = PaqueteConsumido
     template_name = 'peticion-detail.html'
     context_object_name = 'paquete'
@@ -223,7 +227,11 @@ class PeticionDetail(PermissionRequiredMixin, UpdateView):
         context = super(PeticionDetail, self).get_context_data(**kwargs)
         items = PaqueteConsumidoItem.objects.filter(
             paquete_consumido=self.object)
-        context.update({'pe_active': 'active', 'paqueteitems': items})
+        has_inactive_item = items.filter(producto__is_inactive=True).exists()
+        context.update({
+            'pe_active': 'active',
+            'paqueteitems': items,
+            'has_inactive_item': has_inactive_item})
         return context
 
     def form_valid(self, form):

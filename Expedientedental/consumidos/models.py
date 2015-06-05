@@ -6,6 +6,12 @@ from core.models import CancelledModel, TimeStampedModel
 
 
 class Paquete(models.Model):
+    '''
+    Los Paquetes se usan para agrupar Productos necesarios para realizar
+    un 'servicio' o 'procedimiento'. Facilita el proceso de la persona en
+    inventario. Deben ser creados previamente y se necesita familarizacion
+    con los 'servicios' o 'procedimientos'.
+    '''
     nombre = models.CharField(max_length=50, unique=True)
     descripcion = models.CharField(max_length=200)
     productos = models.ManyToManyField('inventario.Producto',
@@ -14,19 +20,21 @@ class Paquete(models.Model):
     is_inactive = models.BooleanField(default=False)
 
     def __unicode__(self):
-        return'%s' % (self.nombre)
+        return '%s' % self.nombre
 
 
 class PaqueteItem(models.Model):
+    ''' Productos de un paquete. '''
     paquete = models.ForeignKey(Paquete)
     producto = models.ForeignKey('inventario.Producto')
     cantidad_producto = models.DecimalField(max_digits=8, decimal_places=2)
 
     def __unicode__(self):
-        return '%s' % (self.paquete)
+        return '%s' % self.paquete
 
 
 class PaqueteConsumido(TimeStampedModel):
+    ''' Indica un grupo de productos que saldran de inventario. '''
     STATUS_CHOICES = (
         ('en_espera', 'En Espera'),
         ('por_entregar', 'Por Entregar'),
@@ -45,8 +53,10 @@ class PaqueteConsumido(TimeStampedModel):
         return '%s %s %s' % (self.paquete, self.medico, self.status)
 
     def get_item_initials(self):
+        ''' Asigna initials usando PaqueteItems con ForeignKey a Paquete. '''
         paquete = self.paquete
-        paquete_items = paquete.paqueteitem_set.all()
+        paquete_items = paquete.paqueteitem_set.filter(
+            producto__is_inactive=False)
         initial_list = []
         for pitem in paquete_items:
             initial = {
@@ -59,18 +69,25 @@ class PaqueteConsumido(TimeStampedModel):
         return initial_list
 
     def precio_total(self):
+        ''' Saca el total de todos los PaqueteConsumidoItems con ForeignKey
+        a PaqueteConsumido. '''
         return self.paqueteconsumidoitem_set.get_precio_total()
 
 
 class PaqueteConsumidoItemManager(models.Manager):
     def get_precio_total(self):
-        p = self.aggregate(Sum('precio'))['precio__sum']
-        if p is None:
-            p = 0
-        return p
+        ''' Suma el precio de PaqueteConsumidoItem. '''
+        precio = self.aggregate(Sum('precio'))['precio__sum']
+        if precio is None:
+            precio = 0
+        return precio
 
 
 class PaqueteConsumidoItem(models.Model):
+    '''
+    Producto a salir de inventario. Contiene el precio de acorde al precio
+    del producto y la cantidad que va de salida (se consume).
+    '''
     paquete_consumido = models.ForeignKey(PaqueteConsumido)
     producto = models.ForeignKey('inventario.Producto')
     cantidad = models.DecimalField(max_digits=8, decimal_places=2)
@@ -79,14 +96,20 @@ class PaqueteConsumidoItem(models.Model):
     objects = PaqueteConsumidoItemManager()
 
     def __unicode__(self):
-        return u'%s %s %s ' % (self.producto, self.cantidad, self.precio)
+        return u'%s %s %s' % (self.producto, self.cantidad, self.precio)
 
     def set_precio(self):
+        ''' Calcula el precio correcto a asignar multiplicando el precio
+        del producto por la cantidad de este. '''
         precio = self.producto.precio_porcion * self.cantidad
         return precio
 
 
 class ProductoConsumido(models.Model):
+    '''
+    Saca Productos de inventario sin necesidad de asociarse a un servicio
+    y sin generar peticion (PaqueteConsumido).
+    '''
     medico = models.ForeignKey(Medico)
     paciente = models.ForeignKey(Paciente)
     producto = models.ForeignKey('inventario.Producto')
@@ -94,8 +117,7 @@ class ProductoConsumido(models.Model):
     fecha = models.DateTimeField()
 
     def __unicode__(self):
-        return u'%s %s %s' % (
-            self.producto, self.cantidad, self.cantidad)
+        return u'%s %s %s' % (self.producto, self.cantidad, self.cantidad)
 
 
 class CancelPaquete(CancelledModel):
@@ -107,8 +129,8 @@ class CancelPaquete(CancelledModel):
 
 class CancelSalida(CancelledModel):
     '''
-    Hereda del modelo abstracto CancelledModel.
-    Agrega relacion con la salida a cancelar.
+    Hereda del modelo abstracto CancelledModel que contiene 'motivo'
+    y 'created_at'. Agrega relacion con la salida a cancelar.
     '''
     salida = models.ForeignKey(ProductoConsumido)
 

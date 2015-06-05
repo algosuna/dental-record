@@ -22,7 +22,7 @@ class PaqueteForm(forms.ModelForm):
 
     class Meta:
         model = Paquete
-        exclude = ('productos',)
+        exclude = ['productos']
 
     def __init__(self, *args, **kwargs):
         super(PaqueteForm, self).__init__(*args, **kwargs)
@@ -111,7 +111,7 @@ class PeticionForm(forms.ModelForm):
     ''' Creates PaqueteConsumido with null Paquete. '''
     class Meta:
         model = PaqueteConsumido
-        fields = ('nota',)
+        fields = ['nota']
 
     def __init__(self, *args, **kwargs):
         super(PeticionForm, self).__init__(*args, **kwargs)
@@ -136,7 +136,7 @@ class AtenderPeticionForm(forms.ModelForm):
     ''' Adds Paquete and to PaqueteConsumido. '''
     class Meta:
         model = PaqueteConsumido
-        fields = ['paquete', ]
+        fields = ['paquete']
 
     def __init__(self, *args, **kwargs):
         super(AtenderPeticionForm, self).__init__(*args, **kwargs)
@@ -155,11 +155,13 @@ class AtenderPeticionForm(forms.ModelForm):
 
 
 class PaqueteItemCreateForm(forms.ModelForm):
-    ''' Creates PaqueteConsumidoItems from PaqueteItems in Paquete and adds or
-    removes extra items (products). '''
+    '''
+    Creates PaqueteConsumidoItems from PaqueteItems in Paquete and adds or
+    removes extra items (products).
+    '''
     class Meta:
         model = PaqueteConsumidoItem
-        exclude = ('precio', 'paquete_consumido', )
+        exclude = ['precio', 'paquete_consumido']
 
     def __init__(self, *args, **kwargs):
         super(PaqueteItemCreateForm, self).__init__(*args, **kwargs)
@@ -177,6 +179,9 @@ class PaqueteItemCreateForm(forms.ModelForm):
             self.fields['producto'] = forms.ModelChoiceField(
                 queryset=Producto.objects.filter(pk=producto.pk),
                 empty_label=None)
+        else:
+            self.fields['producto'] = forms.ModelChoiceField(
+                queryset=Producto.objects.exclude(is_inactive=True))
 
     def get_producto(self):
         return self.get_initial_or_instance(Producto)
@@ -203,9 +208,13 @@ class PaqueteItemCreateForm(forms.ModelForm):
 
 
 class PeticionSurtidoForm(forms.ModelForm):
+    '''
+    Changes PaqueteConsumido status from 'por_entregar' to 'surtido'
+    and vice-versa.
+    '''
     class Meta:
         model = PaqueteConsumido
-        fields = ''
+        fields = []
 
     is_delivered = forms.BooleanField(required=False)
 
@@ -239,6 +248,7 @@ class PeticionSurtidoForm(forms.ModelForm):
 
 
 class ProductoConsumidoForm(forms.ModelForm):
+    ''' TODO: Fix and complete this feature post-deployment. '''
     class Meta:
         model = ProductoConsumido
 
@@ -246,9 +256,7 @@ class ProductoConsumidoForm(forms.ModelForm):
         super(ProductoConsumidoForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.layout = Layout(
-            HTML("""
-                 <p class="parrafo"> Campos con ( * ) Son Requeridos.</p>
-                 """),
+            HTML('''<p> Campos con ( * ) Son Requeridos.</p>'''),
             Fieldset(
                 '',
                 Field('medico', wrapper_class='col-md-4'),
@@ -264,9 +272,10 @@ class ProductoConsumidoForm(forms.ModelForm):
 
 
 class SalidaCanceladaForm(forms.ModelForm):
+    ''' TODO: To the end. '''
     class Meta:
         model = ProductoConsumido
-        exclude = ('cantidad',)
+        exclude = ['cantidad']
 
     def __init__(self, *args, **kwargs):
         super(SalidaCanceladaForm, self).__init__(*args, **kwargs)
@@ -277,7 +286,7 @@ class SalidaCanceladaForm(forms.ModelForm):
             'cancelado',
             Submit('submit', 'Cancelar', css_class='pull-right')
         )
-        # self.fields['cancelado'].label = 'Cancelar Salida'
+        self.fields['cancelado'].label = 'Cancelar Salida'
 
     def save(self, commit=True):
         instance = super(SalidaCanceladaForm, self).save(commit=False)

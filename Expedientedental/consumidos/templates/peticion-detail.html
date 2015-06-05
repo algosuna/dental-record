@@ -71,13 +71,13 @@
 
   </div>
 
-  <!-- TODO: add stuff to mark as delivered -->
-
+  {% if not has_inactive_item %}
   <div class="well clearfix">
 
     {% crispy form %}
 
   </div>
+  {% endif %}
 
 </div>
 
