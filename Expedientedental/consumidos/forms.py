@@ -10,7 +10,7 @@ from crispy_forms.layout import (
 from inventario.models import Producto
 from consumidos.models import (
     Paquete, PaqueteItem, PaqueteConsumido, PaqueteConsumidoItem,
-    ProductoConsumido
+    ProductoConsumido, CancelPaquete
 )
 
 
@@ -60,6 +60,51 @@ class PaqueteForm(forms.ModelForm):
                 item.save()
             items.append(item)
         return items
+
+
+class PaqueteCancelForm(forms.ModelForm):
+    class Meta:
+        model = Paquete
+        fields = ['is_inactive']
+
+    def __init__(self, *args, **kwargs):
+        super(PaqueteCancelForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_class = 'form-inline'
+        self.helper.field_template = 'bootstrap3/layout/inline_field.html'
+        self.helper.layout = Layout(
+            'is_inactive',
+            Submit('submit', 'Desactivar', css_class='pull-right')
+        )
+        self.fields['is_inactive'].label = 'Desactivar Paquete'
+
+    def save(self, commit=True):
+        instance = super(PaqueteCancelForm, self).save(commit=False)
+        if commit:
+            pass
+        return instance
+
+
+class CancelPaqueteForm(forms.ModelForm):
+    class Meta:
+        model = CancelPaquete
+        exclude = 'paquete'
+
+    def __init__(self, *args, **kwargs):
+        super(CancelPaqueteForm, self).__init__(*args, **kwargs)
+        self.paqueteitem = self.initial.get('paquete')
+        self.helper = FormHelper()
+        self.helper.add_input(Submit('submit', 'Guardar'))
+        self.fields['reason'].label = 'Motivo de Desactivacion'
+
+    def save(self, commit=True):
+        instance = super(CancelPaqueteForm, self).save(commit=False)
+        instance.paquete = self.initial.get('paquete')
+        instance.paquete.is_inactive = True
+        if commit:
+            instance.paquete.save()
+            instance.save()
+        return instance
 
 
 class PeticionForm(forms.ModelForm):
