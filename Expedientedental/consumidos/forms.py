@@ -134,6 +134,9 @@ class PaqueteItemCreateForm(forms.ModelForm):
             self.fields['producto'] = forms.ModelChoiceField(
                 queryset=Producto.objects.filter(pk=producto.pk),
                 empty_label=None)
+        else:
+            self.fields['producto'] = forms.ModelChoiceField(
+                queryset=Producto.objects.exclude(is_inactive=True))
 
     def get_producto(self):
         return self.get_initial_or_instance(Producto)

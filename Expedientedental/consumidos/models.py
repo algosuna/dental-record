@@ -53,7 +53,8 @@ class PaqueteConsumido(TimeStampedModel):
     def get_item_initials(self):
         ''' Asigna initials usando PaqueteItems con ForeignKey a Paquete. '''
         paquete = self.paquete
-        paquete_items = paquete.paqueteitem_set.all()
+        paquete_items = paquete.paqueteitem_set.filter(
+            producto__is_inactive=False)
         initial_list = []
         for pitem in paquete_items:
             initial = {
@@ -70,14 +71,17 @@ class PaqueteConsumido(TimeStampedModel):
         a PaqueteConsumido. '''
         return self.paqueteconsumidoitem_set.get_precio_total()
 
+    # def get_producto_status(self):
+    #     return self.paqueteconsumidoitem_set.producto_status()
+
 
 class PaqueteConsumidoItemManager(models.Manager):
     def get_precio_total(self):
         ''' Suma el precio de PaqueteConsumidoItem. '''
-        p = self.aggregate(Sum('precio'))['precio__sum']
-        if p is None:
-            p = 0
-        return p
+        precio = self.aggregate(Sum('precio'))['precio__sum']
+        if precio is None:
+            precio = 0
+        return precio
 
 
 class PaqueteConsumidoItem(models.Model):
@@ -100,6 +104,11 @@ class PaqueteConsumidoItem(models.Model):
         del producto por la cantidad de este. '''
         precio = self.producto.precio_porcion * self.cantidad
         return precio
+
+    def producto_status(self):
+        ''' Averigua si el Producto de PaqueteConsumidoItem
+        esta desactivado. '''
+        return self.producto.is_inactive
 
 
 class ProductoConsumido(models.Model):

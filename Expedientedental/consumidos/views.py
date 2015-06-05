@@ -215,7 +215,11 @@ class PeticionDetail(PermissionRequiredMixin, UpdateView):
         context = super(PeticionDetail, self).get_context_data(**kwargs)
         items = PaqueteConsumidoItem.objects.filter(
             paquete_consumido=self.object)
-        context.update({'pe_active': 'active', 'paqueteitems': items})
+        has_inactive_item = items.filter(producto__is_inactive=True).exists()
+        context.update({
+            'pe_active': 'active',
+            'paqueteitems': items,
+            'has_inactive_item': has_inactive_item})
         return context
 
     def form_valid(self, form):
