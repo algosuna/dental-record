@@ -44,6 +44,7 @@
     <li class="sidebar-header text-center">Paquetes</li>
     <li class="{{ pn_active }}"><a href="{% url consumidos:paquete_new %}"><i class="fa fa-tasks fa-fw"></i> Crear Paquete</a></li>
     <li class="{{ ps_active }}"><a href="{% url consumidos:paquete_list %}"><i class="fa fa-th-list fa-fw"></i> Paquetes</a></li>
+    <li class="{{ pdea_active }}"><a href="{% url consumidos:deactivated-list %}"><i class="fa fa-th-list fa-fw"></i> Paquetes desactivados</a></li>
     {% endif %}
 
     {% if perms.inventario.change_producto %}

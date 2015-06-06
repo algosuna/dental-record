@@ -1,10 +1,11 @@
 from django.contrib.auth import logout, login
 from django.shortcuts import render
 from django.views.generic import FormView, TemplateView
+from django.core.urlresolvers import reverse_lazy
 
 from core.mixins import LoginRequiredMixin
 
-from accounts.forms import LoginForm
+from accounts.forms import LoginForm, PassChangeForm
 
 
 def logout_view(request):
@@ -42,3 +43,20 @@ class LoginView(FormView):
 
 class HomeView(LoginRequiredMixin, TemplateView):
     template_name = 'home.html'
+
+
+class ChangeView(FormView):
+    form_class = PassChangeForm
+    template_name = 'password_change_form.html'
+    success_url = reverse_lazy('consumidos:done')
+
+    def get_form_kwargs(self):
+        kwargs = super(ChangeView, self).get_form_kwargs()
+        kwargs.update({'user': self.request.user})
+        return kwargs
+
+    def form_valid(self, form):
+        form.save()
+        return super(ChangeView, self).form_valid(form)
+
+

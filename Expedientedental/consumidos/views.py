@@ -12,7 +12,7 @@ from core.views import CreateObjFromContext
 
 from consumidos.models import (
     PaqueteConsumido, PaqueteConsumidoItem, Paquete, ProductoConsumido,
-    CancelSalida, PaqueteItem
+    CancelSalida, PaqueteItem, CancelPaquete
 )
 from consumidos.forms import (
     PaqueteForm, AtenderPeticionForm, PaqueteItemCreateForm, PeticionForm,
@@ -45,6 +45,34 @@ class PaqueteDeactivate(PermissionRequiredMixin, CreateObjFromContext):
     def get_context_data(self, **kwargs):
         context = super(PaqueteDeactivate, self).get_context_data(**kwargs)
         context.update({'pda_active': 'active'})
+        return context
+
+
+class Deactivatedpack(PermissionRequiredMixin, ListView):
+    model = Paquete
+    queryset = model.objects.filter(is_inactive=True)
+    context_object_name = 'paquetesi'
+    template_name = 'paquetes-desactivados.html'
+    permission_required = 'consumidos.add_paquete'
+
+    def get_context_data(self, **kwargs):
+        context = super(Deactivatedpack, self).get_context_data(**kwargs)
+        context.update({'pdea_active': 'active'})
+        return context
+
+
+class PackDeactivateDetail(PermissionRequiredMixin, DetailView):
+    model = CancelPaquete
+    context_object_name = 'deapack'
+    template_name = 'paquetedeactivate-detail.html'
+    permission_required = 'consumidos.add_cancelpaquete'
+
+    def get_context_data(self, **kwargs):
+        context = super(PackDeactivateDetail, self).get_context_data(**kwargs)
+        context.update({
+            'paquete': self.object.paquete,
+            'pde_active': 'active'
+            })
         return context
 
 

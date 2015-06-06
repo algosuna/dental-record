@@ -1,0 +1,44 @@
+{% extends "dash.html" %}
+{% block title %}Paquetes Desactivados{% endblock %}
+
+{% block content %}
+<h2 class="page-header">Desactivaciones de Paquetes</h2>
+
+{% if paquetesi %}
+<table class="table table-hover">
+
+  <thead>
+
+    <tr>
+
+      <th>Paquete</th>
+      <th>Descripcion</th>
+     
+      <th>&nbsp;</th>
+
+    </tr>
+
+  </thead>
+
+  <tbody>
+
+    {% for paquete in paquetesi %}
+    <tr>
+
+      <tr>
+
+        
+        <td>{{ paquete.nombre }}</td>
+        <td>{{ paquete.descripcion }}</td>
+        <td><a href="{% url consumidos:deactivated-detail paquete.id %}" class="btn btn-default">Ver Paquete</a></td>
+
+    </tr>
+    {% endfor %}
+
+  </tbody>
+
+</table>
+{% else %}
+<p class="text-center text-muted lead">No hay paquetes desactivados.</p>
+{% endif %}
+{% endblock content %}

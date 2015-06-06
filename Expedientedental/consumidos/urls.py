@@ -3,7 +3,8 @@ from consumidos.views import (
     Paquetes, PaqueteCreate, PaqueteDetail, PaqueteUpdate, Peticiones,
     PeticionesAtendidas, PeticionCreate, PeticionUpdate,
     ProductoConsumidoCreate, PeticionDetail, ReciboPeticionPDF,
-    ProductosConsumidos, ProductoConsumidoDetail, PaqueteDeactivate
+    ProductosConsumidos, ProductoConsumidoDetail, PaqueteDeactivate,
+    Deactivatedpack, PackDeactivateDetail
 )
 
 urlpatterns = patterns(
@@ -21,6 +22,12 @@ urlpatterns = patterns(
 
     url(r'^paquete/(?P<pk>\d+)/deactivate/$',
         PaqueteDeactivate.as_view(), name='paquete_deactivated'),
+
+    url(r'^paquete/deactivated/list/$', Deactivatedpack.as_view(),
+        name='deactivated-list'),
+
+    url(r'^paquete/(?P<pk>\d+)/deactivated/detail/$',
+        PackDeactivateDetail.as_view(), name='deactivated-detail'),
 
     url(r'^salidas/peticiones/$', Peticiones.as_view(), name='peticion_list'),
 
