@@ -1,0 +1,159 @@
+{% extends "dash.html" %}
+{% load static from staticfiles %}
+
+{% load crispy_forms_tags %}
+
+{% block css %}
+<style>
+  .checkbox {
+    margin-top: 7px !important;
+    margin-left: 5px;
+  }
+  input[type=checkbox] {
+    margin: 0px !important;
+  }
+  .alert {
+    margin-top: 20px;
+  }
+  .alert p {
+    padding: 10px 0px 0px 10px;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<h2 class="page-header">{% block title %}Peticion a Inventario{% endblock %} <small class="pull-right"><a href="{% url consumidos:recibo_paquete salida.id %}"><i class="fa fa-print fa-fw"></i> Imprimir Recibo</a></small></h2>
+
+<div class="col-md-6">
+
+  {% for item in paqueteitems %}
+  <div class="panel panel-default">
+
+    <table class="table">
+
+      <tr>
+
+        <th>Producto:</th>
+        <td>{{ item.producto }}</td>
+
+      </tr>
+
+      <tr>
+
+        <th>Cantidad:</th>
+        <td>{{ item.cantidad }} {{ item.producto.unidad_medida.unidad }}{% if item.cantidad > 1 %}s{% endif %}</td>
+
+      </tr>
+
+      <tr>
+
+        <th>Precio:</th>
+        <td>$ {{ item.producto.precio_porcion }}</td>
+
+      </tr>
+
+      <tr>
+
+        <th>Total:</th>
+        <td>$ {{ item.precio }}</td>
+
+      </tr>
+
+    </table>
+
+  </div>
+  {% endfor %}
+
+  <div class="well clearfix">
+
+    {% crispy form %}
+
+  </div>
+
+</div>
+
+<div class="col-md-6">
+
+  <div class="panel panel-info">
+
+    <div class="panel-heading">{{ salida.servicio }}</div>
+
+    <table class="table">
+
+      <tr>
+
+        <th>Paciente:</th>
+        <td>{{ salida.paciente }}</td>
+
+      </tr>
+
+      <tr>
+
+        <th>Medico:</th>
+        <td>{{ salida.medico }}</td>
+
+      </tr>
+
+      <tr>
+
+        <th>Fecha creaci&oacute;n:</th>
+        <td>{{ salida.created_at }}</td>
+
+      </tr>
+
+      <tr>
+
+        <th>&Uacute;ltima actualizaci&oacute;n:</th>
+        <td>{{ salida.updated_at }}</td>
+
+      </tr>
+      <tr>
+
+        <th>Observaciones del Medico:</th>
+        <td>{{ salida.nota }}</td>
+
+      </tr>
+
+      <tr>
+
+        <th>Status:</th>
+        <td><span class="label">{{ salida.get_status_display }}</span></td>
+
+      </tr>
+
+    </table>
+
+  </div>
+
+</div>
+{% endblock content %}
+
+{% block javascript %}
+<script>
+$(function() {
+
+  $.each($('.label'), function(){
+    var status = $(this);
+
+    if(status.text() == 'En Espera') {
+
+      status.addClass(' label-warning');
+
+    } else if(status.text() == 'Surtido') {
+
+      status.addClass(' label-primary');
+
+    } else if(status.text() == 'Por Entregar') {
+
+      status.addClass(' label-info');
+
+    } else {
+
+      status.addClass(' label-default');
+
+    }
+
+  })
+})
+</script>
+{% endblock javascript %}

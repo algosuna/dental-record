@@ -1,9 +1,10 @@
 from django.conf.urls import patterns, url
 from consumidos.views import (
     Paquetes, PaqueteCreate, PaqueteDetail, PaqueteUpdate, Peticiones,
-    PeticionesAtendidas, PeticionCreate, PeticionUpdate,
+    PeticionesAtendidas, PeticionCreate, PeticionUpdate, PeticionCancel,
     ProductoConsumidoCreate, PeticionDetail, ReciboPeticionPDF,
-    ProductosConsumidos, ProductoConsumidoDetail, PaqueteDeactivate
+    ProductosConsumidos, ProductoConsumidoDetail, PaqueteDeactivate,
+    PeticionCancelled
 )
 
 urlpatterns = patterns(
@@ -30,14 +31,20 @@ urlpatterns = patterns(
     url(r'^clinica/peticion/servicio/(?P<pk>\d+)/new/$',
         PeticionCreate.as_view(), name='peticion_new'),
 
-    url(r'^salidas/peticion/(?P<pk>\d+)/update/$',
-        PeticionUpdate.as_view(), name='peticion_update'),
-
     url(r'^salidas/peticion/(?P<pk>\d+)/detail/$',
         PeticionDetail.as_view(), name='peticion_detail'),
 
     url(r'^salidas/peticion/(?P<pk>\d+)/insumos/add/$',
         'paquete_item_create', name='paquete_item_create'),
+
+    url(r'^salidas/peticion/(?P<pk>\d+)/update/$',
+        PeticionUpdate.as_view(), name='peticion_update'),
+
+    url(r'^salidas/peticion/(?P<pk>\d+)/cancel/$',
+        PeticionCancel.as_view(), name='peticion_cancel'),
+
+    url(r'^salidas/peticiones/cancelled/$',
+        PeticionCancelled.as_view(), name='peticiones_canceladas'),
 
     url(r'^salidas/producto/new/$',
         ProductoConsumidoCreate.as_view(), name='consumido_new'),

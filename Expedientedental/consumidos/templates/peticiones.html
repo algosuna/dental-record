@@ -80,6 +80,7 @@
 
   </table>
   {% endif %}
+
   {% if paqueteporentregar %}
   <h3>Peticiones por Entregar</h3>
   <table class="table table-hover">
@@ -119,6 +120,43 @@
 
   </table>
   {% endif %}
+
+{% elif peticiones_canceladas %}
+<table class="table table-hover">
+
+  <thead>
+
+    <tr>
+
+      <th>Servicio</th>
+      <th>Medico</th>
+      <th>Paciente</th>
+      <th>Fecha</th>
+      <th>Status</th>
+      <th>&nbsp;</th>
+
+    </tr>
+
+  </thead>
+
+  <tbody>
+
+    {% for peticion in peticiones_canceladas %}
+    <tr>
+
+      <td class="padded">{{ peticion.salida.servicio }}</td>
+      <td class="padded">{{ peticion.salida.medico }}</td>
+      <td class="padded">{{ peticion.salida.paciente }}</td>
+      <td class="padded">{{ peticion.salida.updated_at }}</td>
+      <td class="padded"><span class="label">{{ peticion.salida.get_status_display }}</span></td>
+      <td><a href="{% url consumidos:peticion_detail peticion.salida.id %}" class="btn btn-default">Detalle</a></td>
+
+    </tr>
+    {% endfor %}
+
+  </tbody>
+
+</table>
 {% else %}
 <p class="lead text-center text-muted">No hay peticiones.</p>
 {% endif %}

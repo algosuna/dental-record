@@ -10,7 +10,7 @@ from crispy_forms.layout import (
 from inventario.models import Producto
 from consumidos.models import (
     Paquete, PaqueteItem, PaqueteConsumido, PaqueteConsumidoItem,
-    ProductoConsumido, CancelPaquete
+    ProductoConsumido, CancelPaquete, CancelPaqueteConsumido
 )
 
 
@@ -92,7 +92,6 @@ class CancelPaqueteForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(CancelPaqueteForm, self).__init__(*args, **kwargs)
-        self.paqueteitem = self.initial.get('paquete')
         self.helper = FormHelper()
         self.helper.add_input(Submit('submit', 'Guardar'))
         self.fields['reason'].label = 'Motivo de Desactivacion'
@@ -247,6 +246,28 @@ class PeticionSurtidoForm(forms.ModelForm):
         return instance
 
 
+class PeticionCancelForm(forms.ModelForm):
+    class Meta:
+        model = CancelPaqueteConsumido
+        exclude = ['salida']
+
+    def __init__(self, *args, **kwargs):
+        super(PeticionCancelForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.add_input(Submit(
+            'submit', 'Cancelar', css_class='btn-danger pull-right'))
+        self.fields['reason'].label = 'Motivo de Cancelaci&oacute;n:'
+
+    def save(self, commit=True):
+        instance = super(PeticionCancelForm, self).save(commit=False)
+        instance.salida = self.initial.get('salida')
+        instance.salida.status = 'cancelado'
+        if commit:
+            instance.salida.save()
+            instance.save()
+        return instance
+
+
 class ProductoConsumidoForm(forms.ModelForm):
     ''' TODO: Fix and complete this feature post-deployment. '''
     class Meta:
@@ -269,27 +290,3 @@ class ProductoConsumidoForm(forms.ModelForm):
                 ),
             ButtonHolder(Submit('save', 'Generar'))
         )
-
-
-class SalidaCanceladaForm(forms.ModelForm):
-    ''' TODO: To the end. '''
-    class Meta:
-        model = ProductoConsumido
-        exclude = ['cantidad']
-
-    def __init__(self, *args, **kwargs):
-        super(SalidaCanceladaForm, self).__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.form_class = 'form-inline'
-        self.helper.field_template = 'bootstrap3/layout/inline_field.html'
-        self.helper.layout = Layout(
-            'cancelado',
-            Submit('submit', 'Cancelar', css_class='pull-right')
-        )
-        self.fields['cancelado'].label = 'Cancelar Salida'
-
-    def save(self, commit=True):
-        instance = super(SalidaCanceladaForm, self).save(commit=False)
-        if commit:
-            pass
-        return instance
