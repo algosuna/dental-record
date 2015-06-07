@@ -260,12 +260,34 @@ class PeticionCancel(PermissionRequiredMixin, CreateObjFromContext):
     success_url = reverse_lazy('consumidos:peticiones_canceladas')
     permission_required = 'consumidos.add_cancelpaqueteconsumido'
 
+    def get_context_data(self, **kwargs):
+        context = super(PeticionCancel, self).get_context_data(**kwargs)
+        context.update({'pcld_active': 'active'})
+        return context
+
+    def form_valid(self, form):
+        paquete = self.get_obj()
+        items = paquete.paqueteconsumidoitem_set.all()
+        if paquete.status == 'surtido':
+            for i in items:
+                producto = i.producto
+                if producto.in_stock():
+                    producto.agregar(i.cantidad)
+                    producto.save()
+
+        return super(PeticionCancel, self).form_valid(form)
+
 
 class PeticionCancelled(PermissionRequiredMixin, ListView):
     model = CancelPaqueteConsumido
     context_object_name = 'peticiones_canceladas'
     template_name = 'peticiones.html'
     permission_required = 'consumidos.add_cancelpaqueteconsumido'
+
+    def get_context_data(self, **kwargs):
+        context = super(PeticionCancelled, self).get_context_data(**kwargs)
+        context.update({'pcld_active': 'active'})
+        return context
 
 
 class ProductosConsumidos(PermissionRequiredMixin, ListView):
