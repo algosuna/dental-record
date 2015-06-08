@@ -102,8 +102,11 @@ class PaqueteCancelledDetail(PermissionRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         ctx = super(PaqueteCancelledDetail, self).get_context_data(**kwargs)
+        paquete = self.object.paquete
+        paqueteitems = paquete.paqueteitem_set.all()
         ctx.update({
-            'paquete': self.object.paquete,
+            'paquete': paquete,
+            'paqueteitems': paqueteitems,
             'pdea_active': 'active'
             })
         return ctx

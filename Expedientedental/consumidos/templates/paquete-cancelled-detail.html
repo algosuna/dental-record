@@ -15,7 +15,7 @@
 
       <div class="panel-heading">
 
-        <h4 class="panel-title">{{ deapack.paquete.nombre }}</h4>
+        <h4 class="panel-title">{{ paquete.nombre }}</h4>
 
       </div>
 
@@ -40,10 +40,8 @@
             <tr>
 
               <td>{{ deapack.created_at }}</td>
-              <td>{{ deapack.paquete.descripcion }}</td>
-              <td>{{ deapack.paquete.nombre }}</td>
-              <td></td>
-
+              <td>{{ paquete.descripcion }}</td>
+              <td>{{ paquete.nombre }}</td>
 
             </tr>
 
@@ -68,7 +66,38 @@
 
     <p>{{ deapack.reason }}</p>
 
+
   </div><!-- end .col-md-6 -->
 
 </div><!-- end .row -->
+
+{% if paqueteitems %}
+<table class="table table-striped">
+
+  <thead>
+
+    <tr>
+
+      <th>Nombre</th>
+
+    </tr>
+
+  </thead>
+
+  <tbody>
+
+    {% for item in paqueteitems %}
+    <tr>
+
+      <td>{{ item.producto }}</td>
+      
+    </tr>
+    {% endfor %}
+
+  </tbody>
+
+</table>
+{% endif %}
+
+
 {% endblock content %}
