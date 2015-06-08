@@ -12,11 +12,11 @@ from core.views import CreateObjFromContext
 
 from consumidos.models import (
     PaqueteConsumido, PaqueteConsumidoItem, Paquete, ProductoConsumido,
-    CancelSalida, PaqueteItem, CancelPaquete
+    CancelPaqueteConsumido, CancelPaquete
 )
 from consumidos.forms import (
     PaqueteForm, AtenderPeticionForm, PaqueteItemCreateForm, PeticionForm,
-    ProductoConsumidoForm, SalidaCanceladaForm, PeticionSurtidoForm,
+    ProductoConsumidoForm, PeticionSurtidoForm, PeticionCancelForm,
     CancelPaqueteForm, PaqueteCancelForm
 )
 from servicios.models import Servicio
@@ -24,6 +24,7 @@ from servicios.models import Servicio
 
 class Paquetes(PermissionRequiredMixin, ListView):
     model = Paquete
+    queryset = model.objects.exclude(is_inactive=True)
     context_object_name = 'paquetes'
     template_name = 'paquetes.html'
     permission_required = 'consumidos.add_paquete'
@@ -31,48 +32,6 @@ class Paquetes(PermissionRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super(Paquetes, self).get_context_data(**kwargs)
         context.update({'ps_active': 'active'})
-        return context
-
-
-class PaqueteDeactivate(PermissionRequiredMixin, CreateObjFromContext):
-    form_class = CancelPaqueteForm
-    ctx_model = Paquete
-    template_name = 'paquete-deactivate.html'
-    success_url = reverse_lazy('consumidos:paquete_list')
-    permission_required = 'consumidos.add_paquete'
-    initial_value = 'paquete'
-
-    def get_context_data(self, **kwargs):
-        context = super(PaqueteDeactivate, self).get_context_data(**kwargs)
-        context.update({'pda_active': 'active'})
-        return context
-
-
-class Deactivatedpack(PermissionRequiredMixin, ListView):
-    model = Paquete
-    queryset = model.objects.filter(is_inactive=True)
-    context_object_name = 'paquetesi'
-    template_name = 'paquetes-desactivados.html'
-    permission_required = 'consumidos.add_paquete'
-
-    def get_context_data(self, **kwargs):
-        context = super(Deactivatedpack, self).get_context_data(**kwargs)
-        context.update({'pdea_active': 'active'})
-        return context
-
-
-class PackDeactivateDetail(PermissionRequiredMixin, DetailView):
-    model = CancelPaquete
-    context_object_name = 'deapack'
-    template_name = 'paquetedeactivate-detail.html'
-    permission_required = 'consumidos.add_cancelpaquete'
-
-    def get_context_data(self, **kwargs):
-        context = super(PackDeactivateDetail, self).get_context_data(**kwargs)
-        context.update({
-            'paquete': self.object.paquete,
-            'pde_active': 'active'
-            })
         return context
 
 
@@ -90,11 +49,12 @@ class PaqueteCreate(PermissionRequiredMixin, CreateView):
 
 
 class PaqueteDetail(PermissionRequiredMixin, UpdateView):
+    ''' Muestra detalle de paquete y da la opcion de marcar como 'surtido'. '''
     model = Paquete
     form_class = PaqueteCancelForm
     context_object_name = 'paquete'
     template_name = 'paquete-detail.html'
-    permission_required = 'consumidos.add_paquete'
+    permission_required = 'consumidos.change_paquete'
 
     def get_context_data(self, **kwargs):
         context = super(PaqueteDetail, self).get_context_data(**kwargs)
@@ -102,9 +62,51 @@ class PaqueteDetail(PermissionRequiredMixin, UpdateView):
         return context
 
     def get_success_url(self):
-        url = reverse('consumidos:paquete_deactivated',
+        url = reverse('consumidos:paquete_cancel',
                       kwargs={'pk': self.object.pk})
         return url
+
+
+class PaqueteCancel(PermissionRequiredMixin, CreateObjFromContext):
+    form_class = CancelPaqueteForm
+    ctx_model = Paquete
+    template_name = 'paquete-cancel.html'
+    success_url = reverse_lazy('consumidos:paquete_cancelled_list')
+    permission_required = 'consumidos.add_paquete'
+    initial_value = 'paquete'
+
+    def get_context_data(self, **kwargs):
+        context = super(PaqueteCancel, self).get_context_data(**kwargs)
+        context.update({'pdea_active': 'active'})
+        return context
+
+
+class PaqueteCancelled(PermissionRequiredMixin, ListView):
+    model = Paquete
+    queryset = model.objects.filter(is_inactive=True)
+    context_object_name = 'paquetesi'
+    template_name = 'paquetes-cancelled.html'
+    permission_required = 'consumidos.add_paquete'
+
+    def get_context_data(self, **kwargs):
+        context = super(PaqueteCancelled, self).get_context_data(**kwargs)
+        context.update({'pdea_active': 'active'})
+        return context
+
+
+class PaqueteCancelledDetail(PermissionRequiredMixin, DetailView):
+    model = CancelPaquete
+    context_object_name = 'deapack'
+    template_name = 'paquete-cancelled-detail.html'
+    permission_required = 'consumidos.add_cancelpaquete'
+
+    def get_context_data(self, **kwargs):
+        ctx = super(PaqueteCancelledDetail, self).get_context_data(**kwargs)
+        ctx.update({
+            'paquete': self.object.paquete,
+            'pdea_active': 'active'
+            })
+        return ctx
 
 
 class PaqueteUpdate(PermissionRequiredMixin, UpdateView):
@@ -263,7 +265,7 @@ class PeticionDetail(PermissionRequiredMixin, UpdateView):
         return context
 
     def form_valid(self, form):
-        ''' Takes from inventory if in stock and status wasn't 'surtido,
+        ''' Takes from inventory if in stock and status wasn't 'surtido',
         else, if the status was 'surtido' it adds quantities to inventory. '''
         is_delivered = form.cleaned_data.get('is_delivered')
         consumidos = self.object.paqueteconsumidoitem_set.all()
@@ -277,6 +279,44 @@ class PeticionDetail(PermissionRequiredMixin, UpdateView):
                 producto.agregar(c.cantidad)
                 producto.save()
         return super(PeticionDetail, self).form_valid(form)
+
+
+class PeticionCancel(PermissionRequiredMixin, CreateObjFromContext):
+    form_class = PeticionCancelForm
+    ctx_model = PaqueteConsumido
+    initial_value = 'salida'
+    template_name = 'peticion-cancel.html'
+    success_url = reverse_lazy('consumidos:peticiones_canceladas')
+    permission_required = 'consumidos.add_cancelpaqueteconsumido'
+
+    def get_context_data(self, **kwargs):
+        context = super(PeticionCancel, self).get_context_data(**kwargs)
+        context.update({'pcld_active': 'active'})
+        return context
+
+    def form_valid(self, form):
+        paquete = self.get_obj()
+        items = paquete.paqueteconsumidoitem_set.all()
+        if paquete.status == 'surtido':
+            for i in items:
+                producto = i.producto
+                if producto.in_stock():
+                    producto.agregar(i.cantidad)
+                    producto.save()
+
+        return super(PeticionCancel, self).form_valid(form)
+
+
+class PeticionCancelled(PermissionRequiredMixin, ListView):
+    model = CancelPaqueteConsumido
+    context_object_name = 'peticiones_canceladas'
+    template_name = 'peticiones.html'
+    permission_required = 'consumidos.add_cancelpaqueteconsumido'
+
+    def get_context_data(self, **kwargs):
+        context = super(PeticionCancelled, self).get_context_data(**kwargs)
+        context.update({'pcld_active': 'active'})
+        return context
 
 
 class ProductosConsumidos(PermissionRequiredMixin, ListView):
@@ -318,24 +358,6 @@ class ProductoConsumidoDetail(PermissionRequiredMixin, DetailView):
         producto = self.object.producto
         ctx.update({'pcd_active': 'active', 'producto': producto})
         return ctx
-
-
-class SalidaCancelledList(PermissionRequiredMixin, ListView):
-    ''' TODO: To the end. '''
-    model = CancelSalida
-    context_object_name = 'cancelsalida'
-    template_name = 'salida-cancel.html'
-    permission_required = 'consumidos.add_cancelsalida'
-
-
-class SalidaCancel(PermissionRequiredMixin, CreateObjFromContext):
-    ''' TODO: To the end. '''
-    form_class = SalidaCanceladaForm
-    ctx_model = CancelSalida
-    initial_value = 'salida'
-    template_name = 'salida-cancel.html'
-    success_url = reverse_lazy('consumidos:entradas_canceladas')
-    permission_required = 'consumidos.add_cancelsalida'
 
 
 class ReciboPeticionPDF(PDFTemplateView):

@@ -124,7 +124,7 @@ class ProductosCancelled(PermissionRequiredMixin, ListView):
 class ProductoCancelDetail(PermissionRequiredMixin, DetailView):
     model = CancelProducto
     context_object_name = 'cancelproducto'
-    template_name = 'productocancel-detail.html'
+    template_name = 'producto-cancel-detail.html'
     permission_required = 'inventario.add_cancelproducto'
 
     def get_context_data(self, **kwargs):

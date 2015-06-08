@@ -13,7 +13,7 @@
 
       <th>Paquete</th>
       <th>Descripcion</th>
-     
+
       <th>&nbsp;</th>
 
     </tr>
@@ -27,10 +27,10 @@
 
       <tr>
 
-        
+
         <td>{{ paquete.nombre }}</td>
         <td>{{ paquete.descripcion }}</td>
-        <td><a href="{% url consumidos:deactivated-detail paquete.id %}" class="btn btn-default">Ver Paquete</a></td>
+        <td><a href="{% url consumidos:paquete_cancelled_detail paquete.id %}" class="btn btn-default">Ver Paquete</a></td>
 
     </tr>
     {% endfor %}

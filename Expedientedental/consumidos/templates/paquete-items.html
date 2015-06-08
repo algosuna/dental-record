@@ -34,17 +34,15 @@
     <input type="submit" class="btn btn-primary pull-right" value="Aceptar">
 
   </form>
-  <th>&nbsp;</th>
-  <th>&nbsp;</th>
 
+  {% if paquete.nota %}
   <div class="panel panel-info">
-      <div class="panel-heading">
-        <h4 class="panel-title">Observaciones</h4>
-    </div>
+    <div class="panel-heading">Observaciones</div>
     <div class="panel-body">
-      <h5>{{paquete.nota}}</h5>
+      <p>{{ paquete.nota }}</p>
     </div>
   </div>
+  {% endif %}
 
 </div>
 {% endblock %}

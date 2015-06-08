@@ -12,6 +12,12 @@
   input[type=checkbox] {
     margin: 0px !important;
   }
+  .alert {
+    margin-top: 20px;
+  }
+  .alert p {
+    padding: 10px 0px 0px 10px;
+  }
 </style>
 {% endblock %}
 
@@ -67,6 +73,15 @@
 
       </tr>
 
+      {% if paquete.status == 'cancelado' %}
+      <tr>
+
+        <th>Motivo de Cancelaci&oacute;n:</th>
+        <td>{{ paquete.cancelpaqueteconsumido_set.get.reason }}</td>
+
+      </tr>
+      {% endif %}
+
     </table>
 
   </div>
@@ -75,6 +90,16 @@
   <div class="well clearfix">
 
     {% crispy form %}
+
+  </div>
+
+  <div class="clearfix">
+    <button type="button" class="btn btn-danger pull-right" data-toggle="collapse" data-target="#cancelar"><i class="fa fa-ban fa-fw"></i> Cancelar Peticion</button>
+  </div>
+
+  <div class="collapse clearfix alert alert-danger" id="cancelar">
+    <p class="pull-left">Seguro que desea cancelar esta peticion?</p>
+    <a href="{% url consumidos:peticion_cancel paquete.id %}" class="btn btn-success pull-right">Cancelar</a>
 
   </div>
   {% endif %}

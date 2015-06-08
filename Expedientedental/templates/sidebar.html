@@ -44,7 +44,7 @@
     <li class="sidebar-header text-center">Paquetes</li>
     <li class="{{ pn_active }}"><a href="{% url consumidos:paquete_new %}"><i class="fa fa-tasks fa-fw"></i> Crear Paquete</a></li>
     <li class="{{ ps_active }}"><a href="{% url consumidos:paquete_list %}"><i class="fa fa-th-list fa-fw"></i> Paquetes</a></li>
-    <li class="{{ pdea_active }}"><a href="{% url consumidos:deactivated-list %}"><i class="fa fa-th-list fa-fw"></i> Paquetes desactivados</a></li>
+    <li class="{{ pdea_active }}"><a href="{% url consumidos:paquete_cancelled_list %}"><i class="fa fa-times fa-fw"></i> Paquetes Desactivados</a></li>
     {% endif %}
 
     {% if perms.inventario.change_producto %}
@@ -55,6 +55,7 @@
     <li class="sidebar-header text-center">Salidas</li>
     <li class="{{ pe_active }}"><a href="{% url consumidos:peticion_list %}"><i class="fa fa-inbox fa-fw"></i> Peticiones</a></li>
     <li class="{{ psl_active }}"><a href="{% url consumidos:peticion_surtido_list %}"><i class="fa fa-th-large fa-fw"></i>Peticiones Atendidas</a></li>
+    <li class="{{ pcld_active }}"><a href="{% url consumidos:peticiones_canceladas %}"><i class="fa fa-times fa-fw"></i>Peticiones Canceladas</a></li>
     <!-- <li class="{{ pcd_active }}"><a href="{% url consumidos:consumido_new %}"><i class="fa fa-asterisk fa-fw"></i>Mat.Extra</a></li>
     <li class="{{ pcl_active }}"><a href="{% url consumidos:consumido_list %}"><i class="fa fa-asterisk fa-fw"></i>Materiales Entregados</a></li> -->
     {% endif %}

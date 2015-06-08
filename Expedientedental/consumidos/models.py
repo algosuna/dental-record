@@ -23,6 +23,13 @@ class Paquete(models.Model):
         return '%s' % self.nombre
 
 
+class CancelPaquete(CancelledModel):
+    paquete = models.ForeignKey(Paquete)
+
+    def __unicode__(self):
+        return '%s' % self.reason
+
+
 class PaqueteItem(models.Model):
     ''' Productos de un paquete. '''
     paquete = models.ForeignKey(Paquete)
@@ -74,6 +81,17 @@ class PaqueteConsumido(TimeStampedModel):
         return self.paqueteconsumidoitem_set.get_precio_total()
 
 
+class CancelPaqueteConsumido(CancelledModel):
+    '''
+    Hereda del modelo abstracto CancelledModel que contiene 'motivo'
+    y 'created_at'. Agrega relacion con la salida a cancelar.
+    '''
+    salida = models.ForeignKey(PaqueteConsumido)
+
+    def __unicode__(self):
+        return '%s' % self.reason
+
+
 class PaqueteConsumidoItemManager(models.Manager):
     def get_precio_total(self):
         ''' Suma el precio de PaqueteConsumidoItem. '''
@@ -118,21 +136,3 @@ class ProductoConsumido(models.Model):
 
     def __unicode__(self):
         return u'%s %s %s' % (self.producto, self.cantidad, self.cantidad)
-
-
-class CancelPaquete(CancelledModel):
-    paquete = models.ForeignKey(Paquete)
-
-    def __unicode__(self):
-        return '%s' % self.reason
-
-
-class CancelSalida(CancelledModel):
-    '''
-    Hereda del modelo abstracto CancelledModel que contiene 'motivo'
-    y 'created_at'. Agrega relacion con la salida a cancelar.
-    '''
-    salida = models.ForeignKey(ProductoConsumido)
-
-    def __unicode__(self):
-        return '%s' % self.reason

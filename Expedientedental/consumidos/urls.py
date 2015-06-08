@@ -1,10 +1,10 @@
 from django.conf.urls import patterns, url
 from consumidos.views import (
     Paquetes, PaqueteCreate, PaqueteDetail, PaqueteUpdate, Peticiones,
-    PeticionesAtendidas, PeticionCreate, PeticionUpdate,
+    PeticionesAtendidas, PeticionCreate, PeticionUpdate, PeticionCancel,
     ProductoConsumidoCreate, PeticionDetail, ReciboPeticionPDF,
-    ProductosConsumidos, ProductoConsumidoDetail, PaqueteDeactivate,
-    Deactivatedpack, PackDeactivateDetail
+    ProductosConsumidos, ProductoConsumidoDetail, PaqueteCancel,
+    PaqueteCancelled, PaqueteCancelledDetail, PeticionCancelled
 )
 
 urlpatterns = patterns(
@@ -20,14 +20,14 @@ urlpatterns = patterns(
     url(r'^paquete/(?P<pk>\d+)/update/$',
         PaqueteUpdate.as_view(), name='paquete_edit'),
 
-    url(r'^paquete/(?P<pk>\d+)/deactivate/$',
-        PaqueteDeactivate.as_view(), name='paquete_deactivated'),
+    url(r'^paquete/(?P<pk>\d+)/cancel/$',
+        PaqueteCancel.as_view(), name='paquete_cancel'),
 
-    url(r'^paquete/deactivated/list/$', Deactivatedpack.as_view(),
-        name='deactivated-list'),
+    url(r'^paquete/cancelled/$',
+        PaqueteCancelled.as_view(), name='paquete_cancelled_list'),
 
-    url(r'^paquete/(?P<pk>\d+)/deactivated/detail/$',
-        PackDeactivateDetail.as_view(), name='deactivated-detail'),
+    url(r'^paquete/cancelled/(?P<pk>\d+)/$',
+        PaqueteCancelledDetail.as_view(), name='paquete_cancelled_detail'),
 
     url(r'^salidas/peticiones/$', Peticiones.as_view(), name='peticion_list'),
 
@@ -37,14 +37,20 @@ urlpatterns = patterns(
     url(r'^clinica/peticion/servicio/(?P<pk>\d+)/new/$',
         PeticionCreate.as_view(), name='peticion_new'),
 
-    url(r'^salidas/peticion/(?P<pk>\d+)/update/$',
-        PeticionUpdate.as_view(), name='peticion_update'),
-
     url(r'^salidas/peticion/(?P<pk>\d+)/detail/$',
         PeticionDetail.as_view(), name='peticion_detail'),
 
     url(r'^salidas/peticion/(?P<pk>\d+)/insumos/add/$',
         'paquete_item_create', name='paquete_item_create'),
+
+    url(r'^salidas/peticion/(?P<pk>\d+)/update/$',
+        PeticionUpdate.as_view(), name='peticion_update'),
+
+    url(r'^salidas/peticion/(?P<pk>\d+)/cancel/$',
+        PeticionCancel.as_view(), name='peticion_cancel'),
+
+    url(r'^salidas/peticiones/cancelled/$',
+        PeticionCancelled.as_view(), name='peticiones_canceladas'),
 
     url(r'^salidas/producto/new/$',
         ProductoConsumidoCreate.as_view(), name='consumido_new'),
