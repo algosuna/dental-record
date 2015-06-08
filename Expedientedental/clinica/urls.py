@@ -1,8 +1,9 @@
 from django.conf.urls import patterns, url
 
-from clinica.views import InterrogatorioPDF, HistorialDetail, PacienteDetail, \
-    OdontogramaDetail, ProcedimientosView, HistorialView, InterrogatorioView, \
-    InterrogatorioUpdate
+from clinica.views import (
+    InterrogatorioPDF, HistorialDetail, PacienteDetail, OdontogramaDetail,
+    ProcedimientosView, HistorialView, InterrogatorioView, InterrogatorioUpdate
+)
 
 
 urlpatterns = patterns(
@@ -10,21 +11,16 @@ urlpatterns = patterns(
 
     url(r'^$', 'paciente_search', name='paciente_search'),
 
-    url(r'^odontograma/(?P<paciente_id>\d+)/$',
+    url(r'^(?P<paciente_id>\d+)/odontograma/$',
         'odontograma', name='odontograma'),
 
     url(r'^procedimiento/(?P<procedimiento_id>\d+)/$',
         'bitacora_create', name='bitacora_create'),
 
-)
-
-urlpatterns += patterns(
-    '',
-
-    url(r'^detail/(?P<pk>\d+)/$',
+    url(r'^(?P<pk>\d+)/detail/$',
         PacienteDetail.as_view(), name='paciente_detail'),
 
-    url(r'^odontograma/detail/(?P<pk>\d+)/$',
+    url(r'^odontograma/(?P<pk>\d+)/detail/$',
         OdontogramaDetail.as_view(), name='odontograma_detail'),
 
     url(r'^procedimientos/(?P<pk>\d+)/$',
