@@ -123,6 +123,7 @@ class MedicoUserForm(forms.ModelForm):
         self.fields['username'].label = 'Usuario'
         self.fields['first_name'].label = 'Nombre'
         self.fields['last_name'].label = 'Apellido Paterno'
+        self.fields['last_name'].required = True
         self.fields['email'].label = 'Coreo Electr&oacute;nico'
         self.fields['password'].label = 'Contrase&ntilde;a'
 
@@ -145,7 +146,7 @@ class MedicoForm(forms.ModelForm):
                 Field('cedula_estatal', wrapper_class='col-md-4'),
                 Field('especialidad', wrapper_class='col-md-4'),
                 Field('licencia_especialidad', wrapper_class='col-md-4'),
-                Field('rfc', wrapper_class='col-md-6'),
+                Field('rfc', wrapper_class='col-md-6', required=True),
                 Field('telefono', wrapper_class='col-md-6'),
                 Field('direccion', wrapper_class='col-md-12'),
                 Field('ciudad', wrapper_class='col-md-6'),
@@ -156,7 +157,8 @@ class MedicoForm(forms.ModelForm):
         )
         self.fields['licencia_medica'].label = 'Licencia Medica'
         self.fields['universidad_egreso'].label = 'Universidad de Egreso'
-        self.fields['rfc'].label = 'R.F.C.'
+        self.fields['rfc'].required = False
+        self.fields['rfc'].label = 'R.F.C'
         self.fields['licencia_especialidad'].label = 'Licencia de Especialidad'
         self.fields['cedula_estatal'].label = 'Cedula Estatal'
         self.fields['especialidad'].label = 'Especialidad'
