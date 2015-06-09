@@ -129,7 +129,8 @@ class MedicoUserForm(forms.ModelForm):
 
 
 class MedicoForm(forms.ModelForm):
-    ''' TODO: validate rfc '''
+    ''' TODO: validate rfc
+    https://docs.djangoproject.com/en/1.4/ref/contrib/localflavor/#django.contrib.localflavor.mx.forms.MXRFCField '''
     class Meta:
         model = Medico
         exclude = ['mothers_last_name', 'user']
