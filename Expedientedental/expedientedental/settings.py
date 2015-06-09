@@ -15,11 +15,11 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'dentaldb.sqlite3',      # Or path to database file if using sqlite3.
+        'NAME': 'dentaldb.sqlite3',
         'USER': '',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+        'HOST': '',
+        'PORT': '',
     }
 }
 
@@ -36,7 +36,7 @@ TIME_ZONE = 'America/Tijuana'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-Me'
 
 SITE_ID = 1
 
