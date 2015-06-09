@@ -1,13 +1,18 @@
 # encoding: utf-8
 from os.path import splitext
+
 from django.db import models
 from django.contrib.auth.models import User
+
+from simple_history.models import HistoricalRecords
 
 
 class Grupo(models.Model):
     '''The name and number which a patient belongs to.'''
     nombre = models.CharField(max_length=50)
     numero = models.CharField(max_length=10)
+
+    history = HistoricalRecords()
 
     def __unicode__(self):
         grupo = '%s - %s' % (self.numero, self.nombre)
@@ -28,6 +33,8 @@ class Medico(models.Model):
     estado = models.CharField(max_length=30)
     codigo_postal = models.IntegerField(max_length=5)
     telefono = models.CharField(max_length=20)
+
+    history = HistoricalRecords()
 
     def __unicode__(self):
         nombre = '%s' % (self.user.get_full_name())
@@ -65,6 +72,8 @@ class Paciente(models.Model):
     nSs = models.CharField(max_length=20)
     telefono = models.CharField(max_length=20)
 
+    history = HistoricalRecords()
+
     def nombre_completo(self):
         nombreCompleto = '%s %s %s' % (
             self.nombre, self.apellidoPaterno, self.apellidoMaterno)
@@ -91,12 +100,12 @@ class Metodo(models.Model):
 
 
 class Evaluacion(Metodo):
-    pass
+    history = HistoricalRecords()
 
 
 class TratamientoPreventivo(Metodo):
-    pass
+    history = HistoricalRecords()
 
 
 class Tratamiento(Metodo):
-    pass
+    history = HistoricalRecords()

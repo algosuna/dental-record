@@ -1,8 +1,10 @@
 from django.db import models
 
-from altas.models import Medico, Paciente, Evaluacion, Tratamiento,\
-    TratamientoPreventivo
 from core.models import TimeStampedModel
+
+from altas.models import (
+    Medico, Paciente, Evaluacion, Tratamiento, TratamientoPreventivo
+)
 
 
 class Interrogatorio(models.Model):

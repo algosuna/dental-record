@@ -29,7 +29,13 @@
       <tr>
         <td class="padded">{{ producto.nombre }}</td>
         <td class="padded">{{ producto.porciones }}</td>
-        <td class="text-right"><a href="{% url inventario:entradas_producto producto.id %}" class="btn btn-info">Registrar Entrada</a></td>
+        <td class="text-right">
+          {% if producto.is_inactive %}
+          <a href="{% url inventario:productocancelado_detail producto.id %}" class="btn btn-default">Ver Producto</a>
+          {% else %}
+          <a href="{% url inventario:entradas_producto producto.id %}" class="btn btn-info">Registrar Entrada</a>
+          {% endif %}
+        </td>
       </tr>
       {% endfor %}
 

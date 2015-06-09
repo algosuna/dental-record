@@ -108,6 +108,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'simple_history.middleware.HistoryRequestMiddleware',
 )
 
 ROOT_URLCONF = 'expedientedental.urls'
@@ -160,10 +161,11 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     'crispy_forms',
-    'wkhtmltopdf',
-    'dajaxice',
     'dajax',
+    'dajaxice',
+    'simple_history',
     'south',
+    'wkhtmltopdf',
 
     'accounts',
     'altas',
