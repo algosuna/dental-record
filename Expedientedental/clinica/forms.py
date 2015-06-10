@@ -6,7 +6,9 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, HTML, Field, ButtonHolder,\
     Submit
 
-from clinica.models import Interrogatorio, Odontograma, Procedimiento, Bitacora
+from clinica.models import (
+    Interrogatorio, Odontograma, Procedimiento, Bitacora, Radiografia
+)
 
 
 class InterrogatorioForm(forms.ModelForm):
@@ -334,7 +336,6 @@ class BitacoraForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(BitacoraForm, self).__init__(*args, **kwargs)
         self.procedimiento = self.initial.get('procedimiento')
-        print self.procedimiento
         self.helper = FormHelper()
         self.helper.layout = Layout(
             Field('procedimiento', wrapper_class='hidden'),
@@ -358,4 +359,27 @@ class BitacoraForm(forms.ModelForm):
         if commit:
             procedimiento.save()
 
+        return instance
+
+
+class RadiografiaForm(forms.ModelForm):
+    class Meta:
+        model = Radiografia
+        exclude = ['thumbnail', 'paciente']
+
+    def __init__(self, *args, **kwargs):
+        super(RadiografiaForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.add_input(Submit('save', 'Guardar'))
+        self.fields['image'].label = 'Imagen'
+        self.fields['title'].label = 'T&iacute;tulo'
+        self.fields['description'].label = 'Descripci&oacute;n'
+
+    def save(self, commit=True):
+        instance = super(RadiografiaForm, self).save(commit=False)
+        instance.paciente = self.initial.get('paciente')
+        # TODO: do something with the image to save as thumbnail?
+        # instance.thumbnail = ?
+        if commit:
+            instance.save()
         return instance

@@ -11,9 +11,12 @@ from core.mixins import PermissionRequiredMixin
 from core.views import CreateObjFromContext
 from core.utils import generic_search
 
-from clinica.models import Interrogatorio, Odontograma, Procedimiento, Bitacora
+from clinica.models import (
+    Interrogatorio, Odontograma, Procedimiento, Bitacora, Radiografia
+)
 from clinica.forms import (
-    OdontogramaForm, InterrogatorioForm, BitacoraForm, ProcedimientoFormSet
+    OdontogramaForm, InterrogatorioForm, BitacoraForm, ProcedimientoFormSet,
+    RadiografiaForm, RadiografiaUpdateForm
 )
 from altas.models import Paciente, Tratamiento
 
@@ -155,7 +158,8 @@ def bitacora_create(request, procedimiento_id):
         if form.is_valid():
             form.save()
 
-            return redirect(reverse('clinica:procedimientos', args=[paciente.id]))
+            return redirect(reverse(
+                'clinica:procedimientos', args=[paciente.id]))
     else:
         form = BitacoraForm(initial={'procedimiento': procedimiento})
 
@@ -242,6 +246,52 @@ class InterrogatorioUpdate(PermissionRequiredMixin, UpdateView):
     def get_success_url(self):
         url = reverse('clinica:interrogatorio', kwargs={'pk': self.object.pk})
         return url
+
+
+# TODO: Create templates (2) and everything else...
+class Radiografias(PermissionRequiredMixin, DetailView):
+    model = Paciente
+    context_object_name = 'paciente'
+    template_name = 'radiografias.html'
+    permission_required = 'clinica.add_radiografia'
+
+    def get_context_data(self, **kwargs):
+        context = super(Radiografias, self).get_context_data(**kwargs)
+        radiografias = Radiografia.objects.filter(paciente=self.object)
+        context.update({'radiografias': radiografias})
+        return context
+
+
+class RadiografiaCreate(PermissionRequiredMixin, CreateObjFromContext):
+    form_class = RadiografiaForm
+    ctx_model = Paciente
+    initial_value = 'paciente'
+    template_name = 'radiografia.html'
+    permission_required = 'clinica.add_radiografia'
+
+
+class RadiografiaDetail(PermissionRequiredMixin, DetailView):
+    model = Radiografia
+    context_object_name = 'radiografia'
+    template_name = 'radiografia.html'
+    permission_required = 'clinica.add_radiografia'
+
+    def get_context_data(self, **kwargs):
+        context = super(RadiografiaDetail, self).get_context_data(**kwargs)
+        context.update({'paciente': self.object.paciente})
+        return context
+
+
+class RadiografiaUpdate(PermissionRequiredMixin, UpdateView):
+    model = Radiografia
+    form_class = RadiografiaUpdateForm
+    template_name = 'radiografia.html'
+    permission_required = 'clinica.change_radiografia'
+
+    def get_context_data(self, **kwargs):
+        context = super(RadiografiaUpdate, self).get_context_data(**kwargs)
+        context.update({'paciente': self.object.paciente})
+        return context
 
 
 class InterrogatorioPDF(PDFTemplateView):
