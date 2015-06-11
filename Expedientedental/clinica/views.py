@@ -232,6 +232,11 @@ class InterrogatorioView(PermissionRequiredMixin, CreateObjFromContext):
 
 
 class InterrogatorioUpdate(PermissionRequiredMixin, UpdateView):
+    '''
+    Note: Does not save. Must find a way to pass paciente and medico
+    (again) or ignore the fields completely and leave as is.
+    Update: Interrogatorio should not be updated.
+    '''
     form_class = InterrogatorioForm
     model = Interrogatorio
     template_name = 'interrogatorio-edit.html'

@@ -3,8 +3,9 @@ from django import forms
 from django.forms.formsets import formset_factory
 
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Fieldset, HTML, Field, ButtonHolder,\
-    Submit
+from crispy_forms.layout import (
+    Layout, Fieldset, HTML, Field, ButtonHolder, Submit
+)
 
 from clinica.models import (
     Interrogatorio, Odontograma, Procedimiento, Bitacora, Radiografia

@@ -36,6 +36,7 @@ urlpatterns = patterns(
     url(r'^interrogatorio/(?P<pk>\d+)/$',
         InterrogatorioView.as_view(), name='interrogatorio'),
 
+    # TODO: remove this.
     url(r'^interrogatorio/(?P<pk>\d+)/update/$',
         InterrogatorioUpdate.as_view(), name='interrogatorio_edit'),
 
