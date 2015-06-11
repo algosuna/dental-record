@@ -2,7 +2,9 @@ from django.db import models
 from django.db.models.query import QuerySet
 from django.db.models import Sum
 
+from simple_history.models import HistoricalRecords
 from core.models import TimeStampedModel
+
 from clinica.models import Procedimiento, Odontograma
 from precios.models import PrecioTratamiento
 
@@ -85,6 +87,8 @@ class CotizacionItem(TimeStampedModel):
     cotizacion = models.ForeignKey(Cotizacion)
     precio = models.DecimalField(max_digits=8, decimal_places=2)
     procedimiento = models.ForeignKey(Procedimiento)
+
+    history = HistoricalRecords()
 
     objects = CotizacionItemManager()
 

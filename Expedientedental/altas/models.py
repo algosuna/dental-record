@@ -1,13 +1,18 @@
 # encoding: utf-8
 from os.path import splitext
+
 from django.db import models
 from django.contrib.auth.models import User
+
+from simple_history.models import HistoricalRecords
 
 
 class Grupo(models.Model):
     '''The name and number which a patient belongs to.'''
     nombre = models.CharField(max_length=50)
     numero = models.CharField(max_length=10)
+
+    history = HistoricalRecords()
 
     def __unicode__(self):
         grupo = '%s - %s' % (self.numero, self.nombre)
@@ -16,18 +21,20 @@ class Grupo(models.Model):
 
 class Medico(models.Model):
     user = models.ForeignKey(User, unique=True)
-    mothers_last_name = models.CharField(max_length=30, blank=True)
-    universidad_egreso = models.CharField(max_length=70)
-    licencia_medica = models.CharField(max_length=30)
-    especialidad = models.CharField(max_length=40)
-    licencia_especialidad = models.CharField(max_length=30)
-    cedula_estatal = models.CharField(max_length=40)
+    mothers_last_name = models.CharField(max_length=30)
+    universidad_egreso = models.CharField(max_length=70, blank=True)
+    licencia_medica = models.CharField(max_length=30, blank=True)
+    especialidad = models.CharField(max_length=40, blank=True)
+    licencia_especialidad = models.CharField(max_length=30, blank=True)
+    cedula_estatal = models.CharField(max_length=40, blank=True)
     rfc = models.CharField(max_length=15)
-    direccion = models.CharField(max_length=70)
-    ciudad = models.CharField(max_length=30)
-    estado = models.CharField(max_length=30)
-    codigo_postal = models.IntegerField(max_length=5)
+    direccion = models.CharField(max_length=70, blank=True)
+    ciudad = models.CharField(max_length=30, blank=True)
+    estado = models.CharField(max_length=30, blank=True)
+    codigo_postal = models.IntegerField(max_length=5, blank=True)
     telefono = models.CharField(max_length=20)
+
+    history = HistoricalRecords()
 
     def __unicode__(self):
         nombre = '%s' % (self.user.get_full_name())
@@ -55,15 +62,18 @@ class Paciente(models.Model):
     grupo = models.ForeignKey(Grupo)
     nombre = models.CharField(max_length=40)
     apellidoPaterno = models.CharField(max_length=30)
-    apellidoMaterno = models.CharField(max_length=30)
+    apellidoMaterno = models.CharField(max_length=30, blank=True)
     sexo = models.CharField(max_length=2, choices=SEX_CHOICES)
-    correoElectronico = models.EmailField(max_length=60)
-    direccion = models.CharField(max_length=70)
-    codigoPostal = models.IntegerField(max_length=5)
-    estado = models.CharField(max_length=20, choices=ESTADO_CHOICES)
-    ciudad = models.CharField(max_length=30)
-    nSs = models.CharField(max_length=20)
+    correoElectronico = models.EmailField(max_length=60, blank=True)
+    direccion = models.CharField(max_length=70, blank=True)
+    codigoPostal = models.IntegerField(max_length=5, blank=True)
+    estado = models.CharField(max_length=20, choices=ESTADO_CHOICES,
+                              blank=True)
+    ciudad = models.CharField(max_length=30, blank=True)
+    nSs = models.CharField(max_length=20, blank=True)
     telefono = models.CharField(max_length=20)
+
+    history = HistoricalRecords()
 
     def nombre_completo(self):
         nombreCompleto = '%s %s %s' % (
@@ -91,12 +101,12 @@ class Metodo(models.Model):
 
 
 class Evaluacion(Metodo):
-    pass
+    history = HistoricalRecords()
 
 
 class TratamientoPreventivo(Metodo):
-    pass
+    history = HistoricalRecords()
 
 
 class Tratamiento(Metodo):
-    pass
+    history = HistoricalRecords()

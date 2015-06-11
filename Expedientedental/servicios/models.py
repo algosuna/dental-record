@@ -2,7 +2,9 @@ from django.db import models
 from django.db.models import Sum
 from django.db.models.query import QuerySet
 
+from simple_history.models import HistoricalRecords
 from core.models import TimeStampedModel
+
 from clinica.models import Odontograma, Procedimiento
 from pagos.models import PagoAplicado
 
@@ -114,6 +116,8 @@ class Servicio(TimeStampedModel):
     paquete = models.ForeignKey(PaqueteServicios)
     precio = models.DecimalField(max_digits=8, decimal_places=2)
     procedimiento = models.ForeignKey(Procedimiento)
+
+    history = HistoricalRecords()
 
     objects = ServicioManager()
 

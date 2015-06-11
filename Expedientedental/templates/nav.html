@@ -18,9 +18,23 @@
 
           <ul class="dropdown-menu">
 
-            <li><a href="{% url accounts:change %}"><i class="fa fa-wrench fa-fw"></i> Settings</a></li>
-            <li class="divider"></li>
-            <li><a href="{% url accounts:logout %}"><i class="fa fa-sign-out fa-fw"></i> Log Out</a></li>
+            <div class="navbar-content">
+
+              <p>{{ user.get_full_name }} <span class="text-muted">({{ user.username }})</span></p>
+              <p class="text-muted small">{{ user.email }}</p>
+
+            </div>
+
+            <div class="navbar-footer">
+
+              <div class="navbar-footer-content clearfix padded">
+
+                <a href="{% url accounts:change %}" class="btn btn-default btn-sm pull-left"><i class="fa fa-wrench fa-fw"></i> Change Passowrd</a>
+                <a href="{% url accounts:logout %}" class="btn btn-default btn-sm pull-right"><i class="fa fa-sign-out fa-fw"></i> Log Out</a>
+
+              </div>
+
+            </div>
 
           </ul>
 

@@ -1,8 +1,11 @@
 # -*- encoding: utf-8 -*-
 from django.db import models
 from django.db.models import Sum
-from altas.models import Medico, Paciente
+
+from simple_history.models import HistoricalRecords
 from core.models import CancelledModel, TimeStampedModel
+
+from altas.models import Medico, Paciente
 
 
 class Paquete(models.Model):
@@ -16,7 +19,6 @@ class Paquete(models.Model):
     descripcion = models.CharField(max_length=200)
     productos = models.ManyToManyField('inventario.Producto',
                                        through='PaqueteItem')
-
     is_inactive = models.BooleanField(default=False)
 
     def __unicode__(self):
@@ -55,6 +57,8 @@ class PaqueteConsumido(TimeStampedModel):
     nota = models.TextField(blank=True)
     status = models.CharField(
         max_length=12, choices=STATUS_CHOICES, default='en_espera')
+
+    history = HistoricalRecords()
 
     def __unicode__(self):
         return '%s %s %s' % (self.paquete, self.medico, self.status)
@@ -133,6 +137,8 @@ class ProductoConsumido(models.Model):
     producto = models.ForeignKey('inventario.Producto')
     cantidad = models.DecimalField(max_digits=8, decimal_places=2)
     fecha = models.DateTimeField()
+
+    history = HistoricalRecords()
 
     def __unicode__(self):
         return u'%s %s %s' % (self.producto, self.cantidad, self.cantidad)

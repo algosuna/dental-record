@@ -1,7 +1,9 @@
 from django.db import models
 from django.db.models import Sum
 
+from simple_history.models import HistoricalRecords
 from core.models import TimeStampedModel
+
 from altas.models import Paciente
 
 
@@ -19,6 +21,8 @@ class Pago(TimeStampedModel):
     monto_aplicado = models.DecimalField(
         max_digits=9, decimal_places=3, default=0)
     paciente = models.ForeignKey(Paciente)
+
+    history = HistoricalRecords()
 
     def montodisponible(self):
         '''

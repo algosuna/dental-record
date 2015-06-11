@@ -2,6 +2,7 @@
 from django.db import models
 from decimal import Decimal
 
+from simple_history.models import HistoricalRecords
 from core.models import TimeStampedModel, CancelledModel
 
 
@@ -21,6 +22,8 @@ class Producto(TimeStampedModel):
     precio_porcion = models.DecimalField(max_digits=8, decimal_places=2,
                                          default=Decimal(u'0.00'))
     is_inactive = models.BooleanField(default=False)
+
+    history = HistoricalRecords()
 
     def __unicode__(self):
         return u'%s %s' % (self.nombre, self.unidad_medida)
