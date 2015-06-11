@@ -1,9 +1,10 @@
 {% load static from staticfiles %}
+{% load thumbnail %}
 <div class="col-sm-3 col-md-2 sidebar">
 
   {% if paciente %}
   <div class="client-info clearfix">
-    <img src="{% static paciente.imagen %}" alt="Cliente" width="50" height="50" class="pull-left">
+    <img src="{% thumbnail paciente.imagen 'avatar' %}" alt="Cliente" width="50" height="50" class="pull-left">
     <p>{{ paciente.nombre }} {{ paciente.apellidoPaterno }} {{ paciente.apellidoMaterno }}</p>
   </div><!-- TODO: remove and turn into a block -->
   {% endif %}
@@ -14,6 +15,7 @@
     {% if paciente %}
     <li class="{{ pd_active }}"><a href="{% url clinica:paciente_detail paciente.id %}"><i class="fa fa-user fa-fw"></i> Datos Personales</a></li>
     <li class="{{ e_active }}"><a href="{% url clinica:interrogatorio paciente.id %}"><i class="fa fa-folder fa-fw"></i> Expediente Medico/Dental</a></li>
+    <li class="{{ ra_active }}"><a href="{% url clinica:radiografias paciente.id %}"><i class="fa fa-image fa-fw"></i> Radiograf&iacute;as</a></li>
 
     <a class="sidebar-header text-center" data-toggle="collapse" href="#clinica">Actividades Clinicas</a>
     <div class="collapse" id="clinica">

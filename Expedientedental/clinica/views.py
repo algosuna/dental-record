@@ -248,7 +248,6 @@ class InterrogatorioUpdate(PermissionRequiredMixin, UpdateView):
         return url
 
 
-# TODO: Create templates (2) and everything else...
 class Radiografias(PermissionRequiredMixin, DetailView):
     model = Paciente
     context_object_name = 'paciente'
@@ -257,8 +256,9 @@ class Radiografias(PermissionRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(Radiografias, self).get_context_data(**kwargs)
-        radiografias = Radiografia.objects.filter(paciente=self.object)
-        context.update({'radiografias': radiografias})
+        radiografias = Radiografia.objects.filter(
+            paciente=self.object).order_by('-updated_at')
+        context.update({'radiografias': radiografias, 'ra_active': 'active'})
         return context
 
 
@@ -269,6 +269,15 @@ class RadiografiaCreate(PermissionRequiredMixin, CreateObjFromContext):
     template_name = 'radiografia.html'
     permission_required = 'clinica.add_radiografia'
 
+    def get_context_data(self, **kwargs):
+        context = super(RadiografiaCreate, self).get_context_data(**kwargs)
+        context.update({'title': 'Nueva', 'ra_active': 'active'})
+        return context
+
+    def get_success_url(self):
+        url = reverse('clinica:radiografias', kwargs={'pk': self.get_obj().pk})
+        return url
+
 
 class RadiografiaDetail(PermissionRequiredMixin, DetailView):
     model = Radiografia
@@ -278,7 +287,10 @@ class RadiografiaDetail(PermissionRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(RadiografiaDetail, self).get_context_data(**kwargs)
-        context.update({'paciente': self.object.paciente})
+        context.update({
+            'paciente': self.object.paciente,
+            'title': 'Detalle de',
+            'ra_active': 'active'})
         return context
 
 
@@ -290,8 +302,16 @@ class RadiografiaUpdate(PermissionRequiredMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super(RadiografiaUpdate, self).get_context_data(**kwargs)
-        context.update({'paciente': self.object.paciente})
+        context.update({
+            'paciente': self.object.paciente,
+            'title': 'Editar Informacion de',
+            'ra_active': 'active'})
         return context
+
+    def get_success_url(self):
+        url = reverse('clinica:radiografias',
+                      kwargs={'pk': self.object.paciente.pk})
+        return url
 
 
 class InterrogatorioPDF(PDFTemplateView):

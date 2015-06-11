@@ -2,6 +2,7 @@ from os.path import splitext
 
 from django.db import models
 
+from easy_thumbnails.fields import ThumbnailerImageField
 from simple_history.models import HistoricalRecords
 from core.models import TimeStampedModel
 
@@ -225,8 +226,7 @@ class Radiografia(TimeStampedModel):
         return url
 
     paciente = models.ForeignKey(Paciente)
-    image = models.ImageField(upload_to=url)
-    tumbnail = models.ImageField(upload_to=url)
+    image = ThumbnailerImageField(upload_to='radiografia')
     title = models.CharField(max_length=80)
     description = models.TextField()
 

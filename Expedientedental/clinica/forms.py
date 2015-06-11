@@ -42,7 +42,8 @@ class InterrogatorioForm(forms.ModelForm):
 
             Fieldset(
                 'Antecedentes personales Patol&oacute;gicos',
-                Field('e_inflamatorias_not_opciones', wrapper_class='col-md-4'),
+                Field('e_inflamatorias_not_opciones',
+                      wrapper_class='col-md-4'),
                 Field('ets', wrapper_class='col-md-4'),
                 Field('e_degenerativas', wrapper_class='col-md-4'),
                 Field('e_neoplasticas', wrapper_class='col-md-4'),
@@ -118,7 +119,8 @@ class InterrogatorioForm(forms.ModelForm):
                 Field('dolor_abertura', wrapper_class='col-md-4'),
                 Field('fatiga_dolor_muscular', wrapper_class='col-md-4'),
                 Field('disminucion_de_la_avertura', wrapper_class='col-md-4'),
-                Field('desviacion_avertura_de_cierre', wrapper_class='col-md-4'),
+                Field('desviacion_avertura_de_cierre',
+                      wrapper_class='col-md-4'),
             ),
 
             Fieldset(
@@ -178,7 +180,6 @@ class InterrogatorioForm(forms.ModelForm):
         self.fields['e_degenerativas'].label = 'Enfermedades degenerativas'
         self.fields['e_neoplasticas'].label = 'Enfermedades neoplásicas'
         self.fields['e_congenitas'].label = 'Enfermedades congénitas'
-        self.fields['otras'].label = 'Otras'
         self.fields['habitos_higienicosVest'].label = 'Hábitos higiénicos: \
         En el vestuario'
         self.fields['habitos_higienicos_corp'].label = 'Corporales'
@@ -194,28 +195,16 @@ class InterrogatorioForm(forms.ModelForm):
         vacunación'
         self.fields['esquema_completo'].label = 'Tiene el esquema completo'
         self.fields['esquema_falta'].label = 'Especifique cuál falta'
-        self.fields['adicciones'].label = 'Adicciones'
         self.fields['alergias'].label = 'Antecedentes alérgicos'
         self.fields['fecha_hospitalizaion'].label = 'Ha sido hospitalizado'
         self.fields['motivo'].label = 'Motivo'
-        self.fields['padecimiento_actual'].label = 'Padecimiento actual'
-        self.fields['aparato_digestivo'].label = 'Aparato digestivo'
-        self.fields['aparato_respiratorio'].label = 'Aparato respiratorio'
         self.fields['aparato_cardioBascular'].label = 'Aparato cardiovascular'
-        self.fields['aparato_genitourinario'].label = 'Aparato genitourinario'
         self.fields['sistema_endocrina'].label = 'Sistema endocrino'
         self.fields['sistema_hemopoyetico'].label = 'Sistema hemopoyético'
         self.fields['sistema_musculoEsqueletico'].label = 'Sistema \
         musculoesquelético'
-        self.fields['aparato_tegumentario'].label = 'Aparato tegumentario'
-        self.fields['habitus_exterior'].label = 'Habitus exterior'
-        self.fields['peso'].label = 'Peso'
-        self.fields['talla'].label = 'Talla'
         self.fields['complexion'].label = 'Complexión'
-        self.fields['frecuencia_cardiaca'].label = 'Frecuencia cardiaca'
         self.fields['tension_arterial'].label = 'Tensión arterial'
-        self.fields['frecuencia_respiratoria'].label = 'Frecuencia respiratoria'
-        self.fields['temperatura'].label = 'Temperatura'
         self.fields['cabeza'].label = 'Cabeza:'
         self.fields['craneo'].label = 'Cráneo:'
         self.fields['cara_asimetria'].label = 'Cara:'
@@ -223,9 +212,6 @@ class InterrogatorioForm(forms.ModelForm):
         self.fields['piel'].label = 'Piel:'
         self.fields['musculos'].label = 'Músculos:'
         self.fields['cuello'].label = 'Cuello:'
-        self.fields['otros'].label = 'Otros'
-        self.fields['ruidos'].label = 'Ruidos'
-        self.fields['chasquidos'].label = 'Chasquidos'
         self.fields['crepitacion'].label = 'Crepitación'
         self.fields['dif_para_abrir_la_boca'].label = 'Dificultad para abrir la \
         boca'
@@ -236,33 +222,10 @@ class InterrogatorioForm(forms.ModelForm):
         abertura'
         self.fields['desviacion_avertura_de_cierre'].label = 'Desviación a la \
         abertura cierre'
-        self.fields['ganglios'].label = 'Ganglios'
         self.fields['glandulas_salivales'].label = 'Glándulas salivales'
-        self.fields['labio_externo'].label = 'Labio externo'
         self.fields['borde_bermellon'].label = 'Borde bermellón'
-        self.fields['labio_interno'].label = 'Labio interno'
-        self.fields['comisuras'].label = 'Comisuras'
-        self.fields['carrillos'].label = 'Carrillos'
-        self.fields['fondo_de_saco'].label = 'Fondo de saco'
-        self.fields['frenillos'].label = 'Frenillos'
-        self.fields['lengua_tercio_medio'].label = 'Lengua tercio medio'
-        self.fields['paladar_duro'].label = 'Paladar duro'
-        self.fields['paladar_blando'].label = 'Paladar blando'
-        self.fields['istmo_bucofaringe'].label = 'Istmo bucofaringe'
-        self.fields['lengua_dorso'].label = 'Lengua dorso'
-        self.fields['lengua_bordes'].label = 'Lengua bordes'
-        self.fields['lengua_ventral'].label = 'Lengua ventral'
-        self.fields['piso_de_la_boca'].label = 'Piso de la boca'
-        self.fields['dientes'].label = 'Dientes'
-        self.fields['mucosa_del_borde_alveolar'].label = 'Mucosa del borde \
-        alveolar'
         self.fields['encia'].label = 'Encía'
-        self.fields['gingivitis'].label = 'Gingivitis'
-        self.fields['periodontitis'].label = 'Periodontitis'
         self.fields['rececion_gingival'].label = 'Recesión gingival'
-        self.fields['bolsas_periodontales'].label = 'Bolsas Periodontales'
-        self.fields['movilidad_dentario'] .label = 'Movilidad Dentario'
-        self.fields['indice_de_placa'].label = 'Indice de Placa'
         self.fields['interpretacion_radiografica'].label = 'Interpretación \
         radiográfica'
         self.fields['estudios_de_laboratorio'] .label = 'Estudios de laboratorio y \
@@ -344,7 +307,8 @@ class BitacoraForm(forms.ModelForm):
             Field('is_complete'),
             Submit('save', 'Guardar'),
         )
-        self.fields['is_complete'].label = 'Marcar Procedimiento como Completado.'
+        self.fields['is_complete'].label = 'Marcar Procedimiento como \
+                                            Completado.'
 
     def save(self, commit=True):
         instance = super(BitacoraForm, self).save(commit)
@@ -365,7 +329,7 @@ class BitacoraForm(forms.ModelForm):
 class RadiografiaForm(forms.ModelForm):
     class Meta:
         model = Radiografia
-        exclude = ['thumbnail', 'paciente']
+        exclude = ['paciente']
 
     def __init__(self, *args, **kwargs):
         super(RadiografiaForm, self).__init__(*args, **kwargs)
@@ -383,3 +347,16 @@ class RadiografiaForm(forms.ModelForm):
         if commit:
             instance.save()
         return instance
+
+
+class RadiografiaUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Radiografia
+        fields = ['title', 'description']
+
+    def __init__(self, *args, **kwargs):
+        super(RadiografiaUpdateForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.add_input(Submit('save', 'Guardar'))
+        self.fields['title'].label = 'T&iacute;tulo'
+        self.fields['description'].label = 'Descripci&oacute;n'

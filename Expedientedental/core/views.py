@@ -23,3 +23,5 @@ class CreateObjFromContext(CreateView):
         initial = initial.copy()
         initial[self.initial_value] = self.get_obj()
         return initial
+
+    # TODO: add a method for the success url.
