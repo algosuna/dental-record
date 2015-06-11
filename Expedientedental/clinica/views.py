@@ -217,7 +217,7 @@ class InterrogatorioView(PermissionRequiredMixin, CreateObjFromContext):
 
     def get_context_data(self, **kwargs):
         context = super(InterrogatorioView, self).get_context_data(**kwargs)
-        context.update({'e_active': 'active'})
+        context.update({'ex_active': 'active'})
         return context
 
     def get_success_url(self):
@@ -245,7 +245,7 @@ class InterrogatorioUpdate(PermissionRequiredMixin, UpdateView):
     def get_context_data(self, **kwargs):
         context = super(InterrogatorioUpdate, self).get_context_data(**kwargs)
         paciente = self.object.paciente
-        context.update({'paciente': paciente, 'e_active': 'active'})
+        context.update({'paciente': paciente, 'ex_active': 'active'})
         return context
 
     def get_success_url(self):

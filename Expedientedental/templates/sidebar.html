@@ -14,7 +14,7 @@
     {% if perms.clinica.add_odontograma %}
     {% if paciente %}
     <li class="{{ pd_active }}"><a href="{% url clinica:paciente_detail paciente.id %}"><i class="fa fa-user fa-fw"></i> Datos Personales</a></li>
-    <li class="{{ e_active }}"><a href="{% url clinica:interrogatorio paciente.id %}"><i class="fa fa-folder fa-fw"></i> Expediente Medico/Dental</a></li>
+    <li class="{{ ex_active }}"><a href="{% url clinica:interrogatorio paciente.id %}"><i class="fa fa-folder fa-fw"></i> Expediente Medico/Dental</a></li>
     <li class="{{ ra_active }}"><a href="{% url clinica:radiografias paciente.id %}"><i class="fa fa-image fa-fw"></i> Radiograf&iacute;as</a></li>
 
     <a class="sidebar-header text-center" data-toggle="collapse" href="#clinica">Actividades Clinicas</a>
