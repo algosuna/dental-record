@@ -125,21 +125,7 @@
 <script src="{% static 'js/jquery.svggraph.min.js'%}"></script>
 <script src="{% static 'js/odontograma.js'%}"></script>
 <script>
-  // some widgets and such
-  $(function() {
-    var submitButton = $('.normalized-btn'),
-        pacienteId = '{{ paciente.id }}',
-        pacienteSelect = $('#id_paciente');
-
-    // aligns the submit button
-    submitButton.addClass(' pull-right');
-
-    // gives a value to the paciente field
-    pacienteSelect.val(pacienteId);
-
-    // hides paciente field TODO: uncomment this.
-    // $('#div_id_paciente').addClass(' hidden');
-
-  });
+  // aligns the submit button
+  $('.normalized-btn').addClass(' pull-right')
 </script>
 {% endblock %}

@@ -32,8 +32,7 @@
 
 <h2 class="page-header">Presupuesto <small>#{{ cotizacion.id }}</small> <a href="{% url cotizacion:pdf cotizacion.id %}" class="btn button-second pull-right"> Imprimir<span class=" glyphicon glyphicon-print"></span></a></h2>
 {% if cotizacion.total == cotizacion.total_procesado %}
-<!-- TODO: make the landing page work. -->
-<div class="alert alert-warning"><strong>Nota:</strong> Esta cotizacion ya ha sido procesada. Para ver los pagos, haga click <a href="{% url pagos:pagos_paciente paciente.id %}?q={{ cotizacion.id }}">aqu&iacute;</a>.</div>
+<div class="alert alert-warning"><strong>Nota:</strong> Esta cotizacion ya ha sido procesada. Para ver los pagos, haga click <a href="{% url pagos:pagos_cotizacion cotizacion.id %}">aqu&iacute;</a>.</div>
 {% endif %}
 <div class="row">
   <div class="col-md-8">
@@ -91,7 +90,7 @@
       </table>
     </div>
     {% if cotizacion.total == cotizacion.total_procesado %}
-    <a href="{% url pagos:pagos_paciente paciente.id %}?q={{ cotizacion.id }}" class="btn btn-primary pull-right">Ver Pagos <span class="glyphicon glyphicon-chevron-right"></span></a>
+    <a href="{% url pagos:pagos_cotizacion cotizacion.id %}" class="btn btn-primary pull-right">Ver Pagos <span class="glyphicon glyphicon-chevron-right"></span></a>
     {% else %}
     <a href="{% url servicios:servicios_create cotizacion_id=cotizacion.id %}" class="btn btn-primary pull-right">Aceptar <span class="glyphicon glyphicon-chevron-right"></span></a>
     {% endif %}

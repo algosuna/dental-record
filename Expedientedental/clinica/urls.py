@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, url
 
 from clinica.views import (
-    InterrogatorioPDF, HistorialDetail, PacienteDetail, InterrogatorioUpdate,
+    InterrogatorioPDF, HistorialDetail, PacienteDetail,
     ProcedimientosView, HistorialView, InterrogatorioView, OdontogramaDetail,
     Radiografias, RadiografiaCreate, RadiografiaDetail, RadiografiaUpdate
 )
@@ -35,10 +35,6 @@ urlpatterns = patterns(
 
     url(r'^interrogatorio/(?P<pk>\d+)/$',
         InterrogatorioView.as_view(), name='interrogatorio'),
-
-    # TODO: remove this.
-    url(r'^interrogatorio/(?P<pk>\d+)/update/$',
-        InterrogatorioUpdate.as_view(), name='interrogatorio_edit'),
 
     url(r'^(?P<pk>\d+)/radiografias/$',
         Radiografias.as_view(), name='radiografias'),

@@ -31,7 +31,6 @@ class PagoAplicadoForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(PagoAplicadoForm, self).__init__(*args, **kwargs)
         self.servicio = self.initial.get('servicio')
-        # print self.servicio.precio
         self.helper = FormHelper()
         self.helper.form_tag = False
         self.helper.form_show_labels = False
@@ -48,7 +47,6 @@ class PagoAplicadoForm(forms.ModelForm):
         total_pagado = self.servicio.pagoaplicado_set.total_pagado()
         total_pagado += importe_nuevo
         precio = self.servicio.precio
-        print total_pagado, precio
         if total_pagado > precio:
             raise ValidationError('Importe invalido.')
         return importe_nuevo
@@ -62,9 +60,8 @@ class BaseApplyFormSet(BaseFormSet):
 
     def clean(self):
         """
-            Verifica que la suma de todas
-            los importes de pagos aplicados
-            no sean mayoes a monto total
+        Verifica que la suma de todas los importes de pagos aplicados
+        no sean mayoes a monto total
         """
         super(BaseApplyFormSet, self).clean()
         if any(self.errors):

@@ -27,7 +27,7 @@
       <td class="padded">{{ pago.updated_at }}</td>
       <td class="padded">$ {{ pago.monto_aplicado }}</td>
       <td><a href="{% url pagos:pagos_detail pago.id %}" class="btn btn-primary pull-right">Ver Pago</a></td>
-      
+
 
     </tr>
     {% endfor %}
@@ -38,6 +38,6 @@
 
 </table>
 {% else %}
-<!-- TODO: a message in case there are no pending payments -->
+<p class="lead text-muted text-center">Este paciente no ha realizado pagos.</p>
 {% endif %}
 {% endblock %}
