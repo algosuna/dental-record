@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, url
 from pagos.views import (
     RecibodePagoPDF, PagosPacienteList, PagosDetail, PagosPending,
-    PagosServicio, PagosServicios, HistorialPagosPDF
+    PagosServicio, PagosServicios, HistorialPagosPDF, PagosCotizacionList
 )
 
 urlpatterns = patterns(
@@ -26,6 +26,9 @@ urlpatterns += patterns(
 
     url(r'^list/(?P<pk>\d+)/$',
         PagosPacienteList.as_view(), name='pagos_paciente'),
+
+    url(r'^cotizacion/(?P<pk>\d+)/$',
+        PagosCotizacionList.as_view(), name='pagos_cotizacion'),
 
     url(r'^servicios/(?P<pk>\d+)/$',
         PagosServicios.as_view(), name='pagos_servicios'),

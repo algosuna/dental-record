@@ -343,8 +343,6 @@ class RadiografiaForm(forms.ModelForm):
     def save(self, commit=True):
         instance = super(RadiografiaForm, self).save(commit=False)
         instance.paciente = self.initial.get('paciente')
-        # TODO: do something with the image to save as thumbnail?
-        # instance.thumbnail = ?
         if commit:
             instance.save()
         return instance

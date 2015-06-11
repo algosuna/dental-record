@@ -1,13 +1,17 @@
 from django import forms
 from django.contrib.auth.models import User
+from django.contrib.localflavor.mx.forms import MXRFCField
 
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Fieldset, HTML, Field, ButtonHolder,\
-    Submit
+from crispy_forms.layout import (
+    Layout, Fieldset, HTML, Field, ButtonHolder, Submit
+)
 
-from altas.models import Medico, Paciente, Grupo, Evaluacion, Tratamiento,\
-    TratamientoPreventivo
 from core.forms import SimpleCrispyForm
+
+from altas.models import (
+    Medico, Paciente, Grupo, Evaluacion, Tratamiento, TratamientoPreventivo
+)
 
 
 class GrupoForm(forms.ModelForm):
@@ -129,8 +133,6 @@ class MedicoUserForm(forms.ModelForm):
 
 
 class MedicoForm(forms.ModelForm):
-    ''' TODO: validate rfc
-    https://docs.djangoproject.com/en/1.4/ref/contrib/localflavor/#django.contrib.localflavor.mx.forms.MXRFCField '''
     class Meta:
         model = Medico
         exclude = ['mothers_last_name', 'user']
@@ -160,6 +162,7 @@ class MedicoForm(forms.ModelForm):
         self.fields['universidad_egreso'].label = 'Universidad de Egreso'
         self.fields['rfc'].required = False
         self.fields['rfc'].label = 'R.F.C'
+        self.fields['rfc'] = MXRFCField()
         self.fields['licencia_especialidad'].label = 'Licencia de Especialidad'
         self.fields['cedula_estatal'].label = 'Cedula Estatal'
         self.fields['especialidad'].label = 'Especialidad'
