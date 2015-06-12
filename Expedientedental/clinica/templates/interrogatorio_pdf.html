@@ -1,12 +1,6 @@
-{% extends "basePDF.html" %}
-#encoding:utf-8
-{%load static from staticfiles %}
+{% extends 'base-pdf.html' %}
 
-
-{% block title %} 
-    <h2 class="pull-left"> Expediente Medico Dental</h2>   
-{% endblock title %}
-
+{% block title %}Expediente Medico Dental{% endblock %}   
 
 {% block content %}
 
@@ -33,7 +27,7 @@
            	<th>Madre: </th>
         </tr>
         <tr>
-            <th>{{interrogatorio.herenciaMadre}}</th>
+            <td>{{interrogatorio.herenciaMadre}}</td>
         </tr>
         <tr>
             <th>Padre: </th>
@@ -431,4 +425,24 @@
 {% endif %}
 </table>
 </div>
-{% endblock content %}
+<!-- <script>
+        function subst() {
+          var vars={};
+          var x=document.location.search.substring(1).split('&');
+          for (var i in x) {var z=x[i].split('=',2);vars[z[0]] = unescape(z[1]);}
+          var x=['frompage','topage','page','webpage','section','subsection','subsubsection'];
+          for (var i in x) {
+            var y = document.getElementsByClassName(x[i]);
+            for (var j=0; j<y.length; ++j) y[j].textContent = vars[x[i]];
+
+            if(vars['page'] == 1){ // If page is 1, set FakeHeaders display to none
+               document.getElementById("headerpdf").style.display = 'none';
+            }
+
+            if(vars['page'] == 3) { // If page is 3, set FakeHeaders display to none
+                document.getElementById("headepdf").style.display = 'none';
+            }
+          }
+        }
+        </script> -->
+{% endblock %}

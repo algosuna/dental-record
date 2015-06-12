@@ -365,7 +365,14 @@ class ProductoConsumidoDetail(PermissionRequiredMixin, DetailView):
 
 class ReciboPeticionPDF(PDFTemplateView):
     filename = 'recibo-entrega_de_peticion.pdf'
+    show_content_in_browser = True
     template_name = 'peticion-pdf.html'
+    footer_template = 'footerpdf.html'
+    cmd_options = {
+        'margin-top': 40,
+        'margin-bottom': 20,
+        'page-size': 'Letter'
+    }
 
     def get_context_data(self, **kwargs):
         context = super(ReciboPeticionPDF, self).get_context_data(**kwargs)

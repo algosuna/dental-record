@@ -5,7 +5,7 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import DetailView
 
-from wkhtmltopdf.views import PDFTemplateView
+from wkhtmltopdf.views import PDFTemplateView, PDFTemplateResponse
 
 from core.utils import generic_search
 from core.mixins import PermissionRequiredMixin
@@ -232,9 +232,16 @@ class PagosPending(PermissionRequiredMixin, DetailView):
 
 class PagosDetail(PermissionRequiredMixin, DetailView):
     model = Pago
+    show_content_in_browser = True
     context_object_name = 'pago'
     template_name = 'pago-detail.html'
+    footer_template = 'footerpdf.html'
     permission_required = 'pagos.add_pago'
+    cmd_options = {
+        'margin-top': 15,
+        'margin-bottom': 20,
+        'page-size': 'Letter',
+    }
 
     def get_context_data(self, **kwargs):
         context = super(PagosDetail, self).get_context_data(**kwargs)
@@ -245,8 +252,17 @@ class PagosDetail(PermissionRequiredMixin, DetailView):
 
 class RecibodePagoPDF(PDFTemplateView):
     filename = 'recibo.pdf'
+    show_content_in_browser = True
+    header_template = 'headerpdf.html',
     template_name = 'recibo_pago.html'
+    footer_template = 'footerpdf.html'
     medico = None
+
+    cmd_options = {
+        'margin-top': 35,
+        'margin-bottom': 20,
+        'page-size': 'Letter'
+    }
 
     def get_medico(self):
         if self.medico is None:
@@ -274,8 +290,15 @@ class RecibodePagoPDF(PDFTemplateView):
 
 class HistorialPagosPDF(PDFTemplateView):
     filename = 'recibo_de_entrega.pdf'
+    show_content_in_browser = True
     template_name = 'historial_pagos.html'
+    footer_template = 'footerpdf.html'
     paciente = None
+    cmd_options = {
+        'margin-top': 20,
+        'margin-bottom': 20,
+        'page-size': 'Letter'
+    }
 
     def get_paciente(self):
         if self.paciente is None:

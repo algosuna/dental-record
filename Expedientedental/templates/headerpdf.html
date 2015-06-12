@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+
+  <style>
+  .clearfix:before,
+  .clearfix:after{
+      content:"";
+      display:block;
+  }
+  .clearfix:after{
+      clear:both;
+  }
+  .clearfix{
+      zoom:1;
+  }
+  .pull-right {
+    float: right;
+    display: block;
+  }
+  </style>
+
+  <div class="page-header clearfix">
+    <img src="http://localhost:8000/static/img/logo.png" alt="Logo" height="120" width="170" class="pull-right">
+  </div>

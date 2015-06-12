@@ -255,7 +255,15 @@ class EntradaCancelDetail(PermissionRequiredMixin, DetailView):
 
 class ProductosPDF(PDFTemplateView):
     filename = 'productos.pdf'
+    show_content_in_browser = True
     template_name = 'productos-pdf.html'
+    footer_template = 'footerpdf.html'
+
+    cmd_options = {
+        'margin-top': '20',
+        'margin-bottom': '20',
+        'page-size': 'Letter',
+    }
 
     def get_context_data(self, **kwargs):
         context = super(ProductosPDF, self).get_context_data(**kwargs)
@@ -268,7 +276,15 @@ class ProductosPDF(PDFTemplateView):
 
 class ProductoPdf(PDFTemplateView):
     filename = 'producto.pdf'
+    show_content_in_browser = True
     template_name = 'producto-pdf.html'
+    footer_template = 'footerpdf.html'
+
+    cmd_options = {
+        'margin-top': '20',
+        'margin-bottom': '20',
+        'page-size': 'Letter',
+    }
 
     def get_context_data(self, **kwargs):
         context = super(ProductoPdf, self).get_context_data(**kwargs)
@@ -281,7 +297,15 @@ class ProductoPdf(PDFTemplateView):
 
 class ProductoCanceladoPDF(PDFTemplateView):
     filename = 'producto-cancelado.pdf'
+    show_content_in_browser = True
     template_name = 'producto-pdf.html'
+    footer_template = 'footerpdf.html'
+
+    cmd_options = {
+        'margin-top': '20',
+        'margin-bottom': '20',
+        'page-size': 'Letter',
+    }
 
     def get_context_data(self, **kwargs):
         context = super(ProductoCanceladoPDF, self).get_context_data(**kwargs)
@@ -297,9 +321,14 @@ class ProductoCanceladoPDF(PDFTemplateView):
 
 class EntradasPDF(PDFTemplateView):
     filename = 'entradas.pdf'
+    show_content_in_browser = True
     template_name = 'entradas-pdf.html'
+    footer_template = 'footerpdf.html'
+
     cmd_options = {
-        'margin-top': 13,
+        'margin-top': '20',
+        'margin-bottom': '20',
+        'page-size': 'Letter',
     }
 
     def get_context_data(self, **kwargs):
@@ -314,7 +343,15 @@ class EntradasPDF(PDFTemplateView):
 
 class EntradaPDF(PDFTemplateView):
     filename = 'entrada.pdf'
+    show_content_in_browser = True
     template_name = 'entrada-pdf.html'
+    footer_template = 'footerpdf.html'
+
+    cmd_options = {
+        'margin-top': '20',
+        'margin-bottom': '20',
+        'page-size': 'Letter',
+    }
 
     def get_context_data(self, **kwargs):
         context = super(EntradaPDF, self).get_context_data(**kwargs)
@@ -327,9 +364,14 @@ class EntradaPDF(PDFTemplateView):
 
 class EntradasCanceladasPDF(PDFTemplateView):
     filename = 'entradas-canceladas.pdf'
+    show_content_in_browser = True
     template_name = 'entradas-pdf.html'
+    footer_template = 'footerpdf.html'
+
     cmd_options = {
-        'margin-top': 13,
+        'margin-top': '20',
+        'margin-bottom': '20',
+        'page-size': 'Letter',
     }
 
     def get_context_data(self, **kwargs):
@@ -346,7 +388,15 @@ class EntradasCanceladasPDF(PDFTemplateView):
 
 class EntradaCanceladaPDF(PDFTemplateView):
     filename = 'entrada-cancelada.pdf'
+    show_content_in_browser = True
     template_name = 'entrada-pdf.html'
+    footer_template = 'footerpdf.html'
+
+    cmd_options = {
+        'margin-top': 20,
+        'margin-bottom': 20,
+        'page-size': 'Letter',
+    }
 
     def get_context_data(self, **kwargs):
         context = super(EntradaCanceladaPDF, self).get_context_data(**kwargs)

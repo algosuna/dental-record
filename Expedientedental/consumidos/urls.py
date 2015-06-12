@@ -62,6 +62,9 @@ urlpatterns = patterns(
         ProductoConsumidoDetail.as_view(), name='consumido_detail'),
 
     url(r'^salidas/paquete/(?P<pk>\d+)/recibo/pdf/$',
-        ReciboPeticionPDF.as_view(), name='recibo_paquete'),
+        ReciboPeticionPDF.as_view(
+            template_name='peticion-pdf.html',
+            header_template='headerpdf.html',
+            footer_template='footerpdf.html'), name='recibo_paquete'),
 
 )

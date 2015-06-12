@@ -1,4 +1,12 @@
-{% extends 'basePDF.html' %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+</head>
+<body>
+
+</body>
+</html>
 
 {% block css %}
 <style>
@@ -10,6 +18,30 @@
   }
 </style>
 {% endblock %}
+
+{% load static from staticfiles %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="http://localhost:8000/static/css/localPDF.css">
+
+  <style>
+  .pdf-title {
+    display: block;
+    margin-left: 20px;
+    margin-top: 50px;
+  }
+  .low-margin .pdf-title {
+    margin-top: 10px;
+  }
+  .low-margin img {
+    margin-right: 10px;
+  }
+  h2 {
+    margin-left: 20px;
+    margin-top: 50px;
+  }
+  </style>
+
+
 
 {% block title %}Recibo de Entrega{% endblock %}
 

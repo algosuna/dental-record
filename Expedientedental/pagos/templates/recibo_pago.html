@@ -1,51 +1,105 @@
-{% extends "basePDF.html" %}
-{% load static from staticfiles %}
+<html>
 
-{% block title %}Recibo de Pago de Servicios{% endblock %}
 
-{% block headercontent %}
-<div class="panel panel-default">
-  <div class="panel-heading">Pago #{{ pago.id }}</div>
-  <table class="table table-bordered table-condensed">
-    <tr>
-      <th>Nombre</th>
-      <td>{{ pago.paciente }}</td>
-    </tr>
-    <tr>
-      <th>Grupo</th>
-      <td>{{ pago.paciente.grupo }}</td>
-    </tr>
-    <tr>
-      <th>Medico Tratante</th>
-      <td>{{ medico}}</td>
-    </tr>
-    <tr>
-      <th>Fecha</th>
-      <td>{{ pago.fecha}}</td>
-    </tr>
-  </table>
+<style>
+        #page-wrap { width: 100%;  font: 14px/1.4 Georgia, serif; }
+
+#page-wrap p { border: 0; font: 14px Georgia, Serif; overflow: hidden; resize: none; }
+#page-wrap table { border-collapse: collapse; }
+#page-wrap table td,#page-wrap table th { border: 1px solid black; padding: 5px; }
+
+#header {  width: 50%; margin: 50px 10px; background: #222; text-align: center; color: white; font: bold 15px Helvetica, Sans-Serif; text-decoration: uppercase; }
+
+#address { width: 250px; height: 150px; float: left; }
+#customer { overflow: hidden; }
+
+#logo { text-align: right; float: right; position: relative; margin-top: 25px; border: 1px solid #fff; max-width: 540px; max-height: 100px; overflow: hidden; }
+#header{ width:100%}
+
+#meta { margin-top: 1px; width: 300px; float: right; }
+#meta td { text-align: right;  }
+#meta td.meta-head { text-align: left; background: #eee; }
+#meta td textarea { width: 100%; height: 20px; text-align: right; }
+
+#items { clear: both; width: 100%; margin: 30px 0 0 0; border: 1px solid black; }
+#items th { background: #eee; }
+#items textarea { width: 80px; height: 50px; }
+#items tr.item-row td { border: 0; vertical-align: top; }
+#items td.description { width: 300px; }
+#items td.item-name { width: 175px; }
+#items td.description textarea, #items td.item-name textarea { width: 100%; }
+#items td.total-line { border-right: 0; text-align: right; }
+#items td.total-value { border-left: 0; padding: 10px; }
+#items td.total-value textarea { height: 50px; background: none; }
+#items td.balance { background: #eee; }
+#items td.blank { border: 0; }
+
+#terms { text-align: center; margin: 20px 0 0 0; }
+#terms h5 { text-transform: uppercase; font: 13px Helvetica, Sans-Serif; border-bottom: 1px solid black; padding: 0 0 8px 0; margin: 0 0 8px 0; }
+#terms textarea { width: 100%; text-align: center;}
+
+#page-wrap textarea:hover, #page-wrap textarea:focus, #items td.total-value textarea:hover, #items td.total-value textarea:focus, .delete:hover { background-color:#EEFF88; }
+
+#image{
+    width:100px;
+}
+    </style>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<body>
+   <div id="page-wrap">
+      <h3>Recibo de Pago</h3>
+      <div id="identity">
+            <p id="address">Paciente:{{ pago.paciente }}<br>
+                            Credencial:{{pago.paciente.credencialPaciente }}<br>
+                            Medico Tratante: {{ medico }}<br>
+                            Grupo : {{ pago.paciente.grupo }}
+            </p>
+      </div>
+      <div style="clear:both"></div>
+      <div id="customer">
+            <table id="meta">
+                <tr>
+                    <td class="meta-head">PAGO #</td>
+                    <td><p>{{ pago.id }}</p></td>
+                </tr>
+                <tr>
+                    <td class="meta-head">Fecha</td>
+                    <td><p id="date">{{ pago.fecha }}</p></td>
+                </tr>
+                <tr>
+                    <td class="meta-head">Monto </td>
+                    <td><div class="due">${{ pago.monto }}</div></td>
+                </tr>
+            </table>
+      </div>
+      <table id="items">
+        <tr>
+            <th>Servicio</th>
+            <th>Precio</th>
+            <th>Saldo anterior</th>            
+            <th>Su pago</th>
+            
+        </tr>
+        {% for pago in pago.pagoaplicado_set.all %}
+        <tr class="item-row">
+            <td class="description"><p>{{ pago.servicio }}</p></td>                    
+            <td><span class="price">${{ pago.servicio.precio }}</span></td>
+            <td><span class="price">${{ pago.pago.montodisponible }}</span></td>
+            <td><span class="cost">${{ pago.importe }}</span></td>
+        </tr>
+          {% endfor %}
+        <tr>
+            <td colspan="3" class="blank"> </td>
+            <td colspan="2" class="total-line">Total</td>
+            <td class="total-value"><div id="total">${{ pago.monto }}</div></td>
+        </tr>
+      </table>
+
+
+          <div class="col-xs-4 col-xs-offset-4 clearfix">
+  <p class="text-center siggy">Firma</p>
+  <br>
+  <hr>
 </div>
-{% endblock %}
-
-{% block content %}
-
-<table class="table">
-  <thead>
-    <tr>
-      <th>Plan de Tratamiento</th>
-      <th>Costo</th>
-      <th>Importe</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for pago in pago.pagoaplicado_set.all %}
-    <tr>
-      <td>{{ pago.servicio }}</td>
-      <td>$ {{ pago.servicio.precio }}</td>
-      <td>$ {{ pago.importe }}</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
-{% endblock content %}
-
+</body>
+</html>

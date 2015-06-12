@@ -321,9 +321,14 @@ class RadiografiaUpdate(PermissionRequiredMixin, UpdateView):
 
 class InterrogatorioPDF(PDFTemplateView):
     filename = 'interrogatorio.pdf'
+    show_content_in_browser = True
     template_name = 'interrogatorio_pdf.html'
+    # header_template = 'headerpdf.html',
+    footer_template = 'footerpdf.html'
     cmd_options = {
-        'margin-top': 13,
+        'margin-top': 20,
+        'margin-bottom': 20,
+        'page-size': 'Letter'
     }
 
     def get_context_data(self, **kwargs):
