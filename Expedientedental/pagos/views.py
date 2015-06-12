@@ -3,7 +3,7 @@ from datetime import datetime
 from django.contrib.auth.decorators import permission_required
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView
 
 from wkhtmltopdf.views import PDFTemplateView, PDFTemplateResponse
 
@@ -11,6 +11,7 @@ from core.utils import generic_search
 from core.mixins import PermissionRequiredMixin
 
 from altas.models import Paciente
+from cotizacion.models import Cotizacion
 from servicios.models import PaqueteServicios, Servicio
 from pagos.models import Pago, PagoAplicado
 from pagos.forms import PagoForm, PagoAplicadoFormset
@@ -68,9 +69,6 @@ def pagos(request, paquete_id):
                 pago.save()
 
                 return redirect(reverse('pagos:pagos_detail', args=[pago.id]))
-            else:
-                print pa_formset.non_form_errors()
-
     else:
         modelform = PagoForm(initial={
                              'monto': paquete.total_adeudado(),
@@ -92,6 +90,7 @@ def pagos(request, paquete_id):
 
 @permission_required('pagos.add_pago')
 def pagos_list(request):
+    ''' Todos los pagos realizados. '''
     pagos = Pago.objects.order_by('-fecha')
     query = 'q'
 
@@ -159,7 +158,27 @@ class PagosPacienteList(PermissionRequiredMixin, DetailView):
         return context
 
 
+class PagosCotizacionList(PermissionRequiredMixin, DetailView):
+    ''' Pagos realizados a una cotizacion. '''
+    model = Cotizacion
+    context_object_name = 'cotizacion'
+    template_name = 'pago-cotizacion.html'
+    permission_required = 'pagos.add_pago'
+
+    def get_context_data(self, **kwargs):
+        context = super(PagosCotizacionList, self).get_context_data(**kwargs)
+        paciente = self.object.odontograma.paciente
+        pagos = PagoAplicado.objects.filter(
+            pago__paciente=paciente)
+        context.update({
+            'pagos': pagos,
+            'paciente': paciente,
+            'r_active': 'active'})
+        return context
+
+
 class PagosServicio(PermissionRequiredMixin, DetailView):
+    ''' Pagos por servicio. '''
     model = Servicio
     context_object_name = 'servicio'
     template_name = 'pago-servicio.html'
@@ -177,6 +196,7 @@ class PagosServicio(PermissionRequiredMixin, DetailView):
 
 
 class PagosServicios(PermissionRequiredMixin, DetailView):
+    ''' Lista de servicios con pagos. '''
     model = Paciente
     context_object_name = 'paciente'
     template_name = 'pago-servicios.html'

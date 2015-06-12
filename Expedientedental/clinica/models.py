@@ -1,5 +1,9 @@
+from os.path import splitext
+
 from django.db import models
 
+from easy_thumbnails.fields import ThumbnailerImageField
+from simple_history.models import HistoricalRecords
 from core.models import TimeStampedModel
 
 from altas.models import (
@@ -212,3 +216,21 @@ class Bitacora(TimeStampedModel):
     def __unicode__(self):
         entrada = '%s %s' % (self.id, self.created_at)
         return entrada
+
+
+class Radiografia(TimeStampedModel):
+
+    def url(self, filename):
+        name, ext = splitext(filename)
+        url = 'radiografia/%s%s' % (self.title. ext)
+        return url
+
+    paciente = models.ForeignKey(Paciente)
+    image = ThumbnailerImageField(upload_to='radiografia')
+    title = models.CharField(max_length=80)
+    description = models.TextField()
+
+    history = HistoricalRecords()
+
+    def __unicode__(self):
+        return '%s - %s' % (self.title, self.paciente)

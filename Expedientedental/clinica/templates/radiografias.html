@@ -1,0 +1,35 @@
+{% extends 'dash.html' %}
+
+{% load static from staticfiles %}
+{% load thumbnail %}
+
+{% block content %}
+<h2 class="page-header">{% block title %}Radiografias{% endblock %} <small class="pull-right"><a href="{% url clinica:radiografia_create paciente.id %}"><i class="fa fa-plus fa-fw"></i> Nueva</a></small></h2>
+
+{% if radiografias %}
+<div class="row">
+
+  {% for radiografia in radiografias %}
+  <div class="col-md-3">
+
+    <div class="thumbnail">
+
+      <img src="{% thumbnail radiografia.image 300x300 crop %}" class="img-responsive" alt="{{ radiografia.title }}">
+
+      <div class="caption">
+
+        <h5>{{ radiografia.title }}<a href="{% url clinica:radiografia_detail radiografia.id %}" class="pull-right"><i class="fa fa-search fa-fw"></i> Ver</a></h5>
+
+      </div>
+
+    </div>
+
+  </div>
+  {% endfor %}
+
+</div>
+{% else %}
+<p class="text-muted text-center lead">Este paciente no tiene radiograf&iacute;as.</p>
+<p class="text-center"><a href="{% url clinica:radiografia_create paciente.id %}" class="btn btn-primary"><i class="fa fa-plus fa-fw"></i> Agregar Radiograf&iacute;a</a></p>
+{% endif %}
+{% endblock %}

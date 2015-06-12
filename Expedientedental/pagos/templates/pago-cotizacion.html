@@ -1,0 +1,35 @@
+{% extends 'dash.html' %}
+
+{% block content %}
+<h2 class="page-header">{% block title %}Pagos a Cotizacion #{{ cotizacion.id }}{% endblock %} <small class="pull-right">{{ paciente.nombre }} {{ paciente.apellidoPaterno }} {{ paciente.apellidoMaterno }} #{{ paciente.credencialPaciente }}</small></h2>
+
+<table class="table table-hover">
+
+  <thead>
+
+    <tr>
+
+      <th>Fecha</th>
+      <th>Su Pago</th>
+      <th>&nbsp;</th>
+
+    </tr>
+
+  </thead>
+
+  <tbody>
+
+    {% for pago in pagos %}
+    <tr>
+
+      <td class="padded">{{ pago.fecha }}</td>
+      <td class="padded">$ {{ pago.importe }}</td>
+      <td><a href="{% url pagos:pagos_detail pago.pago.id %}" class="btn btn-primary pull-right">Ver Pago</a></td>
+
+    </tr>
+    {% endfor %}
+
+  </tbody>
+
+</table>
+{% endblock %}

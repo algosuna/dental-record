@@ -163,6 +163,7 @@ INSTALLED_APPS = (
     'crispy_forms',
     'dajax',
     'dajaxice',
+    'easy_thumbnails',
     'simple_history',
     'south',
     'wkhtmltopdf',
@@ -183,6 +184,15 @@ INSTALLED_APPS = (
 
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+THUMBNAIL_ALIASES = {
+    '': {
+        'avatar': {'size': (50, 50), 'crop': True},
+        'thumbnail': {'size': (200, 200), 'crop': True},
+    },
+}
+
+THUMBNAIL_DEBUG = True
 
 
 import unittest

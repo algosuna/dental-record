@@ -1,6 +1,7 @@
-{% extends "dash.html" %}
+{% extends 'dash.html' %}
 
-{%load static from staticfiles %}
+{% load static from staticfiles %}
+{% load thumbnail %}
 
 {%block title%}Detalles de Paciente{%endblock%}
 
@@ -11,7 +12,7 @@
 
     <div class="col-xs-2">
 
-      <img src="{% static paciente.imagen %}" alt="{{ paciente.nombre }} {{ paciente.apellidoPaterno }}">
+      <img src="{% thumbnail paciente.imagen 'thumbnail' %}" alt="{{ paciente.nombre }} {{ paciente.apellidoPaterno }}">
 
     </div>
 
@@ -81,7 +82,6 @@
       {% endif %}
       {% endwith %}
       {% endfor %}
-      <!-- TODO: quitar esto y correjir lo de arriba. es por mientras -->
     </tbody>
 
   </table>

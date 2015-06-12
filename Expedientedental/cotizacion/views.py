@@ -48,8 +48,6 @@ class ProcesadoList(PermissionRequiredMixin, ListView):
         return cotizaciones
 
     def get_context_data(self, **kwargs):
-        ''' TODO: find a way to pass paciente and medico in
-        context from odontograma (?) '''
         context = super(ProcesadoList, self).get_context_data(**kwargs)
         context.update({'cp_active': 'active'})
         return context

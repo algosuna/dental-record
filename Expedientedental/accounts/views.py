@@ -47,8 +47,8 @@ class HomeView(LoginRequiredMixin, TemplateView):
 
 class ChangeView(FormView):
     form_class = PassChangeForm
-    template_name = 'password_change_form.html'
-    success_url = reverse_lazy('consumidos:done')
+    template_name = 'password-change.html'
+    success_url = reverse_lazy('accounts:home')
 
     def get_form_kwargs(self):
         kwargs = super(ChangeView, self).get_form_kwargs()
