@@ -4,6 +4,49 @@
 <h2 class="page-header">{% block title %}Servicios de Paciente{% endblock %}</h2>
 
 {% if servicios %}
+
+<div class="col-md-6 col-md-offset-3">
+
+  <div class="panel panel-default">
+
+    <div class="panel-heading">Costos de paciente</div>
+
+    <table class="table">
+
+      <tr>
+
+        <th>Precio a paciente:</th>
+        <td>$ {{ servicios.total }}</td>
+
+      </tr>
+
+      <tr>
+
+        <th>Pago de paciente:</th>
+        <td>$ {{ servicios.total_pagado }}</td>
+
+      </tr>
+
+      <tr>
+
+        <th>Costo de productos:</th>
+        <td>$ {{ costo_total }}</td>
+
+      </tr>
+
+      <tr>
+
+        <th>Diferencia:</th>
+        <td>$ {{ diff }}</td>
+
+      </tr>
+
+    </table>
+
+  </div>
+
+</div>
+
 <table class="table">
 
   <thead>
