@@ -41,7 +41,6 @@ urlpatterns += patterns(
     url(r'^paquete/recibo/pdf/$',
         HistorialPagosPDF.as_view(), name='historial'),
 
-    url(r'^pago/(?P<pago_id>\d+)/pdf/$', RecibodePagoPDF.as_view
-        (template_name='recibo_pago.html', header_template='headerpdf.html',
-            footer_template='footerpdf.html',), name='pdf'),
+    url(r'^pago/(?P<pago_id>\d+)/pdf/$', RecibodePagoPDF.as_view(),
+        name='pdf'),
 )

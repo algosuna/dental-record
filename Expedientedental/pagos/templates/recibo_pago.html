@@ -2,19 +2,19 @@
 
 
 <style>
-        #page-wrap { width: 80%;  font: 14px/1.4 Georgia, serif; }
+        #page-wrap { width: 100%;  font: 14px/1.4 Georgia, serif; }
 
 #page-wrap p { border: 0; font: 14px Georgia, Serif; overflow: hidden; resize: none; }
 #page-wrap table { border-collapse: collapse; }
 #page-wrap table td,#page-wrap table th { border: 1px solid black; padding: 5px; }
 
-#header {  width: 20%; margin: 20px 0; background: #222; text-align: center; color: white; font: bold 15px Helvetica, Sans-Serif; text-decoration: uppercase; }
+#header {  width: 50%; margin: 50px 10px; background: #222; text-align: center; color: white; font: bold 15px Helvetica, Sans-Serif; text-decoration: uppercase; }
 
 #address { width: 250px; height: 150px; float: left; }
 #customer { overflow: hidden; }
 
 #logo { text-align: right; float: right; position: relative; margin-top: 25px; border: 1px solid #fff; max-width: 540px; max-height: 100px; overflow: hidden; }
-#header{ width:125%}
+#header{ width:100%}
 
 #meta { margin-top: 1px; width: 300px; float: right; }
 #meta td { text-align: right;  }
@@ -47,7 +47,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <body>
    <div id="page-wrap">
-      <p id="header">RECIBO DE PAGO </p>
+      <h3>Recibo de Pago</h3>
       <div id="identity">
             <p id="address">Paciente:{{ pago.paciente }}<br>
                             Credencial:{{pago.paciente.credencialPaciente }}<br>
@@ -64,7 +64,7 @@
                 </tr>
                 <tr>
                     <td class="meta-head">Fecha</td>
-                    <td><p id="date">{{ pago.fecha|fecha:"d-M-Y" }}</p></td>
+                    <td><p id="date">{{ pago.fecha }}</p></td>
                 </tr>
                 <tr>
                     <td class="meta-head">Monto </td>
@@ -96,9 +96,10 @@
       </table>
 
 
-          <div id="terms">
-            <p class="text-center siggy"> Firma </p>
-         </div>
-   </div>
+          <div class="col-xs-4 col-xs-offset-4 clearfix">
+  <p class="text-center siggy">Firma</p>
+  <br>
+  <hr>
+</div>
 </body>
 </html>

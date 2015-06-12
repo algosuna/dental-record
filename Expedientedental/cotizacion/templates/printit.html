@@ -1,6 +1,9 @@
-{% extends "basePDF.html" %}
-{% load static from staticfiles %}
+{% extends 'base-pdf.html' %}
+
 {% block content %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="http://localhost:8000/static/css/localPDF.css">
+
 <div class="well odontograma clearfix">
   <div class="col-xs-1">
     <alt="{{ cotizacion.odontograma.paciente.nombre }} {{ cotizacion.odontograma.paciente.apellidoPaterno }}">
@@ -70,5 +73,6 @@
         {% endif %}
       </table>
     </div>
+{% endblock %}
 
-{% endblock content%}
+

@@ -88,7 +88,14 @@ def cotizacion_detail(request, odontograma_id):
 
 class CotizacionPDF(PDFTemplateView):
     filename = 'cotizacion.pdf'
+    show_content_in_browser = True
     template_name = 'printit.html'
+    footer_template = 'footerpdf.html'
+    cmd_options = {
+        'margin-top': 20,
+        'margin-bottom': 20,
+        'page-size': 'Letter'
+    }
 
     def get_context_data(self, **kwargs):
         context = super(CotizacionPDF, self).get_context_data(**kwargs)
