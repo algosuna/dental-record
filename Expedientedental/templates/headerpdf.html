@@ -1,38 +1,23 @@
 <!DOCTYPE html>
-<html>
-<head>
-
-  {% load static from staticfiles %}
-
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-  <link rel="stylesheet" href="http://localhost:8000/static/css/localPDF.css">
 
   <style>
-  .pdf-title {
+  .clearfix:before,
+  .clearfix:after{
+      content:"";
+      display:block;
+  }
+  .clearfix:after{
+      clear:both;
+  }
+  .clearfix{
+      zoom:1;
+  }
+  .pull-right {
+    float: right;
     display: block;
-    margin-left: 20px;
-    margin-top: 50px;
-  }
-  .low-margin .pdf-title {
-    margin-top: 10px;
-  }
-  .low-margin img {
-    margin-right: 10px;
-  }
-  h2 {
-    margin-left: 20px;
-    margin-top: 50px;
   }
   </style>
-  {% block css %}
-  {% endblock %}
-</head>
 
-<body class="{{ classes }}">
   <div class="page-header clearfix">
     <img src="http://localhost:8000/static/img/logo.png" alt="Logo" height="120" width="170" class="pull-right">
-    <h4 class="page-header pdf-title pull-left">{% block title %}{% endblock title %}</h4>
-    <div class="col-xs-8 pull-left">
-      {% block headercontent %}{% endblock %}
-    </div>
   </div>

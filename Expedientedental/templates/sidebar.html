@@ -52,7 +52,7 @@
     {% if perms.consumidos.add_paquete %}
     <a class="sidebar-header text-center" data-toggle="collapse" href="#paquetes">Paquetes</a>
     <div class="collapse" id="paquetes">
-      <li class="{{ pn_active }}"><a href="{% url consumidos:paquete_new %}"><i class="fa fa-tasks fa-fw"></i> Crear Paquete</a></li>
+      <li class="{{ pn_active }}"><a href="{% url consumidos:paquete_new %}"><i class="fa fa-tasks fa-fw"></i> Agregar Paquete</a></li>
       <li class="{{ ps_active }}"><a href="{% url consumidos:paquete_list %}"><i class="fa fa-th-list fa-fw"></i> Paquetes</a></li>
       <li class="{{ pdea_active }}"><a href="{% url consumidos:paquete_cancelled_list %}"><i class="fa fa-times fa-fw"></i> Paquetes Desactivados</a></li>
     </div>
