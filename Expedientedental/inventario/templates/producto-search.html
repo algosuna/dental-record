@@ -6,7 +6,7 @@
 
 {% if search_string %}
 
-<p class="text-center">Usted ingresó "{{ search_string }}" :</p>
+<p class="text-center">Usted ingreso "{{ search_string }}" :</p>
 
   {% if objects %}
   <table class="table table-hover">
@@ -43,7 +43,7 @@
 
   </table>
   {% else %}
-  <p class="lead text-center text-muted">No se han encontrado productos con ese nombre.</p>
+  <p class="lead text-center text-muted">No Se Han Encontrado Productos Con Ese Nombre.</p>
   {% endif %}
   <p class="text-center">
     <a href="{% url inventario:producto_search %}" class="btn btn-primary">Nueva Búsqueda <span class="glyphicon glyphicon-arrow-right"></span></a>
@@ -55,7 +55,7 @@
 
     <form action="" method="GET">
 
-      <label for="q" class="lead">Ingrese el nombre del Producto:</label>
+      <label for="q" class="lead">Ingrese El Nombre Del Producto:</label>
       <input type="text" name="q" class="form-control" placeholder="Nombre del producto..." value="{{ query|escape }}">
       <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-search'></span> Buscar</button>
 

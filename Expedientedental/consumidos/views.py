@@ -194,7 +194,7 @@ class PeticionUpdate(PermissionRequiredMixin, UpdateView):
 
 class PeticionesAtendidas(PermissionRequiredMixin, ListView):
     model = PaqueteConsumido
-    queryset = model.objects.filter(status='surtido')
+    queryset = model.objects.filter(status='surtido').order_by('-created_at')
     context_object_name = 'paqueteconsumidos'
     template_name = 'peticiones.html'
     permission_required = 'consumidos.change_paqueteconsumido'

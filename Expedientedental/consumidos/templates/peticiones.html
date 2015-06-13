@@ -2,7 +2,7 @@
 {% load static from staticfiles %}
 
 {% block content %}
-<h2 class="page-header">{% block title %}Peticiones{% endblock %}</h2>
+<h2 class="page-header">{% block title %}Peticiones De Materiales Entregados{% endblock %}</h2>
 
 {% if paqueteconsumidos %}
 <table class="table table-hover">
@@ -71,7 +71,7 @@
         <td class="padded">{{ paquete.paciente }}</td>
         <td class="padded">{{ paquete.updated_at }}</td>
         <td class="padded"><span class="label">{{ paquete.get_status_display }}</span></td>
-        <td><a href="{% url consumidos:peticion_update paquete.id %}" class="btn btn-default">Atender</a></td>
+        <td><a href="{% url consumidos:peticion_update paquete.id %}" class="btn btn-default">Entregar</a></td>
 
       </tr>
       {% endfor %}

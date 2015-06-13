@@ -48,7 +48,7 @@
 
   </div><!-- patient info section -->
 
-  <h3 class="page-header">Procedimientos</h3>
+  <h3 class="page-header">Procedimientos Para Realizarse Ahora, Solicite Materiales</h3>
 
   {% if procedimientos %}
   <table class="table table-bordered table-hover">
@@ -76,8 +76,8 @@
         <td>{{ procedimiento.get_cara_display }}</td>
         <td>{{ procedimiento.tratamiento }}</td>
         <td><span class="label">{{ procedimiento.get_status_display }}</span></td>
-        <td><a href="{% url clinica:historial_detail procedimiento.id %}" class="btn btn-default">Ver</a></td>
-        <td><a href="{% url consumidos:peticion_new servicio.id %}" class="btn btn-default">solicitar materiales</a></td>
+        <td><a href="{% url clinica:historial_detail procedimiento.id %}" class="btn btn-default">Ver Bitacora</a></td>
+        <td><a href="{% url consumidos:peticion_new servicio.id %}" class="btn btn-default">Solicitar Materiales</a></td>
       </tr>
       {% endif %}
       {% endwith %}

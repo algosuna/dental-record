@@ -16,10 +16,10 @@
 
 <div class="form-inline">
 
-  <label for="tratamiento" class="control-label lead">1) Seleccione tratamiento:</label>
+  <label for="tratamiento" class="control-label lead">1) Seleccione Tratamiento:</label>
   <select name="tratamiento" id="tratamientos" class="form-control form-inline" data-bind="value: tratamientoSeleccionado,">
 
-    <option>Seleccione un tratamiento...</option>
+    <option>Seleccione un Tratamiento...</option>
     {% for tratamiento in tratamientos %}
     <option value="{{ tratamiento.id }}">{{ tratamiento }}</option>
     {% endfor %}
@@ -32,7 +32,7 @@
 
   {{ formset.management_form }}
 
-  <p class="lead">2) Seleccione una pieza:</p>
+  <p class="lead">2) Seleccione Una Pieza:</p>
 
   <div id="odontograma"></div>
 
@@ -82,7 +82,7 @@
 
   </div>
 
-  <p class="lead">3) Verifique detalles:</p>
+  <p class="lead">3) Verifique Detalles:</p>
 
   <div class="clearfix" id="formsets">
 
@@ -109,7 +109,7 @@
 
   </div>
 
-  <h3 class="page-header">Detalle informaci&oacute;n adicional</h3>
+  <h3 class="page-header">Detalle Informacion Adicional</h3>
 
   {% crispy form %}
 

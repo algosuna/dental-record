@@ -279,11 +279,15 @@ class ProcedimientoForm(forms.ModelForm):
         self.helper.layout = Layout(
             Fieldset(
                 '',
-                Field('pieza', data_bind='value: diente.id'),
-                Field('cara', data_bind='value: cara'),
-                Field('tratamiento', data_bind='value: tratamiento'),
-                Field('diagnostico'),
-                Field('notas')
+                Field('pieza', data_bind='value: diente.id',
+                      wrapper_class='col-xs-1'),
+                Field('cara', data_bind='value: cara',
+                      wrapper_class='col-xs-2'),
+                Field('tratamiento', data_bind='value: tratamiento',
+                      wrapper_class='col-xs-2'),
+                Field('diagnostico', wrapper_class='col-xs-2'),
+
+                Field('notas', wrapper_class='col-xs-5')
 
                 ),
             )

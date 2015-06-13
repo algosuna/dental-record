@@ -5,7 +5,7 @@
 
 {% if search_string %}
 
-<p class="text-center">Usted ingres&oacute; "{{ search_string }}":</p>
+<p class="text-center">Usted Ingreso "{{ search_string }}":</p>
 
   {% if objects %}
   <table class="table table-hover">
@@ -44,10 +44,10 @@
 
   </table>
   {% else %}
-  <p class="lead text-center text-muted">No se han encontrado pacientes con ese nombre.</p>
+  <p class="lead text-center text-muted">No Se Han Encontrado Pacientes Con Ese Nombre.</p>
   {% endif %}
   <p class="text-center">
-    <a href="{% url pagos:paciente_search %}" class="btn btn-primary">Nueva Búsqueda <span class="glyphicon glyphicon-arrow-right"></span></a>
+    <a href="{% url pagos:paciente_search %}" class="btn btn-primary">Nueva Busqueda <span class="glyphicon glyphicon-arrow-right"></span></a>
   </p>
 
 {% else %}
@@ -56,7 +56,7 @@
 
     <form action="" method="GET">
 
-      <label for="q" class="lead">Ingrese el nombre del paciente:</label>
+      <label for="q" class="lead">Ingrese El Nombre Del Paciente:</label>
       <input type="text" name="q" class="form-control" placeholder="Nombre del paciente..." value="{{ query|escape }}">
       <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-search'></span> Buscar</button>
 
