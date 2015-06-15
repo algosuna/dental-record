@@ -1,6 +1,7 @@
 from django.core.paginator import Paginator, InvalidPage
 from django.http import Http404
-from django.utils.translation import ugettext as _
+from django.core.exceptions import ImproperlyConfigured
+from django.utils.encoding import smart_str
 from django.views.generic import CreateView, DetailView
 
 
@@ -50,7 +51,7 @@ class DetailListView(DetailView):
             queryset = self.list_model._default_manager.all()
         else:
             raise ImproperlyConfigured(
-                u"'%s' must define 'list_queryset' or 'list_model'"
+                "'%s' must define 'list_queryset' or 'list_model'"
                 % self.__class__.__name__)
         return queryset
 
@@ -67,15 +68,15 @@ class DetailListView(DetailView):
             if page == 'last':
                 page_number = paginator.num_pages
             else:
-                raise Http404(_(
-                    u"Page is not 'last', nor can it be converted to an int."))
+                raise Http404(
+                    "Page is not 'last', nor can it be converted to an int.")
         try:
             page = paginator.page(page_number)
             return (paginator, page, page.object_list, page.has_other_pages())
         except InvalidPage:
-            raise Http404(_(u'Invalid page (%(page_number)s)') % {
-                                'page_number': page_number
-            })
+            raise Http404('Invalid page (%(page_number)s)' % {
+                          'page_number': page_number
+                          })
 
     def get_list_context_object_name(self, object_list):
         ''' Get the name of the item to be used in the context. '''

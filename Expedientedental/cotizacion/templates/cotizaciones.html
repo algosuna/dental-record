@@ -1,32 +1,69 @@
-{% extends "dash.html" %}
+{% extends 'dash.html' %}
 
 {% block content %}
 
 <h2 class="page-header">{% block title %}Presupuestos{% endblock %}</h2>
 
 {% if orders %}
-	<table class="table table-hover">
-		<tr>
-			<th>#</th>
-			<th>Medico</th>
-			<th>Cliente</th>
-			<th>Fecha</th>
-			<th>&nbsp;</th>
-		</tr>
-		{% for order in orders %}
-		<tr>
-			<td>{{ order.id }}</td>
-			<td>{{ order.medico }}</td>
-			<td>{{ order.paciente }}</td>
-			<td>{{ order.created_at }}</td>
-			<td class="text-right">
-				<a href="{% url cotizacion:cotizacion_detail order.id %}" title="Ver Presupuesto" class="btn btn-primary">Ver Presupuesto</a>
-			</td>
-		</tr>
-		{% endfor %}
-	</table>
-{% else %}
-	<p class="lead text-muted text-center">No hay presupuestos pendientes.</p>
-{% endif %}
+<table class="table table-hover">
 
+  <tr>
+
+    <th>#</th>
+    <th>Medico</th>
+    <th>Cliente</th>
+    <th>Fecha</th>
+    <th>&nbsp;</th>
+
+  </tr>
+
+  {% for order in orders %}
+  <tr>
+
+    <td>{{ order.id }}</td>
+    <td>{{ order.medico }}</td>
+    <td>{{ order.paciente }}</td>
+    <td>{{ order.created_at }}</td>
+    <td class="text-right">
+
+      <a href="{% url cotizacion:cotizacion_detail order.id %}" title="Ver Presupuesto" class="btn btn-primary">Ver Presupuesto</a>
+
+    </td>
+
+  </tr>
+  {% endfor %}
+
+</table>
+
+  {% if is_paginated %}
+  <nav>
+
+    <ul class="pager">
+
+      <li class="previous">
+
+        {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}"><span aria-hidden="true">&larr;</span> Previous</a>
+        {% endif %}
+
+      </li>
+
+      <li class="text-muted">{{ page_obj }}</li>
+
+      <li class="next">
+
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">Next <span aria-hidden="true">&rarr;</span></a>
+        {% endif %}
+
+      </li>
+
+    </ul>
+
+  </nav>
+  {% endif %}
+
+{% else %}
+<p class="lead text-muted text-center">No hay presupuestos pendientes.</p>
+{% endif %}
 {% endblock %}

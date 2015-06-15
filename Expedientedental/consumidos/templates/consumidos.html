@@ -6,8 +6,11 @@
 
 {% if consumidos %}
 <table class="table table-hover">
+
   <thead>
+
     <tr>
+
       <th>#</th>
       <th>Producto</th>
       <th>Cantidad</th>
@@ -15,30 +18,66 @@
       <th>Paciente</th>
       <th>Fecha</th>
       <th>Status</th>
+
     </tr>
+
   </thead>
+
   <tbody>
+
     {% for consumido in consumidos %}
     <tr>
+
       <td>{{ consumido.id }}</td>
       <td>{{ consumido.producto }}</td>
       <td>{{ consumido.cantidad }}</td>
       <td>{{ consumido.medico }}</td>
       <td>{{ consumido.paciente }}</td>
       <td>{{ consumido.fecha }}</td>
-      
+
       <td><a href="{% url consumidos:cons_detail consumido.id %}" class="glyphicon glyphicon-eye-open">Detalles</a></td>
       <td><a href="#" class="glyphicon glyphicon-ban-circle">Cancelar</a></td>
       <td><a href="{% url consumidos:pdf consumido.id %}" class="glyphicon glyphicon-print">imprimir Acuse</a></td>
-      
+
     </tr>
     {% endfor %}
+
   </tbody>
+
 </table>
+
+  {% if is_paginated %}
+  <nav>
+
+    <ul class="pager">
+
+      <li class="previous">
+
+        {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}"><span aria-hidden="true">&larr;</span> Previous</a>
+        {% endif %}
+
+      </li>
+
+      <li class="text-muted">{{ page_obj }}</li>
+
+      <li class="next">
+
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">Next <span aria-hidden="true">&rarr;</span></a>
+        {% endif %}
+
+      </li>
+
+    </ul>
+
+  </nav>
+  {% endif %}
 {% else %}
 <p class="lead text-center text-muted">no existen peticiones pendientes<br><br>
 {% endif %}
-{% endblock content %}
+{% endblock %}
+
 {% block javascript %}
 <script>
 $(function() {

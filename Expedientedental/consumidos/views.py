@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from django.contrib.auth.decorators import permission_required
+from django.core.paginator import Paginator, EmptyPage
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.forms.models import modelformset_factory
 from django.shortcuts import render, get_object_or_404, redirect
@@ -28,6 +29,7 @@ class Paquetes(PermissionRequiredMixin, ListView):
     context_object_name = 'paquetes'
     template_name = 'paquetes.html'
     permission_required = 'consumidos.add_paquete'
+    paginate_by = 20
 
     def get_context_data(self, **kwargs):
         context = super(Paquetes, self).get_context_data(**kwargs)
@@ -87,6 +89,7 @@ class PaqueteCancelled(PermissionRequiredMixin, ListView):
     context_object_name = 'paquetesi'
     template_name = 'paquetes-cancelled.html'
     permission_required = 'consumidos.add_paquete'
+    paginate_by = 20
 
     def get_context_data(self, **kwargs):
         context = super(PaqueteCancelled, self).get_context_data(**kwargs)
@@ -135,7 +138,13 @@ class Peticiones(PermissionRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super(Peticiones, self).get_context_data(**kwargs)
-        por_entregar = self.model.objects.filter(status='por_entregar')
+        peticiones = self.model.objects.filter(status='por_entregar')
+        paginator = Paginator(peticiones, 20)
+        page = self.request.GET.get('page') or 1
+        try:
+            por_entregar = paginator.page(page)
+        except EmptyPage:
+            por_entregar = paginator.page(paginator.num_pages)
         context.update({
             'pe_active': 'active',
             'paqueteporentregar': por_entregar
@@ -198,6 +207,7 @@ class PeticionesAtendidas(PermissionRequiredMixin, ListView):
     context_object_name = 'paqueteconsumidos'
     template_name = 'peticiones.html'
     permission_required = 'consumidos.change_paqueteconsumido'
+    paginate_by = 20
 
     def get_context_data(self, **kwargs):
         context = super(PeticionesAtendidas, self).get_context_data(**kwargs)
@@ -315,6 +325,7 @@ class PeticionCancelled(PermissionRequiredMixin, ListView):
     context_object_name = 'peticiones_canceladas'
     template_name = 'peticiones.html'
     permission_required = 'consumidos.add_cancelpaqueteconsumido'
+    paginate_by = 20
 
     def get_context_data(self, **kwargs):
         context = super(PeticionCancelled, self).get_context_data(**kwargs)
@@ -328,6 +339,7 @@ class ProductosConsumidos(PermissionRequiredMixin, ListView):
     context_object_name = 'consumidos'
     template_name = 'consumidos.html'
     permission_required = 'consumidos.add_productoconsumido'
+    paginate_by = 20
 
     def get_context_data(self, **kwargs):
         context = super(ProductosConsumidos, self).get_context_data(**kwargs)
