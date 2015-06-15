@@ -1,14 +1,10 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title></title>
-</head>
-<body>
+{% extends "base-pdf.html" %}
 
-</body>
-</html>
 
-{% block title %}Detalle de Entrada{% if cancelentrada %} Cancelada {% endif 
+
+
+{% block title %}Detalle de Entrada{% if cancelentrada %} Cancelada {% endif %}
+{% endblock title %}
 
 {% block content %}
 <p>Fecha: <strong>{{ fecha }}</strong> Hora: <strong>{{ hora }}</strong></p>
