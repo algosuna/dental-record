@@ -1,11 +1,10 @@
-# from decimal import Decimal
-
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.views.generic import DetailView
 
 from core.utils import generic_search
 from core.mixins import LoginRequiredMixin
+from core.views import DetailListView
 
 from altas.models import Paciente
 from consumidos.models import PaqueteConsumido
@@ -36,15 +35,19 @@ def paciente_search(request):
         })
 
 
-class ServiciosPaciente(LoginRequiredMixin, DetailView):
+class ServiciosPaciente(LoginRequiredMixin, DetailListView):
     ''' Lista de servicios de paciente. '''
     model = Paciente
     context_object_name = 'paciente'
     template_name = 'utilidad-servicios.html'
+    list_model = Servicio
+    list_queryset = list_model.objects.filter(status__in=['parcial', 'pagado'])
+    list_paginate_by = 20
+    list_context_name = 'servicios'
 
     def get_context_data(self, **kwargs):
         context = super(ServiciosPaciente, self).get_context_data(**kwargs)
-        servicios = Servicio.objects.filter(status__in=['parcial', 'pagado'])
+        servicios = self.get_list_queryset()
         consumidos = PaqueteConsumido.objects.filter(
             paciente=self.object, status='surtido')
         costo_total = 0
@@ -56,7 +59,7 @@ class ServiciosPaciente(LoginRequiredMixin, DetailView):
         diff = servicios.total_pagado() - costo_total
 
         context.update({
-            'servicios': servicios,
+            'global_servicios': servicios,
             'costo_total': costo_total,
             'diff': diff,
             'us_active': 'active'})

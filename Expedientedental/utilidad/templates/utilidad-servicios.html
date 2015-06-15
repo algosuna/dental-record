@@ -16,14 +16,14 @@
       <tr>
 
         <th>Precio a paciente:</th>
-        <td>$ {{ servicios.total }}</td>
+        <td>$ {{ global_servicios.total }}</td>
 
       </tr>
 
       <tr>
 
         <th>Pago de paciente:</th>
-        <td>$ {{ servicios.total_pagado }}</td>
+        <td>$ {{ global_servicios.total_pagado }}</td>
 
       </tr>
 
@@ -84,6 +84,27 @@
   </tbody>
 
 </table>
+
+{% if is_paginated %}
+<nav>
+  <ul class="pager">
+    <li class="previous">
+      {% if page_obj.has_previous %}
+      <a href="?page={{ page_obj.previous_page_number }}"><span aria-hidden="true">&larr;</span> Previous</a>
+      {% endif %}
+    </li>
+
+    <li class="text-muted">{{ page_obj }}</li>
+
+    <li class="next">
+      {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}">Next <span aria-hidden="true">&rarr;</span></a>
+      {% endif %}
+    </li>
+  </ul>
+</nav>
+{% endif %}
+
 {% else %}
 <p class="lead text-muted">Este paciente no tiene servicios con pagos.</p>
 {% endif %}
