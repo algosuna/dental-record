@@ -1,4 +1,4 @@
-{% extends "dash.html" %}
+{% extends 'dash.html' %}
 {% block title %}Productos Desactivados{% endblock %}
 
 {% block content %}
@@ -42,6 +42,34 @@
   </tbody>
 
 </table>
+
+{% if is_paginated %}
+<nav>
+
+  <ul class="pager">
+
+    <li class="previous">
+
+      {% if page_obj.has_previous %}
+      <a href="?page={{ page_obj.previous_page_number }}"><span aria-hidden="true">&larr;</span> Previous</a>
+      {% endif %}
+
+    </li>
+
+    <li class="text-muted">{{ page_obj }}</li>
+
+    <li class="next">
+
+      {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}">Next <span aria-hidden="true">&rarr;</span></a>
+      {% endif %}
+
+    </li>
+
+  </ul>
+
+</nav>
+{% endif %}
 {% else %}
 <p class="text-center text-muted lead">No hay productos desactivados.</p>
 {% endif %}
