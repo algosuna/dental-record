@@ -16,6 +16,7 @@ class PreciosGrupos(PermissionRequiredMixin, ListView):
     context_object_name = 'grupos'
     template_name = 'precios-grupos.html'
     permission_required = 'precios.change_preciotratamiento'
+    paginate_by = 20
 
     def get_context_data(self, **kwargs):
         context = super(PreciosGrupos, self).get_context_data(**kwargs)
@@ -23,6 +24,7 @@ class PreciosGrupos(PermissionRequiredMixin, ListView):
         return context
 
 
+# TODO: separar crear y editar (solo edita por los updates que se le han hecho)
 @permission_required('precios.add_preciotratamiento')
 def precios_view(request, grupo_id):
     '''
@@ -67,3 +69,6 @@ def precios_view(request, grupo_id):
                    'tratamientos': existen_tratamientos,
                    'grupo': grupo,
                    'pg_active': 'active'})
+
+
+# TODO: agregar DetailView para precios

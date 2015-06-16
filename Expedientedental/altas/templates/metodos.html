@@ -8,23 +8,63 @@
 
 {% if object_list %}
 <table class="table table-hover">
+
   <thead>
+
     <tr>
+
       <th>Codigo</th>
       <th>Nombre</th>
       <th>&nbsp;</th>
+
     </tr>
+
   </thead>
+
   <tbody>
+
     {% for object in object_list %}
     <tr>
+
       <td>{{ object.codigo }}</td>
       <td>{{ object.nombre }}</td>
       <td class="text-right"><a href="/altas/{{ name }}/edit/{{ object.id }}/" title="Editar"><span class="glyphicon glyphicon-pencil"></span></a></td>
+
     </tr>
     {% endfor %}
+
   </tbody>
+
 </table>
+
+  {% if is_paginated %}
+  <nav>
+
+    <ul class="pager">
+
+      <li class="previous">
+
+        {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}"><span aria-hidden="true">&larr;</span> Previous</a>
+        {% endif %}
+
+      </li>
+
+      <li class="text-muted">{{ page_obj }}</li>
+
+      <li class="next">
+
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">Next <span aria-hidden="true">&rarr;</span></a>
+        {% endif %}
+
+      </li>
+
+    </ul>
+
+  </nav>
+  {% endif %}
+
 <a href="/altas/{{ name }}/new/" class="btn btn-primary pull-right"><span class="glyphicon glyphicon-plus"></span> Agregar {{ title }}</a>
 {% else %}
 <p class="lead text-center text-muted">No hay registros en la base de datos.<br><br>

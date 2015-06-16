@@ -45,6 +45,7 @@ class Productos(PermissionRequiredMixin, ListView):
     context_object_name = 'productos'
     template_name = 'productos.html'
     permission_required = 'inventario.add_producto'
+    paginate_by = 20
 
     def get_context_data(self, **kwargs):
         context = super(Productos, self).get_context_data(**kwargs)
@@ -80,7 +81,6 @@ class ProductoUpdate(PermissionRequiredMixin, UpdateView):
 class ProductoDetail(PermissionRequiredMixin, UpdateView):
     form_class = ProductoCancelForm
     model = Producto
-    # context_object_name = 'producto'
     template_name = 'producto-detail.html'
     permission_required = 'inventario.add_producto'
 
@@ -114,6 +114,7 @@ class ProductosCancelled(PermissionRequiredMixin, ListView):
     context_object_name = 'productos'
     template_name = 'productos-cancelados.html'
     permission_required = 'inventario.add_cancelproducto'
+    paginate_by = 20
 
     def get_context_data(self, **kwargs):
         context = super(ProductosCancelled, self).get_context_data(**kwargs)
@@ -141,6 +142,7 @@ class Unidades(PermissionRequiredMixin, ListView):
     context_object_name = 'unidades'
     template_name = 'unidades.html'
     permission_required = 'inventario.add_unidadmedida'
+    paginate_by = 20
 
     def get_context_data(self, **kwargs):
         context = super(Unidades, self).get_context_data(**kwargs)
@@ -167,6 +169,7 @@ class EntradaList(PermissionRequiredMixin, ListView):
     context_object_name = 'entradas'
     template_name = 'entradas.html'
     permission_required = 'inventario.add_entrada'
+    paginate_by = 20
 
     def get_context_data(self, **kwargs):
         context = super(EntradaList, self).get_context_data(**kwargs)
@@ -218,6 +221,7 @@ class EntradasCancelledList(PermissionRequiredMixin, ListView):
     context_object_name = 'entradas'
     template_name = 'entradas-canceladas.html'
     permission_required = 'inventario.add_cancelentrada'
+    paginate_by = 20
 
     def get_context_data(self, **kwargs):
         context = super(EntradasCancelledList, self).get_context_data(**kwargs)
