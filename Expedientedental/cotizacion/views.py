@@ -87,6 +87,9 @@ def cotizacion_detail(request, odontograma_id):
 
 
 class CotizacionPDF(PDFTemplateView):
+    '''
+    view pdf que contiene datos de la cotizacion y sus items
+    '''
     filename = 'cotizacion.pdf'
     show_content_in_browser = True
     template_name = 'printit.html'

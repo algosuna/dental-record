@@ -254,6 +254,10 @@ class EntradaCancelDetail(PermissionRequiredMixin, DetailView):
 
 
 class ProductosPDF(PDFTemplateView):
+    '''
+    pdf de lista de productos muesra su status asi como
+    las existencias dentro del inventario:lista de productos
+    '''
     filename = 'productos.pdf'
     show_content_in_browser = True
     template_name = 'productos-pdf.html'
@@ -275,6 +279,11 @@ class ProductosPDF(PDFTemplateView):
 
 
 class ProductoPdf(PDFTemplateView):
+    '''
+    view dedicada a imprimir el detalle de un prducto
+    inventario:detalle de prodcuto
+    '''
+
     filename = 'producto.pdf'
     show_content_in_browser = True
     template_name = 'producto-pdf.html'
@@ -296,6 +305,10 @@ class ProductoPdf(PDFTemplateView):
 
 
 class ProductoCanceladoPDF(PDFTemplateView):
+    '''
+    pdf de producto desactivado muestra el detalle
+    de desactivacion asi como los detalles del producto
+    '''
     filename = 'producto-cancelado.pdf'
     show_content_in_browser = True
     template_name = 'producto-pdf.html'
@@ -320,6 +333,11 @@ class ProductoCanceladoPDF(PDFTemplateView):
 
 
 class EntradasPDF(PDFTemplateView):
+    '''
+    pdf muestra el detalle de la entradas del isnumo
+    a inventario lista de las entradas
+    '''
+
     filename = 'entradas.pdf'
     show_content_in_browser = True
     template_name = 'entradas-pdf.html'
@@ -342,6 +360,10 @@ class EntradasPDF(PDFTemplateView):
 
 
 class EntradaPDF(PDFTemplateView):
+    '''
+    pdf que muetra la entrada del producto ,detalle
+    asi como existencias
+    '''
     filename = 'entrada.pdf'
     show_content_in_browser = True
     template_name = 'entrada-pdf.html'
@@ -363,6 +385,10 @@ class EntradaPDF(PDFTemplateView):
 
 
 class EntradasCanceladasPDF(PDFTemplateView):
+    '''
+    pdf que muestra todas las entradas-canceladas
+    lista
+    '''
     filename = 'entradas-canceladas.pdf'
     show_content_in_browser = True
     template_name = 'entradas-pdf.html'
@@ -387,6 +413,9 @@ class EntradasCanceladasPDF(PDFTemplateView):
 
 
 class EntradaCanceladaPDF(PDFTemplateView):
+    '''
+    pdf de entradas canceladas detalle de la cancelacion
+    '''
     filename = 'entrada-cancelada.pdf'
     show_content_in_browser = True
     template_name = 'entrada-pdf.html'
