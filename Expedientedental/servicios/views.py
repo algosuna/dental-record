@@ -19,6 +19,8 @@ def servicios_create(request, cotizacion_id):
     servicios = paquete.servicio_set.all()
     total = paquete.total()
 
+    # for servicio in servicios:
+    #   print unicode(servicio)
     return render(request, 'paquete-servicios.html', {
                   'paquete': paquete,
                   'servicios': servicios,
