@@ -25,6 +25,9 @@
     <div class="page-header clearfix">
       <img src="http://localhost:8000/static/img/logo.png" alt="Logo" height="120" width="170" class="pull-right">
       <h4 class="page-header pdf-title pull-left">{% block title %}{% endblock title %}</h4>
+      <div class="col-xs-7 pull-left">
+        {% block headercontent %}{% endblock %}
+      </div>
     </div>
 
     {% block content %}

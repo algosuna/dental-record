@@ -267,13 +267,12 @@ class RecibodePagoPDF(PDFTemplateView):
 
     filename = 'recibo.pdf'
     show_content_in_browser = True
-    header_template = 'headerpdf.html',
     template_name = 'recibo_pago.html'
     footer_template = 'footerpdf.html'
     medico = None
 
     cmd_options = {
-        'margin-top': 35,
+        'margin-top': 10,
         'margin-bottom': 20,
         'page-size': 'Letter'
     }
