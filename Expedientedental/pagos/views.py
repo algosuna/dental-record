@@ -260,6 +260,11 @@ class PagosDetail(PermissionRequiredMixin, DetailView):
 
 
 class RecibodePagoPDF(PDFTemplateView):
+    '''
+    recibo que se le entrega al paciente cada vez
+    que hace un pago o un abono.
+    '''
+
     filename = 'recibo.pdf'
     show_content_in_browser = True
     header_template = 'headerpdf.html',
@@ -298,6 +303,10 @@ class RecibodePagoPDF(PDFTemplateView):
 
 
 class HistorialPagosPDF(PDFTemplateView):
+
+    '''
+    pdf que hace posible entrgar un estado de cuenta del paciente
+    '''
     filename = 'recibo_de_entrega.pdf'
     show_content_in_browser = True
     template_name = 'historial_pagos.html'

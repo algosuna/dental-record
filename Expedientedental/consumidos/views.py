@@ -376,6 +376,10 @@ class ProductoConsumidoDetail(PermissionRequiredMixin, DetailView):
 
 
 class ReciboPeticionPDF(PDFTemplateView):
+    '''
+    recibo de la peticion de materiales comunica
+    clinica:inventario
+    '''
     filename = 'recibo-entrega_de_peticion.pdf'
     show_content_in_browser = True
     template_name = 'peticion-pdf.html'
