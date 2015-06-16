@@ -22,14 +22,14 @@ class Paquete(models.Model):
     is_inactive = models.BooleanField(default=False)
 
     def __unicode__(self):
-        return '%s' % self.nombre
+        return unicode(self.nombre)
 
 
 class CancelPaquete(CancelledModel):
     paquete = models.ForeignKey(Paquete)
 
     def __unicode__(self):
-        return '%s' % self.reason
+        return unicode(self.reason)
 
 
 class PaqueteItem(models.Model):
@@ -39,7 +39,7 @@ class PaqueteItem(models.Model):
     cantidad_producto = models.DecimalField(max_digits=8, decimal_places=2)
 
     def __unicode__(self):
-        return '%s' % self.paquete
+        return (self.paquete)
 
 
 class PaqueteConsumido(TimeStampedModel):
@@ -61,7 +61,7 @@ class PaqueteConsumido(TimeStampedModel):
     history = HistoricalRecords()
 
     def __unicode__(self):
-        return '%s %s %s' % (self.paquete, self.medico, self.status)
+        return unicode(self.paquete, self.medico, self.status)
 
     def get_item_initials(self):
         ''' Asigna initials usando PaqueteItems con ForeignKey a Paquete. '''
@@ -93,7 +93,7 @@ class CancelPaqueteConsumido(CancelledModel):
     salida = models.ForeignKey(PaqueteConsumido)
 
     def __unicode__(self):
-        return '%s' % self.reason
+        return unicode(self.reason)
 
 
 class PaqueteConsumidoItemManager(models.Manager):
@@ -118,7 +118,7 @@ class PaqueteConsumidoItem(models.Model):
     objects = PaqueteConsumidoItemManager()
 
     def __unicode__(self):
-        return u'%s %s %s' % (self.producto, self.cantidad, self.precio)
+        return unicode(self.producto, self.cantidad, self.precio)
 
     def set_precio(self):
         ''' Calcula el precio correcto a asignar multiplicando el precio
@@ -141,4 +141,4 @@ class ProductoConsumido(models.Model):
     history = HistoricalRecords()
 
     def __unicode__(self):
-        return u'%s %s %s' % (self.producto, self.cantidad, self.cantidad)
+        return unicode(self.producto, self.cantidad, self.cantidad)
