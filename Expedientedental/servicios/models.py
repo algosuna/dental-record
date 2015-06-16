@@ -122,7 +122,7 @@ class Servicio(TimeStampedModel):
     objects = ServicioManager()
 
     def __unicode__(self):
-        return "Servicio %s" % (self.procedimiento)
+        return unicode(self.procedimiento)
 
     def total_pagado(self):
         ''' Suma todos los pagos aplicados al servicio. Default a 0. '''

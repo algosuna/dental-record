@@ -204,8 +204,7 @@ class Procedimiento(models.Model):
         max_length=12, choices=STATUS_CHOICES, default='recomendado')
 
     def __unicode__(self):
-        procedimiento = '%s' % (self.tratamiento)
-        return procedimiento
+        return unicode(self.tratamiento)
 
 
 class Bitacora(TimeStampedModel):

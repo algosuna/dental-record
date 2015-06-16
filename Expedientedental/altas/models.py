@@ -31,7 +31,7 @@ class Medico(models.Model):
     direccion = models.CharField(max_length=70, blank=True)
     ciudad = models.CharField(max_length=30, blank=True)
     estado = models.CharField(max_length=30, blank=True)
-    codigo_postal = models.IntegerField(max_length=5, blank=True)
+    codigo_postal = models.IntegerField(max_length=5, null=True, blank=True)
     telefono = models.CharField(max_length=20)
 
     history = HistoricalRecords()
@@ -66,7 +66,7 @@ class Paciente(models.Model):
     sexo = models.CharField(max_length=2, choices=SEX_CHOICES)
     correoElectronico = models.EmailField(max_length=60, blank=True)
     direccion = models.CharField(max_length=70, blank=True)
-    codigoPostal = models.IntegerField(max_length=5, blank=True)
+    codigoPostal = models.IntegerField(max_length=5, blank=True , null=True)
     estado = models.CharField(max_length=20, choices=ESTADO_CHOICES,
                               blank=True)
     ciudad = models.CharField(max_length=30, blank=True)

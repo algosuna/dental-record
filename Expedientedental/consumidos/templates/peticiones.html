@@ -1,8 +1,9 @@
 {% extends 'dash.html' %}
-{% load static from staticfiles %}
 
 {% block content %}
+
 <h2 class="page-header">{% block title %}Peticiones de Materiales Entregados{% endblock %}</h2>
+
 
 {% if paqueteconsumidos %}
 <table class="table table-hover">
@@ -40,6 +41,35 @@
   </tbody>
 
 </table>
+
+  {% if is_paginated %}
+  <nav>
+
+    <ul class="pager">
+
+      <li class="previous">
+
+        {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}"><span aria-hidden="true">&larr;</span> Previous</a>
+        {% endif %}
+
+      </li>
+
+      <li class="text-muted">{{ page_obj }}</li>
+
+      <li class="next">
+
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">Next <span aria-hidden="true">&rarr;</span></a>
+        {% endif %}
+
+      </li>
+
+    </ul>
+
+  </nav>
+  {% endif %}
+
 {% elif paqueteenespera or paqueteporentregar %}
 
   {% if paqueteenespera %}
@@ -119,6 +149,35 @@
     </tbody>
 
   </table>
+
+    {% if paqueteporentregar.has_other_pages %}
+    <nav>
+
+      <ul class="pager">
+
+        <li class="previous">
+
+          {% if paqueteporentregar.has_previous %}
+          <a href="?page={{ paqueteporentregar.previous_page_number }}"><span aria-hidden="true">&larr;</span> Previous</a>
+          {% endif %}
+
+        </li>
+
+        <li class="text-muted">{{ paqueteporentregar }}</li>
+
+        <li class="next">
+
+          {% if paqueteporentregar.has_next %}
+          <a href="?page={{ paqueteporentregar.next_page_number }}">Next <span aria-hidden="true">&rarr;</span></a>
+          {% endif %}
+
+        </li>
+
+      </ul>
+
+    </nav>
+    {% endif %}
+
   {% endif %}
 
 {% elif peticiones_canceladas %}
@@ -157,6 +216,34 @@
   </tbody>
 
 </table>
+
+  {% if is_paginated %}
+  <nav>
+
+    <ul class="pager">
+
+      <li class="previous">
+
+        {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}"><span aria-hidden="true">&larr;</span> Previous</a>
+        {% endif %}
+
+      </li>
+
+      <li class="text-muted">{{ page_obj }}</li>
+
+      <li class="next">
+
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">Next <span aria-hidden="true">&rarr;</span></a>
+        {% endif %}
+
+      </li>
+
+    </ul>
+
+  </nav>
+  {% endif %}
 {% else %}
 <p class="lead text-center text-muted">No hay peticiones.</p>
 {% endif %}

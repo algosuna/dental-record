@@ -1,32 +1,73 @@
-{% extends "dash.html" %}
-{%load static from staticfiles %}
-
-{% block title %}Medicos Registrados {% endblock %}
+{% extends 'dash.html' %}
 
 {% block content %}
-<h2 class="page-header">Médicos Registrados</h2>
+<h2 class="page-header">{% block title %}Médicos Registrados{% endblock %}</h2>
 
 {% if medicos %}
 <table class="table table-hover">
+
   <thead>
+
     <tr>
+
       <th>Nombre</th>
       <th>Especialidad</th>
       <th>&nbsp;</th>
+
     </tr>
+
   </thead>
+
   <tbody>
+
     {% for medico in medicos %}
     <tr>
+
       <td>{{ medico.user.get_full_name }}</td>
       <td>{{ medico.especialidad }}</td>
       <td><a href="{%  url altas:medico_edit medico.id %}"><span class="glyphicon glyphicon-pencil"></span></a></td>
+
     </tr>
     {% endfor %}
+
   </tbody>
+
 </table>
+
+  {% if is_paginated %}
+  <nav>
+
+    <ul class="pager">
+
+      <li class="previous">
+
+        {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}"><span aria-hidden="true">&larr;</span> Previous</a>
+        {% endif %}
+
+      </li>
+
+      <li class="text-muted">{{ page_obj }}</li>
+
+      <li class="next">
+
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">Next <span aria-hidden="true">&rarr;</span></a>
+        {% endif %}
+
+      </li>
+
+    </ul>
+
+  </nav>
+  {% endif %}
+
 <a href="{% url altas:medico_new %}" class="btn btn-primary pull-right">Registrar Nuevo M&eacute;dico <span class="glyphicon glyphicon-plus"></span></a>
 {% else %}
-<p class="lead text-center text-muted">No hay medicos registrados en la base de datos.<br><br><a href="{% url altas:medico_new %}" class="btn btn-primary">Registrar M&eacute;dico <span class="glyphicon glyphicon-chevron-right"></span></a></p>
+<p class="lead text-center text-muted">
+  No hay m&eacute;dicos registrados en la base de datos.
+  <br><br>
+  <a href="{% url altas:medico_new %}" class="btn btn-primary">Registrar M&eacute;dico <span class="glyphicon glyphicon-chevron-right"></span></a>
+</p>
 {% endif %}
 {% endblock content %}

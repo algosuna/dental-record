@@ -8,7 +8,7 @@ from django.views.generic import UpdateView, DetailView
 
 from wkhtmltopdf.views import PDFTemplateView
 from core.mixins import PermissionRequiredMixin
-from core.views import CreateObjFromContext
+from core.views import CreateObjFromContext, DetailListView
 from core.utils import generic_search
 
 from clinica.models import (
@@ -172,19 +172,23 @@ def bitacora_create(request, procedimiento_id):
                   })
 
 
-class HistorialView(PermissionRequiredMixin, DetailView):
+class HistorialView(PermissionRequiredMixin, DetailListView):
     model = Paciente
     template_name = 'historial.html'
     context_object_name = 'paciente'
     permission_required = 'clinica.add_odontograma'
+    list_model = Procedimiento
+    list_paginate_by = 20
+    list_context_name = 'procedimientos'
+
+    def get_list_queryset(self):
+        queryset = self.list_model.objects.filter(
+            odontograma__paciente=self.object, status='completado')
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super(HistorialView, self).get_context_data(**kwargs)
-        procedimientos = Procedimiento.objects.filter(
-            odontograma__paciente=self.object, status='completado')
-        context.update({
-            'procedimientos': procedimientos,
-            'h_active': 'active'})
+        context.update({'h_active': 'active'})
         return context
 
 
@@ -253,17 +257,22 @@ class InterrogatorioUpdate(PermissionRequiredMixin, UpdateView):
         return url
 
 
-class Radiografias(PermissionRequiredMixin, DetailView):
+class Radiografias(PermissionRequiredMixin, DetailListView):
     model = Paciente
     context_object_name = 'paciente'
     template_name = 'radiografias.html'
     permission_required = 'clinica.add_radiografia'
+    list_model = Radiografia
+    list_context_name = 'radiografias'
+    list_paginate_by = 20
+
+    def get_list_queryset(self):
+        return self.list_model.objects.filter(
+            paciente=self.object).order_by('-updated_at')
 
     def get_context_data(self, **kwargs):
         context = super(Radiografias, self).get_context_data(**kwargs)
-        radiografias = Radiografia.objects.filter(
-            paciente=self.object).order_by('-updated_at')
-        context.update({'radiografias': radiografias, 'ra_active': 'active'})
+        context.update({'ra_active': 'active'})
         return context
 
 

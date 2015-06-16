@@ -1,6 +1,7 @@
 # encoding:utf-8
 from datetime import datetime
 from django.contrib.auth.decorators import permission_required
+from django.core.paginator import Paginator
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import DetailView
@@ -92,6 +93,7 @@ def pagos(request, paquete_id):
 def pagos_list(request):
     ''' Todos los pagos realizados. '''
     pagos = Pago.objects.order_by('-fecha')
+    pagos = Paginator(pagos, 2)
     query = 'q'
 
     MODEL_MAP = {

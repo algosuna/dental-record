@@ -16,6 +16,7 @@ class CotizacionList(PermissionRequiredMixin, ListView):
     context_object_name = 'orders'
     template_name = 'cotizaciones.html'
     permission_required = 'cotizacion.add_cotizacion'
+    paginate_by = 20
 
     def get_queryset(self):
         cotizaciones = Cotizacion.objects.all()
@@ -38,6 +39,7 @@ class ProcesadoList(PermissionRequiredMixin, ListView):
     context_object_name = 'orders'
     template_name = 'cotizaciones-procesadas.html'
     permission_required = 'cotizacion.add_cotizacion'
+    paginate_by = 20
 
     def get_queryset(self):
         cotizaciones_pk = []

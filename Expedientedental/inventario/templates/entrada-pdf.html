@@ -1,14 +1,11 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title></title>
-</head>
-<body>
+{% extends "base-pdf.html" %}
 
-</body>
-</html>
 
-{% block title %}Detalle de Entrada{% if cancelentrada %} Cancelada {% endif 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="http://localhost:8000/static/css/localPDF.css">
+
+{% block title %}Detalle de Entrada{% if cancelentrada %} Cancelada {% endif %}
+{% endblock title %}
 
 {% block content %}
 <p>Fecha: <strong>{{ fecha }}</strong> Hora: <strong>{{ hora }}</strong></p>

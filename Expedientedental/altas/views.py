@@ -47,6 +47,7 @@ class Medicos(PermissionRequiredMixin, ListView):
     context_object_name = 'medicos'
     template_name = 'medicos.html'
     permission_required = 'altas.add_medico'
+    paginate_by = 20
 
     def get_context_data(self, **kwargs):
         context = super(Medicos, self).get_context_data(**kwargs)
@@ -84,6 +85,7 @@ class Pacientes(PermissionRequiredMixin, ListView):
     context_object_name = 'pacientes'
     template_name = 'pacientes.html'
     permission_required = 'altas.add_paciente'
+    paginate_by = 20
 
     def get_context_data(self, **kwrags):
         context = super(Pacientes, self).get_context_data(**kwrags)
@@ -123,6 +125,7 @@ class GruposView(PermissionRequiredMixin, ListView):
     context_object_name = 'grupos'
     template_name = 'grupos.html'
     permission_required = 'altas.add_grupo'
+    paginate_by = 20
 
     def get_context_data(self, **kwargs):
         context = super(GruposView, self).get_context_data(**kwargs)
@@ -191,6 +194,7 @@ class MetodoNewView(MetodoMixin, CreateView):
 
 class MetodoListView(MetodoMixin, ListView):
     template_name = 'metodos.html'
+    paginate_by = 20
 
 
 class MetodoUpdateView(MetodoMixin, UpdateView):
