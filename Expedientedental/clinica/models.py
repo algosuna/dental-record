@@ -160,9 +160,7 @@ class Interrogatorio(models.Model):
         max_length=100, blank=True)
 
     def __unicode__(self):
-
-        nombres = "%s %s" % (self.medico, self.paciente)
-        return nombres
+                return unicode(self.medico, self.paciente)
 
 
 class Odontograma(TimeStampedModel):
@@ -174,8 +172,7 @@ class Odontograma(TimeStampedModel):
         TratamientoPreventivo, blank=True, null=True)
 
     def __unicode__(self):
-        odontograma = '%s %s' % (self.id, self.evaluacion)
-        return odontograma
+            return unicode(self.id, self.evaluacion)
 
 
 class Procedimiento(models.Model):
@@ -204,8 +201,7 @@ class Procedimiento(models.Model):
         max_length=12, choices=STATUS_CHOICES, default='recomendado')
 
     def __unicode__(self):
-        procedimiento = '%s' % (self.tratamiento)
-        return procedimiento
+        return unicode(self.tratamiento)
 
 
 class Bitacora(TimeStampedModel):
@@ -214,8 +210,7 @@ class Bitacora(TimeStampedModel):
     descripcion = models.TextField()
 
     def __unicode__(self):
-        entrada = '%s %s' % (self.id, self.created_at)
-        return entrada
+        return unicode % (self.id, self.created_at)
 
 
 class Radiografia(TimeStampedModel):

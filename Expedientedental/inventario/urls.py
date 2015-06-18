@@ -45,6 +45,7 @@ urlpatterns = patterns(
 
     url(r'^productos/pdf/$',
         ProductosPDF.as_view(), name='productos_pdf'),
+
     url(r'^producto/(?P<pk>\d+)/pdf/$',
         ProductoPdf.as_view(), name='producto_pdf'),
 
@@ -53,6 +54,7 @@ urlpatterns = patterns(
 
     url(r'^entradas/pdf/$',
         EntradasPDF.as_view(), name='entradas_pdf'),
+
     url(r'^entrada/(?P<pk>\d+)/pdf/$',
         EntradaPDF.as_view(), name='entrada_pdf'),
 

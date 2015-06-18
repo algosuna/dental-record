@@ -332,6 +332,10 @@ class RadiografiaUpdate(PermissionRequiredMixin, UpdateView):
 
 
 class InterrogatorioPDF(PDFTemplateView):
+    '''
+    pdf de interrogatorio, solo tiene footer ,y propiedades
+    de marginales para el browser preview.pasa paciente en context
+    '''
     filename = 'interrogatorio.pdf'
     show_content_in_browser = True
     template_name = 'interrogatorio_pdf.html'
