@@ -7,6 +7,8 @@ from core.mixins import LoginRequiredMixin
 
 from accounts.forms import LoginForm, PassChangeForm
 
+from clinica.models import Odontograma
+
 
 def logout_view(request):
     logout(request)
@@ -44,6 +46,30 @@ class LoginView(FormView):
 class HomeView(LoginRequiredMixin, TemplateView):
     template_name = 'home.html'
 
+    def get_context_data(self, **kwargs):
+        context = super(HomeView, self).get_context_data(**kwargs)
+        user = self.request.user
+        try:
+            medico = user.medico_set.get()
+        except:
+            pass
+        else:
+            odontogramas = Odontograma.objects.filter(
+                medico=medico).order_by('-created_at')[:10]
+            procedimiento_list = []
+            for o in odontogramas:
+                procedimientos = o.procedimiento_set.filter(
+                    status__in=['autorizado', 'en_proceso'])[:20]
+                procedimiento_list.extend(procedimientos)
+
+            context.update({
+                'odontogramas': odontogramas,
+                'medico': medico,
+                'procedimientos': procedimiento_list
+                })
+
+        return context
+
 
 class ChangeView(FormView):
     form_class = PassChangeForm
@@ -58,5 +84,3 @@ class ChangeView(FormView):
     def form_valid(self, form):
         form.save()
         return super(ChangeView, self).form_valid(form)
-
-

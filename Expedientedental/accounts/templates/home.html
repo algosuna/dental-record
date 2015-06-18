@@ -5,16 +5,241 @@
 {% block bodyclass %}class="home"{% endblock %}
 
 {% block body %}
-<h4 class="page-header">Welcome, {{ user.get_full_name }}</h4>
-{% if perms.clinica.add_odontograma %}
-<a href="{% url clinica:paciente_search %}" class="btn btn-info btn-lg">Ir a Clinica <i class="fa fa-chevron-right fa-fw"></i></a>
-{% endif %}
-{% if perms.cotizacion.add_cotizacion %}
-<a href="{% url cotizacion:cotizacion_list %}" class="btn btn-success btn-lg">Ver Presupuestos <i class="fa fa-chevron-right fa-fw"></i></a>
-{% endif %}
-{% if perms.inventario.add_producto %}
-<a href="{% url inventario:producto_list %}" class="btn btn-primary btn-lg">Inventario <i class="fa fa-chevron-right fa-fw"></i></a>
-{% endif %}
+<h4 class="page-header">Bienvenida(o), {{ user.get_full_name }} {% if medico %}<small class="pull-right"><a href="{% url clinica:paciente_search %}"><i class="fa fa-search fa-fw"></i> Buscar Paciente</a></small>{% endif %}</h4>
+
+<!-- <div class="row">
+  <div class="col-md-4">
+    {% if perms.clinica.add_odontograma %}
+    <a href="{% url clinica:paciente_search %}" class="btn btn-info btn-lg btn-block">Ir a Clinica <i class="fa fa-chevron-right fa-fw"></i></a>
+    {% endif %}
+  </div>
+  <div class="col-md-4">
+    {% if perms.cotizacion.add_cotizacion %}
+    <a href="{% url cotizacion:cotizacion_list %}" class="btn btn-success btn-lg btn-block">Ver Presupuestos <i class="fa fa-chevron-right fa-fw"></i></a>
+    {% endif %}
+  </div>
+  <div class="col-md-4">
+    {% if perms.inventario.add_producto %}
+    <a href="{% url inventario:producto_list %}" class="btn btn-primary btn-lg btn-block">Inventario <i class="fa fa-chevron-right fa-fw"></i></a>
+    {% endif %}
+  </div>
+</div> --><!-- end .row -->
+
+<div class="row">
+
+  <div class="col-md-6">
+
+    {% if medico %}
+    <div class="panel panel-info">
+
+      <div class="panel-heading">
+        <i class="fa fa-puzzle-piece fa-fw"></i> &Uacute;ltimos Odontogramas
+      </div>
+
+      <div class="panel-body">
+
+        {% if odontogramas %}
+        <table class="table table-bordered">
+
+          <thead>
+
+            <tr>
+
+              <th>Fecha</th>
+              <th>Paciente</th>
+              <th>&nbsp;</th>
+
+            </tr>
+
+          </thead>
+
+          <tbody>
+
+            {% for odontograma in odontogramas %}
+            <tr>
+
+              <td>{{ odontograma.created_at }}</td>
+              <td>{{ odontograma.paciente }}</td>
+              <td class="text-center"><a href="{% url clinica:odontograma_detail odontograma.id %}"><i class="fa fa-search fa-fw"></i></a></td>
+
+            </tr>
+            {% endfor %}
+
+          </tbody>
+
+        </table>
+        {% else %}
+        <p class="text-muted">No ha creado odontogramas a&uacute;n.</p>
+        {% endif %}
+
+        <div class="text-right">
+          <a href="{% url clinica:paciente_search %}?next=odontograma">Nuevo Odontograma <i class="fa fa-plus-circle"></i></a>
+        </div>
+
+      </div>
+
+    </div>
+    {% endif %}
+
+  </div>
+
+  <div class="col-md-6">
+
+    <div class="panel panel-default">
+
+      <div class="panel-heading"><i class="fa fa-user{% if medico %}-md{% endif %} fa-fw"></i> Datos Personales</div>
+
+      <table class="table">
+
+        <tr>
+
+          <th>Nombre:</th>
+          <td>{{ user.get_full_name }}</td>
+
+        </tr>
+
+        <tr>
+
+          <th>Usuario:</th>
+          <td>{{ user.username }}</td>
+
+        </tr>
+
+        <tr>
+
+          <th>Correo Electro&oacute;nico:</th>
+          <td>{{ user.email }}</td>
+
+        </tr>
+
+        {% if medico %}
+        <tr>
+
+          <th>Tel&eacute;fono:</th>
+          <td>{{ medico.telefono }}</td>
+
+        </tr>
+
+        <tr>
+
+          <th>Direcci&oacute;n:</th>
+          <td>{{ medico.direccion }}<br>{{ medico.ciudad }}, {{ medico.estado }} {{ medico.codigo_postal }}</td>
+
+        </tr>
+
+        <tr>
+
+          <th>R.F.C.:</th>
+          <td>{{ medico.rfc }}</td>
+
+        </tr>
+
+        <tr>
+
+          <th>Universidad:</th>
+          <td>{{ medico.universidad_egreso}}</td>
+
+        </tr>
+
+        <tr>
+
+          <th>Licencia M&eacute;dica:</th>
+          <td>{{ medico.licencia_medica }}</td>
+
+        </tr>
+
+        <tr>
+
+          <th>Especialidad:</th>
+          <td>{{ medico.especialidad }}</td>
+
+        </tr>
+
+        <tr>
+
+          <th>Licencia de Especialidad:</th>
+          <td>{{ medico.licencia_especialidad }}</td>
+
+        </tr>
+
+        <tr>
+
+          <th>C&eacute;dula Estatal:</th>
+          <td>{{ medico.cedula_estatal }}</td>
+
+        </tr>
+        {% endif %}
+
+      </table>
+
+    </div><!-- end .panel -->
+
+  </div><!-- end .col-md-6 -->
+
+</div><!-- end .row -->
+
+<div class="row">
+
+  {% if medico %}
+  <div class="col-md-12">
+
+    <div class="panel panel-success">
+
+      <div class="panel-heading">
+        <i class="fa fa-th-list fa-fw"></i> Tratamientos Autorizados
+      </div>
+
+      <div class="panel-body">
+
+        {% if procedimientos %}
+        <table class="table table-bordered">
+
+          <thead>
+
+            <tr>
+
+              <th>Paciente</th>
+              <th>Pieza</th>
+              <th>Cara</th>
+              <th>Procedimiento</th>
+              <th>Status</th>
+              <th>&nbsp;</th>
+
+            </tr>
+
+          </thead>
+
+          <tbody>
+
+            {% for procedimiento in procedimientos %}
+            {% with servicio=procedimiento.servicio_set.get %}
+            <tr>
+
+              <td class="padded">{{ procedimiento.odontograma.paciente }}</td>
+              <td class="padded">{{ procedimiento.pieza }}</td>
+              <td class="padded">{{ procedimiento.get_cara_display }}</td>
+              <td class="padded">{{ procedimiento.tratamiento }}</td>
+              <td class="text-center padded"><span class="label label-primary">{{ procedimiento.get_status_display }}</span></td>
+              <td class="text-center"><a href="{% url consumidos:peticion_new servicio.id %}" class="btn btn-default">Solicitar Materiales</a></td>
+
+            </tr>
+            {% endwith %}
+            {% endfor %}
+
+          </tbody>
+
+        </table>
+        {% endif %}
+
+      </div>
+
+    </div><!-- end .panel -->
+
+  </div>
+  {% endif %}
+
+</div><!-- end .row -->
+
 {% endblock %}
 
 {% block footer %}

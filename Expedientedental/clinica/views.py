@@ -43,7 +43,8 @@ def paciente_search(request):
 
     return render(request, 'paciente-search.html', {
         'objects': objects,
-        'search_string': request.GET.get(query, '')})
+        'search_string': request.GET.get(query, '')
+        })
 
 
 class PacienteDetail(PermissionRequiredMixin, DetailView):
@@ -58,9 +59,11 @@ class PacienteDetail(PermissionRequiredMixin, DetailView):
         procedimientos = Procedimiento.objects.filter(
             odontograma__paciente=self.object
             ).exclude(status='completado').order_by('id')
-        context.update({'odontogramas': odontogramas,
-                        'procedimientos': procedimientos,
-                        'pd_active': 'active'})
+        context.update({
+            'odontogramas': odontogramas,
+            'procedimientos': procedimientos,
+            'pd_active': 'active'
+            })
         return context
 
 
