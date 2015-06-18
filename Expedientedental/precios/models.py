@@ -14,4 +14,4 @@ class PrecioTratamiento(models.Model):
     history = HistoricalRecords()
 
     def __unicode__(self):
-        return "%s (%s)" % (self.tratamiento, self.precio)
+        return '%s ($%s)' % (self.tratamiento, self.precio)

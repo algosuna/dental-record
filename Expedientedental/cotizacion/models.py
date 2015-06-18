@@ -25,8 +25,7 @@ class Cotizacion(TimeStampedModel):
         return resultado
 
     def __unicode__(self):
-        cotizacion = "cotizacion %s" % (self.odontograma)
-        return cotizacion
+        return 'Cotizacion %s' % self.odontograma
 
 
 class CotizacionItemQuerySet(QuerySet):
@@ -93,4 +92,4 @@ class CotizacionItem(TimeStampedModel):
     objects = CotizacionItemManager()
 
     def __unicode__(self):
-        return " %s" % (self.procedimiento)
+        return unicode(self.procedimiento)

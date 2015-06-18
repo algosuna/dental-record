@@ -43,8 +43,7 @@ class Pago(TimeStampedModel):
             raise ValueError('No se pudo aplicar monto')
 
     def __unicode__(self):
-            pago = "%s %s %s" % (self.monto, self.monto_aplicado, self.fecha)
-            return pago
+        return '$%s (%s)' % (self.monto_aplicado, self.fecha)
 
 
 class PagoAplicadoManager(models.Manager):
@@ -70,5 +69,4 @@ class PagoAplicado(models.Model):
     objects = PagoAplicadoManager()
 
     def __unicode__(self):
-            pagodetalle = "%s %s" % (self.pago, self.servicio)
-            return pagodetalle
+        return '$%s - %s' % (self.pago, self.servicio)

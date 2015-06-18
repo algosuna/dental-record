@@ -26,7 +26,7 @@ class Producto(TimeStampedModel):
     history = HistoricalRecords()
 
     def __unicode__(self):
-        return u'%s %s' % (self.nombre, self.unidad_medida)
+        return '%s %s' % (self.nombre, self.unidad_medida)
 
     def get_stock(self):
         ''' Regresa cantidad disponible. '''
@@ -52,7 +52,7 @@ class CancelProducto(CancelledModel):
     producto = models.ForeignKey(Producto)
 
     def __unicode__(self):
-        return '%s' % self.reason
+        return unicode(self.reason)
 
 
 class Entrada(TimeStampedModel):
@@ -62,7 +62,7 @@ class Entrada(TimeStampedModel):
     is_cancelled = models.BooleanField(default=False)
 
     def __unicode__(self):
-        return '%s' % self.producto
+        return unicode(self.producto)
 
 
 class CancelEntrada(CancelledModel):
@@ -73,4 +73,4 @@ class CancelEntrada(CancelledModel):
     entrada = models.ForeignKey(Entrada)
 
     def __unicode__(self):
-        return '%s' % self.reason
+        return unicode(self.reason)

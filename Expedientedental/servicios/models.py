@@ -40,8 +40,7 @@ class PaqueteServicios(TimeStampedModel):
         return r
 
     def __unicode__(self):
-        paquete = 'Paquete de Servicios %s' % (self.odontograma)
-        return paquete
+        return 'Paquete de Servicios %s' % (self.odontograma)
 
 
 class ServicioQuerySet(QuerySet):

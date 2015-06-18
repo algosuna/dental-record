@@ -15,8 +15,7 @@ class Grupo(models.Model):
     history = HistoricalRecords()
 
     def __unicode__(self):
-        grupo = '%s - %s' % (self.numero, self.nombre)
-        return grupo
+        return '%s - %s' % (self.numero, self.nombre)
 
 
 class Medico(models.Model):
@@ -37,7 +36,7 @@ class Medico(models.Model):
     history = HistoricalRecords()
 
     def __unicode__(self):
-        return unicode(self.user.get_full_name())
+        return self.user.get_full_name()
 
 
 class Paciente(models.Model):
