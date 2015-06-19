@@ -12,6 +12,7 @@ from clinica.models import Odontograma
 
 
 class CotizacionList(PermissionRequiredMixin, ListView):
+    ''' TODO: este view debe iterar cotizaciones. '''
     model = Odontograma
     context_object_name = 'orders'
     template_name = 'cotizaciones.html'
@@ -19,6 +20,7 @@ class CotizacionList(PermissionRequiredMixin, ListView):
     paginate_by = 20
 
     def get_queryset(self):
+        ''' TODO: arreglar este query. '''
         cotizaciones = Cotizacion.objects.all()
         odontogramas_procesados_pk = []
         for c in cotizaciones:

@@ -8,6 +8,8 @@ from core.mixins import LoginRequiredMixin
 from accounts.forms import LoginForm, PassChangeForm
 
 from clinica.models import Odontograma
+from cotizacion.models import Cotizacion
+from pagos.models import Pago
 
 
 def logout_view(request):
@@ -67,6 +69,22 @@ class HomeView(LoginRequiredMixin, TemplateView):
                 'medico': medico,
                 'procedimientos': procedimiento_list
                 })
+
+        # TODO: arreglar este query despues de crear cotizacion con odontograma
+        cotizaciones = Cotizacion.objects.all()
+        odontogramas_procesados_pk = []
+        for c in cotizaciones:
+            if c.total() == c.total_procesado():
+                odontogramas_procesados_pk.append(c.odontograma.pk)
+        odontogramas = Odontograma.objects.exclude(
+            pk__in=odontogramas_procesados_pk).order_by('-created_at')[:10]
+
+        pagos = Pago.objects.all().order_by('-created_at')[:5]
+
+        context.update({
+            'cotizaciones': odontogramas,
+            'pagos': pagos
+            })
 
         return context
 
