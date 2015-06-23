@@ -292,7 +292,7 @@ class ProcedimientoForm(forms.ModelForm):
                 ),
             )
 
-ProcedimientoFormSet = formset_factory(ProcedimientoForm)
+ProcedimientoFormSet = formset_factory(ProcedimientoForm, extra=0)
 
 
 class BitacoraForm(forms.ModelForm):
