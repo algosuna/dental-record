@@ -9,6 +9,7 @@ from accounts.forms import LoginForm, PassChangeForm
 
 from clinica.models import Odontograma
 from cotizacion.models import Cotizacion
+from inventario.models import Producto
 from pagos.models import Pago
 
 
@@ -81,9 +82,12 @@ class HomeView(LoginRequiredMixin, TemplateView):
 
         pagos = Pago.objects.all().order_by('-created_at')[:5]
 
+        productos = Producto.objects.all().order_by('-updated_at')[:5]
+
         context.update({
             'cotizaciones': odontogramas,
-            'pagos': pagos
+            'pagos': pagos,
+            'productos': productos,
             })
 
         return context

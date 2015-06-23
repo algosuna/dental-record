@@ -29,112 +29,6 @@
 
   <div class="col-md-6">
 
-    {% if medico %}
-    <div class="panel panel-info">
-
-      <div class="panel-heading">
-        <i class="fa fa-puzzle-piece fa-fw"></i> &Uacute;ltimos Odontogramas
-      </div>
-
-      <div class="panel-body">
-
-        {% if odontogramas %}
-        <table class="table table-bordered">
-
-          <thead>
-
-            <tr>
-
-              <th>Fecha</th>
-              <th>Paciente</th>
-              <th>&nbsp;</th>
-
-            </tr>
-
-          </thead>
-
-          <tbody>
-
-            {% for odontograma in odontogramas %}
-            <tr>
-
-              <td>{{ odontograma.created_at }}</td>
-              <td>{{ odontograma.paciente }}</td>
-              <td class="text-center"><a href="{% url clinica:odontograma_detail odontograma.id %}"><i class="fa fa-search fa-fw"></i></a></td>
-
-            </tr>
-            {% endfor %}
-
-          </tbody>
-
-        </table>
-        {% else %}
-        <p class="text-muted">No ha creado odontogramas a&uacute;n.</p>
-        {% endif %}
-
-        <div class="text-right">
-          <a href="{% url clinica:paciente_search %}?next=odontograma">Nuevo Odontograma <i class="fa fa-plus-circle"></i></a>
-        </div>
-
-      </div>
-
-    </div>
-    {% endif %}
-
-    {% if perms.cotizacion.add_cotizacion %}
-    <div class="panel panel-info">
-
-      <div class="panel-heading"><i class="fa fa-calculator fa-fw"></i> Presupuestos</div>
-
-      <div class="panel-body">
-
-        {% if cotizaciones %}
-        <table class="table table-bordered">
-
-          <thead>
-
-            <tr>
-
-              <th>Fecha</th>
-              <th>Evaluacion</th>
-              <th>&nbsp;</th>
-
-            </tr>
-
-          </thead>
-
-          <tbody>
-
-            {% for cotizacion in cotizaciones %}
-            <tr>
-
-              <td>{{ cotizacion.created_at }}</td>
-              <td>{{ cotizacion }}</td>
-              <td class="text-center"><a href="{% url cotizacion:cotizacion_detail cotizacion.id %}"><i class="fa fa-search fa-fw"></i></a></td>
-
-            </tr>
-            {% endfor %}
-
-          </tbody>
-
-        </table>
-
-        <div class="text-right">
-          <a href="{% url cotizacion:cotizacion_list %}">Ver Lista de Presupuestos <i class="fa fa-plus-circle"></i></a>
-        </div>
-        {% else %}
-        <p class="text-muted">No hay cotizaciones en la base de datos.</p>
-        {% endif %}
-
-      </div>
-
-    </div>
-    {% endif %}
-
-  </div>
-
-  <div class="col-md-6">
-
     <div class="panel panel-default">
 
       <div class="panel-heading"><i class="fa fa-user{% if medico %}-md{% endif %} fa-fw"></i> Datos Personales</div>
@@ -226,33 +120,26 @@
 
   </div><!-- end .col-md-6 -->
 
-</div><!-- end .row -->
-
-<div class="row">
-
   {% if medico %}
-  <div class="col-md-12">
+  <div class="col-md-6">
 
-    <div class="panel panel-success">
+    <div class="panel panel-info">
 
       <div class="panel-heading">
-        <i class="fa fa-th-list fa-fw"></i> Tratamientos Autorizados
+        <i class="fa fa-puzzle-piece fa-fw"></i> &Uacute;ltimos Odontogramas
       </div>
 
       <div class="panel-body">
 
-        {% if procedimientos %}
+        {% if odontogramas %}
         <table class="table table-bordered">
 
           <thead>
 
             <tr>
 
+              <th>Fecha</th>
               <th>Paciente</th>
-              <th>Pieza</th>
-              <th>Cara</th>
-              <th>Procedimiento</th>
-              <th>Status</th>
               <th>&nbsp;</th>
 
             </tr>
@@ -261,33 +148,142 @@
 
           <tbody>
 
-            {% for procedimiento in procedimientos %}
-            {% with servicio=procedimiento.servicio_set.get %}
+            {% for odontograma in odontogramas %}
             <tr>
 
-              <td class="padded">{{ procedimiento.odontograma.paciente }}</td>
-              <td class="padded">{{ procedimiento.pieza }}</td>
-              <td class="padded">{{ procedimiento.get_cara_display }}</td>
-              <td class="padded">{{ procedimiento.tratamiento }}</td>
-              <td class="text-center padded"><span class="label label-primary">{{ procedimiento.get_status_display }}</span></td>
-              <td class="text-center"><a href="{% url consumidos:peticion_new servicio.id %}" class="btn btn-default">Solicitar Materiales</a></td>
+              <td>{{ odontograma.created_at }}</td>
+              <td>{{ odontograma.paciente }}</td>
+              <td class="text-center"><a href="{% url clinica:odontograma_detail odontograma.id %}"><i class="fa fa-search fa-fw"></i></a></td>
 
             </tr>
-            {% endwith %}
             {% endfor %}
 
           </tbody>
 
         </table>
         {% else %}
-        <p class="text-muted">No hay tratamientos autorizados.</p>
+        <p class="text-muted">No ha creado odontogramas a&uacute;n.</p>
+        {% endif %}
+
+        <div class="text-right">
+          <a href="{% url clinica:paciente_search %}?next=odontograma">Nuevo Odontograma <i class="fa fa-plus-circle"></i></a>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div><!-- end .col-md-6 -->
+  {% endif %}
+
+  {% if perms.cotizacion.add_cotizacion %}
+  <div class="col-md-6">
+
+    <div class="panel panel-info">
+
+      <div class="panel-heading"><i class="fa fa-calculator fa-fw"></i> Presupuestos</div>
+
+      <div class="panel-body">
+
+        {% if cotizaciones %}
+        <table class="table table-bordered">
+
+          <thead>
+
+            <tr>
+
+              <th>Fecha</th>
+              <th>Evaluacion</th>
+              <th>&nbsp;</th>
+
+            </tr>
+
+          </thead>
+
+          <tbody>
+
+            {% for cotizacion in cotizaciones %}
+            <tr>
+
+              <td>{{ cotizacion.created_at }}</td>
+              <td>{{ cotizacion }}</td>
+              <td class="text-center"><a href="{% url cotizacion:cotizacion_detail cotizacion.id %}"><i class="fa fa-search fa-fw"></i></a></td>
+
+            </tr>
+            {% endfor %}
+
+          </tbody>
+
+        </table>
+
+        <div class="text-right">
+          <a href="{% url cotizacion:cotizacion_list %}">Ver Lista de Presupuestos <i class="fa fa-plus-circle"></i></a>
+        </div>
+        {% else %}
+        <p class="text-muted">No hay cotizaciones en la base de datos.</p>
+        {% endif %}
+
+      </div>
+
+    </div>
+
+  </div>
+  {% endif %}
+
+  {% if perms.inventario.change_producto %}
+  <div class="col-md-6">
+
+    <div class="panel panel-info">
+
+      <div class="panel-heading">
+        <i class="fa fa-cube fa-fw"></i> Productos Actualizados Recientemente
+      </div>
+
+      <div class="panel-body">
+
+        {% if productos %}
+        <table class="table table-bordered">
+
+          <thead>
+
+            <tr>
+
+              <th>Producto</th>
+              <th>&Uacute;ltima Modificaci&oacute;n</th>
+              <th>&nbsp;</th>
+
+            </tr>
+
+          </thead>
+
+          <tbody>
+
+            {% for producto in productos %}
+            <tr>
+
+              <td>{{ producto.nombre }}</td>
+              <td>{{ producto.updated_at }}</td>
+              <td class="text-center"><a href="{% url inventario:producto_detail producto.id %}"><i class="fa fa-search fa-fw"></i></a></td>
+
+            </tr>
+            {% endfor %}
+
+          </tbody>
+
+        </table>
+
+        <div class="text-right">
+          <a href="#">Buscar Producto <i class="fa fa-arrow-circle-right fa-fw"></i></a>
+        </div>
+        {% else %}
+        <p class="text-muted">No hay productos registrados.</p>
         {% endif %}
 
       </div>
 
     </div><!-- end .panel -->
 
-  </div>
+  </div><!-- end .col-md-6 -->
   {% endif %}
 
   {% if perms.pagos.add_pago %}
@@ -348,7 +344,7 @@
   </div><!-- end .col-md-6 -->
   {% endif %}
 
-  <div class="col-md-6">
+  <!--div class="col-md-6">
 
     <h3>Otras Actividades</h3>
 
@@ -356,9 +352,77 @@
     <a href="{% url precios:precios_grupos %}" class="btn btn-default btn-lg btn-block">Actualizar Precios de Grupos</a>
     {% endif %}
 
-  </div><!-- end .col-md-6 -->
+    {% if perms.altas.add_tratamiento %}
+    <a href="{% url precios:precios_grupos %}" class="btn btn-default btn-lg btn-block">Actualizar Precios de Grupos</a>
+    {% endif %}
+
+  </div><!- - end .col-md-6 -->
 
 </div><!-- end .row -->
+
+{% if medico %}
+<div class="row">
+
+  <div class="col-md-12">
+
+    <div class="panel panel-success">
+
+      <div class="panel-heading">
+        <i class="fa fa-th-list fa-fw"></i> Tratamientos Autorizados
+      </div>
+
+      <div class="panel-body">
+
+        {% if procedimientos %}
+        <table class="table table-bordered">
+
+          <thead>
+
+            <tr>
+
+              <th>Paciente</th>
+              <th>Pieza</th>
+              <th>Cara</th>
+              <th>Procedimiento</th>
+              <th>Status</th>
+              <th>&nbsp;</th>
+
+            </tr>
+
+          </thead>
+
+          <tbody>
+
+            {% for procedimiento in procedimientos %}
+            {% with servicio=procedimiento.servicio_set.get %}
+            <tr>
+
+              <td class="padded">{{ procedimiento.odontograma.paciente }}</td>
+              <td class="padded">{{ procedimiento.pieza }}</td>
+              <td class="padded">{{ procedimiento.get_cara_display }}</td>
+              <td class="padded">{{ procedimiento.tratamiento }}</td>
+              <td class="text-center padded"><span class="label label-primary">{{ procedimiento.get_status_display }}</span></td>
+              <td class="text-center"><a href="{% url consumidos:peticion_new servicio.id %}" class="btn btn-default">Solicitar Materiales</a></td>
+
+            </tr>
+            {% endwith %}
+            {% endfor %}
+
+          </tbody>
+
+        </table>
+        {% else %}
+        <p class="text-muted">No hay tratamientos autorizados.</p>
+        {% endif %}
+
+      </div>
+
+    </div><!-- end .panel -->
+
+  </div>
+
+</div><!-- end .row -->
+{% endif %}
 
 {% endblock %}
 
