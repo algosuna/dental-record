@@ -7,11 +7,6 @@ urlpatterns = patterns(
 
     url(r'^altas/precios/(?P<grupo_id>\d+)/$', 'precios_view', name='precios'),
 
-)
-
-urlpatterns += patterns(
-    '',
-
     url(r'^altas/precios/$', PreciosGrupos.as_view(), name='precios_grupos'),
 
 )
