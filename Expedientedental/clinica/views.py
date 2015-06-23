@@ -72,10 +72,18 @@ def odontograma(request, paciente_id):
     paciente = get_object_or_404(Paciente, pk=paciente_id)
     tratamientos = Tratamiento.objects.all()
     medico = request.user.medico_set.get()
+    # initial = [{
+    #     'pieza': None,
+    #     'cara': None,
+    #     'tratamiento': None,
+    #     'diagnostico': None,
+    #     'notas': None,
+    # }]
+    initial = [{}]
 
     if request.method == 'POST':
         modelform = OdontogramaForm(request.POST)
-        formset = ProcedimientoFormSet(request.POST, request.FILES)
+        formset = ProcedimientoFormSet(request.POST, initial=initial)
 
         if modelform.is_valid():
             odontograma = modelform.save(commit=False)
@@ -88,11 +96,21 @@ def odontograma(request, paciente_id):
                     form.instance.odontograma = odontograma
                     form.save()
 
-            return redirect(reverse(
-                'clinica:odontograma_detail', args=[odontograma.id]))
+                return redirect(reverse(
+                    'clinica:odontograma_detail', args=[odontograma.id]))
+
+        # TODO: agregar form vacio
+
     else:
         modelform = OdontogramaForm()
-        formset = ProcedimientoFormSet()
+        formset = ProcedimientoFormSet(initial=initial)
+
+    # print len(formset)
+    print formset.initial_form_count()
+    print formset.total_form_count()
+    # for form in formset:
+    #     print '*' * 20
+    #     print form
 
     return render(request, 'odontograma.html', {
                   'form': modelform,

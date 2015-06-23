@@ -94,6 +94,7 @@ jQuery(function(){
 		};
 
 		$.each([caraCentral, caraIzquierda, caraDerecha, caraInferior, caraSuperior, caraCompleto], function(index, value){
+
 	    	value.click(function(){
 	    		// Evento que agrega procedimiento a odontograma
 	    		var me = $(this);
@@ -138,8 +139,6 @@ jQuery(function(){
 	};
 
 	function renderSvg(){
-
-
 		var svg = $('#odontograma').svg('get').clear();
 		var parentGroup = svg.group({transform: 'scale(1.5)'});
 		var dientes = vm.dientes();
@@ -153,7 +152,6 @@ jQuery(function(){
 	//View Models
 	function DienteModel(id, x, y){
 		var self = this;
-
 		self.id = id;
 		self.x = x;
 		self.y = y;
@@ -161,13 +159,12 @@ jQuery(function(){
 
 	function ViewModel(){
 		var self = this;
-
 		//self.tratamientosPosibles = ko.observableArray([]);
 		self.tratamientoSeleccionado = ko.observable(null);
 		self.tratamientosAplicados = ko.observableArray([]);
 
 		self.quitarTratamiento = function(tratamiento){
-			self.tratamientosAplicados.destroy(tratamiento);
+			self.tratamientosAplicados.remove(tratamiento);
 			// Resta 1 para mantenter actualizado contador de formas en formset
 		    // setTotalForms(getTotalForms()-1);
 			renderSvg();

@@ -288,41 +288,60 @@
 
   {% if perms.pagos.add_pago %}
   <div class="col-md-6">
+
     <div class="panel panel-default">
+
       <div class="panel-heading"><i class="fa fa-dollar fa-fw"></i> Pagos Recientes</div>
+
       <div class="panel-body">
+
         {% if pagos %}
         <table class="table table-bordered">
+
           <thead>
+
             <tr>
+
               <th>Fecha</th>
               <th>Paciente</th>
               <th>Monto</th>
               <th>&nbsp;</th>
+
             </tr>
+
           </thead>
+
           <tbody>
+
             {% for pago in pagos %}
             <tr>
+
               <td>{{ pago.created_at }}</td>
               <td>{{ pago.paciente }}</td>
               <td>$ {{ pago.monto_aplicado }}</td>
               <td class="text-center"><a href="{% url pagos:pagos_detail pago.id %}"><i class="fa fa-search fa-fw"></i></a></td>
+
             </tr>
             {% endfor %}
-          </tbody>
-        </table>
 
+          </tbody>
+
+        </table>
         {% else %}
         <p class="text-muted">No hay pagos registrados.</p>
         {% endif %}
 
         <div class="text-right">
+
           <a href="{% url pagos:paciente_search %}">Realizar Pago <i class="fa fa-plus-circle"></i></a>
+
         </div>
-      </div>
-    </div>
-  </div>
+
+      </div><!-- end .panel-body -->
+
+    </div><!-- end .panel -->
+
+  </div><!-- end col-md-6 -->
   {% endif %}
 
 </div><!-- end .row -->
