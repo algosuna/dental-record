@@ -14,11 +14,11 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'dentaldb.sqlite3',
-        'USER': '',                      # Not used with sqlite3.
-        'PASSWORD': '',                  # Not used with sqlite3.
-        'HOST': '',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'dentaldb',
+        'USER': 'root',
+        'PASSWORD': 'root',
+        'HOST': 'localhost',
         'PORT': '',
     }
 }

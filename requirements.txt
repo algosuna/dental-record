@@ -12,6 +12,7 @@ django-simple-history==1.6.1
 django-suit==0.2.12
 django-wkhtmltopdf==2.0.2
 easy-thumbnails==2.2
+MySQL-python==1.2.5
 Pillow==2.8.2
 python-dateutil==2.4.0
 pytz==2014.10
