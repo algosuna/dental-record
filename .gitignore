@@ -5,3 +5,4 @@ media
 *.sublime-*
 .sass-cache
 *.css.map
+dump
