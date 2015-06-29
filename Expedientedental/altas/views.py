@@ -1,5 +1,6 @@
 # encoding:utf-8
 from django.contrib.auth.decorators import permission_required
+from django.contrib.auth.models import Permission
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.shortcuts import render, redirect
 from django.views.generic import CreateView, ListView, UpdateView
@@ -24,8 +25,19 @@ def medico_create(request):
         medico_form = MedicoForm(request.POST)
 
         if medico_user_form.is_valid() and medico_form.is_valid():
-            user = medico_user_form.save(commit=False)
+            user = medico_user_form.save()
             user.set_password(user.password)
+            permissions = Permission.objects.filter(
+                codename__in=[
+                    'add_odontograma',
+                    'add_bitacora',
+                    'add_radiografia',
+                    'change_radiografia',
+                    'add_interrogatorio',
+                    'add_procedimiento',
+                    'add_paquete'
+                ])
+            user.user_permissions.add(*list(permissions))
             user.save()
             medico = medico_form.save(commit=False)
             medico.user = user
