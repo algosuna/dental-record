@@ -1,27 +1,12 @@
 # Django settings for expedientedental project.
 from unipath import Path
-BASE_DIR = Path(__file__).ancestor(2)
-
-DEBUG = True
-
-TEMPLATE_DEBUG = DEBUG
+BASE_DIR = Path(__file__).ancestor(3)
 
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+    ('Andrea Gonzalez', 'andyosuna@gmail.com'),
 )
 
 MANAGERS = ADMINS
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'dentaldb',
-        'USER': 'root',
-        'PASSWORD': 'root',
-        'HOST': 'localhost',
-        'PORT': '',
-    }
-}
 
 # Local time zone for this installation. Choices can be found here:
 ALLOWED_HOSTS = []
@@ -66,12 +51,15 @@ MEDIA_URL = '/media/'
 # Example: "/home/media/media.lawrence.com/static/"
 # STATIC_ROOT = BASE_DIR.child('static')
 
+# Additional locations of static files
+STATICFILES_DIRS = (
+    BASE_DIR.child('static'),
+)
+
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
 STATIC_URL = '/static/'
 
-# Additional locations of static files
-STATICFILES_DIRS = [BASE_DIR.child('static')]
 # Put strings here, like "/home/html/static" or "C:/www/django/static".
 # Always use forward slashes, even on Windows.
 # Don't forget to use absolute paths, not relative paths.
@@ -151,7 +139,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
 
     # Uncomment the next line to enable admin documentation:
-    'django.contrib.admindocs',
+    # 'django.contrib.admindocs',
 
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -191,9 +179,6 @@ THUMBNAIL_ALIASES = {
         'thumbnail': {'size': (200, 200), 'crop': True},
     },
 }
-
-THUMBNAIL_DEBUG = True
-
 
 import unittest
 unittest.TestLoader.testMethodPrefix = 'should'

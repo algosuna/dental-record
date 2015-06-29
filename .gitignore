@@ -6,3 +6,4 @@ media
 .sass-cache
 *.css.map
 dump
+cfg.json

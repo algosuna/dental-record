@@ -12,8 +12,9 @@ dajaxice_autodiscover()
 urlpatterns = patterns(
     '',
 
-    # Uncomment the next line to enable the admin:
     # url(r'^i18n/', include('django.conf.urls.i18n')),
+
+    # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
 
     # Uncomment the admin/doc line below to enable admin documentation:
@@ -32,7 +33,6 @@ urlpatterns = patterns(
     url(r'^', include('consumidos.urls', namespace='consumidos')),
 
     # Esto es necesario para tener un folder de media funcional.
-    # Agregado para foto de paciente (imagenpaciente)
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve',
         {'document_root': settings.MEDIA_ROOT}),
 
