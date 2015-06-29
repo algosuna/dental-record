@@ -14,7 +14,7 @@
       selectedListLabel: false,                                                           // 'string', false
       nonSelectedListLabel: false,                                                        // 'string', false
       helperSelectNamePostfix: '_helper',                                                 // 'string_of_postfix' / false
-      selectorMinimalHeight: 100,
+      selectorMinimalHeight: 300,
       showFilterInputs: true,                                                             // whether to show filter inputs
       nonSelectedFilter: '',                                                              // string, filter the non selected options
       selectedFilter: '',                                                                 // string, filter the selected options
