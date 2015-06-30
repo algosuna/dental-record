@@ -3,18 +3,24 @@
 {% load static from staticfiles %}
 {% load thumbnail %}
 
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/ekko-lightbox.min.css' %}">
+{% endblock %}
+
 {% block content %}
 <h2 class="page-header">{% block title %}Radiografias{% endblock %} <small class="pull-right"><a href="{% url clinica:radiografia_create paciente.id %}"><i class="fa fa-plus fa-fw"></i> Nueva</a></small></h2>
 
 {% if radiografias %}
-<div class="row">
+<div class="row gallery-container">
 
   {% for radiografia in radiografias %}
   <div class="col-md-3">
 
     <div class="thumbnail">
 
-      <img src="{% thumbnail radiografia.image 300x300 crop %}" class="img-responsive" alt="{{ radiografia.title }}">
+      <a href="{% static radiografia.image %}" data-toggle="lightbox" data-gallery="gallery" data-title="{{ radiografia.title }}" data-parent=".gallery-container">
+        <img src="{% thumbnail radiografia.image 300x300 crop %}" class="img-responsive" alt="{{ radiografia.title }}">
+      </a>
 
       <div class="caption">
 
@@ -25,6 +31,12 @@
     </div>
 
   </div>
+
+{% if forloop.counter|divisibleby:4 %}
+</div>
+<div class="row">
+{% endif %}
+
   {% endfor %}
 
 </div>
@@ -60,4 +72,16 @@
 <p class="text-muted text-center lead">Este paciente no tiene radiograf&iacute;as.</p>
 <p class="text-center"><a href="{% url clinica:radiografia_create paciente.id %}" class="btn btn-primary"><i class="fa fa-plus fa-fw"></i> Agregar Radiograf&iacute;a</a></p>
 {% endif %}
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'js/ekko-lightbox.min.js' %}"></script>
+<script>
+$(function () {
+  $('.gallery-container').delegate('*[data-toggle="lightbox"]', 'click', function(event) {
+    event.preventDefault();
+    $(this).ekkoLightbox();
+  });
+})
+</script>
 {% endblock %}
