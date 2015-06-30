@@ -1,8 +1,18 @@
 import json
+from django.core.exceptions import ImproperlyConfigured
 from .base import *
 
-with file(BASE_DIR.child('cfg.json')) as cfg:
-    config = json.load(cfg)
+with open(BASE_DIR.child('cfg.json')) as cfg:
+    config = json.loads(cfg.read())
+
+
+def get_config(setting, config=config):
+    ''' Get configuration variables or return detailed exception. '''
+    try:
+        return config[setting]
+    except KeyError:
+        error_msg = 'Configura la variable de entorno {0}'.format(setting)
+        raise ImproperlyConfigured(error_msg)
 
 DEBUG = False
 
@@ -18,3 +28,5 @@ DATABASES = {
         'PORT': '',
     }
 }
+
+SECRET_KEY = get_config('SECRET_KEY')
