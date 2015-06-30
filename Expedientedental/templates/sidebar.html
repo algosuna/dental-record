@@ -26,19 +26,21 @@
     {% endif %}
     {% endif %}
 
-    {% if perms.cotizacion.add_cotizacion %}
+    {% if perms.pagos.add_pago %}
     <a class="sidebar-header text-center" data-toggle="collapse" href="#administracion">Administraci&oacute;n</a>
     <div class="collapse" id="administracion">
       <li class="{{ rp_active }}"><a href="{% url pagos:paciente_search %}"><i class="fa fa-search fa-fw"></i> Buscar Paciente</a></li>
       <li class="{{ c_active }}"><a href="{% url cotizacion:cotizacion_list %}"><i class="fa fa-calculator fa-fw"></i> Presupuestos</a></li>
       <li class="{{ cp_active }}"><a href="{% url cotizacion:procesado_list %}"><i class="fa fa-calculator fa-fw"></i> Presupuestos Procesados</a></li>
       <li class="{{ r_active }}"><a href="{% url pagos:pagos_list %}"><i class="fa fa-list fa-fw"></i> Pagos Realizados</a></li>
+      {% if perms.precios.change_preciotratamiento %}
       <li class="{{ pg_active }}"><a href="{% url precios:precios_grupos %}"><i class="fa fa-usd fa-fw"></i> Precios por Grupo</a></li>
+      {% endif %}
       <li class="{{ us_active }}"><a href="{% url utilidad:utilidad_search %}"><i class="fa fa-list fa-fw"></i> Utilidades</a></li>
     </div>
     {% endif %}
 
-    {% if perms.inventario.add_producto %}
+    {% if perms.inventario.change_producto %}
     <a class="sidebar-header text-center" data-toggle="collapse" href="#inventario">Inventario</a>
     <div class="collapse" id="inventario">
       <li class="{{ s_active }}"><a href="{% url inventario:producto_search %}"><i class="fa fa-search fa-fw"></i> Buscar Producto</a></li>
@@ -56,13 +58,15 @@
     </div>
     {% endif %}
 
-    {% if perms.inventario.change_producto %}
+    {% if perms.inventario.add_entrada %}
     <a class="sidebar-header text-center" data-toggle="collapse" href="#entradas">Entradas</a>
     <div class="collapse" id="entradas">
       <li class="{{ e_active }}"><a href="{% url inventario:entradas %}"><i class="fa fa-cubes fa-fw"></i> Entradas de Producto</a></li>
       <li class="{{ ec_active }}"><a href="{% url inventario:entradas_canceladas %}"><i class="fa fa-times fa-fw"></i> Entradas Canceladas</a></li>
     </div>
+    {% endif %}
 
+    {% if perms.consumidos.change_paqueteconsumido %}
     <a class="sidebar-header text-center" data-toggle="collapse" href="#salidas">Peticiones</a>
     <div class="collapse" id="salidas">
       <li class="{{ pe_active }}"><a href="{% url consumidos:peticion_list %}"><i class="fa fa-inbox fa-fw"></i> Peticiones de Material</a></li>
@@ -73,19 +77,23 @@
     </div>
     {% endif %}
 
-    {% if perms.altas.add_tratamiento %}
+    {% if perms.altas.add_medico or perms.inventario.add_unidadmedida or perms.inventario.add_producto %}
     <a class="sidebar-header text-center" data-toggle="collapse" href="#altas">Catalogos</a>
     <div class="collapse" id="altas">
       <li class="{{ m_active }}"><a href="{% url altas:medicos %}"><i class="fa fa-user-md fa-fw"></i> Medicos</a></li>
       <li class="{{ pa_active }}"><a href="{% url altas:pacientes %}"><i class="fa fa-user fa-fw"></i> Pacientes</a></li>
       <li class="{{ g_active }}"><a href="{% url altas:grupos %}"><i class="fa fa-users fa-fw"></i> Grupos</a></li>
+      {% if perms.inventario.add_producto %}
       <li class="{{ pc_active }}"><a href="{% url inventario:producto_create %}"><i class="fa fa-plus fa-fw"></i> Productos</a></li>
+      {% endif %}
+      {% if perms.inventario.add_unidadmedida %}
       <li class="{{ u_active }}"><a href="{% url inventario:unidades %}"><i class="fa fa-dashboard fa-fw"></i> Unidades de Medida</a></li>
+      {% endif %}
       <li class="{{ t_active }}"><a href="{% url altas:tratamiento %}"><i class="fa fa-heart fa-fw"></i> Tratamientos</a></li>
       <li class="{{ tp_active }}"><a href="{% url altas:preventivo %}"><i class="fa fa-heart fa-fw"></i> Tratamientos Prev.</a></li>
-      <li class="{{ ev_active }}"><a href="{% url altas:evaluacion %}"><i class="fa fa-heart fa-fw"></i> 
+      <li class="{{ ev_active }}"><a href="{% url altas:evaluacion %}"><i class="fa fa-heart fa-fw"></i>
       Evaluaciones</a></li>
-      
+
     </div>
     {% endif %}
   </ul>
