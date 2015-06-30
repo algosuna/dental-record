@@ -21,10 +21,10 @@ TEMPLATE_DEBUG = DEBUG
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': config['DATABASE']['NAME'],
-        'USER': config['DATABASE']['USER'],
-        'PASSWORD': config['DATABASE']['PASSWORD'],
-        'HOST': config['DATABASE']['HOST'],
+        'NAME': get_config('DATABASE')['NAME'],
+        'USER': get_config('DATABASE')['USER'],
+        'PASSWORD': get_config('DATABASE')['PASSWORD'],
+        'HOST': get_config('DATABASE')['HOST'],
         'PORT': '',
     }
 }
