@@ -6,9 +6,9 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import DetailView
 
-from wkhtmltopdf.views import PDFTemplateView, PDFTemplateResponse
+from wkhtmltopdf.views import PDFTemplateView
 
-from core.utils import generic_search
+from core.utils import generic_search, paginate_objects
 from core.mixins import PermissionRequiredMixin
 
 from altas.models import Paciente
@@ -93,14 +93,6 @@ def pagos(request, paquete_id):
 def pagos_list(request):
     ''' Todos los pagos realizados. '''
     pagos = Pago.objects.order_by('-fecha')
-    paginator = Paginator(pagos, 20)
-    page = request.GET.get('page') or 1
-
-    try:
-        pagos = paginator.page(page)
-    except EmptyPage:
-        pagos = paginator.page(paginator.num_pages)
-
     query = 'q'
 
     MODEL_MAP = {
@@ -117,12 +109,18 @@ def pagos_list(request):
     for model, fields in MODEL_MAP.iteritems():
         objects += generic_search(request, model, fields, query)
 
+    paginator, page_obj, object_list, is_paginated = paginate_objects(
+        request, objects, 20)
+
     return render(request, 'pago-list.html', {
-                  'pagos': pagos,
-                  'objects': objects,
-                  'search_string': request.GET.get(query, ''),
-                  'r_active': 'active'
-                  })
+        'pagos': pagos,
+        'objects': object_list,
+        'page_obj': page_obj,
+        'paginator': paginator,
+        'is_paginated': is_paginated,
+        'search_string': request.GET.get(query, ''),
+        'r_active': 'active'
+        })
 
 
 @permission_required('pagos.add_pago')
@@ -146,11 +144,17 @@ def paciente_search(request):
     for model, fields in MODEL_MAP.iteritems():
         objects += generic_search(request, model, fields, query)
 
+    paginator, page_obj, object_list, is_paginated = paginate_objects(
+        request, objects, 20)
+
     return render(request, 'pago-paciente-search.html', {
-                  'objects': objects,
-                  'search_string': request.GET.get(query, ''),
-                  'rp_active': 'active'
-                  })
+        'objects': object_list,
+        'page_obj': page_obj,
+        'paginator': paginator,
+        'is_paginated': is_paginated,
+        'search_string': request.GET.get(query, ''),
+        'rp_active': 'active'
+        })
 
 
 class PagosPacienteList(PermissionRequiredMixin, DetailView):

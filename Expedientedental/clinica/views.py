@@ -9,7 +9,7 @@ from django.views.generic import UpdateView, DetailView
 from wkhtmltopdf.views import PDFTemplateView
 from core.mixins import PermissionRequiredMixin
 from core.views import CreateObjFromContext, DetailListView
-from core.utils import generic_search
+from core.utils import generic_search, paginate_objects
 
 from clinica.models import (
     Interrogatorio, Odontograma, Procedimiento, Bitacora, Radiografia
@@ -41,8 +41,14 @@ def paciente_search(request):
     for model, fields in MODEL_MAP.iteritems():
         objects += generic_search(request, model, fields, query)
 
+    paginator, page_obj, object_list, is_paginated = paginate_objects(
+        request, objects, 20)
+
     return render(request, 'paciente-search.html', {
-        'objects': objects,
+        'objects': object_list,
+        'page_obj': page_obj,
+        'paginator': paginator,
+        'is_paginated': is_paginated,
         'search_string': request.GET.get(query, '')
         })
 

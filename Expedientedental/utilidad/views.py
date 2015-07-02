@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.views.generic import DetailView
 
-from core.utils import generic_search
+from core.utils import generic_search, paginate_objects
 from core.mixins import LoginRequiredMixin
 from core.views import DetailListView
 
@@ -28,8 +28,14 @@ def paciente_search(request):
     for model, fields in MODEL_MAP.iteritems():
         objects += generic_search(request, model, fields, query)
 
+    paginator, page_obj, object_list, is_paginated = paginate_objects(
+        request, objects, 20)
+
     return render(request, 'utilidad-search.html', {
-        'objects': objects,
+        'objects': object_list,
+        'page_obj': page_obj,
+        'paginator': paginator,
+        'is_paginated': is_paginated,
         'search_string': request.GET.get(query, ''),
         'us_active': 'active'
         })

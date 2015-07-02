@@ -24,14 +24,45 @@
           <td>{{ paciente.nombre }}</td>
           <td>{{ paciente.apellidoPaterno }}</td>
           <td>{{ paciente.apellidoMaterno }}</td>
-          <!-- <td class="text-center"><a href="/odontograma/{{ paciente.id }}" class="btn btn-warning">Odontograma</a></td>
-          <td class="text-center"><a href="/interrogatorio/{{ paciente.id }}" class="btn btn-info">Interrogatorio</a></td>
-          <td class="text-center"><a href="/interrogatorios/{{ paciente.id }}/pdf/" class="btn btn-danger">PDF</a></td> -->
-          <td class="text-right"><a href="{% url clinica:paciente_detail paciente.id %}" class="btn btn-success">Ver Detalles</a></td>
+          <td class="text-right">
+            <div class="btn-group">
+              <a href="{% url clinica:paciente_detail paciente.id %}" class="btn btn-default"><span class="glyphicon glyphicon-search"></span> Detalles</a>
+              <a href="{% url clinica:odontograma paciente.id %}" class="btn btn-info"><span class="glyphicon glyphicon-plus"></span> Odontograma</a>
+            </div>
+          </td>
         </tr>
         {% endfor %}
       </tbody>
     </table>
+
+    {% if is_paginated %}
+    <nav>
+
+      <ul class="pager">
+
+        <li class="previous">
+
+          {% if page_obj.has_previous %}
+          <a href="?q={{ search_string }}&page={{ page_obj.previous_page_number }}"><span aria-hidden="true">&larr;</span> Previous</a>
+          {% endif %}
+
+        </li>
+
+        <li class="text-muted">{{ page_obj }}</li>
+
+        <li class="next">
+
+          {% if page_obj.has_next %}
+          <a href="?q={{ search_string }}&page={{ page_obj.next_page_number }}">Next <span aria-hidden="true">&rarr;</span></a>
+          {% endif %}
+
+        </li>
+
+      </ul>
+
+    </nav>
+    {% endif %}
+
     {% else %}
     <p class="lead text-center text-muted">No se han encontrado pacientes con ese nombre.</p>
     {% endif %}

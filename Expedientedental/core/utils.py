@@ -1,5 +1,6 @@
 import re
 
+from django.core.paginator import Paginator, EmptyPage
 from django.db.models import Q
 
 
@@ -43,3 +44,14 @@ def generic_search(request, model, fields, query_param='q'):
     found_entries = model.objects.filter(entry_query)
 
     return found_entries
+
+
+def paginate_objects(request, queryset, num_items):
+    paginator = Paginator(queryset, num_items)
+    page = request.GET.get('page') or 1
+    try:
+        page = paginator.page(page)
+    except EmptyPage:
+        page = paginator.page(paginator.num_pages)
+
+    return paginator, page, page.object_list, page.has_other_pages()
