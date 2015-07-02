@@ -4,7 +4,7 @@
 
 <h2 class="page-header">{% block title %}Presupuestos{% endblock %}</h2>
 
-{% if orders %}
+{% if cotizaciones %}
 <table class="table table-hover">
 
   <tr>
@@ -17,16 +17,16 @@
 
   </tr>
 
-  {% for order in orders %}
+  {% for cotizacion in cotizaciones %}
   <tr>
 
-    <td>{{ order.id }}</td>
-    <td>{{ order.medico }}</td>
-    <td>{{ order.paciente }}</td>
-    <td>{{ order.created_at }}</td>
+    <td>{{ cotizacion.id }}</td>
+    <td>{{ cotizacion.odontograma.medico }}</td>
+    <td>{{ cotizacion.odontograma.paciente }}</td>
+    <td>{{ cotizacion.created_at }}</td>
     <td class="text-right">
 
-      <a href="{% url cotizacion:cotizacion_detail order.id %}" title="Ver Presupuesto" class="btn btn-primary">Ver Presupuesto</a>
+      <a href="{% url cotizacion:cotizacion_detail cotizacion.id %}" title="Ver Presupuesto" class="btn btn-primary">Ver Presupuesto</a>
 
     </td>
 

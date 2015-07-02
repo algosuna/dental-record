@@ -19,6 +19,7 @@ from clinica.forms import (
     RadiografiaForm, RadiografiaUpdateForm
 )
 from altas.models import Paciente, Tratamiento
+from cotizacion.models import Cotizacion, CotizacionItem
 
 
 @permission_required('clinica.add_odontograma')
@@ -75,6 +76,10 @@ class PacienteDetail(PermissionRequiredMixin, DetailView):
 
 @permission_required('clinica.add_procedimiento')
 def odontograma(request, paciente_id):
+    '''
+    Crea Odontograma con Procedimientos. Se genera una cotizacion despues
+    de esto.
+    '''
     paciente = get_object_or_404(Paciente, pk=paciente_id)
     tratamientos = Tratamiento.objects.all()
     medico = request.user.medico_set.get()
@@ -101,6 +106,14 @@ def odontograma(request, paciente_id):
                 for form in formset:
                     form.instance.odontograma = odontograma
                     form.save()
+
+                try:
+                    cotizacion = odontograma.cotizacion_set.get()
+
+                except Cotizacion.DoesNotExist:
+                    cotizacion = Cotizacion.objects.create(
+                        odontograma=odontograma)
+                    CotizacionItem.objects.create_items(cotizacion)
 
                 return redirect(reverse(
                     'clinica:odontograma_detail', args=[odontograma.id]))
