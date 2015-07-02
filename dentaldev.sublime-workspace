@@ -1,0 +1,1130 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"cotiza",
+				"cotizaciones"
+			],
+			[
+				"cot",
+				"cotizaciones"
+			],
+			[
+				"Coti",
+				"Cotizacion"
+			],
+			[
+				"coti",
+				"cotizacion"
+			],
+			[
+				"sear",
+				"search_string"
+			],
+			[
+				"paginate",
+				"paginate_objects"
+			],
+			[
+				"pagi",
+				"paginated_objects"
+			],
+			[
+				"ekko",
+				"ekkoLightbox"
+			],
+			[
+				"DA",
+				"DATABASE	(cfg.json)"
+			],
+			[
+				"tra",
+				"tratamientos"
+			],
+			[
+				"trata",
+				"tratamientosAplicados"
+			],
+			[
+				"create",
+				"created_at"
+			],
+			[
+				"order",
+				"order_by	(views.py)"
+			],
+			[
+				"procedim",
+				"procedimiento_list"
+			],
+			[
+				"Pagin",
+				"Paginator	(views.py)"
+			],
+			[
+				"paginate_",
+				"paginate_queryset	(list.py)"
+			],
+			[
+				"Paginate",
+				"PaginatedDetailView"
+			],
+			[
+				"query",
+				"queryset"
+			],
+			[
+				"page_",
+				"page_size	(list.py)"
+			],
+			[
+				"queryset",
+				"list_queryset"
+			],
+			[
+				"kwargs",
+				"kwargs	param"
+			],
+			[
+				"initi",
+				"initial_value"
+			],
+			[
+				"Creat",
+				"CreateObjFromContext"
+			],
+			[
+				"radigo",
+				"radiografia	(models.py)"
+			],
+			[
+				"Histori",
+				"HistoricalRecords"
+			],
+			[
+				"imagen",
+				"imagen_url	(models.py)"
+			],
+			[
+				"for",
+				"for	for (…) {…}"
+			],
+			[
+				"simple",
+				"simple_history	(settings.py)"
+			],
+			[
+				"Hi",
+				"HistoricalRecords	class"
+			],
+			[
+				"em",
+				"empty_label"
+			],
+			[
+				"IS_",
+				"is_inactive"
+			],
+			[
+				"is",
+				"is_inactive	(forms.py)"
+			],
+			[
+				"ed",
+				"edit	module"
+			],
+			[
+				"ge",
+				"generic	module"
+			],
+			[
+				"context",
+				"context_object_name"
+			],
+			[
+				"cont",
+				"contrib	module"
+			],
+			[
+				"add_paque",
+				"add_paqueteconsumidoitem"
+			],
+			[
+				"Permiss",
+				"PermissionRequiredMixin	class"
+			],
+			[
+				"paqueteconsumido",
+				"paquete_consumido"
+			],
+			[
+				"qe",
+				"query"
+			],
+			[
+				"Pre",
+				"PreciosGrupos	class"
+			],
+			[
+				"List",
+				"ListView"
+			],
+			[
+				"contex",
+				"context_object_name"
+			],
+			[
+				"ob",
+				"object"
+			],
+			[
+				"REVE",
+				"reverse_lazy"
+			],
+			[
+				"odo",
+				"odontograma"
+			],
+			[
+				"obje",
+				"objects"
+			],
+			[
+				"Cot",
+				"Cotizacion"
+			],
+			[
+				"cotiz",
+				"cotizacion"
+			],
+			[
+				"produ",
+				"producto"
+			],
+			[
+				"produc",
+				"productos"
+			],
+			[
+				"reverse",
+				"reverse_lazy"
+			],
+			[
+				"initla",
+				"initial_value"
+			],
+			[
+				"add_ent",
+				"add_cancelentrada"
+			],
+			[
+				"entradas",
+				"entradas_canceladas"
+			],
+			[
+				"Ent",
+				"Entradas"
+			],
+			[
+				"Projec",
+				"ProjectDetail"
+			],
+			[
+				"Entradas",
+				"EntradasProducto"
+			],
+			[
+				"Fro",
+				"FormView"
+			],
+			[
+				"try",
+				"try	Try/Except/Else"
+			],
+			[
+				"request",
+				"requests_auth_options"
+			],
+			[
+				"add",
+				"add_argument"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "Expedientedental/clinica/forms.py",
+			"settings":
+			{
+				"buffer_size": 16217,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Expedientedental/clinica/models.py",
+			"settings":
+			{
+				"buffer_size": 9733,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Expedientedental/clinica/views.py",
+			"settings":
+			{
+				"buffer_size": 13527,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/andyosuna/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
+			"settings":
+			{
+				"buffer_size": 466,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Expedientedental/cotizacion/views.py",
+			"settings":
+			{
+				"buffer_size": 3428,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Expedientedental/cotizacion/templates/cotizaciones.html",
+			"settings":
+			{
+				"buffer_size": 1392,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Expedientedental/cotizacion/urls.py",
+			"settings":
+			{
+				"buffer_size": 569,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Expedientedental/clinica/templates/odontograma.html",
+			"settings":
+			{
+				"buffer_size": 4749,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Expedientedental/static/js/odontograma.js",
+			"settings":
+			{
+				"buffer_size": 7154,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 400.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"package",
+				"Package Control: Disable Package"
+			],
+			[
+				"packa",
+				"Package Control: Disable Package"
+			],
+			[
+				"anaconda: ",
+				"Anaconda: Disable linting on this file"
+			],
+			[
+				"linting",
+				"Anaconda: Enable linting on this file"
+			],
+			[
+				"disabl",
+				"Anaconda: Disable linting on this file"
+			],
+			[
+				"disa",
+				"Package Control: Disable Package"
+			],
+			[
+				"disab",
+				"Package Control: Disable Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"package control:",
+				"Package Control: Disable Package"
+			],
+			[
+				"package control:disa",
+				"Package Control: Disable Package"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: insta",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 583.0
+	},
+	"console":
+	{
+		"height": 139.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = 'eb2297e1a458f27d836c04bb0cbaf282' + 'd0e7a3098092775ccb37ca9d6b2e4b7d'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/home/andyosuna/dentaldev",
+		"/home/andyosuna/dentaldev/Expedientedental",
+		"/home/andyosuna/dentaldev/Expedientedental/altas",
+		"/home/andyosuna/dentaldev/Expedientedental/altas/templates",
+		"/home/andyosuna/dentaldev/Expedientedental/clinica",
+		"/home/andyosuna/dentaldev/Expedientedental/clinica/templates",
+		"/home/andyosuna/dentaldev/Expedientedental/core",
+		"/home/andyosuna/dentaldev/Expedientedental/cotizacion",
+		"/home/andyosuna/dentaldev/Expedientedental/cotizacion/templates",
+		"/home/andyosuna/dentaldev/Expedientedental/expedientedental",
+		"/home/andyosuna/dentaldev/Expedientedental/expedientedental/settings",
+		"/home/andyosuna/dentaldev/Expedientedental/inventario",
+		"/home/andyosuna/dentaldev/Expedientedental/inventario/templates",
+		"/home/andyosuna/dentaldev/Expedientedental/pagos",
+		"/home/andyosuna/dentaldev/Expedientedental/pagos/templates",
+		"/home/andyosuna/dentaldev/Expedientedental/precios",
+		"/home/andyosuna/dentaldev/Expedientedental/templates",
+		"/home/andyosuna/dentaldev/Expedientedental/utilidad",
+		"/home/andyosuna/dentaldev/Expedientedental/utilidad/templates"
+	],
+	"file_history":
+	[
+		"/home/andyosuna/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
+		"/home/andyosuna/dentaldev/Expedientedental/clinica/templates/paciente-search.html",
+		"/home/andyosuna/dentaldev/Expedientedental/inventario/templates/producto-search.html",
+		"/home/andyosuna/dentaldev/Expedientedental/inventario/views.py",
+		"/home/andyosuna/dentaldev/Expedientedental/pagos/templates/pago-list.html",
+		"/home/andyosuna/dentaldev/Expedientedental/pagos/views.py",
+		"/home/andyosuna/dentaldev/Expedientedental/pagos/templates/pago-paciente-search.html",
+		"/home/andyosuna/dentaldev/Expedientedental/utilidad/templates/utilidad-search.html",
+		"/home/andyosuna/dentaldev/Expedientedental/clinica/models.py",
+		"/home/andyosuna/dentaldev/Expedientedental/utilidad/views.py",
+		"/home/andyosuna/dentaldev/Expedientedental/templates/sidebar.html",
+		"/home/andyosuna/dentaldev/Expedientedental/core/utils.py",
+		"/home/andyosuna/Django-1.4.20/django/contrib/auth/models.py",
+		"/home/andyosuna/dentaldev/Expedientedental/cfg.json",
+		"/home/andyosuna/dentaldev/Expedientedental/altas/forms.py",
+		"/home/andyosuna/dentaldev/Expedientedental/altas/views.py",
+		"/home/andyosuna/dentaldev/Expedientedental/manage.py",
+		"/home/andyosuna/dentaldev/Expedientedental/expedientedental/settings/production.py",
+		"/home/andyosuna/dentaldev/Expedientedental/expedientedental/settings/base.py",
+		"/home/andyosuna/dentaldev/Expedientedental/expedientedental/settings/development.py",
+		"/home/andyosuna/dentaldev/Expedientedental/expedientedental/urls.py",
+		"/home/andyosuna/Downloads/lightbox-3.3.0/dist/ekko-lightbox.js",
+		"/home/andyosuna/dentaldev/Expedientedental/clinica/templates/radiografias.html",
+		"/home/andyosuna/dentaldev/Expedientedental/expedientedental/settings/local.py",
+		"/home/andyosuna/.config/sublime-text-3/Packages/User/Default (Linux).sublime-keymap",
+		"/home/andyosuna/dentaldev/Expedientedental/expedientedental/settings/__init__.py",
+		"/home/andyosuna/dentaldev/Expedientedental/expedientedental/settings/cfg.json",
+		"/home/andyosuna/dentaldev/dentaldev.sublime-project",
+		"/home/andyosuna/dentaldev/Expedientedental/expedientedental/wsgi.py",
+		"/home/andyosuna/dentaldev/Expedientedental/expedientedental/settings/dev_andy.py",
+		"/home/andyosuna/django-1.8.1/django/contrib/__init__.py",
+		"/home/andyosuna/django-1.8.1/django/contrib/auth/__init__.py",
+		"/home/andyosuna/django-1.8.1/django/views/generic/__init__.py",
+		"/home/andyosuna/dentaldev/Expedientedental/datadump.json",
+		"/home/andyosuna/dentaldev/Expedientedental/accounts/templates/home.html",
+		"/home/andyosuna/dentaldev/Expedientedental/altas/models.py",
+		"/home/andyosuna/dentaldev/Expedientedental/expedientedental/settings.py",
+		"/home/andyosuna/dentaldev/Expedientedental/accounts/views.py",
+		"/home/andyosuna/dentaldev/Expedientedental/precios/urls.py",
+		"/home/andyosuna/dentaldev/Expedientedental/cotizacion/urls.py",
+		"/home/andyosuna/dentaldev/Expedientedental/clinica/views.py",
+		"/home/andyosuna/dentaldev/Expedientedental/clinica/forms.py",
+		"/home/andyosuna/dentaldev/Expedientedental/clinica/templates/odontograma.html",
+		"/home/andyosuna/dentaldev/Expedientedental/static/js/odontograma.js",
+		"/home/andyosuna/Django-1.4.20/django/forms/formsets.py",
+		"/home/andyosuna/dentaldev/Expedientedental/consumidos/views.py",
+		"/home/andyosuna/dentaldev/Expedientedental/consumidos/templates/paquete-items.html",
+		"/home/andyosuna/dentaldev/dump/meh.sql",
+		"/home/andyosuna/dentaldev/dump/dump.sql",
+		"/home/andyosuna/dentaldev/dump/auth.json",
+		"/home/andyosuna/dentaldev/Expedientedental/cotizacion/views.py",
+		"/home/andyosuna/dentaldev/Expedientedental/consumidos/models.py",
+		"/home/andyosuna/dentaldev/Expedientedental/accounts/templates/password-change.html",
+		"/home/andyosuna/dentaldev/Expedientedental/clinica/templates/paciente-detail.html",
+		"/home/andyosuna/dentaldev/Expedientedental/cotizacion/models.py",
+		"/home/andyosuna/dentaldev/Expedientedental/inventario/models.py",
+		"/home/andyosuna/dentaldev/Expedientedental/pagos/models.py",
+		"/home/andyosuna/dentaldev/Expedientedental/precios/models.py",
+		"/home/andyosuna/dentaldev/Expedientedental/servicios/models.py",
+		"/home/andyosuna/dentaldev/Expedientedental/altas/templates/medicos.html",
+		"/home/andyosuna/dentaldev/Expedientedental/inventario/templates/productos.html",
+		"/home/andyosuna/dentaldev/Expedientedental/inventario/templates/productos-cancelados.html",
+		"/home/andyosuna/dentaldev/Expedientedental/inventario/templates/unidades.html",
+		"/home/andyosuna/dentaldev/Expedientedental/inventario/templates/entradas.html",
+		"/home/andyosuna/dentaldev/Expedientedental/inventario/templates/entradas-canceladas.html",
+		"/home/andyosuna/dentaldev/Expedientedental/cotizacion/templates/cotizaciones.html",
+		"/home/andyosuna/dentaldev/Expedientedental/cotizacion/templates/cotizaciones-procesadas.html",
+		"/home/andyosuna/dentaldev/Expedientedental/consumidos/templates/paquetes.html",
+		"/home/andyosuna/dentaldev/Expedientedental/consumidos/templates/paquetes-cancelled.html",
+		"/home/andyosuna/dentaldev/Expedientedental/consumidos/templates/peticiones.html",
+		"/home/andyosuna/Django-1.4.20/django/views/generic/list.py",
+		"/home/andyosuna/dentaldev/Expedientedental/core/views.py",
+		"/home/andyosuna/dentaldev/Expedientedental/consumidos/templates/consumidos.html",
+		"/home/andyosuna/dentaldev/Expedientedental/clinica/templates/historial.html",
+		"/home/andyosuna/dentaldev/Expedientedental/altas/templates/pacientes.html",
+		"/home/andyosuna/dentaldev/Expedientedental/altas/templates/grupos.html",
+		"/home/andyosuna/dentaldev/Expedientedental/precios/views.py",
+		"/home/andyosuna/dentaldev/Expedientedental/altas/templates/metodos.html",
+		"/home/andyosuna/dentaldev/Expedientedental/clinica/templates/radiografia.html",
+		"/home/andyosuna/dentaldev/Expedientedental/utilidad/templates/utilidad-servicios.html",
+		"/home/andyosuna/dentaldev/Expedientedental/precios/templates/precios-grupos.html",
+		"/home/andyosuna/dentaldev/Expedientedental/precios/forms.py",
+		"/home/andyosuna/Django-1.4.20/django/core/paginator.py",
+		"/home/andyosuna/Django-1.4.20/django/views/generic/list_detail.py",
+		"/home/andyosuna/dentaldev/Expedientedental/clinica/urls.py",
+		"/home/andyosuna/dentaldev/Expedientedental/altas/templates/paciente.html",
+		"/home/andyosuna/dentaldev/Expedientedental/clinica/templates/bitacora-create.html",
+		"/home/andyosuna/dentaldev/Expedientedental/templates/base.html",
+		"/home/andyosuna/dentaldev/Expedientedental/static/css/local.css",
+		"/home/andyosuna/dentaldev/Expedientedental/templates/nav.html",
+		"/home/andyosuna/dentaldev/Expedientedental/static/sass/base.scss",
+		"/home/andyosuna/dentaldev/Expedientedental/inventario/urls.py",
+		"/home/andyosuna/Downloads/django-audit-log-0.7.0/audit_log/models/managers.py",
+		"/home/andyosuna/Downloads/django-audit-log-0.7.0/audit_log/README.rst",
+		"/home/andyosuna/dentaldev/Expedientedental/consumidos/urls.py",
+		"/home/andyosuna/dentaldev/Expedientedental/consumidos/forms.py",
+		"/home/andyosuna/dentaldev/Expedientedental/consumidos/templates/paquete-cancelled-detail.html",
+		"/home/andyosuna/dentaldev/Expedientedental/consumidos/templates/peticion-detail.html",
+		"/home/andyosuna/dentaldev/Expedientedental/consumidos/templates/peticion-cancel.html",
+		"/etc/apt/sources.list",
+		"/home/andyosuna/dentaldev/Expedientedental/core/models.py",
+		"/home/andyosuna/brief.py",
+		"/home/andyosuna/dentaldev/Expedientedental/consumidos/templates/consumido.html",
+		"/home/andyosuna/dentaldev/dentaldev.sublime-workspace",
+		"/home/andyosuna/dentaldev/Expedientedental/consumidos/templates/paquete-detail.html",
+		"/home/andyosuna/dentaldev/Expedientedental/consumidos/templates/peticion-pdf.html",
+		"/home/andyosuna/dentaldev/Expedientedental/inventario/forms.py",
+		"/home/andyosuna/dentaldev/Expedientedental/pagos/templates/recibo_pago.html",
+		"/home/andyosuna/dentaldev/Expedientedental/templates/basePDF.html",
+		"/home/andyosuna/dentaldev/Expedientedental/templates/basePDF-footer.html",
+		"/home/andyosuna/dentaldev/Expedientedental/cotizacion/forms.py",
+		"/home/andyosuna/dentaldev/Expedientedental/consumidos/templates/paquete.html",
+		"/home/andyosuna/dentaldev/Expedientedental/consumidos/templates/peticion-update.html",
+		"/home/andyosuna/dentaldev/Expedientedental/consumidos/templates/peticiones-atendidas.html",
+		"/home/andyosuna/dentaldev/Expedientedental/utilidad/urls.py",
+		"/home/andyosuna/dentaldev/Expedientedental/utilidad/templates/utilidad-servicio.html",
+		"/home/andyosuna/dentaldev/.gitignore",
+		"/home/andyosuna/.config/sublime-text-3/Packages/User/Anaconda.sublime-settings",
+		"/home/andyosuna/.config/sublime-text-3/Packages/Anaconda/Anaconda.sublime-settings",
+		"/home/andyosuna/.config/sublime-text-3/Packages/Default/Preferences.sublime-settings",
+		"/home/andyosuna/dentaldev/Expedientedental/utilidad/models.py",
+		"/home/andyosuna/dentaldev/Expedientedental/pagos/forms.py",
+		"/home/andyosuna/dentaldev/Expedientedental/pagos/urls.py",
+		"/home/andyosuna/dentaldev/Expedientedental/pagos/templates/pago-paciente.html",
+		"/home/andyosuna/dentaldev/Expedientedental/pagos/templates/pago-detail.html",
+		"/home/andyosuna/dentaldev/Expedientedental/pagos/templates/pago-servicio.html",
+		"/home/andyosuna/dentaldev/Expedientedental/pagos/templates/pago-servicios.html",
+		"/home/andyosuna/dentaldev/Expedientedental/altas/urls.py"
+	],
+	"find":
+	{
+		"height": 38.0
+	},
+	"find_in_files":
+	{
+		"height": 106.0,
+		"where_history":
+		[
+			"",
+			"/home/andyosuna/Django-1.4.20",
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"generic_search",
+			"form_valid",
+			"['DATABASE']",
+			"DB",
+			"debug",
+			"mysql",
+			"tratamientoSeleccionado",
+			"tratamientosAplicados",
+			"getTotalForms",
+			"OdontogramaForm",
+			"}}, ",
+			"INSERT INTO",
+			"\"",
+			"django_admin_log\" ",
+			"\"",
+			"CREATE",
+			"historical",
+			"app_label\": \"auth",
+			"thumbnail",
+			"pk\": 36",
+			"primary",
+			"href",
+			"consol",
+			"});\n",
+			"fill",
+			"pushDataWrapper",
+			"drawDiente",
+			"tratamientosAplicados",
+			"pushDataWrapper",
+			"drawDiente",
+			"tratamientosAplicados",
+			"observableArray",
+			"DienteModel",
+			"applyBindings",
+			"tratamientosAplicados",
+			"pushDataWrapper",
+			"DienteModel",
+			"diente",
+			"<tr><th><label for=\"id_form-0-pieza\">Pieza:</label></th><td><input type=\"text\" name=\"form-0-pieza\" id=\"id_form-0-pieza\" /></td></tr>",
+			"diente.id",
+			"diente",
+			"extra",
+			"\"",
+			"%",
+			"\"",
+			"extends",
+			"md-3",
+			"\"",
+			"por_entregar",
+			"_(",
+			"_",
+			"\"",
+			"TODO",
+			"_(",
+			"_",
+			"paginator.page",
+			"EmptyPage",
+			"PageNotAnInteger",
+			"list_paginate_by",
+			"list_queryset_context_name",
+			"\"\"\"",
+			"self.queryset",
+			"servicio",
+			"StringIO",
+			"url",
+			"eeeeee",
+			" #eeeeee",
+			"#eee",
+			"#ccc",
+			"#ddd",
+			"%}\n",
+			"nota",
+			"pcd_",
+			"pcl_",
+			"paquete",
+			"paquete.",
+			"cancelsalida",
+			"CancelSalida",
+			"cancelsalida",
+			"CancelSalida",
+			"paqeteitems",
+			"models.Manager",
+			"p",
+			"legend",
+			"''' ",
+			"\"\"\"",
+			"pcl_",
+			"pc_",
+			"deployment",
+			"r'^",
+			"\"",
+			"low_margin",
+			"\"",
+			"quitar(",
+			"def form_valid(",
+			"\"",
+			"def get_initial(",
+			"TODO",
+			"h2",
+			"paquete.fecha",
+			"consumido-detail.html",
+			"\"",
+			"peticion",
+			"h3",
+			"pconsumido",
+			"\"",
+			"<td>",
+			"producto_consumido",
+			"PCItemForm",
+			"PaqueteItemCreateForm",
+			"PCItemForm",
+			"PaqueteConsumidoItemForm",
+			"def get_initial",
+			"\"",
+			"paquete.",
+			"pa_",
+			"ps_",
+			"PaqueteUpdate",
+			"paquete.html",
+			"armar",
+			"pe_",
+			"ps_",
+			"armar",
+			"pn_",
+			"PeticionView",
+			"\"\"\"",
+			"pa_qs",
+			"objetos"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			""
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 3,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "Expedientedental/clinica/forms.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 16217,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								13617,
+								13617
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 5520.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "Expedientedental/clinica/models.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 9733,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "Expedientedental/clinica/views.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 13527,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3510,
+								3510
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1860.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "/home/andyosuna/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 466,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JSON.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "Expedientedental/cotizacion/views.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3428,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								326,
+								326
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1500.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "Expedientedental/cotizacion/templates/cotizaciones.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1392,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								432,
+								432
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 360.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "Expedientedental/cotizacion/urls.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 569,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								320,
+								320
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "Expedientedental/clinica/templates/odontograma.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4749,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4263,
+								4263
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1048.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "Expedientedental/static/js/odontograma.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7154,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 28.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.unsaved_changes":
+	{
+		"height": 122.0
+	},
+	"pinned_build_system": "",
+	"project": "dentaldev.sublime-project",
+	"replace":
+	{
+		"height": 52.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"sett",
+				"Expedientedental/expedientedental/settings.py"
+			],
+			[
+				"precios/form",
+				"Expedientedental/precios/forms.py"
+			],
+			[
+				"precios/vie",
+				"Expedientedental/precios/views.py"
+			],
+			[
+				"urls",
+				"Expedientedental/consumidos/urls.py"
+			],
+			[
+				"side",
+				"Expedientedental/templates/sidebar.html"
+			],
+			[
+				"inventario/m",
+				"dentaldev/Expedientedental/Inventario/models.py"
+			],
+			[
+				"inventario/views",
+				"dentaldev/Expedientedental/inventario/views.py"
+			],
+			[
+				"inventario/urls.",
+				"dentaldev/Expedientedental/inventario/urls.py"
+			],
+			[
+				"forms",
+				"dentaldev/Expedientedental/inventario/forms.py"
+			],
+			[
+				"hom",
+				"Expedientedental/accounts/templates/home.html"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 263.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
