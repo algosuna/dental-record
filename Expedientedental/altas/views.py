@@ -6,6 +6,8 @@ from django.shortcuts import render, redirect
 from django.views.generic import CreateView, ListView, UpdateView
 
 from core.mixins import PermissionRequiredMixin
+from core.utils import generic_search, paginate_objects
+from core.views import SearchForm
 
 from altas.models import (
     Grupo, Tratamiento, TratamientoPreventivo, Evaluacion, Medico, Paciente
@@ -207,6 +209,29 @@ class MetodoNewView(MetodoMixin, CreateView):
 class MetodoListView(MetodoMixin, ListView):
     template_name = 'metodos.html'
     paginate_by = 20
+
+    def get_string(self):
+        query = self.kwargs['q'] or ''
+        string = False
+        if query != '':
+            string = True
+        return query, string
+
+    def get_queryset(self):
+        query, not_empty = self.get_string()
+        objects = []
+        if not_empty:
+            for model, fields in self.model.objects.all().iteritems():
+                objects += generic_search(self.request, model, fields, query)
+        else:
+            objects = self.model.objects.all()
+
+    def get_context_data(self, **kwargs):
+        context = super(MetodoListView, self).get_context_data(**kwargs)
+        search_string, not_empty = self.get_string()
+        if not_empty:
+            context.update({'search_string': search_string})
+        return context
 
 
 class MetodoUpdateView(MetodoMixin, UpdateView):
