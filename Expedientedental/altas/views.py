@@ -35,7 +35,7 @@ def medico_create(request):
                     'change_radiografia',
                     'add_interrogatorio',
                     'add_procedimiento',
-                    'add_paquete'
+                    'add_paqueteconsumido'
                 ])
             user.user_permissions.add(*list(permissions))
             user.save()
