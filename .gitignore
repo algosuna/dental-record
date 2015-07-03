@@ -5,3 +5,4 @@ media
 .sass-cache
 dump
 cfg.json
+*.sublime-workspace

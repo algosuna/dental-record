@@ -11,7 +11,7 @@
 	"folders":
 	[
 		{
-			"path": "~/dentaldev"
+			"path": "$PROJECT_HOME/dentaldev"
 		}
 	]
 }
