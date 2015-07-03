@@ -6,8 +6,7 @@ from django.shortcuts import render, redirect
 from django.views.generic import CreateView, ListView, UpdateView
 
 from core.mixins import PermissionRequiredMixin
-from core.utils import generic_search, paginate_objects
-from core.views import SearchForm
+from core.utils import generic_search
 
 from altas.models import (
     Grupo, Tratamiento, TratamientoPreventivo, Evaluacion, Medico, Paciente
@@ -211,9 +210,9 @@ class MetodoListView(MetodoMixin, ListView):
     paginate_by = 20
 
     def get_string(self):
-        query = self.kwargs['q'] or ''
+        query = self.kwargs.get('q', '')
         string = False
-        if query != '':
+        if query:
             string = True
         return query, string
 
