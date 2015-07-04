@@ -14,7 +14,7 @@ def get_config(setting, config=config):
         error_msg = 'Configura la variable de entorno {0}'.format(setting)
         raise ImproperlyConfigured(error_msg)
 
-DEBUG = False
+DEBUG = True
 
 SECRET_KEY = get_config('SECRET_KEY')
 

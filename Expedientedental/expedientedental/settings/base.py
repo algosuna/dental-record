@@ -21,7 +21,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = (
     # Pretty admin site
-    'suit',
+    'django_admin_bootstrapped',
 
     # Django default apps
     'django.contrib.admin',
@@ -35,7 +35,6 @@ INSTALLED_APPS = (
     'crispy_forms',
     'easy_thumbnails',
     'simple_history',
-    'south',
     'wkhtmltopdf',
 
     # Project
