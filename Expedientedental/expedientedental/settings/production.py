@@ -16,7 +16,9 @@ def get_config(setting, config=config):
 
 DEBUG = False
 
-TEMPLATE_DEBUG = DEBUG
+ALLOWED_HOSTS = []
+
+SECRET_KEY = get_config('SECRET_KEY')
 
 DATABASES = {
     'default': {
@@ -29,6 +31,25 @@ DATABASES = {
     }
 }
 
-SECRET_KEY = get_config('SECRET_KEY')
-
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+SESSION_COOKIE_AGE = 60 * 60 * 8
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': BASE_DIR.child('logs/debug.log'),
+        },
+    },
+    'loggers': {
+        'django.request': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+}

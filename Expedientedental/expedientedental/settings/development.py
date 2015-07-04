@@ -1,32 +1,30 @@
-import os
+import json
 from django.core.exceptions import ImproperlyConfigured
-
 from .base import *
 
+with open(BASE_DIR.child('cfg.json')) as cfg:
+    config = json.loads(cfg.read())
 
-def get_env_variable(var_name):
-    ''' Get the environment variable or return exception. '''
+
+def get_config(setting, config=config):
+    ''' Get configuration variables or return detailed exception. '''
     try:
-        return os.environ[var_name]
+        return config[setting]
     except KeyError:
-        error_msg = 'Configura la variable de entorno {}'.format(var_name)
+        error_msg = 'Configura la variable de entorno {0}'.format(setting)
         raise ImproperlyConfigured(error_msg)
 
-DEBUG = True
+DEBUG = False
 
-TEMPLATE_DEBUG = DEBUG
-
-THUMBNAIL_DEBUG = DEBUG
+SECRET_KEY = get_config('SECRET_KEY')
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'dentaldb',
-        'USER': 'root',
-        'PASSWORD': 'root',
-        'HOST': 'localhost',
+        'NAME': get_config('DATABASE')['NAME'],
+        'USER': get_config('DATABASE')['USER'],
+        'PASSWORD': get_config('DATABASE')['PASSWORD'],
+        'HOST': get_config('DATABASE')['HOST'],
         'PORT': '',
     }
 }
-
-SECRET_KEY = get_env_variable('SECRET_KEY')
