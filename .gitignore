@@ -2,8 +2,7 @@
 dentaldb.sqlite3
 migrations
 media
-*.sublime-*
 .sass-cache
-*.css.map
 dump
 cfg.json
+*.sublime-workspace

@@ -9,7 +9,7 @@ from django.views.generic import UpdateView, DetailView
 from wkhtmltopdf.views import PDFTemplateView
 from core.mixins import PermissionRequiredMixin
 from core.views import CreateObjFromContext, DetailListView
-from core.utils import generic_search
+from core.utils import generic_search, paginate_objects
 
 from clinica.models import (
     Interrogatorio, Odontograma, Procedimiento, Bitacora, Radiografia
@@ -19,6 +19,7 @@ from clinica.forms import (
     RadiografiaForm, RadiografiaUpdateForm
 )
 from altas.models import Paciente, Tratamiento
+from cotizacion.models import Cotizacion, CotizacionItem
 
 
 @permission_required('clinica.add_odontograma')
@@ -41,8 +42,14 @@ def paciente_search(request):
     for model, fields in MODEL_MAP.iteritems():
         objects += generic_search(request, model, fields, query)
 
+    paginator, page_obj, object_list, is_paginated = paginate_objects(
+        request, objects, 20)
+
     return render(request, 'paciente-search.html', {
-        'objects': objects,
+        'objects': object_list,
+        'page_obj': page_obj,
+        'paginator': paginator,
+        'is_paginated': is_paginated,
         'search_string': request.GET.get(query, '')
         })
 
@@ -69,6 +76,10 @@ class PacienteDetail(PermissionRequiredMixin, DetailView):
 
 @permission_required('clinica.add_procedimiento')
 def odontograma(request, paciente_id):
+    '''
+    Crea Odontograma con Procedimientos. Se genera una cotizacion despues
+    de esto.
+    '''
     paciente = get_object_or_404(Paciente, pk=paciente_id)
     tratamientos = Tratamiento.objects.all()
     medico = request.user.medico_set.get()
@@ -95,6 +106,14 @@ def odontograma(request, paciente_id):
                 for form in formset:
                     form.instance.odontograma = odontograma
                     form.save()
+
+                try:
+                    cotizacion = odontograma.cotizacion_set.get()
+
+                except Cotizacion.DoesNotExist:
+                    cotizacion = Cotizacion.objects.create(
+                        odontograma=odontograma)
+                    CotizacionItem.objects.create_items(cotizacion)
 
                 return redirect(reverse(
                     'clinica:odontograma_detail', args=[odontograma.id]))

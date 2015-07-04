@@ -7,7 +7,7 @@ urlpatterns = patterns(
     url(r'^$', CotizacionList.as_view(), name='cotizacion_list'),
 
     # review the items in cotizacion, select approved items
-    url(r'^(?P<odontograma_id>\d+)/detail/$',
+    url(r'^(?P<pk>\d+)/detail/$',
         'cotizacion_detail', name='cotizacion_detail'),
 
     url(r'^procesados/$', ProcesadoList.as_view(), name='procesado_list'),

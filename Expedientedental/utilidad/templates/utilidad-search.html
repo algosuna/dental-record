@@ -41,6 +41,34 @@
     </tbody>
 
   </table>
+
+    {% if is_paginated %}
+    <nav>
+
+      <ul class="pager">
+
+        <li class="previous">
+
+          {% if page_obj.has_previous %}
+          <a href="?q={{ search_string }}&page={{ page_obj.previous_page_number }}"><span aria-hidden="true">&larr;</span> Previous</a>
+          {% endif %}
+
+        </li>
+
+        <li class="text-muted">{{ page_obj }}</li>
+
+        <li class="next">
+
+          {% if page_obj.has_next %}
+          <a href="?q={{ search_string }}&page={{ page_obj.next_page_number }}">Next <span aria-hidden="true">&rarr;</span></a>
+          {% endif %}
+
+        </li>
+
+      </ul>
+
+    </nav>
+    {% endif %}
   {% else %}
   <p class="lead text-center text-muted">No Se Han Encontrado Pacientes Con Ese Nombre.</p>
   {% endif %}

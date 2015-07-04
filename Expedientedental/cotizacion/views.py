@@ -6,29 +6,24 @@ from django.views.generic import ListView
 from wkhtmltopdf.views import PDFTemplateView
 from core.mixins import PermissionRequiredMixin
 
-from cotizacion.models import Cotizacion, CotizacionItem
+from cotizacion.models import Cotizacion
 from cotizacion.forms import ItemFormSet
-from clinica.models import Odontograma
 
 
 class CotizacionList(PermissionRequiredMixin, ListView):
-    ''' TODO: este view debe iterar cotizaciones. '''
-    model = Odontograma
-    context_object_name = 'orders'
+    model = Cotizacion
+    context_object_name = 'cotizaciones'
     template_name = 'cotizaciones.html'
     permission_required = 'cotizacion.add_cotizacion'
     paginate_by = 20
 
     def get_queryset(self):
-        ''' TODO: arreglar este query. '''
-        cotizaciones = Cotizacion.objects.all()
-        odontogramas_procesados_pk = []
-        for c in cotizaciones:
+        cotizaciones_pk = []
+        for c in self.model.objects.all():
             if c.total() == c.total_procesado():
-                odontogramas_procesados_pk.append(c.odontograma.pk)
-        odontogramas = self.model.objects.exclude(
-            pk__in=odontogramas_procesados_pk)
-        return odontogramas
+                cotizaciones_pk.append(c.pk)
+        cotizaciones = self.model.objects.exclude(pk__in=cotizaciones_pk)
+        return cotizaciones
 
     def get_context_data(self, **kwargs):
         context = super(CotizacionList, self).get_context_data(**kwargs)
@@ -58,16 +53,9 @@ class ProcesadoList(PermissionRequiredMixin, ListView):
 
 
 @permission_required('cotizacion.add_cotizacion')
-def cotizacion_detail(request, odontograma_id):
-    odontograma = get_object_or_404(Odontograma, pk=odontograma_id)
-    try:
-        cotizacion = odontograma.cotizacion_set.get()
-        items = cotizacion.cotizacionitem_set.all()
-
-    except Cotizacion.DoesNotExist:
-        cotizacion = Cotizacion.objects.create(odontograma=odontograma)
-        CotizacionItem.objects.create_items(cotizacion)
-        items = cotizacion.cotizacionitem_set.all()
+def cotizacion_detail(request, pk):
+    cotizacion = get_object_or_404(Cotizacion, pk=pk)
+    items = cotizacion.cotizacionitem_set.all()
 
     if request.method == 'POST':
         formset = ItemFormSet(request.POST)
