@@ -19,7 +19,7 @@ class Grupo(models.Model):
 
 
 class Medico(models.Model):
-    user = models.OneToOneField(User, unique=True)
+    user = models.OneToOneField(User)
     mothers_last_name = models.CharField(max_length=30)
     universidad_egreso = models.CharField(max_length=70, blank=True)
     licencia_medica = models.CharField(max_length=30, blank=True)
