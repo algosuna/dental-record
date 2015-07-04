@@ -4,12 +4,6 @@
 {% block title %}Expediente Medico y Dental{% endblock %}
 
 {% block content %}
-<!--
-{% load dajaxice_templatetags %}
- script inecesario (activarlo hasta la segunda iteracion)
-<script src="{% static 'js/jquery.dajax.core.js'%}"></script>
-{% dajaxice_js_import %}-->
-
 
 <h2 class="page-header">Expediente M&eacute;dico y Dental{% if paciente.interrogatorio_set.get %}
 <small><a href="{% url clinica:pdf paciente.id %}" class="pull-right"><i class="fa fa-print fa-fw"></i>
@@ -301,27 +295,3 @@
 {% endif %}
 
 {% endblock content %}
-{% block javascript %}
-<script type="text/javascript">
-$( document ).ready(function() {
-  $('#id_credencialPaciente').keydown(function(event){
-    if(event.keyCode == 13)
-    {
-      var dni = $('#id_credencialPaciente').val();
-      console.log(dni);
-      Dajaxice.clinica.get_person(Dajax.process, {'dni':dni});
-      event.preventDefault();
-    }
-  });
-});
-
-// disables paciente select
-// and fills in the value by id
-$(function() {
-  var paciente = $('#id_paciente');
-
-  paciente.val('{{ paciente.id }}');
-  paciente.attr('readonly', '');
-})
-</script>
-{% endblock javascript %}
