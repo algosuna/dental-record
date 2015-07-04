@@ -210,26 +210,25 @@ class MetodoListView(MetodoMixin, ListView):
     paginate_by = 20
 
     def get_string(self):
-        query = self.kwargs.get('q', '')
+        query = self.request.GET.get('q', '')
         string = False
         if query:
             string = True
         return query, string
 
     def get_queryset(self):
-        query, not_empty = self.get_string()
         objects = []
-        if not_empty:
-            for model, fields in self.model.objects.all().iteritems():
-                objects += generic_search(self.request, model, fields, query)
-        else:
-            objects = self.model.objects.all()
+        fields = ['codigo', 'nombre']
+        objects = generic_search(self.request, self.model, fields, 'q')
+        return objects
 
     def get_context_data(self, **kwargs):
         context = super(MetodoListView, self).get_context_data(**kwargs)
         search_string, not_empty = self.get_string()
         if not_empty:
-            context.update({'search_string': search_string})
+            url_string = 'altas:%s' % context['name']
+            url = reverse(url_string)
+            context.update({'search_string': search_string, 'url': url})
         return context
 
 
