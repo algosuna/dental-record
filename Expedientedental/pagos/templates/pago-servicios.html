@@ -26,7 +26,7 @@
       <td class="padded">{{ servicio.procedimiento }}</td>
       <td class="padded">$ {{ servicio.precio }}</td>
       <td class="padded"><span class="label label-default">{{ servicio.get_status_display }}</span></td>
-      <td><a href="{% url pagos:pagos_servicio servicio.id %}" class="btn btn-default pull-right">Ver Pagos</a></td>
+      <td><a href="{% url 'pagos:pagos_servicio' servicio.id %}" class="btn btn-default pull-right">Ver Pagos</a></td>
 
     </tr>
     {% endfor %}

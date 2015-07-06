@@ -10,11 +10,13 @@ from precios.models import PrecioTratamiento
 class PrecioForm(SimpleCrispyForm):
     class Meta:
         model = PrecioTratamiento
+        exclude = []
 
 
 class PreciosForm(forms.ModelForm):
     class Meta:
         model = PrecioTratamiento
+        exclude = []
 
     def __init__(self, *args, **kwargs):
         super(PreciosForm, self).__init__(*args, **kwargs)
@@ -34,8 +36,8 @@ class PreciosForm(forms.ModelForm):
         return tratamiento
 
     def get_field_value(self, key, model):
-        if hasattr(self.instance,key):
-            return getattr(self.instance,key)
+        if hasattr(self.instance, key):
+            return getattr(self.instance, key)
         value = self.initial.get(key)
         if value is None:
             value = model.objects.get(pk=self.get(key).value())

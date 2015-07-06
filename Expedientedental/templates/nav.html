@@ -4,13 +4,13 @@
 
       <div class="navbar-header">
 
-        <a class="navbar-brand" href="{% url accounts:home %}">Sistema Administrativo Dental MediExcel</a>
+        <a class="navbar-brand" href="{% url 'accounts:home' %}">Sistema Administrativo Dental MediExcel</a>
 
       </div><!-- end .navbar-header -->
 
       <ul class="nav navbar-nav navbar-right">
 
-        <li><a href="{% url accounts:home %}"><i class="fa fa-home fa-fw"></i> Home</a></li>
+        <li><a href="{% url 'accounts:home' %}"><i class="fa fa-home fa-fw"></i> Home</a></li>
 
         <li>
 
@@ -29,8 +29,8 @@
 
               <div class="navbar-footer-content clearfix padded">
 
-                <a href="{% url accounts:change %}" class="btn btn-default btn-sm pull-left"><i class="fa fa-wrench fa-fw"></i> Change Passowrd</a>
-                <a href="{% url accounts:logout %}" class="btn btn-default btn-sm pull-right"><i class="fa fa-sign-out fa-fw"></i> Log Out</a>
+                <a href="{% url 'accounts:change' %}" class="btn btn-default btn-sm pull-left"><i class="fa fa-wrench fa-fw"></i> Change Passowrd</a>
+                <a href="{% url 'accounts:logout' %}" class="btn btn-default btn-sm pull-right"><i class="fa fa-sign-out fa-fw"></i> Log Out</a>
 
               </div>
 

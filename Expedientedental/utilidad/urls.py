@@ -1,17 +1,14 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 
-from utilidad.views import ServiciosPaciente, UtilidadServicio, paciente_search
+from . import views
 
 
-urlpatterns = patterns(
-    '',
-
-    url(r'^search/$', paciente_search, name='utilidad_search'),
+urlpatterns = [
+    url(r'^search/$', views.paciente_search, name='utilidad_search'),
 
     url(r'^paciente/(?P<pk>\d+)/$',
-        ServiciosPaciente.as_view(), name='utilidad_servicios'),
+        views.ServiciosPaciente.as_view(), name='utilidad_servicios'),
 
     url(r'^servicio/(?P<pk>\d+)/$',
-        UtilidadServicio.as_view(), name='utilidad_servicio')
-
-)
+        views.UtilidadServicio.as_view(), name='utilidad_servicio')
+]

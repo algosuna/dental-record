@@ -280,7 +280,7 @@ class TratamientosPreventivosView(MetodoListView):
     perms = 'tratamientopreventivo'
 
 
-class TratamientoPreventivoUpdateView(MetodoUpdateView):
+class TratamientoPreventivoUpdate(MetodoUpdateView):
     model = TratamientoPreventivo
     name = 'tratamiento preventivo'
     slug = 'preventivo'

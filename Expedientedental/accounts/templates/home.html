@@ -5,22 +5,22 @@
 {% block bodyclass %}class="home"{% endblock %}
 
 {% block body %}
-<h4 class="page-header">Bienvenida(o), {{ user.get_full_name }} {% if medico %}<small class="pull-right"><a href="{% url clinica:paciente_search %}"><i class="fa fa-search fa-fw"></i> Buscar Paciente</a></small>{% endif %}</h4>
+<h4 class="page-header">Bienvenida(o), {{ user.get_full_name }} {% if medico %}<small class="pull-right"><a href="{% url 'clinica:paciente_search' %}"><i class="fa fa-search fa-fw"></i> Buscar Paciente</a></small>{% endif %}</h4>
 
 <!-- <div class="row">
   <div class="col-md-4">
     {% if perms.clinica.add_odontograma %}
-    <a href="{% url clinica:paciente_search %}" class="btn btn-info btn-lg btn-block">Ir a Clinica <i class="fa fa-chevron-right fa-fw"></i></a>
+    <a href="{% url 'clinica:paciente_search' %}" class="btn btn-info btn-lg btn-block">Ir a Clinica <i class="fa fa-chevron-right fa-fw"></i></a>
     {% endif %}
   </div>
   <div class="col-md-4">
     {% if perms.cotizacion.add_cotizacion %}
-    <a href="{% url cotizacion:cotizacion_list %}" class="btn btn-success btn-lg btn-block">Ver Presupuestos <i class="fa fa-chevron-right fa-fw"></i></a>
+    <a href="{% url 'cotizacion:cotizacion_list' %}" class="btn btn-success btn-lg btn-block">Ver Presupuestos <i class="fa fa-chevron-right fa-fw"></i></a>
     {% endif %}
   </div>
   <div class="col-md-4">
     {% if perms.inventario.add_producto %}
-    <a href="{% url inventario:producto_list %}" class="btn btn-primary btn-lg btn-block">Inventario <i class="fa fa-chevron-right fa-fw"></i></a>
+    <a href="{% url 'inventario:producto_list' %}" class="btn btn-primary btn-lg btn-block">Inventario <i class="fa fa-chevron-right fa-fw"></i></a>
     {% endif %}
   </div>
 </div> --><!-- end .row -->
@@ -153,7 +153,7 @@
 
               <td>{{ odontograma.created_at }}</td>
               <td>{{ odontograma.paciente }}</td>
-              <td class="text-center"><a href="{% url clinica:odontograma_detail odontograma.id %}"><i class="fa fa-search fa-fw"></i></a></td>
+              <td class="text-center"><a href="{% url 'clinica:odontograma_detail' odontograma.id %}"><i class="fa fa-search fa-fw"></i></a></td>
 
             </tr>
             {% endfor %}
@@ -166,7 +166,7 @@
         {% endif %}
 
         <div class="text-right">
-          <a href="{% url clinica:paciente_search %}?next=odontograma">Nuevo Odontograma <i class="fa fa-plus-circle"></i></a>
+          <a href="{% url 'clinica:paciente_search' %}?next=odontograma">Nuevo Odontograma <i class="fa fa-plus-circle"></i></a>
         </div>
 
       </div>
@@ -207,7 +207,7 @@
 
               <td>{{ cotizacion.created_at }}</td>
               <td>{{ cotizacion }}</td>
-              <td class="text-center"><a href="{% url cotizacion:cotizacion_detail cotizacion.id %}"><i class="fa fa-search fa-fw"></i></a></td>
+              <td class="text-center"><a href="{% url 'cotizacion:cotizacion_detail' cotizacion.id %}"><i class="fa fa-search fa-fw"></i></a></td>
 
             </tr>
             {% endfor %}
@@ -217,7 +217,7 @@
         </table>
 
         <div class="text-right">
-          <a href="{% url cotizacion:cotizacion_list %}">Ver Lista de Presupuestos <i class="fa fa-plus-circle"></i></a>
+          <a href="{% url 'cotizacion:cotizacion_list' %}">Ver Lista de Presupuestos <i class="fa fa-plus-circle"></i></a>
         </div>
         {% else %}
         <p class="text-muted">No hay cotizaciones en la base de datos.</p>
@@ -263,7 +263,7 @@
 
               <td>{{ producto.nombre }}</td>
               <td>{{ producto.updated_at }}</td>
-              <td class="text-center"><a href="{% url inventario:producto_detail producto.id %}"><i class="fa fa-search fa-fw"></i></a></td>
+              <td class="text-center"><a href="{% url 'inventario:producto_detail' producto.id %}"><i class="fa fa-search fa-fw"></i></a></td>
 
             </tr>
             {% endfor %}
@@ -273,7 +273,7 @@
         </table>
 
         <div class="text-right">
-          <a href="{% url inventario:producto_search %}">Buscar Producto <i class="fa fa-arrow-circle-right fa-fw"></i></a>
+          <a href="{% url 'inventario:producto_search' %}">Buscar Producto <i class="fa fa-arrow-circle-right fa-fw"></i></a>
         </div>
         {% else %}
         <p class="text-muted">No hay productos registrados.</p>
@@ -321,7 +321,7 @@
               <td>{{ pago.created_at }}</td>
               <td>{{ pago.paciente }}</td>
               <td>$ {{ pago.monto_aplicado }}</td>
-              <td class="text-center"><a href="{% url pagos:pagos_detail pago.id %}"><i class="fa fa-search fa-fw"></i></a></td>
+              <td class="text-center"><a href="{% url 'pagos:pagos_detail' pago.id %}"><i class="fa fa-search fa-fw"></i></a></td>
 
             </tr>
             {% endfor %}
@@ -334,7 +334,7 @@
         {% endif %}
 
         <div class="text-right">
-          <a href="{% url pagos:paciente_search %}">Realizar Pago <i class="fa fa-plus-circle"></i></a>
+          <a href="{% url 'pagos:paciente_search' %}">Realizar Pago <i class="fa fa-plus-circle"></i></a>
         </div>
 
       </div><!-- end .panel-body -->
@@ -349,11 +349,11 @@
     <h3>Otras Actividades</h3>
 
     {% if perms.precios.change_preciotratamiento %}
-    <a href="{% url precios:precios_grupos %}" class="btn btn-default btn-lg btn-block">Actualizar Precios de Grupos</a>
+    <a href="{% url 'precios:precios_grupos' %}" class="btn btn-default btn-lg btn-block">Actualizar Precios de Grupos</a>
     {% endif %}
 
     {% if perms.altas.add_tratamiento %}
-    <a href="{% url precios:precios_grupos %}" class="btn btn-default btn-lg btn-block">Actualizar Precios de Grupos</a>
+    <a href="{% url 'precios:precios_grupos' %}" class="btn btn-default btn-lg btn-block">Actualizar Precios de Grupos</a>
     {% endif %}
 
   </div><!- - end .col-md-6 -->
@@ -402,7 +402,7 @@
               <td class="padded">{{ procedimiento.get_cara_display }}</td>
               <td class="padded">{{ procedimiento.tratamiento }}</td>
               <td class="text-center padded"><span class="label label-primary">{{ procedimiento.get_status_display }}</span></td>
-              <td class="text-center"><a href="{% url consumidos:peticion_new servicio.id %}" class="btn btn-default">Solicitar Materiales</a></td>
+              <td class="text-center"><a href="{% url 'consumidos:peticion_new' servicio.id %}" class="btn btn-default">Solicitar Materiales</a></td>
 
             </tr>
             {% endwith %}

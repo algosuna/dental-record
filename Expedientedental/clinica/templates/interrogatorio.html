@@ -6,7 +6,7 @@
 {% block content %}
 
 <h2 class="page-header">Expediente M&eacute;dico y Dental{% if paciente.interrogatorio_set.get %}
-<small><a href="{% url clinica:pdf paciente.id %}" class="pull-right"><i class="fa fa-print fa-fw"></i>
+<small><a href="{% url 'clinica:pdf' paciente.id %}" class="pull-right"><i class="fa fa-print fa-fw"></i>
  Imprimir</a></small>{% endif %}</h2>
 
 

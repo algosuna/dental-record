@@ -15,7 +15,7 @@ textarea.form-control {
 
 {% block content %}
 
-<h2 class="page-header">Producto <small class="pull-right"><a href="{% url inventario:producto_pdf producto.id %}"><span class="glyphicon glyphicon-print"></span> Imprimir</a></small></h2>
+<h2 class="page-header">Producto <small class="pull-right"><a href="{% url 'inventario:producto_pdf' producto.id %}"><span class="glyphicon glyphicon-print"></span> Imprimir</a></small></h2>
 
 <div class="panel panel-primary">
 

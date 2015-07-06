@@ -5,7 +5,7 @@
 
 {% block content %}
 
-<h2 class="page-header">Lista de Productos Registrados <small class="pull-right"><a href="{% url inventario:productos_pdf %}"><span class="glyphicon glyphicon-print"></span> Imprimir</a></small></h2>
+<h2 class="page-header">Lista de Productos Registrados <small class="pull-right"><a href="{% url 'inventario:productos_pdf' %}"><span class="glyphicon glyphicon-print"></span> Imprimir</a></small></h2>
 
 {% if productos %}
 <table class="table table-condensed" id="producto">
@@ -37,9 +37,9 @@
       <td>{{ producto.unidad_medida }}</td>
       <td>{{ producto.precio_porcion }}</td>
       <td>{{ producto.porciones }}</td>
-      <td><a href="{% url inventario:producto_update producto.id %}"><span class="glyphicon glyphicon-pencil"></span></a></td>
-      <td><a href="{% url inventario:entradas_producto producto.id %}"><span class="glyphicon glyphicon-plus"></span></a></td>
-      <td><a href="{% url inventario:producto_detail producto.id %}"><span class="glyphicon glyphicon-search"></span></a></td>
+      <td><a href="{% url 'inventario:producto_update' producto.id %}"><span class="glyphicon glyphicon-pencil"></span></a></td>
+      <td><a href="{% url 'inventario:entradas_producto' producto.id %}"><span class="glyphicon glyphicon-plus"></span></a></td>
+      <td><a href="{% url 'inventario:producto_detail' producto.id %}"><span class="glyphicon glyphicon-search"></span></a></td>
 
     </tr>
     {% endfor %}
@@ -75,9 +75,9 @@
 
 </nav>
 {% endif %}
-<a href="{% url inventario:producto_create %}" class="btn btn-primary pull-right">Registrar Nuevo Producto <span class="glyphicon glyphicon-plus"></span></a>
+<a href="{% url 'inventario:producto_create' %}" class="btn btn-primary pull-right">Registrar Nuevo Producto <span class="glyphicon glyphicon-plus"></span></a>
 {% else %}
-<p class="lead text-center text-muted">No hay productos registrados en la base de datos.<br><br><a href="{% url inventario:producto_create %}" class="btn btn-primary">Agregar Producto <i class="fa fa-plus fa-fw"></i></a></p>
+<p class="lead text-center text-muted">No hay productos registrados en la base de datos.<br><br><a href="{% url 'inventario:producto_create' %}" class="btn btn-primary">Agregar Producto <i class="fa fa-plus fa-fw"></i></a></p>
 {% endif %}
 {% endblock content %}
 

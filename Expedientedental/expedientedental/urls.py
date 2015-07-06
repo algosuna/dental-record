@@ -1,24 +1,25 @@
-from django.conf import settings
-from django.conf.urls.defaults import patterns, include, url
+"""djangotest URL Configuration
 
+The `urlpatterns` list routes URLs to views. For more information please see:
+    https://docs.djangoproject.com/en/1.8/topics/http/urls/
+Examples:
+Function views
+    1. Add an import:  from my_app import views
+    2. Add a URL to urlpatterns:  url(r'^$', views.home, name='home')
+Class-based views
+    1. Add an import:  from other_app.views import Home
+    2. Add a URL to urlpatterns:  url(r'^$', Home.as_view(), name='home')
+Including another URLconf
+    1. Add an import:  from blog import urls as blog_urls
+    2. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
+"""
+from django.conf.urls import include, url
+from django.conf.urls.static import static
 from django.contrib import admin
+from django.conf import settings
 
-from dajaxice.core import dajaxice_autodiscover
-
-admin.autodiscover()
-
-dajaxice_autodiscover()
-
-urlpatterns = patterns(
-    '',
-
-    # url(r'^i18n/', include('django.conf.urls.i18n')),
-
-    # Uncomment the next line to enable the admin:
+urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-
-    # Uncomment the admin/doc line below to enable admin documentation:
-    # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     url(r'^', include('accounts.urls', namespace='accounts')),
     url(r'^altas/', include('altas.urls', namespace='altas')),
@@ -32,9 +33,5 @@ urlpatterns = patterns(
     url(r'^', include('precios.urls', namespace='precios')),
     url(r'^', include('consumidos.urls', namespace='consumidos')),
 
-    # Esto es necesario para tener un folder de media funcional.
-    url(r'^media/(?P<path>.*)$', 'django.views.static.serve',
-        {'document_root': settings.MEDIA_ROOT}),
-
-    url(r'^dajaxice/', include('dajaxice.urls')),
-)
+] + static(settings.STATIC_URL, document_root=settings.STATIC_URL)\
+  + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -88,7 +88,7 @@ class PaqueteCancelForm(forms.ModelForm):
 class CancelPaqueteForm(forms.ModelForm):
     class Meta:
         model = CancelPaquete
-        exclude = 'paquete'
+        exclude = ['paquete']
 
     def __init__(self, *args, **kwargs):
         super(CancelPaqueteForm, self).__init__(*args, **kwargs)
@@ -272,6 +272,7 @@ class ProductoConsumidoForm(forms.ModelForm):
     ''' TODO: Fix and complete this feature post-deployment. '''
     class Meta:
         model = ProductoConsumido
+        exclude = []
 
     def __init__(self, *args, **kwargs):
         super(ProductoConsumidoForm, self).__init__(*args, **kwargs)

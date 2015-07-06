@@ -31,9 +31,9 @@
 </div>
 {% else %}
 {% if procedimiento.status == 'autorizado' %}
-<p class="lead text-muted">Este procedimiento no tiene entradas. <a href="{% url clinica:bitacora_create procedimiento.id %}">Agregar entrada a bit&aacute;cora.</a></p>
+<p class="lead text-muted">Este procedimiento no tiene entradas. <a href="{% url 'clinica:bitacora_create' procedimiento.id %}">Agregar entrada a bit&aacute;cora.</a></p>
 {% else %}
-<p class="lead text-muted">Este procedimiento no esta autorizado. <a href="{% url clinica:procedimientos paciente.id %}">Ir a Plan de Tratamiento.</a></p>
+<p class="lead text-muted">Este procedimiento no esta autorizado. <a href="{% url 'clinica:procedimientos' paciente.id %}">Ir a Plan de Tratamiento.</a></p>
 {% endif %}
 {% endif %}
 

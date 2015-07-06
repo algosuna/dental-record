@@ -40,7 +40,7 @@
     <p>{{ radiografia.description }}</p>
 
     {% if perms.clinica.change_radiografia %}
-    <a href="{% url clinica:radiografia_update radiografia.id %}" class="pull-left"><i class="fa fa-pencil fa-fw"></i> Editar</a>
+    <a href="{% url 'clinica:radiografia_update' radiografia.id %}" class="pull-left"><i class="fa fa-pencil fa-fw"></i> Editar</a>
     {% endif %}
 
   </div>

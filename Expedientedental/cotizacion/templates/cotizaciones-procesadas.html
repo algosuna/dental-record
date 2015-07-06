@@ -26,7 +26,7 @@
     <td>{{ order.created_at }}</td>
     <td class="text-right">
 
-      <a href="{% url cotizacion:cotizacion_detail order.id %}" title="Ver Presupuesto" class="btn btn-primary">Ver Presupuesto</a>
+      <a href="{% url 'cotizacion:cotizacion_detail' order.id %}" title="Ver Presupuesto" class="btn btn-primary">Ver Presupuesto</a>
 
     </td>
 

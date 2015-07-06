@@ -55,7 +55,7 @@
 </form>
 
 {% else %}
-<p class="lead text-muted text-center">No hay tratamientos disponibles. <br><br><a href="/altas/tratamiento/new/" class="btn btn-primary">Agregar Tratamientos <span class="glyphicon glyphicon-plus"></span></a></p>
+<p class="lead text-muted text-center">No hay tratamientos disponibles. <br><br><a href="{% url 'altas:tratamiento_new' %}" class="btn btn-primary">Agregar Tratamientos <span class="glyphicon glyphicon-plus"></span></a></p>
 {% endif %}
 
 {% endblock content %}

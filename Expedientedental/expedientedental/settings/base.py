@@ -70,7 +70,7 @@ ROOT_URLCONF = 'expedientedental.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR.child('templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -110,9 +110,7 @@ MEDIA_ROOT = BASE_DIR.child('media')
 # Examples: "http://example.com/media/", "http://media.example.com/"
 MEDIA_URL = '/media/'
 
-# Absolute path to the directory static files should be collected to.
-# Example: "/var/www/example.com/static/"
-STATIC_ROOT = BASE_DIR.child('static')
+STATICFILES_DIRS = [BASE_DIR.child('static')]
 
 # URL that handles the static files served from STATIC_ROOT.
 # Example: "http://example.com/static/", "http://static.example.com/"

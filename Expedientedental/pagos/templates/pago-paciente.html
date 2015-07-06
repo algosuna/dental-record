@@ -26,13 +26,13 @@
 
       <td class="padded">{{ pago.updated_at }}</td>
       <td class="padded">$ {{ pago.monto_aplicado }}</td>
-      <td><a href="{% url pagos:pagos_detail pago.id %}" class="btn btn-primary pull-right">Ver Pago</a></td>
+      <td><a href="{% url 'pagos:pagos_detail' pago.id %}" class="btn btn-primary pull-right">Ver Pago</a></td>
 
 
     </tr>
     {% endfor %}
 
-    <td><a href="{% url pagos:historial %}" class="btn btn-primary pull-right">imprimir historial</a></td>
+    <td><a href="{% url 'pagos:historial' %}" class="btn btn-primary pull-right">imprimir historial</a></td>
 
   </tbody>
 

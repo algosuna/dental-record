@@ -26,8 +26,8 @@
           <td>{{ paciente.apellidoMaterno }}</td>
           <td class="text-right">
             <div class="btn-group">
-              <a href="{% url clinica:paciente_detail paciente.id %}" class="btn btn-default"><span class="glyphicon glyphicon-search"></span> Detalles</a>
-              <a href="{% url clinica:odontograma paciente.id %}" class="btn btn-info"><span class="glyphicon glyphicon-plus"></span> Odontograma</a>
+              <a href="{% url 'clinica:paciente_detail' paciente.id %}" class="btn btn-default"><span class="glyphicon glyphicon-search"></span> Detalles</a>
+              <a href="{% url 'clinica:odontograma' paciente.id %}" class="btn btn-info"><span class="glyphicon glyphicon-plus"></span> Odontograma</a>
             </div>
           </td>
         </tr>
@@ -67,7 +67,7 @@
     <p class="lead text-center text-muted">No se han encontrado pacientes con ese nombre.</p>
     {% endif %}
     <p class="text-center">
-      <a href="{% url clinica:paciente_search %}" class="btn btn-primary">Nueva Búsqueda <i class="fa fa-arrow-right"></i></a>
+      <a href="{% url 'clinica:paciente_search' %}" class="btn btn-primary">Nueva Búsqueda <i class="fa fa-arrow-right"></i></a>
     </p>
 
   {% else %}

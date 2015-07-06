@@ -76,8 +76,8 @@
         <td>{{ procedimiento.get_cara_display }}</td>
         <td>{{ procedimiento.tratamiento }}</td>
         <td><span class="label">{{ procedimiento.get_status_display }}</span></td>
-        <td><a href="{% url clinica:historial_detail procedimiento.id %}" class="btn btn-default{% if procedimiento.status == 'recomendado' %} disabled{% endif %}">Ver Bitacora</a></td>
-        <td><a href="{% url consumidos:peticion_new servicio.id %}" class="btn btn-default{% if procedimiento.status == 'recomendado' %} disabled{% endif %}">Solicitar Materiales</a></td>
+        <td><a href="{% url 'clinica:historial_detail' procedimiento.id %}" class="btn btn-default{% if procedimiento.status == 'recomendado' %} disabled{% endif %}">Ver Bitacora</a></td>
+        <td><a href="{% url 'consumidos:peticion_new' servicio.id %}" class="btn btn-default{% if procedimiento.status == 'recomendado' %} disabled{% endif %}">Solicitar Materiales</a></td>
       </tr>
       {% endif %}
       {% endwith %}
@@ -87,7 +87,7 @@
   </table>
   {% else %}
   <p class="lead text-muted text-center">Este paciente no tiene procedimientos.<br>
-  <a href="{% url clinica:odontograma paciente.id %}" class="btn btn-primary">Nuevo Odontograma <i class="fa fa-plus"></i></a></p>
+  <a href="{% url 'clinica:odontograma' paciente.id %}" class="btn btn-primary">Nuevo Odontograma <i class="fa fa-plus"></i></a></p>
   {% endif %}
 
 </div>
@@ -96,12 +96,12 @@
   <h3 class="page-header">&Uacute;ltimos Odontogramas</h3>
   {% if odontogramas %}
     {% for odontograma in odontogramas %}
-    <h4><a href="{% url clinica:odontograma_detail odontograma.id %}">{{ odontograma.created_at }}</a></h4>
+    <h4><a href="{% url 'clinica:odontograma_detail' odontograma.id %}">{{ odontograma.created_at }}</a></h4>
     <p><strong>{{ odontograma.diagnostico.nombre }}</strong>{{ odontograma.notas }}</p>
     {% endfor %}
   {% else %}
   <p class="lead text-muted">No hay odontogramas.</p>
-  <a href="{% url clinica:odontograma paciente.id %}" class="btn btn-primary btn-block">Nuevo Odontograma <i class="fa fa-plus"></i></a>
+  <a href="{% url 'clinica:odontograma' paciente.id %}" class="btn btn-primary btn-block">Nuevo Odontograma <i class="fa fa-plus"></i></a>
   {% endif %}
   </ul>
 </div>

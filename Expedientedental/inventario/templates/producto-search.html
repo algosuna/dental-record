@@ -31,9 +31,9 @@
         <td class="padded">{{ producto.porciones }}</td>
         <td class="text-right">
           {% if producto.is_inactive %}
-          <a href="{% url inventario:productocancelado_detail producto.id %}" class="btn btn-default">Ver Producto</a>
+          <a href="{% url 'inventario:productocancelado_detail' producto.id %}" class="btn btn-default">Ver Producto</a>
           {% else %}
-          <a href="{% url inventario:entradas_producto producto.id %}" class="btn btn-info">Registrar Entrada</a>
+          <a href="{% url 'inventario:entradas_producto' producto.id %}" class="btn btn-info">Registrar Entrada</a>
           {% endif %}
         </td>
       </tr>
@@ -74,7 +74,7 @@
   <p class="lead text-center text-muted">No Se Han Encontrado Productos Con Ese Nombre.</p>
   {% endif %}
   <p class="text-center">
-    <a href="{% url inventario:producto_search %}" class="btn btn-primary">Nueva Búsqueda <span class="glyphicon glyphicon-arrow-right"></span></a>
+    <a href="{% url 'inventario:producto_search' %}" class="btn btn-primary">Nueva Búsqueda <span class="glyphicon glyphicon-arrow-right"></span></a>
   </p>
 
 {% else %}

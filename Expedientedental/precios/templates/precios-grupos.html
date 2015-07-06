@@ -20,7 +20,7 @@
     <tr>
       <td>{{ grupo.numero }}</td>
       <td>{{ grupo.nombre }}</td>
-      <td><a href="/altas/precios/{{ grupo.id }}/" class="btn btn-primary pull-right"><span class="glyphicon glyphicon-pencil"></span> Editar Precios</a></td>
+      <td><a href="{% url 'precios:precios' grupo.id %}" class="btn btn-primary pull-right"><span class="glyphicon glyphicon-pencil"></span> Editar Precios</a></td>
     </tr>
     {% endfor %}
   </tbody>

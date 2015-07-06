@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
-from django.contrib.localflavor.mx.forms import MXRFCField
 
+from localflavor.mx.forms import MXRFCField
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import (
     Layout, Fieldset, HTML, Field, ButtonHolder, Submit
@@ -17,6 +17,7 @@ from altas.models import (
 class GrupoForm(forms.ModelForm):
     class Meta:
         model = Grupo
+        exclude = []
 
     def __init__(self, *args, **kwargs):
         super(GrupoForm, self).__init__(*args, **kwargs)
@@ -34,21 +35,25 @@ class GrupoForm(forms.ModelForm):
 class TratamientoForm(SimpleCrispyForm):
     class Meta:
         model = Tratamiento
+        exclude = []
 
 
 class TratamientoPreventivoForm(SimpleCrispyForm):
     class Meta:
         model = TratamientoPreventivo
+        exclude = []
 
 
 class EvaluacionForm(SimpleCrispyForm):
     class Meta:
         model = Evaluacion
+        exclude = []
 
 
 class PacienteForm(forms.ModelForm):
     class Meta:
         model = Paciente
+        exclude = []
 
     def __init__(self, *args, **kwargs):
         super(PacienteForm, self).__init__(*args, **kwargs)

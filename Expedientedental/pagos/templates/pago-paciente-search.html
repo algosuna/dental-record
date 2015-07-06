@@ -32,9 +32,9 @@
         <td class="padded">{{ paciente.grupo }}</td>
         <td>
           <div class="btn-group pull-right">
-            <a href="{% url pagos:pagos_pending paciente.id %}" class="btn btn-success">Ver Pendientes</a>
-            <a href="{% url pagos:pagos_paciente paciente.id %}" class="btn btn-default">Ver Pagos</a>
-            <a href="{% url pagos:pagos_servicios paciente.id %}" class="btn btn-default">Ver Servicios con Pagos</a>
+            <a href="{% url 'pagos:pagos_pending' paciente.id %}" class="btn btn-success">Ver Pendientes</a>
+            <a href="{% url 'pagos:pagos_paciente' paciente.id %}" class="btn btn-default">Ver Pagos</a>
+            <a href="{% url 'pagos:pagos_servicios' paciente.id %}" class="btn btn-default">Ver Servicios con Pagos</a>
           </div>
         </td>
       </tr>
@@ -75,7 +75,7 @@
   <p class="lead text-center text-muted">No Se Han Encontrado Pacientes Con Ese Nombre.</p>
   {% endif %}
   <p class="text-center">
-    <a href="{% url pagos:paciente_search %}" class="btn btn-primary">Nueva Busqueda <span class="glyphicon glyphicon-arrow-right"></span></a>
+    <a href="{% url 'pagos:paciente_search' %}" class="btn btn-primary">Nueva Busqueda <span class="glyphicon glyphicon-arrow-right"></span></a>
   </p>
 
 {% else %}

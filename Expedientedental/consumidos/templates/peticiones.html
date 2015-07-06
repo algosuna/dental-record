@@ -33,7 +33,7 @@
       <td class="padded">{{ paquete.paciente }}</td>
       <td class="padded">{{ paquete.updated_at }}</td>
       <td class="padded"><span class="label">{{ paquete.get_status_display }}</span></td>
-      <td><a href="{% url consumidos:peticion_detail paquete.id %}" class="btn btn-default">Detalle</a></td>
+      <td><a href="{% url 'consumidos:peticion_detail' paquete.id %}" class="btn btn-default">Detalle</a></td>
 
     </tr>
     {% endfor %}
@@ -101,7 +101,7 @@
         <td class="padded">{{ paquete.paciente }}</td>
         <td class="padded">{{ paquete.updated_at }}</td>
         <td class="padded"><span class="label">{{ paquete.get_status_display }}</span></td>
-        <td><a href="{% url consumidos:peticion_update paquete.id %}" class="btn btn-default">Entregar</a></td>
+        <td><a href="{% url 'consumidos:peticion_update' paquete.id %}" class="btn btn-default">Entregar</a></td>
 
       </tr>
       {% endfor %}
@@ -140,7 +140,7 @@
         <td class="padded">{{ paquete.paciente }}</td>
         <td class="padded">{{ paquete.updated_at }}</td>
         <td class="padded"><span class="label">{{ paquete.get_status_display }}</span></td>
-        <td><a href="{% if paquete.paqueteconsumidoitem_set.all %}{% url consumidos:peticion_detail paquete.id %}" class="btn-default{% else %}{% url consumidos:paquete_item_create paquete.id %}" class="btn-warning{% endif %} btn">Actualizar</a></td>
+        <td><a href="{% if paquete.paqueteconsumidoitem_set.all %}{% url 'consumidos:peticion_detail' paquete.id %}" class="btn-default{% else %}{% url 'consumidos:paquete_item_create' paquete.id %}" class="btn-warning{% endif %} btn">Actualizar</a></td>
 
 
       </tr>
@@ -208,7 +208,7 @@
       <td class="padded">{{ peticion.salida.paciente }}</td>
       <td class="padded">{{ peticion.salida.updated_at }}</td>
       <td class="padded"><span class="label">{{ peticion.salida.get_status_display }}</span></td>
-      <td><a href="{% url consumidos:peticion_detail peticion.salida.id %}" class="btn btn-default">Detalle</a></td>
+      <td><a href="{% url 'consumidos:peticion_detail' peticion.salida.id %}" class="btn btn-default">Detalle</a></td>
 
     </tr>
     {% endfor %}

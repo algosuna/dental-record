@@ -34,7 +34,7 @@
         <td>{{ producto.unidad_medida }}</td>
         <td>{{ producto.porciones }}</td>
         <td>{{ producto.precio_porcion }}</td>
-        <td><a href="{% url inventario:productocancelado_detail producto.cancelproducto_set.get.id %}" class="btn btn-default">Ver Producto</a></td>
+        <td><a href="{% url 'inventario:productocancelado_detail' producto.cancelproducto_set.get.id %}" class="btn btn-default">Ver Producto</a></td>
 
     </tr>
     {% endfor %}

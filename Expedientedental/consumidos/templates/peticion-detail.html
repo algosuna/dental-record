@@ -22,7 +22,7 @@
 {% endblock %}
 
 {% block content %}
-<h2 class="page-header">{% block title %}Peticion a Inventario{% endblock %} <small class="pull-right"><a href="{% url consumidos:recibo_paquete paquete.id %}"><i class="fa fa-print fa-fw"></i> Imprimir Recibo</a></small></h2>
+<h2 class="page-header">{% block title %}Peticion a Inventario{% endblock %} <small class="pull-right"><a href="{% url 'consumidos:recibo_paquete' paquete.id %}"><i class="fa fa-print fa-fw"></i> Imprimir Recibo</a></small></h2>
 
 <div class="col-md-6">
 
@@ -99,7 +99,7 @@
 
   <div class="collapse clearfix alert alert-danger" id="cancelar">
     <p class="pull-left">Seguro que desea cancelar esta peticion?</p>
-    <a href="{% url consumidos:peticion_cancel paquete.id %}" class="btn btn-success pull-right">Cancelar</a>
+    <a href="{% url 'consumidos:peticion_cancel' paquete.id %}" class="btn btn-success pull-right">Cancelar</a>
 
   </div>
   {% endif %}

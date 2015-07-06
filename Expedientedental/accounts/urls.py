@@ -1,21 +1,11 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 
-from accounts.views import LoginView, HomeView, ChangeView
-
-
-urlpatterns = patterns(
-    'accounts.views',
-
-    url(r'^logout/$', 'logout_view', name='logout'),
+from . import views
 
 
-)
-
-urlpatterns += patterns(
-    '',
-
-    url(r'^login/$', LoginView.as_view(), name='login'),
-    url(r'^$', HomeView.as_view(), name='home'),
-    url(r'^change/password/$', ChangeView.as_view(), name='change'),
-
-)
+urlpatterns = [
+    url(r'^logout/$', views.logout_view, name='logout'),
+    url(r'^login/$', views.LoginView.as_view(), name='login'),
+    url(r'^$', views.HomeView.as_view(), name='home'),
+    url(r'^change/password/$', views.ChangeView.as_view(), name='change'),
+]

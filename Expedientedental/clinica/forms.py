@@ -15,7 +15,7 @@ from clinica.models import (
 class InterrogatorioForm(forms.ModelForm):
     class Meta:
         model = Interrogatorio
-        exclude = ('medico', 'paciente')
+        exclude = ['medico', 'paciente']
 
     def __init__(self, *args, **kwargs):
         super(InterrogatorioForm, self).__init__(*args, **kwargs)
@@ -270,7 +270,7 @@ class OdontogramaForm(forms.ModelForm):
 class ProcedimientoForm(forms.ModelForm):
     class Meta:
         model = Procedimiento
-        exclude = ('odontograma', 'status')
+        exclude = ['odontograma', 'status']
 
     def __init__(self, *args, **kwargs):
         super(ProcedimientoForm, self).__init__(*args, **kwargs)
@@ -298,6 +298,7 @@ ProcedimientoFormSet = formset_factory(ProcedimientoForm, extra=0)
 class BitacoraForm(forms.ModelForm):
     class Meta:
         model = Bitacora
+        exclude = []
 
     is_complete = forms.BooleanField(required=False)
 

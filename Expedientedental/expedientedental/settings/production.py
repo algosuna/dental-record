@@ -31,6 +31,10 @@ DATABASES = {
     }
 }
 
+# Absolute path to the directory static files should be collected to.
+# Example: "/var/www/example.com/static/"
+STATIC_ROOT = BASE_DIR.child('static')
+
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 SESSION_COOKIE_AGE = 60 * 60 * 8

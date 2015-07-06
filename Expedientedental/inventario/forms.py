@@ -14,7 +14,7 @@ from inventario.models import (
 class ProductoForm(forms.ModelForm):
     class Meta:
         model = Producto
-        exclude = 'porciones'
+        exclude = ['porciones']
 
     def __init__(self, *args, **kwargs):
         super(ProductoForm, self).__init__(*args, **kwargs)
@@ -44,7 +44,7 @@ class ProductoForm(forms.ModelForm):
 class ProductoUpdateForm(forms.ModelForm):
     class Meta:
         model = Producto
-        exclude = ('unidad_medida', 'porciones')
+        exclude = ['unidad_medida', 'porciones']
 
     def __init__(self, *args, **kwargs):
         super(ProductoUpdateForm, self).__init__(*args, **kwargs)
@@ -92,7 +92,7 @@ class ProductoCancelForm(forms.ModelForm):
 class CancelProductoForm(forms.ModelForm):
     class Meta:
         model = CancelProducto
-        exclude = 'producto'
+        exclude = ['producto']
 
     def __init__(self, *args, **kwargs):
         super(CancelProductoForm, self).__init__(*args, **kwargs)
@@ -114,6 +114,7 @@ class CancelProductoForm(forms.ModelForm):
 class UnidadMedidaForm(forms.ModelForm):
     class Meta:
         model = UnidadMedida
+        exclude = []
 
     def __init__(self, *args, **kwargs):
         super(UnidadMedidaForm, self).__init__(*args, **kwargs)
@@ -131,7 +132,7 @@ class UnidadMedidaForm(forms.ModelForm):
 class EntradaForm(forms.ModelForm):
     class Meta:
         model = Entrada
-        exclude = ('producto', 'is_cancelled')
+        exclude = ['producto', 'is_cancelled']
 
     def __init__(self, *args, **kwargs):
         super(EntradaForm, self).__init__(*args, **kwargs)
@@ -157,7 +158,7 @@ class EntradaForm(forms.ModelForm):
 class EntradaCanceladaForm(forms.ModelForm):
     class Meta:
         model = Entrada
-        exclude = ('producto', 'porciones')
+        exclude = ['producto', 'porciones']
 
     def __init__(self, *args, **kwargs):
         super(EntradaCanceladaForm, self).__init__(*args, **kwargs)
@@ -183,7 +184,7 @@ class CancelEntradaForm(forms.ModelForm):
 
     class Meta:
         model = CancelEntrada
-        exclude = 'entrada'
+        exclude = ['entrada']
 
     def __init__(self, *args, **kwargs):
         super(CancelEntradaForm, self).__init__(*args, **kwargs)

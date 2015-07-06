@@ -24,7 +24,7 @@
 
       <td class="padded">{{ pago.fecha }}</td>
       <td class="padded">$ {{ pago.importe }}</td>
-      <td><a href="{% url pagos:pagos_detail pago.pago.id %}" class="btn btn-primary pull-right">Ver Pago</a></td>
+      <td><a href="{% url 'pagos:pagos_detail' pago.pago.id %}" class="btn btn-primary pull-right">Ver Pago</a></td>
 
     </tr>
     {% endfor %}
