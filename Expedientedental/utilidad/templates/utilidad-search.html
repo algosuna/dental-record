@@ -32,7 +32,7 @@
         <td class="padded">{{ paciente }}</td>
         <td class="padded">{{ paciente.grupo }}</td>
         <td>
-          <a href="{% url utilidad:utilidad_servicios paciente.id %}" class="btn btn-success pull-right">Servicios</a>
+          <a href="{% url 'utilidad:utilidad_servicios' paciente.id %}" class="btn btn-success pull-right">Servicios</a>
         </td>
 
       </tr>
@@ -74,7 +74,7 @@
   {% endif %}
   <p class="text-center">
 
-    <a href="{% url utilidad:utilidad_search %}" class="btn btn-primary">Nueva Busqueda <span class="glyphicon glyphicon-arrow-right"></span></a>
+    <a href="{% url 'utilidad:utilidad_search' %}" class="btn btn-primary">Nueva Busqueda <span class="glyphicon glyphicon-arrow-right"></span></a>
 
   </p>
 

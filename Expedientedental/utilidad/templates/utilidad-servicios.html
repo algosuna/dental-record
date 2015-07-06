@@ -76,7 +76,7 @@
       <td><span class="label label-default">{{ servicio.get_status_display }}</span></td>
       <td>{{ servicio.created_at }}</td>
       <td>{{ servicio.updated_at }}</td>
-      <td><a href="{% url utilidad:utilidad_servicio servicio.id %}"><i class="fa fa-search fa-fw"></i></a></td>
+      <td><a href="{% url 'utilidad:utilidad_servicio' servicio.id %}"><i class="fa fa-search fa-fw"></i></a></td>
 
     </tr>
     {% endfor %}
