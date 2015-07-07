@@ -1,8 +1,11 @@
+# Python
 *.pyc
-dentaldb.sqlite3
-migrations
-media
+
+# Sass
 .sass-cache
-dump
+
+# Configuration file
 cfg.json
-*.sublime-workspace
+
+# Sublime files
+*.sublime-*
