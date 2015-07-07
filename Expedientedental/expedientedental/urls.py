@@ -20,6 +20,7 @@ from django.conf import settings
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^docs/', include('django.contrib.admindocs.urls')),
 
     url(r'^', include('accounts.urls', namespace='accounts')),
     url(r'^altas/', include('altas.urls', namespace='altas')),
