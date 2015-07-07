@@ -6,19 +6,24 @@ pygments:         true
 permalink:        pretty
 
 # Setup
-title:            Lanyon
-tagline:          'A Jekyll theme'
+title:            Dental Record
+tagline:          'Administrative system for "The Californias Health System - Dental".'
 description:      'A reserved <a href="http://jekyllrb.com" target="_blank">Jekyll</a> theme that places the utmost gravity on content with a hidden drawer. Made by <a href="https://twitter.com/mdo" target="_blank">@mdo</a>.'
-url:              http://lanyon.getpoole.com
+url:              http://andyosuna.github.io/dental-record
 
 author:
-  name:           'Mark Otto'
-  url:            https://twitter.com/mdo
+  name:           'Andy Osuna'
+  url:            https://twitter.com/andiosuna
 
 paginate:         5
 
 # Custom vars
-version:          2.0.0
+version:          0.0.0
 
 github:
-  repo:           https://github.com/poole/lanyon
+  repo:           https://github.com/andyosuna/dental-record
+  download:       /archive/master.zip
+
+bitbucket:
+  repo:           https://bitbucket.org/mediexcel-dev/dentaldev
+  download:       /get/master.zip
