@@ -1,4 +1,4 @@
-# Installing Dental Administarative System
+# Installing
 
 I highly recommend you create a new virtual environment before proceeding.
 
@@ -89,8 +89,28 @@ Fixtures, or 'dummy data' are provided to you in the repository root in a file n
 To run `loaddata` you must be in the project's directory:
 ```bash
 # Go into the project's directory:
-(dentalenv)$ cd Expedientedental
+(dentalenv)$ cd expedientedental
 (dentalenv)$ python manage.py loaddata ../testdata.json
 Installed 130 object(s) from 1 fixture(s)
 ```
 **Heads up** - Please note that the number of installed objects may vary.
+
+## Run!
+
+If everything goes as it should, you only need to type this:
+```bash
+(dentalenv)$ python manage.py runserver
+Performing system checks...
+
+System check identified no issues (0 silenced).
+July 07, 2015 - 09:01:35
+Django version 1.8.2, using settings 'expedientedental.settings.development'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+```
+
+## Common Problems
+
+You should encounter the most problems when installing the requirements and their dependencies. Head over to the [documentation](http://dental.github.io) and read the detailed list of requirements and their dependencies.
+
+For any other kind of problem, feel free to contact me via twitter ([@andiosuna](https://twitter.com/andiosuna)) or open an issue. Please read the [contributing guidelines](./CONTRIBUTING.md) before doing so!

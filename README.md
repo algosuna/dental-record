@@ -1,4 +1,4 @@
-# Dental Administarative System
+# Dental Record and Administarative System
 
 Administrative system for 'The Californias Health System - Dental'.
 
@@ -15,6 +15,12 @@ The system is divided into the following sections based on user roles. Restricti
 
 It all sounds wonderful, but you want to see it in action, right? Assuming you are a Python developer, you can do so easily by following the simple [install instructions](./INSTALL.md).
 
+## Contributing
+
+If you wish to contribute to the system check the open issues, create an issue or fork and pull request.
+
+For more information read the [contributing guidelines](./CONTRIBUTING.md).
+
 ### Contributors
 
 We are the ones who ~~wasted~~ dedicated five months of our lives to bring this to life.
@@ -22,6 +28,10 @@ We are the ones who ~~wasted~~ dedicated five months of our lives to bring this 
 * Andrea Gonzalez - [@andiosuna](https://twitter.com/andiosuna)
 * Raymundo Aviles - [raviles](https://bitbucket.org/raviles)
 
-Special thanks to this guy, who helped us with our newbie questions with lots of patience.
+Special thanks to this guy, who helped us with our newbie questions and answered with lots of patience.
 
 * M.C. Moises Perez - [@mxpxgx](https://twitter.com/mxpxgx)
+
+## License
+
+This project is licensed under the [GNU General Public License v3.0](./LICENSE).
