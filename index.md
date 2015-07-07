@@ -28,7 +28,7 @@ For more information read the [contributing guidelines]({{ site.url }}/contribut
 
 ### Contributors
 
-We are the ones who ~~wasted~~ dedicated five months of our lives to bring this to life.
+We are the ones who dedicated five months of our lives to bring this to life.
 
 * Andrea Gonzalez - [@andiosuna](https://twitter.com/andiosuna)
 * Raymundo Aviles - [raviles](https://bitbucket.org/raviles)

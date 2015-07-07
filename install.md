@@ -8,6 +8,7 @@ title: Install
 I highly recommend you create a new virtual environment before proceeding.
 
 If you have virtualenvwrapper installed you can do so like this:
+
 ```bash
 # Type the following to create a virtual env.
 # The example env is called 'dentalenv'.
@@ -15,12 +16,12 @@ $ mkvirtualenv dentalenv
 
 # It should activate after creating it.
 (dentalenv)$
-
 ```
 
 ## Install Requirements
 
 You can do so by navigating to the repository root (dentaldev) and typing the following:
+
 ```bash
 (dentalenv)$ pip install -r requirements.txt
 ```
@@ -32,23 +33,29 @@ You can do so by navigating to the repository root (dentaldev) and typing the fo
 Because of how the settings are configured, you should let Django know what settings file to load when running. To do so, you must set an environment variable called `DJANGO_SETTINGS_MODULE`.
 
 Below is an example on how to configure the variable if you are using the default `development` settings:
+
 ```bash
 (dentalenv)$ vi $VIRTUAL_ENV/bin/postactivate
 ```
+
 Proceed to edit the file using `vi` or your preferred text editor:
+
 ```bash
 #!/bin/bash
 # This hook is sourced after this virtualenv is activated.
 
 export DJANGO_SETTINGS_MODULE='settings.expedientedental.development'
 ```
+
 You must also `unset` the variable in the `predeactivate` file:
+
 ```bash
 #!/bin/bash
 # This hook is sourced before this virtualenv is deactivated.
 
 unset DJANGO_SETTINGS_MODULE
 ```
+
 For the changes to take place, run `deactivate` in your terminal, then activate it again by running `workon dentalenv` or `source /path/to/virtual/env/bin/activate`.
 
 ### Database and Secret Key
@@ -80,6 +87,7 @@ INSTALLED_APPS += (
 ```
 
 To load your settings, configure it in the environment variable:
+
 ```bash
 #!/bin/bash
 # This hook is sourced after this virtualenv is activated.
@@ -92,17 +100,20 @@ export DJANGO_SETTINGS_MODULE='settings.expedientedental.john-dev'
 Fixtures, or 'dummy data' are provided to you in the repository root in a file named `testdata.json`. To install it use Django's `loaddata`.
 
 To run `loaddata` you must be in the project's directory:
+
 ```bash
 # Go into the project's directory:
 (dentalenv)$ cd expedientedental
 (dentalenv)$ python manage.py loaddata ../testdata.json
 Installed 130 object(s) from 1 fixture(s)
 ```
+
 **Heads up** - Please note that the number of installed objects may vary.
 
 ## Run!
 
 If everything goes as it should, you only need to type this:
+
 ```bash
 (dentalenv)$ python manage.py runserver
 Performing system checks...
@@ -116,6 +127,6 @@ Quit the server with CONTROL-C.
 
 ## Common Problems
 
-You should encounter the most problems when installing the requirements and their dependencies. Head over to the [documentation](http://dental.github.io) and read the detailed list of requirements and their dependencies.
+You should encounter the most problems when installing the requirements and their dependencies. Head over to the [requirements page]({{ site.url }}/requirements) and read the detailed list of requirements and their dependencies.
 
 For any other kind of problem, feel free to contact me via twitter ([@andiosuna](https://twitter.com/andiosuna)) or open an issue. Please read the [contributing guidelines]({{ site.url }}/contributing) before doing so!
