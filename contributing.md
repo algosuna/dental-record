@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Contributing
+title: 5. Contributing
 ---
 
 :poop:

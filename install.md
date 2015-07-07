@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Install
+title: 2. Install
 ---
 
 # Installing
@@ -118,4 +118,4 @@ Quit the server with CONTROL-C.
 
 You should encounter the most problems when installing the requirements and their dependencies. Head over to the [documentation](http://dental.github.io) and read the detailed list of requirements and their dependencies.
 
-For any other kind of problem, feel free to contact me via twitter ([@andiosuna](https://twitter.com/andiosuna)) or open an issue. Please read the [contributing guidelines]({{ site.baseurl }}/contributing) before doing so!
+For any other kind of problem, feel free to contact me via twitter ([@andiosuna](https://twitter.com/andiosuna)) or open an issue. Please read the [contributing guidelines]({{ site.url }}/contributing) before doing so!

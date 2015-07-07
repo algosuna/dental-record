@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Home
+title: 1. Introduction
 ---
 
 # Dental Record and Administarative System
@@ -18,13 +18,13 @@ The system is divided into the following sections based on user roles. Restricti
 
 ## Running it Locally
 
-It all sounds wonderful, but you want to see it in action, right? Assuming you are a Python developer, you can do so easily by following the simple [install instructions](./INSTALL.md).
+It all sounds wonderful, but you want to see it in action, right? Assuming you are a Python developer, you can do so easily by following the simple [install instructions]({{ site.url }}/install).
 
 ## Contributing
 
 If you wish to contribute to the system check the open issues, create an issue or fork and pull request.
 
-For more information read the [contributing guidelines](./CONTRIBUTING.md).
+For more information read the [contributing guidelines]({{ site.url }}/contributing).
 
 ### Contributors
 
