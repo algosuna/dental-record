@@ -8,7 +8,7 @@ permalink:        pretty
 # Setup
 title:            Dental Record
 tagline:          'Administrative system for "The Californias Health System - Dental".'
-description:      'A reserved <a href="http://jekyllrb.com" target="_blank">Jekyll</a> theme that places the utmost gravity on content with a hidden drawer. Made by <a href="https://twitter.com/mdo" target="_blank">@mdo</a>.'
+description:      'Documentation for Dental Record. All you need to know to get up and running. Made by <a href="https://twitter.com/andiosuna" target="_blank">@andiosuna</a>.'
 url:              http://andyosuna.github.io/dental-record
 
 author:

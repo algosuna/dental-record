@@ -9,12 +9,12 @@
   </div>
 
   <nav class="sidebar-nav">
-    <a class="sidebar-nav-item{% if page.title == "Introduction" %} active{% endif %}" href="/">1. Introduction</a>
-    <a class="sidebar-nav-item{% if page.title == "Install" %} active{% endif %}" href="{{ page.install }}">2. Install</a>
-    <a class="sidebar-nav-item{% if page.title == "Requirements" %} active{% endif %}" href="{{ page.requirements }}">3. Requirements</a>
-    <a class="sidebar-nav-item{% if page.title == "API Reference" %} active{% endif %}" href="{{ page.api-reference }}">4. API Reference</a>
-    <a class="sidebar-nav-item{% if page.title == "Template Guidelines" %} active{% endif %}" href="{{ page.templates }}">5. Template Guidelines</a>
-    <a class="sidebar-nav-item{% if page.title == "Contributing" %} active{% endif %}" href="{{ page.contributing }}">6. Contributing Guidelines</a>
+    <a class="sidebar-nav-item{% if page.title == "Introduction" %} active{% endif %}" href="{{ site.url }}">1. Introduction</a>
+    <a class="sidebar-nav-item{% if page.title == "Install" %} active{% endif %}" href="{{ site.url }}/install">2. Install</a>
+    <a class="sidebar-nav-item{% if page.title == "Requirements" %} active{% endif %}" href="{{ site.url }}/requirements">3. Requirements</a>
+    <a class="sidebar-nav-item{% if page.title == "API Reference" %} active{% endif %}" href="{{ site.url }}/api-reference">4. API Reference</a>
+    <a class="sidebar-nav-item{% if page.title == "Template Guidelines" %} active{% endif %}" href="{{ site.url }}/templates">5. Template Guidelines</a>
+    <a class="sidebar-nav-item{% if page.title == "Contributing" %} active{% endif %}" href="{{ site.url }}/contributing">6. Contributing Guidelines</a>
 
     {% comment %}
       The code below dynamically generates a sidebar nav of pages with
