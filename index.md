@@ -1,6 +1,6 @@
 ---
 layout: page
-title: 1. Introduction
+title: Introduction
 ---
 
 # Dental Record and Administarative System

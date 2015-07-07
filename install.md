@@ -1,6 +1,6 @@
 ---
 layout: page
-title: 2. Install
+title: Install
 ---
 
 # Installing
