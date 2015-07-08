@@ -16,7 +16,7 @@ title: Core
 
 **expedientedental.core.models**
 
-### TimeStampedModel
+### `TimeStampedModel`
 Abstract model that adds a timestamp to the created date and the modified date of the model.
 
 Attributes:
@@ -35,7 +35,7 @@ class PaqueteConsumido(TimeStampedModel):
     # [...]
 ```
 
-### CancelledModel
+### `CancelledModel`
 
 This other abstract model should be used when a model has the option of getting cancelled.
 
