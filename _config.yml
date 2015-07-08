@@ -25,5 +25,5 @@ github:
   download:       /archive/master.zip
 
 bitbucket:
-  repo:           https://bitbucket.org/mediexcel-dev/dentaldev
+  repo:           https://bitbucket.org/mediexcel-dev/dental-record
   download:       /get/master.zip
