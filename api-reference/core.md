@@ -6,10 +6,10 @@ title: Core
 ## Jump to
 
 1. [Models](#models)
-*. [Views](#views)
-*. [Forms](#forms)
-*. [Utils](#utils)
-*. [Mixins](#mixins)
+* [Views](#views)
+* [Forms](#forms)
+* [Utils](#utils)
+* [Mixins](#mixins)
 
 
 ## Models
@@ -41,8 +41,8 @@ This other abstract model should be used when a model has the option of getting 
 
 Attributes:
 
-* created_at - DateTimeField
-* reason - TextField
+* `created_at` - DateTimeField
+* `reason` - TextField
 
 #### Usage
 
@@ -75,22 +75,22 @@ class Producto(models.Model):
 
 **expedientedental.core.views**
 
-### CreateObjFromContext
+### `CreateObjFromContext`
 
 Inherits from:
 
-* django.views.generic.CreateView
+* **django.views.generic.CreateView**
 
 Attributes:
 
-* ctx_model
-* initial_value
+* `ctx_model`
+* `initial_value`
 
 Methods:
 
-* get_obj
-* get_context_data - adds to inherited method.
-* get_initial - adds to inherited method.
+* `get_obj`
+* `get_context_data` - adds to inherited method.
+* `get_initial` - adds to inherited method.
 
 #### Usage
 
@@ -108,7 +108,7 @@ class RadiografiaCreate(CreateObjFromContext):
 
 **Note:** If you are still not clear on what `initial_value` is, look at the view's form and the model of the object being created.
 
-### DetailListView
+### `DetailListView`
 
 Enables a detail view to call some objects with pagination. Most of the code was taken from **django.views.generic.list.MultipleObjectMixin**.
 
@@ -118,18 +118,18 @@ Inherits from:
 
 Attributes:
 
-* list_model
-* list_queryset
-* list_paginate_by
-* list_context_name
+* `list_model`
+* `list_queryset`
+* `list_paginate_by`
+* `list_context_name`
 
 Methods:
 
-* get_list_queryset - objects to be manipulated or a queryset of the objects.
-* get_list_paginate_by(queryset) - gets the number of objects the list should be paginated by.
-* paginate_queryset(queryset, page_size) - paginate the queryset, if needed.
-* get_list_context_object_name(object_list) - get the name of the list objects to be used in the context.
-* get_context_data(**kwargs) - adds to inherited method and integrates pagination and queryset variables.
+* `get_list_queryset` - objects to be manipulated or a queryset of the objects.
+* `get_list_paginate_by(queryset)` - gets the number of objects the list should be paginated by.
+* `paginate_queryset(queryset, page_size)` - paginate the queryset, if needed.
+* `get_list_context_object_name(object_list)` - get the name of the list objects to be used in the context.
+* `get_context_data(**kwargs)` - adds to inherited method and integrates pagination and queryset variables.
 
 #### Usage
 
@@ -152,7 +152,7 @@ class ServiciosPaciente(DetailListView):
 
 **expedientedental.core.forms**
 
-### SimpleCrispyForm
+### `SimpleCrispyForm`
 
 Inherits from:
 
@@ -166,7 +166,7 @@ Inherit from this form to get a simple crispified form with a submit button with
 
 **expedientedental.core.utils**
 
-### normalize_query(query_string)
+### `normalize_query(query_string)`
 
 Requires:
 
@@ -174,7 +174,7 @@ Requires:
 
 It receives a string as parameter and returns a list of 'terms'.
 
-### build_query(query_string, search_fields)
+### `build_query(query_string, search_fields)`
 
 Requires:
 
@@ -182,7 +182,7 @@ Requires:
 
 It normalizes the query string and does an icontains search for every term in every search field. It returns a query.
 
-### generic_search(request, model, fields, query_param='q')
+### `generic_search(request, model, fields, query_param='q')`
 
 #### Usage
 
@@ -236,7 +236,7 @@ def paciente_search(request):
 
 # TODO: explain the multiple model search and fix the above code to match this.
 
-### paginate_objects
+### `paginate_objects`
 
 Requires:
 
