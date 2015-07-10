@@ -217,24 +217,33 @@ from core.utils import generic_search
 
 from altas.models import Paciente
 
-def paciente_search(request):
+def person_search(request):
     query = 'q'
     model = Paciente.objects.all()
-    fields = [
-        'nombre',
-        'apellidoMaterno',
-        'apellidoPaterno',
-        'CredencialPaciente'
-    ]
-    objects = generic_search(request, model, fields, query)
+    MODEL_MAP = {
+        Paciente: [
+            'nombre',
+            'apellidoPaterno',
+            'apellidoMaterno',
+            'credencialPaciente',
+        ]
+        Medico: [
+            'user',
+            'mothers_last_name',
+            'rfc',
+        ]
+    }
+
+    objects = []
+
+    for model, fields in MODEL_MAP.iteritems():
+        objects += generic_search(request, model, fields, query)
 
     return render(request, 'utilidad-search.html', {
         'objects': objects,
         'search_string': request.GET.get(query, '')
         })
 ```
-
-# TODO: explain the multiple model search and fix the above code to match this.
 
 ### `paginate_objects`
 
@@ -243,5 +252,23 @@ Requires:
 * **django.core.paginator.Paginator**
 * **django.core.paginator.EmptyPage**
 
+#### Usage
 
-# TODO: add sample usage
+```python
+# continued from the paciente_search above.
+def paciente_search(request):
+    [...]
+    paginator, page_obj, object_list, is_paginated = paginate_objects(
+        request, objects, 20)
+
+    return render(request, 'utilidad-search.html', {
+        'objects': object_list,
+        'page_obj': page_obj,
+        'paginator': paginator,
+        'is_paginated': is_paginated,
+        'search_string': request.GET.get(query, ''),
+        'us_active': 'active'
+        })
+```
+
+The function outputs four parameters, so you have to define all four. In this example, `paginator` represents the paginator itself which is a list, `page_obj` is the page method in the paginator which outputs an object, `object_list` is the queryset, and `is_paginated` returns a boolean from the `has_other_pages()` method.
