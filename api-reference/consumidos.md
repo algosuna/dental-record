@@ -3,21 +3,21 @@ layout: page
 title: Consumidos
 ---
 
-## Jump to
+## Ir a
 
-1. [Models](#models)
-* [Views](#views)
-* [Forms](#forms)
+1. [Modelos](#modelos)
+* [Vistas](#vistas)
+* [Formas](#formas)
 
 
-## Models
+## Modelos
 
 **expedientedental.consumidos.models**
 
 ### `Paquete`
 Los Paquetes se usan para agrupar Productos necesarios para realizar un 'servicio' o 'procedimiento'. Facilita el proceso de la persona en inventario. Deben ser creados previamente y se necesita familarizacion con los 'servicios' o 'procedimientos'.
 
-Attributes:
+Atributos:
 
 * `nombre = models.CharField(max_length=50, unique=True)`
 * `descripcion = models.CharField(max_length=200)`
@@ -26,11 +26,11 @@ Attributes:
 
 ### `CancelPaquete`
 
-Inherits from `expedientedental.core.models.CancelledModel`.
+Hereda de `expedientedental.core.models.CancelledModel`.
 
-El crear este modelo indica que el paquete en el `ForeignKey` esta desactivado. Se proporciona motivo y se agrega fecha de creacion.
+El crear este modelo indica que el paquete en el `ForeignKey` esta desactivado. Se provee motivo y se agrega fecha de creacion.
 
-Attributes:
+Atributos:
 
 * `paquete = models.ForeignKey(Paquete)`
 
@@ -38,7 +38,7 @@ Attributes:
 
 Productos de un paquete.
 
-Attributes:
+Atributos:
 
 * `paquete = models.ForeignKey(Paquete)`
 * `producto = models.ForeignKey('inventario.Producto')`
@@ -48,19 +48,18 @@ Attributes:
 
 Indica un grupo de productos que saldran de inventario.
 
-Attributes:
+Atributos:
 
 * `paquete = models.ForeignKey(Paquete, null=True)`
 * `medico = models.ForeignKey(Medico)`
 * `paciente = models.ForeignKey(Paciente)`
 * `servicio = models.ForeignKey('servicios.Servicio', null=True)`
 * `nota = models.TextField(blank=True)`
-* `status = models.CharField()` - has choices.
+* `status = models.CharField()` - contiene 'choices'.
 
-Methods:
+Metodos:
 
 * `get_item_initials` - Asigna initials usando PaqueteItems con ForeignKey a Paquete.
-
 * `precio_total` - Saca el total de todos los PaqueteConsumidoItems con ForeignKey a PaqueteConsumido.
 
 ### `CancelPaqueteConsumido`
@@ -69,7 +68,7 @@ Hereda del modelo abstracto CancelledModel (`expedientedental.core.CancelledMode
 
 ### `PaqueteConsumidoItemManager`
 
-Methods:
+Metodos:
 
 * `get_precio_total` - Suma el precio de PaqueteConsumidoItem.
 
@@ -77,7 +76,7 @@ Methods:
 
 Producto a salir de inventario. Contiene el precio de acorde al precio del producto y la cantidad que va de salida (se consume).
 
-Attributes:
+Atributos:
 
 * `paquete_consumido = models.ForeignKey(PaqueteConsumido)`
 * `producto = models.ForeignKey('inventario.Producto')`
@@ -88,13 +87,7 @@ Methods:
 
 * `set_precio` - Calcula el precio correcto a asignar multiplicando el precio del producto por la cantidad de este.
 
-### `ProductoConsumido`
-
-Saca Productos de inventario sin necesidad de asociarse a un servicio y sin generar peticion (PaqueteConsumido).
-
-**Nota:** No escribire los atributos ya que este modelo o funcionalidad no estan bien pensados. Necesita un buen analisis!
-
-## Views
+## Vistas
 
 **expedientedental.consumidos.views**
 
@@ -102,15 +95,15 @@ Saca Productos de inventario sin necesidad de asociarse a un servicio y sin gene
 
 Lista de paquetes.
 
-Inherits from:
+Hereda de:
 
 * **django.views.generic.ListView**
 
 ### `PaqueteCreate`
 
-Creates Paquete object with PaqueteItems. The magic is in the form!
+Crea un objeto Paquete con PaqueteItems. La magia esta en la forma!
 
-Inherits from:
+Hereda de:
 
 * **django.views.generic.CreateView**
 
@@ -118,153 +111,174 @@ Inherits from:
 
 Muestra detalle de paquete y da la opcion de marcar como 'surtido'.
 
-Inherits from:
+Hereda de:
 
 * **django.views.generic.UpdateView**
 
 ### `PaqueteCancel`
 
-Inherits from:
+Pagina de confirmacion para agregar `CancelPaquete`. Aqui se escribe el motivo de cancelacion y se marca como cancelado el paquete.
+
+Hereda de:
 
 * **expedientedental.core.CreateObjFromContext**
 
 ### `PaqueteCancelled`
 
-Inherits from:
+Lista de paquetes cancelados.
+
+Hereda de:
 
 * **django.views.generic.ListView**
 
 ### `PaqueteCancelledDetail`
 
-Inherits from:
+Detalle de paquete cancelado. Es del  modelo `CancelPaquete`. Muestra motivo, los items y todo lo demas.
+
+Hereda de:
 
 * **django.views.generic.DetailView**
 
+### `PaqueteUpdate`
 
+TODO: en la segunda iteracion. Requiere trabajo en la forma.
 
-<!--
-## Forms
+Hereda de:
 
-**expedientedental.core.forms**
+* **django.views.generic.UpdateView**
 
-### `SimpleCrispyForm`
+### `Peticiones`
 
-Inherits from:
+Lista de peticiones o `PaqueteConsumido`. Muestra los `PaqueteConsumido` con estatus de `en_espera` y `por_entregar` en dos listas independientes.
+
+Hereda de:
+
+* **django.views.generic.ListView**
+
+### `PeticionCreate`
+
+Crea `PaqueteConsumido` con paquete nulo. Define el `Paquete` a partir del `Servicio`. Con el metodo `get_initial` define tambien el `Medico` y el `Paciente` a partir del `Servicio`.
+
+Hereda de:
+
+* **expedientedental.core.views.CreateObjFromContext**
+
+### `PeticionUpdate`
+
+Agrega `Paquete` a `PaqueteConsumido`.
+
+Hereda de:
+
+* **django.views.generic.UpdateView**
+
+### `PeticionesAtendidas`
+
+Lista de peticiones o `PaqueteConsumido` con estatus de `surtido`.
+
+Hereda de:
+
+* **django.views.generic.ListView**
+
+### `paquete_item_create`
+
+Crea `PaqueteConsumidoItem`s de `PaqueteItem`s y agrega o quita items extra (productos).
+
+### `PeticionDetail`
+
+Detalle de `PaqueteConsumido` con sus items (`PaqueteConsumidoItem`). Tiene la posibilidad de marcar `PaqueteConsumido` como `surtido`. Al marcar como surtido, se restan los productos de inventario.
+
+Hereda de:
+
+* **django.views.generic.UpdateView**
+
+### `PeticionCancel`
+
+Vista de confirmacion para cancelar una peticion o crear un `CancelPaqueteConsumido`. Devuelve los productos a inventario.
+
+Hereda de:
+
+* **expedientedental.core.views.CreateObjFromContext**
+
+### `PeticionCancelled`
+
+Lista de peticiones canceladas o `CancelPaqueteConsumido`.
+
+Hereda de:
+
+* **django.views.generic.ListView**
+
+### `ReciboPeticionPDF`
+
+Recibo de la peticion de materiales.
+
+Hereda de:
+
+* **wkhtmltopdf.views.PDFTemplateView**
+
+## Formas
+
+**expedientedental.consumidos.forms**
+
+### `PaqueteForm`
+
+Crea `Paquete` con `PaqueteItem`s basado en los productos disponibles (activos).
+
+Hereda de:
 
 * **django.forms.ModelForm**
 
-#### Usage
+### `PaqueteCancelForm`
 
-Inherit from this form to get a simple crispified form with a submit button with the text 'Guardar'.
+Forma con solo el campo de `is_inactive`. Es un foreshadower a la cancelacion del paquete. No guarda los cambios al objeto.
 
-## Utils
+Hereda de:
 
-**expedientedental.core.utils**
+* **django.forms.ModelForm**
 
-### `normalize_query(query_string)`
+### `CancelPaqueteForm`
 
-Requires:
+Crea `CancelPaquete` y modifica tambien el modelo de `Paquete`, cuyo valor viene en el initial.
 
-* **re**
+Hereda de:
 
-It receives a string as parameter and returns a list of 'terms'.
+* **django.forms.ModelForm**
 
-### `build_query(query_string, search_fields)`
+### `PeticionForm`
 
-Requires:
+Crea `PaqueteConsumido` con `Paquete` nulo. Asigna valores de `medico`, `paciente` y `servicio` a partir del initial.
 
-* **django.db.models.Q**
+Hereda de:
 
-It normalizes the query string and does an icontains search for every term in every search field. It returns a query.
+* **django.forms.ModelForm**
 
-### `generic_search(request, model, fields, query_param='q')`
+### `AtenderPeticionForm`
 
-#### Usage
+Agrega `Paquete` a `PaqueteConsumido`.
 
-This is the function that gets called to perform a search. It gathers the parameters, the models and the fields. It runs those parameters with `build_query` and then returns search results.
+Hereda de:
 
-```python
-from core.utils import generic_search
+* **django.forms.ModelForm**
 
-from altas.models import Paciente
+### `PaqueteItemCreateForm`
 
-def paciente_search(request):
-    query = 'q'
-    model = Paciente.objects.all()
-    fields = [
-        'nombre',
-        'apellidoMaterno',
-        'apellidoPaterno',
-        'CredencialPaciente'
-    ]
-    objects = generic_search(request, model, fields, query)
+Crea `PaqueteConsumidoItem`s a partir de `PaqueteItem`s en `Paquete` y agrega o quita items (productos) extra. No muestra productos que no se encuentren en existencia en inventario o que esten desactivados.
 
-    return render(request, 'utilidad-search.html', {
-        'objects': objects,
-        'search_string': request.GET.get(query, '')
-        })
-```
+Hereda de:
 
-You can also search multiple models:
+* **django.forms.ModelForm**
 
-```python
-from core.utils import generic_search
+### `PeticionSurtidoForm`
 
-from altas.models import Paciente
+Cambia el estatus de `PaqueteConsumido` de `por_entregar` a `surtido` y vice versa.
 
-def person_search(request):
-    query = 'q'
-    model = Paciente.objects.all()
-    MODEL_MAP = {
-        Paciente: [
-            'nombre',
-            'apellidoPaterno',
-            'apellidoMaterno',
-            'credencialPaciente',
-        ]
-        Medico: [
-            'user',
-            'mothers_last_name',
-            'rfc',
-        ]
-    }
+Hereda de:
 
-    objects = []
+* **django.forms.ModelForm**
 
-    for model, fields in MODEL_MAP.iteritems():
-        objects += generic_search(request, model, fields, query)
+### `PeticionCancelForm`
 
-    return render(request, 'utilidad-search.html', {
-        'objects': objects,
-        'search_string': request.GET.get(query, '')
-        })
-```
+Crea `CancelPaqueteConsumido`.
 
-### `paginate_objects`
+Hereda de:
 
-Requires:
-
-* **django.core.paginator.Paginator**
-* **django.core.paginator.EmptyPage**
-
-#### Usage
-
-```python
-# continued from the paciente_search above.
-def paciente_search(request):
-    [...]
-    paginator, page_obj, object_list, is_paginated = paginate_objects(
-        request, objects, 20)
-
-    return render(request, 'utilidad-search.html', {
-        'objects': object_list,
-        'page_obj': page_obj,
-        'paginator': paginator,
-        'is_paginated': is_paginated,
-        'search_string': request.GET.get(query, ''),
-        'us_active': 'active'
-        })
-```
-
-The function outputs four parameters, so you have to define all four. In this example, `paginator` represents the paginator itself which is a list, `page_obj` is the page method in the paginator which outputs an object, `object_list` is the queryset, and `is_paginated` returns a boolean from the `has_other_pages()` method.
- -->
+* **django.forms.ModelForm**

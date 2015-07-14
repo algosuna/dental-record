@@ -3,12 +3,12 @@ layout: page
 title: Core
 ---
 
-## Jump to
+## Ir a
 
-1. [Models](#models)
-* [Views](#views)
-* [Forms](#forms)
-* [Utils](#utils)
+1. [Modelos](#modelos)
+* [Vistas](#vistas)
+* [Formas](#formas)
+* [Utilidades](#utilidades)
 * [Mixins](#mixins)
 
 
@@ -17,16 +17,17 @@ title: Core
 **expedientedental.core.models**
 
 ### `TimeStampedModel`
-Abstract model that adds a timestamp to the created date and the modified date of the model.
 
-Attributes:
+Modelo abstacto que agrega una marca de tiempo con la fecha de creaciony de modificacion del modelo.
+
+Atributos:
 
 * created_at - DateTimeField
 * updated_at - DateTimeField
 
-#### Usage
+#### Uso
 
-Inherit from this model whenever you want to keep control of creation date and latest modification.
+Hereda de este modelo cuando desees mantener control de la fecha de creacion y ultima modificacion.
 
 ```python
 from core.models import TimeStampedModel
@@ -37,16 +38,16 @@ class PaqueteConsumido(TimeStampedModel):
 
 ### `CancelledModel`
 
-This other abstract model should be used when a model has the option of getting cancelled.
+Este otro modelo abstracto debera ser usado cuando un modelo tiene la opcion de ser cancelado.
 
-Attributes:
+Atributos:
 
 * `created_at` - DateTimeField
 * `reason` - TextField
 
-#### Usage
+#### Uso
 
-To deactivate a product in inventory, the following was done:
+Para desactivar un producto en inventario, se realizo lo siguiente:
 
 ```python
 from core.models import CancelledModel
@@ -55,7 +56,7 @@ class CancelProducto(CancelledModel):
     producto = models.ForeignKey(Producto)
 ```
 
-You can tell a product was deactivated by looking for a CancelledModel like this:
+Puedes saber su un producto ha sido desactivado buscando un 'CancelledModel' de la siguiente manera:
 
 ```python
 >>> from inventario.models import Producto, CancelProducto
@@ -63,7 +64,7 @@ You can tell a product was deactivated by looking for a CancelledModel like this
 >>> producto_cancelado = CancelProducto.objects.get(producto=producto)
 ```
 
-To make this easier, an attribute is added to the model you wish to cancel or 'deactivate':
+Para facilitar esto, un atributo se agrega al modelo que deseas cancelar o 'desactivar':
 
 ```python
 class Producto(models.Model):
@@ -71,69 +72,69 @@ class Producto(models.Model):
     is_active = models.BooleanField(default=True)
 ```
 
-## Views
+## Vistas
 
 **expedientedental.core.views**
 
 ### `CreateObjFromContext`
 
-Inherits from:
+Hereda de:
 
 * **django.views.generic.CreateView**
 
-Attributes:
+Atributos:
 
 * `ctx_model`
 * `initial_value`
 
-Methods:
+Metodos:
 
 * `get_obj`
-* `get_context_data` - adds to inherited method.
-* `get_initial` - adds to inherited method.
+* `get_context_data` - agrega al metodo heredado.
+* `get_initial` - agrega al metodo heredado.
 
-#### Usage
+#### Uso
 
-You should inherit from this view when you wish to create an object while referencing a second object from the url.
+Debes heredar de esta vista cuando desees crear un objeto al hacer referencia a un segundo objeto desde el url.
 
 ```python
 from core.views import CreateObjFromContext
 
 class RadiografiaCreate(CreateObjFromContext):
-    ctx_model = Paciente  # the model that comes from the url
-    initial_value = 'paciente'  # what the value is called in the object being created.
+    ctx_model = Paciente  # el modelo que viene del url
+    initial_value = 'paciente'  # como se llama el objeto en el objeto que esta siendo creado
     form_class = RadiografiaForm
     template_name = 'radiografia.html'
 ```
 
-**Note:** If you are still not clear on what `initial_value` is, look at the view's form and the model of the object being created.
+**Nota:** Si no estas segura en que es `initial_value`, consulta la forma de la vista y el modelo del objeto que esta siendo creado.
 
 ### `DetailListView`
 
-Enables a detail view to call some objects with pagination. Most of the code was taken from **django.views.generic.list.MultipleObjectMixin**.
+Da la posibilidad de llamar una lista de objetos con paginacion en una vista de detalle. La mayor parte del codigo fue tomada de **django.views.generic.list.MultipleObjectMixin**.
 
-Inherits from:
+Hereda de:
 
 * **django.views.generic.DetailView**
 
-Attributes:
+Atributos:
 
 * `list_model`
 * `list_queryset`
 * `list_paginate_by`
 * `list_context_name`
 
-Methods:
+Metodos:
 
-* `get_list_queryset` - objects to be manipulated or a queryset of the objects.
-* `get_list_paginate_by(queryset)` - gets the number of objects the list should be paginated by.
-* `paginate_queryset(queryset, page_size)` - paginate the queryset, if needed.
-* `get_list_context_object_name(object_list)` - get the name of the list objects to be used in the context.
-* `get_context_data(**kwargs)` - adds to inherited method and integrates pagination and queryset variables.
+* `get_list_queryset` - objetos a ser manipulados o un queryset de los objetos.
+* `get_list_paginate_by(queryset)` - obtiene el numero de objetos por el cual paginar la lista.
+* `paginate_queryset(queryset, page_size)` - pagina el queryset, si es necesario.
+* `get_list_context_object_name(object_list)` - obtiene el nombre de la lista de objetos a ser usados en el contexto.
+* `get_context_data(**kwargs)` - agrega al metodo heredado e integra paginacion y variables del queryset.
 
-#### Usage
+#### Uso
 
-If you find yourself with a detail view with a list of objects, you should inherit from this view. The pagination is optional.
+Si te das cuenta que tienes una vista de detalle y una lista de objetos en el contexto, seria mejor heredar de esta vista. La paginacion es opcional.
 
 ```python
 from core.views import DetailListView
@@ -148,45 +149,45 @@ class ServiciosPaciente(DetailListView):
     template_name = 'utilidad-servicios.html'
 ```
 
-## Forms
+## Formas
 
 **expedientedental.core.forms**
 
 ### `SimpleCrispyForm`
 
-Inherits from:
+Hereda de:
 
 * **django.forms.ModelForm**
 
-#### Usage
+#### Uso
 
-Inherit from this form to get a simple crispified form with a submit button with the text 'Guardar'.
+Hereda de esta forma para obtener una forma simple y crispificada con un boton de submit y el texto 'Guardar'.
 
-## Utils
+## Utilidades
 
 **expedientedental.core.utils**
 
 ### `normalize_query(query_string)`
 
-Requires:
+Requiere:
 
 * **re**
 
-It receives a string as parameter and returns a list of 'terms'.
+Recive una cadena como parametro y retorna una lista de terminos.
 
 ### `build_query(query_string, search_fields)`
 
-Requires:
+Requiere:
 
 * **django.db.models.Q**
 
-It normalizes the query string and does an icontains search for every term in every search field. It returns a query.
+Normaliza la cadena de la consulta y hace una busqueda tipo `icontains` por cada termino en cada campo de busqueda. Retorna una consulta.
 
 ### `generic_search(request, model, fields, query_param='q')`
 
-#### Usage
+#### Uso
 
-This is the function that gets called to perform a search. It gathers the parameters, the models and the fields. It runs those parameters with `build_query` and then returns search results.
+Esta es la funcion que se llama para llevar a cabo una busqueda. Obtiene los parametros, los modelos y los campos. Corre esos parametros con `build_query` y retorna los resultados de la busqueda.
 
 ```python
 from core.utils import generic_search
@@ -210,7 +211,7 @@ def paciente_search(request):
         })
 ```
 
-You can also search multiple models:
+Tambien puedes buscar multiples modelos:
 
 ```python
 from core.utils import generic_search
@@ -247,15 +248,15 @@ def person_search(request):
 
 ### `paginate_objects`
 
-Requires:
+Requiere:
 
 * **django.core.paginator.Paginator**
 * **django.core.paginator.EmptyPage**
 
-#### Usage
+#### Uso
 
 ```python
-# continued from the paciente_search above.
+# continuado del ejemplo de paciente_search arriba.
 def paciente_search(request):
     [...]
     paginator, page_obj, object_list, is_paginated = paginate_objects(
@@ -271,4 +272,8 @@ def paciente_search(request):
         })
 ```
 
-The function outputs four parameters, so you have to define all four. In this example, `paginator` represents the paginator itself which is a list, `page_obj` is the page method in the paginator which outputs an object, `object_list` is the queryset, and `is_paginated` returns a boolean from the `has_other_pages()` method.
+La funcion retorna cuatro parametros, entonces debes definir los cuatro. En este ejemplo, `paginator` representa el paginador en si el cual es una lista, `page_ogj` es el metodo de `page` en el paginador y retorna un objeto, `object_list` es el queryset e `is_paginated` retorna un booleano del metodo `has_other_pages().
+
+## Mixins
+
+Para leer sobre los mixins en core, busca la documentacion de 'django-braces'.
